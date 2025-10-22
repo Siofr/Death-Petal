@@ -1,11 +1,29 @@
 # Death Petal
 Repository for Death Petal. This readme contains information related to Unity folder structure, folder naming conventions and code conventions.
 
-## Unity Folders
-This section containts information on accepted folder naming conventions and structure, these conventions should be followed by everyone to ensure that the project folders remain easy to navigate for all developers. It is important that our folders both have strong structure and naming conventions as it should be possible to navigate and find what we need both through using the dropdown and the search function within Unity.
+## Unity Project Structure
+This section containts information on accepted folder and file naming conventions and structure, these conventions should be followed by everyone to ensure that the project folders remain easy to navigate for all developers. It is important that our folders and files both have strong structure and naming conventions as it should be possible to navigate and find what we need both through using the dropdown and the search function within Unity.
 
 ### Folder and File Naming Conventions
-To be added
+When naming files and folders we should use prefixes and suffixes to make them more easily searchable. If a prefix or suffix does not already exist for a specific type of file in the project then a unique one should be created and added to this list, this list is non exhaustive and should be added to when necessary. Names should be short and consistent.
+
+<ins>General Naming structure example</ins>
+
+[prefix]\_[type of file]\_[name]\_[number]
+
+<ins>Prefixes</ins>
+
+- pl - All files associated with the player character
+- en - All files associated with enemy characters
+- npc - All files associated with non-player characters
+
+<ins>Type of File</ins>
+
+- Snd - Audio and Sound Files
+- Tex - Texture Files
+- Mat - Material Files
+
+To be expanded
 
 ### Folder Structure
 Below is an example of the intended Unity folder structure developers to follow
