@@ -9,6 +9,7 @@ public class InputHandler : MonoBehaviour
     public static InputAction MOVE;
     public static InputAction INTERACT;
     public static InputAction LOOK;
+    public static InputAction AIM;
     public static InputAction ATTACK;
     public static InputAction RELOAD;
     public static InputAction HOTKEY;
@@ -21,6 +22,9 @@ public class InputHandler : MonoBehaviour
 
     public static event Action ReloadEvent;
     public static event Action ReloadCancelledEvent;
+
+    public static event Action AimEvent;
+    public static event Action AimCancelledEvent;
 
     public static event Action<Vector2> HotkeyEvent;
 
@@ -49,6 +53,11 @@ public class InputHandler : MonoBehaviour
         ATTACK = _inputActions.Player.Attack;
         ATTACK.Enable();
         ATTACK.performed += OnAttackPerformed;
+
+        AIM = _inputActions.Player.Aim;
+        AIM.Enable();
+        AIM.performed += OnAim;
+        AIM.canceled += OnAim;
 
         RELOAD = _inputActions.Player.Reload;
         RELOAD.Enable();
@@ -94,13 +103,18 @@ public class InputHandler : MonoBehaviour
 
     private void OnSprint(InputAction.CallbackContext ctx)
     {
+        SprintEvent?.Invoke();
+    }
+
+    private void OnAim(InputAction.CallbackContext ctx)
+    {
         if (ctx.phase == InputActionPhase.Performed)
         {
-            SprintEvent?.Invoke();
+            AimEvent?.Invoke();
         }
         if (ctx.phase == InputActionPhase.Canceled)
         {
-            SprintCancelledEvent?.Invoke();
+            AimCancelledEvent?.Invoke();
         }
     }
 
