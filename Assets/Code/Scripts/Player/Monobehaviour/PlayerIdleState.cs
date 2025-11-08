@@ -8,8 +8,9 @@ namespace State_Machine
 
         public override void OnEnter()
         {
+            player.activeCam = CameraManager.Instance.activeCam;
             player.transform.LookAt(player.transform.position, player.lookDir);
-            Debug.Log("Enter Action Idle State");
+            Debug.Log("Enter Idle State");
         }
 
         public override void OnExit()

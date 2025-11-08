@@ -8,7 +8,7 @@ namespace State_Machine
 
         public override void OnEnter()
         {
-            Debug.Log("Enter Attack State");
+            EventBus<PlayerAimEvent>.Raise(new PlayerAimEvent());
             player.currentSpeed = player.playerAimSpeed;
         }
 
@@ -20,6 +20,7 @@ namespace State_Machine
 
         public override void OnExit()
         {
+            // EventBus<PlayerAimCancelEvent>.Raise(new PlayerAimCancelEvent());
             player.currentSpeed = player.playerWalkSpeed;
         }
     }

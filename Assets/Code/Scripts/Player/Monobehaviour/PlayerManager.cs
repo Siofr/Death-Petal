@@ -3,11 +3,14 @@ using UnityEngine;
 
 namespace State_Machine
 {
-    public class PlayerManager : MonoBehaviour
+    public struct PlayerAimEvent : IEvent { }
+    public struct PlayerAimCancelEvent : IEvent { }
+
+    public class PlayerManager : Singleton<PlayerManager>
     {
         CharacterController _cc;
         Animator _animator;
-        Camera _cam;
+        public Transform activeCam;
 
         public float playerWalkSpeed;
         public float playerSprintSpeed;
@@ -22,11 +25,14 @@ namespace State_Machine
 
         public StateMachine stateMachine;
 
-        private void Awake()
+        public EventBindings<PlayerAimEvent> playerAimEventListener;
+        public EventBindings<PlayerAimCancelEvent> playerAimCancelEventListener;
+
+        protected override void Awake()
         {
+            base.Awake();
             _cc = GetComponent<CharacterController>();
             _animator = GetComponent<Animator>();
-            _cam = Camera.main;
 
             currentSpeed = playerWalkSpeed;
 
@@ -37,6 +43,9 @@ namespace State_Machine
         {
             InputHandler.AimEvent += OnAim;
             InputHandler.SprintEvent += OnSprint;
+
+            EventBus<PlayerAimEvent>.Register(playerAimEventListener);
+            EventBus<PlayerAimCancelEvent>.Register(playerAimCancelEventListener);
         }
 
         private void OnDisable()
@@ -120,14 +129,13 @@ namespace State_Machine
                 return hit.normal;
             }
 
-            Debug.Log("No collider hit");
             return Vector3.negativeInfinity;
         }
 
         public void HandleMovement()
         {
-            Vector3 camForward = Vector3.ProjectOnPlane(_cam.transform.forward, GetPlaneNormal());
-            Vector3 camRight = Vector3.ProjectOnPlane(_cam.transform.right, GetPlaneNormal());
+            Vector3 camForward = Vector3.ProjectOnPlane(activeCam.transform.forward, GetPlaneNormal());
+            Vector3 camRight = Vector3.ProjectOnPlane(activeCam.transform.right, GetPlaneNormal());
 
             Vector3 dir = camForward * _movement.z + camRight * _movement.x;
             lookDir = dir;
@@ -139,8 +147,8 @@ namespace State_Machine
 
         public void HandleLook()
         {
-            Vector3 camForward = Vector3.ProjectOnPlane(_cam.transform.forward, GetPlaneNormal());
-            Vector3 camRight = Vector3.ProjectOnPlane(_cam.transform.right, GetPlaneNormal());
+            Vector3 camForward = Vector3.ProjectOnPlane(activeCam.transform.forward, GetPlaneNormal());
+            Vector3 camRight = Vector3.ProjectOnPlane(activeCam.transform.right, GetPlaneNormal());
 
             Vector3 dir = camForward * _aim.y + camRight * _aim.x;
             lookDir = dir;
