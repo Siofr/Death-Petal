@@ -18,16 +18,16 @@ public class EnemyBase : MonoBehaviour, IEntity
     public EnemyConfig_SO enemyData;
     
     //[Header("EnemyFields")]
-    private Bounds _enemyAreaBounds;
-
     //Non-Serializable Fields
     private NavMeshAgent _nmAgent;
     private StateMachine _enemyStateMachine;
+    private Bounds _enemyAreaBounds;
+    private List<Weakness> _weaknesses = new List<Weakness>();
     
     public Transform target;
     
     //Properties
-    public List<Weakness> Weaknesses { get; } = new List<Weakness>();
+    public List<Weakness> Weaknesses => _weaknesses;
 
     //Events
     private EventBindings<RoomPlayerEnterEvent> _playerRoomEnterEventListener;

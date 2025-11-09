@@ -4,8 +4,6 @@ using UnityEngine;
 public class EnemyAttackState : EnemyBaseState
 {
     public EnemyAttackState(EnemyBase enemyController) : base(enemyController) { }
-    
-    private Coroutine _damageRoutine = null;
 
     private IEnumerator DealDamage(float attackSpeed)
     {
@@ -13,21 +11,28 @@ public class EnemyAttackState : EnemyBaseState
         
         enemyController.target.TryGetComponent(out playerEntity);
         
-        while (_damageRoutine != null && playerEntity.Weaknesses.Count > 0)
+        while (playerEntity.Weaknesses.Count > 0 && enemyController.target != null)
         {
             playerEntity.OnShot(playerEntity.Weaknesses[0]);
+            Debug.Log("Damage Dealt to Player");
+            
             yield return new WaitForSeconds(attackSpeed);
         }
+        
+        Debug.Log("Attack Phase Over");
     }
     
     public override void OnEnter()
     {
         Debug.Log("Entering Attack State");
         enemyController.SetTarget(null);
+
+        enemyController.StartCoroutine(DealDamage(enemyController.enemyData.attackSpeed));
     }
 
     public override void OnExit()
     {
-        _damageRoutine = null;
+        enemyController.StopAllCoroutines();
+        Debug.Log("Exiting Attack State");
     }
 }

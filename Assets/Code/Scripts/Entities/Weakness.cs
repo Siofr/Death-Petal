@@ -4,10 +4,10 @@ using UnityEngine;
 [Flags]
 public enum WeakTypes {
     NONE = 0,
-    RED = 2,
-    BLUE = 4,
-    GREEN = 8,
-    PLAYER = Int32.MaxValue
+    PLAYER = 2,
+    RED = 4,
+    BLUE = 8,
+    GREEN = 16
 }
 
 [RequireComponent(typeof(SphereCollider))]
