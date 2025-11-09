@@ -21,14 +21,14 @@ public class EnemyBase : MonoBehaviour, IEntity
     
     [Header("EnemyFields")]
     [SerializeReference] private Bounds _enemyAreaBounds;
-    [SerializeField] private List<IWeakness> _weaknesses = new List<IWeakness>();
+    [SerializeField] private List<Weakness> _weaknesses = new List<Weakness>();
 
     //Non-Serializable Fields
     private NavMeshAgent _nmAgent;
     private StateMachine _enemyStateMachine;
     
     //Properties
-    public List<IWeakness> Weaknesses
+    public List<Weakness> Weaknesses
     {
         get =>  _weaknesses;
     }
@@ -66,12 +66,15 @@ public class EnemyBase : MonoBehaviour, IEntity
     
     private void OnDeath(EnemyDeathEvent context)
     {
+        
     }
     
-    public void OnDamage(IWeakness damageType)
+    public void OnDamage(Weakness damageType)
     {
-        if(Weaknesses.Contains(damageType))
-            Weaknesses.Remove(damageType);
+        if (!Weaknesses.Contains(damageType))
+            return;
+        
+        Weaknesses.Remove(damageType);
         
         if(Weaknesses.Count == 0)
             EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));

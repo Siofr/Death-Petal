@@ -4,8 +4,8 @@ using UnityEngine;
 
 public interface IEntity
 {
-    public List<IWeakness> Weaknesses { get; }
-    public void OnDamage(IWeakness damageType) { }
+    public List<Weakness> Weaknesses { get; }
+    public void OnDamage(Weakness damageType) { }
 }
 
 
