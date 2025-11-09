@@ -15,61 +15,113 @@ struct EnemyDeathEvent: IEvent
 public class EnemyBase : MonoBehaviour, IEntity
 {
     [Header("Enemy Configuration")]
-    [SerializeField] private EnemyConfigData_SO _enemyData;
-    public EnemyMovementStrategy_SO enemyMovementStrategy;
-    public EnemyAttackStrategy_SO enemyAttackStrategy;
+    public EnemyConfig_SO enemyData;
     
-    [Header("EnemyFields")]
-    [SerializeReference] private Bounds _enemyAreaBounds;
-    [SerializeField] private List<Weakness> _weaknesses = new List<Weakness>();
+    //[Header("EnemyFields")]
+    private Bounds _enemyAreaBounds;
 
     //Non-Serializable Fields
     private NavMeshAgent _nmAgent;
     private StateMachine _enemyStateMachine;
     
-    //Properties
-    public List<Weakness> Weaknesses
-    {
-        get =>  _weaknesses;
-    }
+    public Transform target;
     
+    //Properties
+    public List<Weakness> Weaknesses { get; } = new List<Weakness>();
+
     //Events
-    private EventBindings<EnemyDeathEvent> _enemyDeathEventListener;
+    private EventBindings<RoomPlayerEnterEvent> _playerRoomEnterEventListener;
+    private EventBindings<RoomPlayerExitEvent> _playerRoomExitEventListener;
     
     private void Awake()
     {
         Initialise();
+    }
+
+    private void Initialise()
+    {
+        //Field Init
+        _nmAgent = GetComponent<NavMeshAgent>();
+        _enemyStateMachine = new StateMachine();
+
+        _nmAgent.speed = enemyData.movementSpeed;
+
+        _enemyAreaBounds = GetComponentInParent<Room>().Bounds;
+        
+        //StateMachine Init
+        var idleState = new EnemyIdleState(this);
+        var chaseState = new EnemyChaseState(this);
+        var attackState = new EnemyAttackState(this);
+        
+        _enemyStateMachine.AddTransition(idleState, chaseState, new FuncPredicate( ()=> target!= null ));
+        _enemyStateMachine.AddTransition(chaseState, idleState, new FuncPredicate( () => target == null ));
+        
+        _enemyStateMachine.AddTransition(chaseState, attackState, new FuncPredicate( ()=>InAttackRange() ));
+        _enemyStateMachine.AddTransition(attackState, idleState, new FuncPredicate( ()=>!InAttackRange() ));
+        
+        _enemyStateMachine.SetState(idleState);
+        
+        //Event Init
+        _playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
+        _playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
+        
+        EventBus<RoomPlayerEnterEvent>.Register(_playerRoomEnterEventListener);
+        EventBus<RoomPlayerExitEvent>.Register(_playerRoomExitEventListener);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<RoomPlayerEnterEvent>.Unregister(_playerRoomEnterEventListener);
+        EventBus<RoomPlayerExitEvent>.Unregister(_playerRoomExitEventListener);
     }
     
     private void Update()
     {
         _enemyStateMachine.Update();
     }
-
-    private void Initialise()
+    
+    private bool InAttackRange()
     {
-        _nmAgent = GetComponent<NavMeshAgent>();
-        _enemyStateMachine = new();
-        
-        //StateMachine Init
-        var idleState = new EnemyIdleState(this);
-        var attackState = new EnemyAttackState(this);
-        
-        //Event Init
-        _enemyDeathEventListener = new EventBindings<EnemyDeathEvent>(OnDeath);
+        if(target == null) return false;
+        return Vector3.Distance(target.position, transform.position) < enemyData.attackRange;
     }
 
-    public void HandleMovement()
-    {
-        enemyMovementStrategy.Movement();
-    }
-    
-    private void OnDeath(EnemyDeathEvent context)
+    public void SetTarget(Transform target)
     {
         
+        if (target == null)
+        {
+            _nmAgent.ResetPath();
+            return;
+        }
+        
+        _nmAgent.destination = target.position;
     }
     
-    public void OnDamage(Weakness damageType)
+    private void OnPlayerRoomEnter(RoomPlayerEnterEvent context)
+    {
+        Debug.Log("Is Entering");
+        
+        var roomBounds = context.room.Bounds;
+        
+        if (_enemyAreaBounds != roomBounds) return;
+        
+        var playerTransform =  context.playerTransform;
+        target = playerTransform;
+    }
+
+    private void OnPlayerRoomExit(RoomPlayerExitEvent context)
+    {
+        Debug.Log("Is Exiting");
+        
+        var roomBounds = context.room.Bounds;
+        
+        if(_enemyAreaBounds != roomBounds) return;
+        
+        target = null;
+    }
+    
+    public void OnShot(Weakness damageType)
     {
         if (!Weaknesses.Contains(damageType))
             return;

@@ -3,10 +3,10 @@ using UnityEngine;
 
 [Flags]
 public enum WeakTypes {
-    NONE,
-    RED,
-    BLUE,
-    GREEN,
+    NONE = 0,
+    RED = 2,
+    BLUE = 4,
+    GREEN = 8,
     PLAYER = Int32.MaxValue
 }
 
@@ -23,30 +23,32 @@ public class Weakness : MonoBehaviour
     
     private void Awake()
     {
-        _collider ??= GetComponent<SphereCollider>();
-        _parentEntity ??= GetComponentInParent<IEntity>();
+        _collider = GetComponent<SphereCollider>();
+        _parentEntity = GetComponentInParent<IEntity>();
     }
 
-    private void OnDrawGizmos()
+    private void Start()
     {
-        Color gizmoColor = Color.clear;
-        
-        switch (_weaknessType)
+        if(_parentEntity != null && !_parentEntity.Weaknesses.Contains(this)) _parentEntity.Weaknesses.Add(this);
+    }
+
+    /*private void OnDrawGizmos()
+    {
+        var gizmoColor = _weaknessType switch
         {
-            case WeakTypes.RED:
-                gizmoColor = Color.red;
-                break;
-            case WeakTypes.BLUE:
-                gizmoColor = Color.blue;
-                break;
-            case WeakTypes.GREEN:
-                gizmoColor = Color.green;
-                break;
-        }   
-        
+            WeakTypes.RED => Color.red,
+            WeakTypes.BLUE => Color.blue,
+            WeakTypes.GREEN => Color.green,
+            WeakTypes.RED | WeakTypes.BLUE => Color.purple,
+            WeakTypes.RED | WeakTypes.GREEN => Color.yellow,
+            WeakTypes.BLUE | WeakTypes.GREEN => Color.cyan,
+            WeakTypes.RED | WeakTypes.BLUE | WeakTypes.GREEN => Color.white,
+            _ => Color.clear
+        };
+
         Gizmos.color = gizmoColor;
 
         if(_collider !=null)
-            Gizmos.DrawWireSphere(transform.position, _collider.radius);
-    }
+            Gizmos.DrawSphere(transform.position, _collider.radius);
+    }*/
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IEntity
 {
     public List<Weakness> Weaknesses { get; }
-    public void OnDamage(Weakness damageType) { }
+    public void OnShot(Weakness damageType) { }
 }
 
 
