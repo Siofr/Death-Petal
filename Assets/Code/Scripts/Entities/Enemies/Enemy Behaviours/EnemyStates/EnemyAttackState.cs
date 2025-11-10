@@ -13,7 +13,7 @@ public class EnemyAttackState : EnemyBaseState
         
         while (playerEntity.Weaknesses.Count > 0 && enemyController.target != null)
         {
-            playerEntity.OnShot(playerEntity.Weaknesses[0]);
+            playerEntity.OnShot(playerEntity.Weaknesses[0], WeakTypes.PLAYER);
             Debug.Log("Damage Dealt to Player");
             
             yield return new WaitForSeconds(attackSpeed);
