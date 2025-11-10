@@ -101,12 +101,10 @@ public class EnemyBase : MonoBehaviour, IEntity
     private void OnPlayerRoomEnter(RoomPlayerEnterEvent context)
     {
         Debug.Log("Is Entering");
-        
-        var roomBounds = context.room.Bounds;
-        
-        if (_enemyAreaBounds != roomBounds) return;
-        
         var playerTransform =  context.playerTransform;
+        
+        if (!_enemyAreaBounds.Contains(playerTransform.position)) return;
+        
         target = playerTransform;
     }
 

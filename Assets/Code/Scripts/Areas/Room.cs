@@ -5,12 +5,10 @@ using UnityEngine;
 public struct RoomPlayerEnterEvent: IEvent
 {
     public Transform playerTransform;
-    public Room room;
     
     public RoomPlayerEnterEvent(Transform playerTransform, Room room)
     {
         this.playerTransform = playerTransform;
-        this.room = room;
     }
 }
 
