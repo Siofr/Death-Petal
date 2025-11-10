@@ -24,19 +24,35 @@ public class Door : PuzzleOutputBase
     private IEnumerator OpenDoorRoutine(float angle, float speed, bool isOpening)
     {
         var goalAngle = isOpening ? _openAngle : -_openAngle;
+        var tempAngle = 0;
 
-        yield return null;
+        var condition = tempAngle < angle;
+        if (!isOpening) condition = tempAngle > angle;
+
+        while (condition)
+        {
+            var angleStep = Time.deltaTime / speed;
+
+            transform.RotateAround(_pivotPoint.position, Vector3.up, angleStep);
+
+            yield return null;
+        }
+
+        _doorOpenCalls.Dequeue();
+        
+        if(_doorOpenCalls.Count > 0)
+            _doorOpenCalls.Peek().Invoke();
     }
 
-    private void OpenDoor(float angle, float speed, bool isOpening)
+    public void OpenDoor(bool isOpening)
     {
-        StartCoroutine(OpenDoorRoutine(angle, speed, isOpening));
+        StartCoroutine(OpenDoorRoutine(_openAngle, _openSpeed, isOpening));
     }
     
     private void AddOrCallDoorOpen(bool isOpening)
     {
         Action openDoorAction = () => { };
-        openDoorAction += () => { OpenDoor(_openAngle, _openSpeed, isOpening); };
+        openDoorAction += () => { OpenDoor(isOpening); };
         
         if (_doorOpenCalls.Count < 1)
         {
