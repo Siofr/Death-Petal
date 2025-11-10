@@ -1,25 +1,38 @@
 using State_Machine;
 using UnityEngine;
 
+public struct ActivateCircleEvent : IEvent { }
+
 public class UIPlayerCircle : MonoBehaviour
 {
+    private Transform UICircle;
+    private Transform playerTransform;
+
+    public EventBindings<ActivateCircleEvent> activateCircleEventListener;
+
     private void Awake()
     {
-        PlayerManager.Instance.playerAimEventListener = new EventBindings<PlayerAimEvent>(OnPlayerAim);
-        PlayerManager.Instance.playerAimCancelEventListener = new EventBindings<PlayerAimCancelEvent>(OnPlayerAimExit);
+        activateCircleEventListener = new EventBindings<ActivateCircleEvent>(OnPlayerAim);
+    }
+
+    private void OnEnable()
+    {
+        EventBus<ActivateCircleEvent>.Register(activateCircleEventListener);
+    }
+
+    private void Start()
+    {
+        UICircle = transform.GetChild(0);
+        playerTransform = PlayerManager.Instance.transform;
     }
     void Update()
     {
-        transform.position = PlayerManager.Instance.transform.position;
+        transform.position = playerTransform.position;
+        transform.rotation = playerTransform.rotation;
     }
 
-    void OnPlayerAim()
+    private void OnPlayerAim()
     {
-        transform.gameObject.SetActive(true);
-    }
-
-    void OnPlayerAimExit()
-    {
-        transform.gameObject.SetActive(false);
+        UICircle.gameObject.SetActive(!UICircle.gameObject.activeInHierarchy);
     }
 }

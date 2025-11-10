@@ -3,14 +3,12 @@ using UnityEngine;
 
 namespace State_Machine
 {
-    public struct PlayerAimEvent : IEvent { }
-    public struct PlayerAimCancelEvent : IEvent { }
-
     public class PlayerManager : Singleton<PlayerManager>
     {
         CharacterController _cc;
         Animator _animator;
         public Transform activeCam;
+        public BulletSO bulletType;
 
         public float playerWalkSpeed;
         public float playerSprintSpeed;
@@ -22,11 +20,12 @@ namespace State_Machine
 
         private bool _isAiming;
         private bool _isSprinting;
+        private bool _isReloading;
+        private Transform _activeTarget;
 
         public StateMachine stateMachine;
 
-        public EventBindings<PlayerAimEvent> playerAimEventListener;
-        public EventBindings<PlayerAimCancelEvent> playerAimCancelEventListener;
+        private PlayerReloadState _reloadState;
 
         protected override void Awake()
         {
@@ -44,14 +43,17 @@ namespace State_Machine
             InputHandler.AimEvent += OnAim;
             InputHandler.SprintEvent += OnSprint;
 
-            EventBus<PlayerAimEvent>.Register(playerAimEventListener);
-            EventBus<PlayerAimCancelEvent>.Register(playerAimCancelEventListener);
+            InputHandler.LongReloadEvent += OnReload;
+
+            InputHandler.HotkeyEvent += _reloadState.AddBullet;
         }
 
         private void OnDisable()
         {
             InputHandler.AimEvent -= OnAim;
             InputHandler.SprintEvent -= OnSprint;
+
+            InputHandler.LongReloadEvent -= OnReload;
         }
 
         void SetupStateMachine()
@@ -62,6 +64,7 @@ namespace State_Machine
             var moveState = new PlayerMoveState(this, _animator);
             var idleState = new PlayerIdleState(this, _animator);
             var sprintState = new PlayerSprintState(this, _animator);
+            _reloadState = new PlayerReloadState(this, _animator);
 
             At(aimState, idleState, new FuncPredicate(() => _aim == Vector2.zero));
 
@@ -75,6 +78,9 @@ namespace State_Machine
             At(sprintState, moveState, new FuncPredicate(() => !_isSprinting));
             At(sprintState, idleState, new FuncPredicate(() => _movement == Vector3.zero));
             At(sprintState, aimState, new FuncPredicate(() => _aim != Vector2.zero));
+
+            Any(_reloadState, new FuncPredicate(() => _isReloading));
+            At(_reloadState, idleState, new FuncPredicate(() => !_isReloading));
 
             stateMachine.SetState(idleState);
         }
@@ -106,6 +112,16 @@ namespace State_Machine
                 return;
             }
             _isAiming = false;
+        }
+
+        void OnReload()
+        {
+            if (!_isReloading)
+            {
+                _isReloading = true;
+                return;
+            }
+            _isReloading = false;
         }
 
         void OnSprint()
@@ -154,6 +170,23 @@ namespace State_Machine
             lookDir = dir;
 
             transform.LookAt(transform.position + lookDir.normalized);
+        }
+
+        public void HandleAim()
+        {
+            RaycastHit hit;
+
+            if (Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit, 30))
+            {
+                if (hit.transform.tag == "Enemy")
+                {
+                    _activeTarget = hit.transform;
+                    EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(hit.transform));
+                    return;
+                }
+            }
+
+            EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
         }
     }
 }

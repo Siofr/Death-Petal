@@ -20,6 +20,16 @@ namespace State_Machine
             this.animator = animator;
         }
 
+        protected virtual void OnEnable()
+        {
+
+        }
+
+        protected virtual void OnDisable()
+        {
+
+        }
+
         public virtual void OnEnter()
         {
 

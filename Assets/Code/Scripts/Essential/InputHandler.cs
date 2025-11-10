@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class InputHandler : MonoBehaviour
 {
@@ -21,7 +22,8 @@ public class InputHandler : MonoBehaviour
     public static event Action AttackEvent;
 
     public static event Action ReloadEvent;
-    public static event Action ReloadCancelledEvent;
+    public static event Action LongReloadEvent;
+    public static event Action LongReloadCancelledEvent;
 
     public static event Action AimEvent;
     public static event Action AimCancelledEvent;
@@ -120,13 +122,13 @@ public class InputHandler : MonoBehaviour
 
     private void OnReload(InputAction.CallbackContext ctx)
     {
-        if (ctx.phase == InputActionPhase.Performed)
+        if (ctx.phase == InputActionPhase.Performed && ctx.interaction is HoldInteraction)
         {
-            ReloadEvent?.Invoke();
+            LongReloadEvent?.Invoke();
         }
         if (ctx.phase == InputActionPhase.Canceled)
         {
-            ReloadCancelledEvent?.Invoke();
+            LongReloadCancelledEvent?.Invoke();
         }
     }
 

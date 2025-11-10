@@ -8,7 +8,7 @@ namespace State_Machine
 
         public override void OnEnter()
         {
-            EventBus<PlayerAimEvent>.Raise(new PlayerAimEvent());
+            EventBus<ActivateCircleEvent>.Raise(new ActivateCircleEvent());
             player.currentSpeed = player.playerAimSpeed;
         }
 
@@ -16,11 +16,13 @@ namespace State_Machine
         {
             player.HandleMovement();
             player.HandleLook();
+            player.HandleAim();
         }
 
         public override void OnExit()
         {
-            // EventBus<PlayerAimCancelEvent>.Raise(new PlayerAimCancelEvent());
+            EventBus<ActivateCircleEvent>.Raise(new ActivateCircleEvent());
+            EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
             player.currentSpeed = player.playerWalkSpeed;
         }
     }
