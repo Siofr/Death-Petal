@@ -39,7 +39,7 @@ namespace State_Machine
             }
             if (axis.y < 0)
             {
-                EventBus<RemoveBullet>.Raise(new RemoveBullet());
+                EventBus<RemoveBulletEvent>.Raise(new RemoveBulletEvent());
             }
         }
     }

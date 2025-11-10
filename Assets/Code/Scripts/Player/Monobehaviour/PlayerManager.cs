@@ -9,6 +9,7 @@ namespace State_Machine
         Animator _animator;
         public Transform activeCam;
         public BulletSO bulletType;
+        private Camera _mainCam;
 
         public float playerWalkSpeed;
         public float playerSprintSpeed;
@@ -32,6 +33,7 @@ namespace State_Machine
             base.Awake();
             _cc = GetComponent<CharacterController>();
             _animator = GetComponent<Animator>();
+            _mainCam = Camera.main;
 
             currentSpeed = playerWalkSpeed;
 
@@ -163,8 +165,8 @@ namespace State_Machine
 
         public void HandleLook()
         {
-            Vector3 camForward = Vector3.ProjectOnPlane(activeCam.transform.forward, GetPlaneNormal());
-            Vector3 camRight = Vector3.ProjectOnPlane(activeCam.transform.right, GetPlaneNormal());
+            Vector3 camForward = Vector3.ProjectOnPlane(_mainCam.transform.forward, GetPlaneNormal());
+            Vector3 camRight = Vector3.ProjectOnPlane(_mainCam.transform.right, GetPlaneNormal());
 
             Vector3 dir = camForward * _aim.y + camRight * _aim.x;
             lookDir = dir;

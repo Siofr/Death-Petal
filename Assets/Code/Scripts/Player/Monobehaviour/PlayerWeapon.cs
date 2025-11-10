@@ -1,44 +1,31 @@
 using UnityEngine;
 
-public struct EndLongReload : IEvent { }
-public struct StartLongReload : IEvent { }
-public struct AddBulletEvent : IEvent 
-{
-    public BulletSO bulletType;
-
-    public AddBulletEvent(BulletSO newBullet)
-    {
-        this.bulletType = newBullet;
-    }
-}
-public struct RemoveBullet : IEvent { }
-
 public abstract class PlayerWeapon : MonoBehaviour
 {
     public abstract BulletSO[] currentBarrel { get; set; }
     public abstract BulletSO[] lastBarrel { get; set; }
     public abstract int currentIndex { get; set; }
-    public abstract int maxBullets { get; set; }
+    public PlayerWeaponSO weaponData;
 
     public EventBindings<AddBulletEvent> addBulletListener;
-    public EventBindings<RemoveBullet> removeBulletListener;
+    public EventBindings<RemoveBulletEvent> removeBulletListener;
 
 
     protected void Start()
     {
-        currentBarrel = new BulletSO[maxBullets];
-        lastBarrel = new BulletSO[maxBullets];
+        currentBarrel = new BulletSO[weaponData.maxBullets];
+        lastBarrel = new BulletSO[weaponData.maxBullets];
     }
 
     protected void Awake()
     {
         addBulletListener = new EventBindings<AddBulletEvent>(AddBullet);
-        removeBulletListener = new EventBindings<RemoveBullet>(RemoveBullet);
+        removeBulletListener = new EventBindings<RemoveBulletEvent>(RemoveBullet);
     }
 
     protected void OnEnable()
     {
-        
+        EventBus<AddBulletEvent>.Register(addBulletListener);
     }
 
     public abstract void Shoot(Transform activeTarget);

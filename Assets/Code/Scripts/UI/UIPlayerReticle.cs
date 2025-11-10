@@ -1,16 +1,6 @@
 using State_Machine;
 using UnityEngine;
 
-public struct ActiveTargetEvent : IEvent
-{
-    public Transform activeTarget;
-
-    public ActiveTargetEvent(Transform newTarget)
-    {
-        activeTarget = newTarget;
-    }
-}
-
 public class UIPlayerReticle : MonoBehaviour
 {
     private Transform _reticle;
