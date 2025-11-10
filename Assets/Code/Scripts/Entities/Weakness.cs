@@ -20,6 +20,11 @@ public class Weakness : MonoBehaviour
     
     public WeakTypes WeakType => _weaknessType;
     public IEntity ParentEntity => _parentEntity;
+
+    public void RemoveWeakType(WeakTypes weakType)
+    {
+        _weaknessType &= ~weakType;
+    }
     
     private void Awake()
     {

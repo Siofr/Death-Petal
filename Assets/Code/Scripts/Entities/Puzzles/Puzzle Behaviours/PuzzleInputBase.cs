@@ -20,7 +20,7 @@ public abstract class PuzzleInputBase : MonoBehaviour, IPuzzleInput
         _outputTransform.TryGetComponent(out _puzzleOutput);
     }
 
-    public abstract void OnShot(Weakness damageType);
+    public abstract void OnShot(Weakness weakness, WeakTypes damageType);
 
 
     public bool CompletionCondition(Func<bool> condition, bool reset)

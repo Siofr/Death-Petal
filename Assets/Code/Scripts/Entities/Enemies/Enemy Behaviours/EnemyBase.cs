@@ -119,12 +119,19 @@ public class EnemyBase : MonoBehaviour, IEntity
         target = null;
     }
     
-    public void OnShot(Weakness damageType)
+    public void OnShot( Weakness weakness, WeakTypes damageType)
     {
-        if (!Weaknesses.Contains(damageType))
+        if (!Weaknesses.Contains(weakness))
             return;
         
-        Weaknesses.Remove(damageType);
+        if(weakness.WeakType.HasFlag(damageType))
+            weakness.RemoveWeakType(damageType);
+        
+        if(weakness.WeakType == WeakTypes.NONE)
+        {
+            Weaknesses.Remove(weakness);
+            Destroy(weakness.gameObject);
+        }
         
         if(Weaknesses.Count == 0)
             EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));

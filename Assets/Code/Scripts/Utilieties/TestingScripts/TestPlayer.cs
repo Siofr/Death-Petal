@@ -7,12 +7,15 @@ public class TestPlayer : MonoBehaviour, IEntity
 
     public List<Weakness> Weaknesses => _weaknesses;
     
-    public void OnShot(Weakness weakness)
+    public void OnShot(Weakness weakness, WeakTypes damageType)
     {
         if (!Weaknesses.Contains(weakness)) return;
-        
-        Weaknesses.Remove(weakness);
-        Destroy(weakness.gameObject);
+
+        if (damageType == WeakTypes.PLAYER)
+        {
+            Weaknesses.Remove(weakness);
+            Destroy(weakness.gameObject);   
+        }
         
         if (Weaknesses.Count < 1)
         {
