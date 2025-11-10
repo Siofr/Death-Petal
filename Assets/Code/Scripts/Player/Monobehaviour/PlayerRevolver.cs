@@ -6,11 +6,11 @@ public class PlayerRevolver : PlayerWeapon
     public override BulletSO[] lastBarrel { get; set; }
     public override int currentIndex { get; set; }
 
-    public override void Shoot(Transform activeTarget)
+    public override void Shoot(ShootEvent ctx)
     {
         if (currentIndex < 0) return;
 
-        activeTarget.gameObject.SetActive(false);
+        // ctx.weakness.ParentEntity.OnShot(currentBarrel[currentIndex].weakness);
         currentIndex -= 1;
     }
 

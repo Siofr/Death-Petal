@@ -22,11 +22,12 @@ namespace State_Machine
         private bool _isAiming;
         private bool _isSprinting;
         private bool _isReloading;
-        private Transform _activeTarget;
+        public Transform activeTarget;
 
         public StateMachine stateMachine;
 
         private PlayerReloadState _reloadState;
+        private PlayerAimState _aimState;
 
         protected override void Awake()
         {
@@ -44,42 +45,42 @@ namespace State_Machine
         {
             InputHandler.AimEvent += OnAim;
             InputHandler.SprintEvent += OnSprint;
-
             InputHandler.LongReloadEvent += OnReload;
-
             InputHandler.HotkeyEvent += _reloadState.AddBullet;
+            InputHandler.AttackEvent += _aimState.HandleShoot;
         }
 
         private void OnDisable()
         {
             InputHandler.AimEvent -= OnAim;
             InputHandler.SprintEvent -= OnSprint;
-
             InputHandler.LongReloadEvent -= OnReload;
+            InputHandler.HotkeyEvent -= _reloadState.AddBullet;
+            InputHandler.AttackEvent -= _aimState.HandleShoot;
         }
 
         void SetupStateMachine()
         {
             stateMachine = new StateMachine();
 
-            var aimState = new PlayerAimState(this, _animator);
+            _aimState = new PlayerAimState(this, _animator);
             var moveState = new PlayerMoveState(this, _animator);
             var idleState = new PlayerIdleState(this, _animator);
             var sprintState = new PlayerSprintState(this, _animator);
             _reloadState = new PlayerReloadState(this, _animator);
 
-            At(aimState, idleState, new FuncPredicate(() => _aim == Vector2.zero));
+            At(_aimState, idleState, new FuncPredicate(() => _aim == Vector2.zero));
 
-            At(idleState, aimState, new FuncPredicate(() => _aim != Vector2.zero));
+            At(idleState, _aimState, new FuncPredicate(() => _aim != Vector2.zero));
             At(idleState, moveState, new FuncPredicate(() => _movement != Vector3.zero));
 
             At(moveState, idleState, new FuncPredicate(() => _movement == Vector3.zero));
             At(moveState, sprintState, new FuncPredicate(() => _isSprinting));
-            At(moveState, aimState, new FuncPredicate(() => _aim != Vector2.zero));
+            At(moveState, _aimState, new FuncPredicate(() => _aim != Vector2.zero));
 
             At(sprintState, moveState, new FuncPredicate(() => !_isSprinting));
             At(sprintState, idleState, new FuncPredicate(() => _movement == Vector3.zero));
-            At(sprintState, aimState, new FuncPredicate(() => _aim != Vector2.zero));
+            At(sprintState, _aimState, new FuncPredicate(() => _aim != Vector2.zero));
 
             Any(_reloadState, new FuncPredicate(() => _isReloading));
             At(_reloadState, idleState, new FuncPredicate(() => !_isReloading));
@@ -177,12 +178,13 @@ namespace State_Machine
         public void HandleAim()
         {
             RaycastHit hit;
+            Weakness weakness;
 
             if (Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit, 30))
             {
-                if (hit.transform.tag == "Enemy")
+                if (hit.transform.TryGetComponent<Weakness>(out weakness))
                 {
-                    _activeTarget = hit.transform;
+                    activeTarget = hit.transform;
                     EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(hit.transform));
                     return;
                 }

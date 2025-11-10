@@ -5,4 +5,5 @@ public class PlayerWeaponSO : ScriptableObject
 {
     public string gunName;
     public int maxBullets;
+    public BulletSO[] bulletTypes;
 }

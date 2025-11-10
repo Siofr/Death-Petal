@@ -9,6 +9,7 @@ public abstract class PlayerWeapon : MonoBehaviour
 
     public EventBindings<AddBulletEvent> addBulletListener;
     public EventBindings<RemoveBulletEvent> removeBulletListener;
+    public EventBindings<ShootEvent> shootListener;
 
 
     protected void Start()
@@ -21,6 +22,7 @@ public abstract class PlayerWeapon : MonoBehaviour
     {
         addBulletListener = new EventBindings<AddBulletEvent>(AddBullet);
         removeBulletListener = new EventBindings<RemoveBulletEvent>(RemoveBullet);
+        shootListener = new EventBindings<ShootEvent>(Shoot);
     }
 
     protected void OnEnable()
@@ -28,7 +30,7 @@ public abstract class PlayerWeapon : MonoBehaviour
         EventBus<AddBulletEvent>.Register(addBulletListener);
     }
 
-    public abstract void Shoot(Transform activeTarget);
+    public abstract void Shoot(ShootEvent ctx);
 
     public abstract void QuickReload();
 

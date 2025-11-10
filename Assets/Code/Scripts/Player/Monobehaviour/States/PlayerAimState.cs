@@ -8,7 +8,7 @@ namespace State_Machine
 
         public override void OnEnter()
         {
-            EventBus<ActivateCircleEvent>.Raise(new ActivateCircleEvent());
+            EventBus<AimEvent>.Raise(new AimEvent());
             player.currentSpeed = player.playerAimSpeed;
         }
 
@@ -21,9 +21,22 @@ namespace State_Machine
 
         public override void OnExit()
         {
-            EventBus<ActivateCircleEvent>.Raise(new ActivateCircleEvent());
+            EventBus<AimEvent>.Raise(new AimEvent());
             EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
             player.currentSpeed = player.playerWalkSpeed;
+        }
+
+        public void HandleShoot()
+        {
+            if (PlayerManager.Instance.activeTarget == null) { OnMiss(); }
+
+            Weakness weakness = PlayerManager.Instance.activeTarget.GetComponent<Weakness>();
+            EventBus<ShootEvent>.Raise(new ShootEvent(weakness));
+        }
+
+        public void OnMiss()
+        {
+            EventBus<ShootEvent>.Raise(new ShootEvent(null));
         }
     }
 }

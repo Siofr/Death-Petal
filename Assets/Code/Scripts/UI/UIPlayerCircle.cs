@@ -1,23 +1,21 @@
 using State_Machine;
 using UnityEngine;
 
-public struct ActivateCircleEvent : IEvent { }
-
 public class UIPlayerCircle : MonoBehaviour
 {
     private Transform UICircle;
     private Transform playerTransform;
 
-    public EventBindings<ActivateCircleEvent> activateCircleEventListener;
+    public EventBindings<AimEvent> activateCircleEventListener;
 
     private void Awake()
     {
-        activateCircleEventListener = new EventBindings<ActivateCircleEvent>(OnPlayerAim);
+        activateCircleEventListener = new EventBindings<AimEvent>(OnPlayerAim);
     }
 
     private void OnEnable()
     {
-        EventBus<ActivateCircleEvent>.Register(activateCircleEventListener);
+        EventBus<AimEvent>.Register(activateCircleEventListener);
     }
 
     private void Start()
