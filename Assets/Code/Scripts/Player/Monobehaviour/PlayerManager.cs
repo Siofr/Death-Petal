@@ -1,4 +1,5 @@
 using State_Machine;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 namespace State_Machine
@@ -28,6 +29,7 @@ namespace State_Machine
 
         private PlayerReloadState _reloadState;
         private PlayerAimState _aimState;
+        private PlayerIdleState _idleState;
 
         protected override void Awake()
         {
@@ -65,27 +67,30 @@ namespace State_Machine
 
             _aimState = new PlayerAimState(this, _animator);
             var moveState = new PlayerMoveState(this, _animator);
-            var idleState = new PlayerIdleState(this, _animator);
+            _idleState = new PlayerIdleState(this, _animator);
             var sprintState = new PlayerSprintState(this, _animator);
             _reloadState = new PlayerReloadState(this, _animator);
 
-            At(_aimState, idleState, new FuncPredicate(() => _aim == Vector2.zero));
+            At(_aimState, _idleState, new FuncPredicate(() => _aim == Vector2.zero));
 
-            At(idleState, _aimState, new FuncPredicate(() => _aim != Vector2.zero));
-            At(idleState, moveState, new FuncPredicate(() => _movement != Vector3.zero));
+            At(_idleState, _aimState, new FuncPredicate(() => _aim != Vector2.zero));
+            At(_idleState, moveState, new FuncPredicate(() => _movement != Vector3.zero));
 
-            At(moveState, idleState, new FuncPredicate(() => _movement == Vector3.zero));
+            At(moveState, _idleState, new FuncPredicate(() => _movement == Vector3.zero));
             At(moveState, sprintState, new FuncPredicate(() => _isSprinting));
             At(moveState, _aimState, new FuncPredicate(() => _aim != Vector2.zero));
 
             At(sprintState, moveState, new FuncPredicate(() => !_isSprinting));
-            At(sprintState, idleState, new FuncPredicate(() => _movement == Vector3.zero));
+            At(sprintState, _idleState, new FuncPredicate(() => _movement == Vector3.zero));
             At(sprintState, _aimState, new FuncPredicate(() => _aim != Vector2.zero));
 
             Any(_reloadState, new FuncPredicate(() => _isReloading));
-            At(_reloadState, idleState, new FuncPredicate(() => !_isReloading));
+            At(_reloadState, _idleState, new FuncPredicate(() => !_isReloading));
+        }
 
-            stateMachine.SetState(idleState);
+        private void Start()
+        {
+            stateMachine.SetState(_idleState);
         }
 
         void At(IState from, IState to, IPredicate condition) => stateMachine.AddTransition(from, to, condition);
