@@ -1,0 +1,48 @@
+using UnityEngine;
+
+[RequireComponent(typeof(Animator))]
+public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput
+{
+    //Base Fields
+    [SerializeField] private bool _isSolved;
+
+    [SerializeField] private Animator _animator;
+    
+    //Events
+    private EventBindings<PuzzleSolvedEvent> _puzzleSolvedEventListener;
+    private EventBindings<PuzzleResetEvent> _puzzleResetEventListener;
+    
+    //Properties
+    public bool IsSolved
+    {
+        get => _isSolved;
+        set => _isSolved = value;
+    }
+
+    public virtual void Awake()
+    {
+        _puzzleSolvedEventListener = new EventBindings<PuzzleSolvedEvent>(OnPuzzleSolved);
+        _puzzleResetEventListener = new EventBindings<PuzzleResetEvent>(OnPuzzleReset);
+        
+        EventBus<PuzzleSolvedEvent>.Register(_puzzleSolvedEventListener);
+        EventBus<PuzzleResetEvent>.Register(_puzzleResetEventListener);
+    }
+
+    public virtual void OnDisable()
+    {
+        EventBus<PuzzleSolvedEvent>.Unregister(_puzzleSolvedEventListener);
+        EventBus<PuzzleResetEvent>.Unregister(_puzzleResetEventListener);
+    }
+    
+    public virtual void OnPuzzleSolved(PuzzleSolvedEvent context)
+    {
+        _animator.SetBool(Animator.StringToHash("IsSolved"), true);
+        IsSolved = true;
+    }
+
+    public virtual void OnPuzzleReset(PuzzleResetEvent context)
+    {
+        _animator.SetBool("IsSolved", false);
+        IsSolved = false;
+    }
+}
