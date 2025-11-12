@@ -8,6 +8,7 @@ namespace State_Machine
 
         public override void OnEnter()
         {
+            animator.SetBool(AimHash, true);
             EventBus<AimEvent>.Raise(new AimEvent());
             player.currentSpeed = player.playerAimSpeed;
         }
@@ -21,6 +22,7 @@ namespace State_Machine
 
         public override void OnExit()
         {
+            animator.SetBool(AimHash, false);
             EventBus<AimEvent>.Raise(new AimEvent());
             EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
             player.currentSpeed = player.playerWalkSpeed;

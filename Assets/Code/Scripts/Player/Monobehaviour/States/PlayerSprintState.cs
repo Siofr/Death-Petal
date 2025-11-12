@@ -9,6 +9,7 @@ namespace State_Machine
         public override void OnEnter()
         {
             Debug.Log("Enter Sprint State");
+            animator.SetFloat(SpeedHash, 0.3f);
             player.currentSpeed = player.playerSprintSpeed;
         }
 

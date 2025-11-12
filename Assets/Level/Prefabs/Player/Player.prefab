@@ -122,7 +122,6 @@ GameObject:
   - component: {fileID: 1398715432841325139}
   - component: {fileID: 8543887564667533573}
   - component: {fileID: 2752580990786439412}
-  - component: {fileID: 3628458578733003269}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -183,39 +182,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2963cfd6814ef264397f1f333289b529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
+  _animator: {fileID: 0}
   activeCam: {fileID: 0}
   bulletTypes:
   - {fileID: 11400000, guid: 10fedb77a8a8a03428b6a0bd9794af24, type: 2}
   - {fileID: 11400000, guid: adaef4b4914884a429570ed2efab51ea, type: 2}
   - {fileID: 11400000, guid: 95d0503eeda4d7b438a37b599d6500ed, type: 2}
-  playerWalkSpeed: 5
-  playerSprintSpeed: 10
-  playerAimSpeed: 3.5
+  playerWalkSpeed: 4
+  playerSprintSpeed: 5.5
+  playerAimSpeed: 2.5
   currentSpeed: 0
   lookDir: {x: 0, y: 0, z: 0}
   activeTarget: {fileID: 0}
---- !u!95 &3628458578733003269
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3997147908757342861}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7249666322484350803
 GameObject:
   m_ObjectHideFlags: 0

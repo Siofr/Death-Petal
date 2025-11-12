@@ -7,7 +7,7 @@ namespace State_Machine
     public class PlayerManager : Singleton<PlayerManager>
     {
         CharacterController _cc;
-        Animator _animator;
+        public Animator _animator;
         public Transform activeCam;
         public BulletSO[] bulletTypes;
         private Camera _mainCam;
@@ -35,7 +35,7 @@ namespace State_Machine
         {
             base.Awake();
             _cc = GetComponent<CharacterController>();
-            _animator = GetComponent<Animator>();
+            _animator = GetComponentInChildren<Animator>();
             _mainCam = Camera.main;
 
             currentSpeed = playerWalkSpeed;
