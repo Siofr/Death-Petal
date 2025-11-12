@@ -29,11 +29,11 @@ public abstract class PuzzleInputBase : MonoBehaviour, IPuzzleInput
 
         if (!result && reset)
         {
-            EventBus<PuzzleResetEvent>.Raise(new  PuzzleResetEvent());
+            if(_puzzleOutput.IsSolved) EventBus<PuzzleResetEvent>.Raise(new  PuzzleResetEvent());
             return false;
         }
         
-        EventBus<PuzzleSolvedEvent>.Raise(new PuzzleSolvedEvent());
+        if(!_puzzleOutput.IsSolved) EventBus<PuzzleSolvedEvent>.Raise(new PuzzleSolvedEvent());
         
         return result;
     }
