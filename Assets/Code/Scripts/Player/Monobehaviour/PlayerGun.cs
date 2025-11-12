@@ -39,13 +39,11 @@ public class PlayerGun : MonoBehaviour
 
         // Now remove it
         Debug.Log("GUN Shooting" + bulletArray[0].bulletTypeName);
+        ctx.weakness?.ParentEntity.OnShot(ctx.weakness, bulletArray[0].weakness);
         bulletArray[0] = null;
 
         // Now Reorder it
         bulletArray = ReorderArray(bulletArray);
-
-        // Now check
-        PrintContents(bulletArray);
     }
 
     public void AddBullet(AddBulletEvent ctx)

@@ -9,7 +9,7 @@ namespace State_Machine
 
         public override void OnEnter()
         {
-            
+            EventBus<StartLongReload>.Raise(new StartLongReload());
         }
 
         public override void Update()

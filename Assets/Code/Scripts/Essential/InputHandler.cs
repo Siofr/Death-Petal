@@ -124,10 +124,12 @@ public class InputHandler : MonoBehaviour
     {
         if (ctx.phase == InputActionPhase.Performed && ctx.interaction is HoldInteraction)
         {
+            Debug.Log("Reload Start");
             LongReloadEvent?.Invoke();
         }
         if (ctx.phase == InputActionPhase.Canceled)
         {
+            Debug.Log("Reload Cancel");
             LongReloadCancelledEvent?.Invoke();
         }
     }

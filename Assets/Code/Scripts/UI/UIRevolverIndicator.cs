@@ -7,6 +7,7 @@ public class UIRevolverIndicator : MonoBehaviour
     public Image[] bulletSprites = new Image[6];
     private int currentBullet = 0;
     private int shootIndex;
+    private int bulletsLoaded;
     private Transform _cylinder;
 
     private EventBindings<ShootEvent> _shootEventListener;
@@ -46,18 +47,14 @@ public class UIRevolverIndicator : MonoBehaviour
 
     public void Initialize()
     {
+        StartReload();
         shootIndex = 0;
-        int j = currentBullet;
-        for (int i = 0; i < j; i++)
-        {
-            RemoveBullet();
-        }
     }
 
     public void ShootBullet()
     {
         // 0. Sanity Check 1. Remove current bullet 2. Rotate barrel counter clockwise
-        if (!bulletSprites[shootIndex].enabled) return;
+        if (shootIndex >= bulletSprites.Length || shootIndex >= bulletsLoaded) return;
 
         bulletSprites[shootIndex].enabled = false;
         shootIndex += 1;
@@ -95,13 +92,19 @@ public class UIRevolverIndicator : MonoBehaviour
         else { zRot = zRot + angle * direction; }
 
         Vector3 rot = new Vector3(0, 0, zRot);
-        _cylinder.transform.DORotate(rot, 0.12f, RotateMode.FastBeyond360);
+        _cylinder.transform.DORotate(rot, 0.05f, RotateMode.FastBeyond360);
     }
 
     public void EndReload()
     {
         int diff = bulletSprites.Length - currentBullet;
+        bulletsLoaded = currentBullet;
+        if (diff != 0) Rotate(1, diff * 30);
+    }
 
+    public void StartReload()
+    {
+        int diff = bulletSprites.Length - shootIndex;
         if (diff != 0) Rotate(1, diff * 30);
     }
 }

@@ -48,6 +48,7 @@ namespace State_Machine
             InputHandler.AimEvent += OnAim;
             InputHandler.SprintEvent += OnSprint;
             InputHandler.LongReloadEvent += OnReload;
+            InputHandler.LongReloadCancelledEvent += OnReload;
             InputHandler.HotkeyEvent += _reloadState.AddBullet;
             InputHandler.AttackEvent += _aimState.HandleShoot;
         }
