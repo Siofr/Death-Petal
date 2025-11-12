@@ -39,6 +39,7 @@ public class Room : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            _roomCameraTransform.gameObject.SetActive(true);
             EventBus<RoomPlayerEnterEvent>.Raise(new RoomPlayerEnterEvent(other.transform, this));
         }
     }
@@ -47,6 +48,7 @@ public class Room : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            _roomCameraTransform.gameObject.SetActive(false);
             EventBus<RoomPlayerExitEvent>.Raise(new RoomPlayerExitEvent(this));
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,11 +10,16 @@ public class DoorEditor : Editor
     {
         DrawDefaultInspector();
         
-        Door doorScript = (Door)target;
+        Door door = (Door)target;
         
-        if(GUILayout.Button("Open Door"))
+        if (GUILayout.Button("Open Door"))
         {
-            doorScript.OpenDoor(true); 
+            door.OpenDoor();
+        }
+
+        if (GUILayout.Button("Close Door"))
+        {
+            door.CloseDoor();
         }
     }
 }
