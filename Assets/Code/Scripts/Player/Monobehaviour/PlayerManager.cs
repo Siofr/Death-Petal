@@ -8,7 +8,7 @@ namespace State_Machine
         CharacterController _cc;
         Animator _animator;
         public Transform activeCam;
-        public BulletSO bulletType;
+        public BulletSO[] bulletTypes;
         private Camera _mainCam;
 
         public float playerWalkSpeed;

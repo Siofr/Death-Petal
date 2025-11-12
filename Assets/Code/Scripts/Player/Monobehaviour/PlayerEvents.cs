@@ -33,7 +33,17 @@ public struct RotateBarrelEvent : IEvent
     }
 }
 
-public struct RemoveBulletEvent : IEvent { }
+public struct RemoveBulletEvent : IEvent
+{
+    public int bulletIndex;
+    public int direction;
+
+    public RemoveBulletEvent(int newBulletIndex, int newDirection)
+    {
+        this.bulletIndex = newBulletIndex;
+        this.direction = newDirection;
+    }
+}
 public struct EndLongReload : IEvent { }
 public struct StartLongReload : IEvent { }
 

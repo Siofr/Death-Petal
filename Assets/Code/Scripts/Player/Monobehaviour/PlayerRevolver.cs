@@ -8,10 +8,14 @@ public class PlayerRevolver : PlayerWeapon
 
     public override void Shoot(ShootEvent ctx)
     {
-        if (currentIndex < 0) return;
+        if (currentIndex < 0 || !currentBarrel[currentIndex]) { return; }
+        Debug.Log("Color" + currentBarrel[currentIndex].bulletTypeName);
+        BulletSO currentBullet = currentBarrel[currentIndex];
+        EventBus<RemoveBulletEvent>.Raise(new RemoveBulletEvent(0, 1));
 
-        // ctx.weakness.ParentEntity.OnShot(currentBarrel[currentIndex].weakness);
-        currentIndex -= 1;
+        if (ctx.weakness == null) { return; }
+
+        ctx.weakness.ParentEntity.OnShot(ctx.weakness, currentBullet.weakness);
     }
 
     public override void QuickReload()
@@ -28,17 +32,17 @@ public class PlayerRevolver : PlayerWeapon
     {
         if (currentIndex >= currentBarrel.Length) return;
 
-        for (int i = currentIndex; i <= currentBarrel.Length; i++)
+        for (int i = currentIndex; i < currentBarrel.Length; i++)
         {
             EventBus<RotateBarrelEvent>.Raise(new RotateBarrelEvent(1));
         }
     }
 
-    public override void RemoveBullet()
+    public override void RemoveBullet(RemoveBulletEvent ctx)
     {
-        if (currentIndex - 1 < 0) return;
+        if (currentIndex + ctx.bulletIndex < 0) return;
 
-        currentBarrel[currentIndex - 1] = null;
+        currentBarrel[currentIndex + ctx.bulletIndex] = null;
         currentIndex -= 1;
     }
 
@@ -54,7 +58,12 @@ public class PlayerRevolver : PlayerWeapon
     {
         for (int i = currentIndex; i > 0; i--)
         {
-            EventBus<RemoveBulletEvent>.Raise(new RemoveBulletEvent());
+            EventBus<RemoveBulletEvent>.Raise(new RemoveBulletEvent(0, -1));
         }
+    }
+
+    private void MoveArrayUp(BulletSO[] arr)
+    {
+
     }
 }

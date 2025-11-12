@@ -28,15 +28,15 @@ namespace State_Machine
 
         public void HandleShoot()
         {
-            if (PlayerManager.Instance.activeTarget == null) { OnMiss(); }
+            Debug.Log("Handle Shoot");
+            if (PlayerManager.Instance.activeTarget == null) 
+            {
+                EventBus<ShootEvent>.Raise(new ShootEvent(null));
+                return;
+            }
 
             Weakness weakness = PlayerManager.Instance.activeTarget.GetComponent<Weakness>();
             EventBus<ShootEvent>.Raise(new ShootEvent(weakness));
-        }
-
-        public void OnMiss()
-        {
-            EventBus<ShootEvent>.Raise(new ShootEvent(null));
         }
     }
 }

@@ -49,14 +49,15 @@ public class UIAmmoIndicator : MonoBehaviour
         RotateBarrel(1);
     }
 
-    public void RemoveBullet()
+    public void RemoveBullet(RemoveBulletEvent ctx)
     {
-        if (_currentCylinder - 1 < 0) return;
+        Debug.Log(_currentCylinder);
+        if (_currentCylinder + ctx.bulletIndex - 1 < 0) return;
 
-        Image cylinderImage = _cylinders[_currentCylinder - 1].GetComponent<Image>();
+        Image cylinderImage = _cylinders[_currentCylinder + ctx.bulletIndex - 1].GetComponent<Image>();
         cylinderImage.enabled = false;
         _currentCylinder -= 1;
-        RotateBarrel(-1);
+        RotateBarrel(1 * ctx.direction);
     }
 
     public void OnRotateBarrel(RotateBarrelEvent ctx)
