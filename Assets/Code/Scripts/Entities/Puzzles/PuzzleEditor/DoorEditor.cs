@@ -14,12 +14,37 @@ public class DoorEditor : Editor
         
         if (GUILayout.Button("Open Door"))
         {
-            door.OpenDoor();
+            if (Application.isPlaying)
+            {
+                door.OpenDoor(door.openSpeed, true, true);
+                return;
+            }
+
+            if (Application.isPlaying)
+            {
+                door.OpenDoor(door.openSpeed, true, false);
+                return;
+            }
         }
 
         if (GUILayout.Button("Close Door"))
         {
-            door.CloseDoor();
+            if (Application.isPlaying)
+            {
+                door.OpenDoor(door.openSpeed, false, true);
+                return;
+            }
+
+            if (Application.isPlaying)
+            {
+                door.OpenDoor(door.openSpeed, false, false);
+                return;
+            }
+        }
+
+        if (GUILayout.Button("Clear Animation Queue"))
+        {
+            door.ClearAnimationQueue();
         }
     }
 }
