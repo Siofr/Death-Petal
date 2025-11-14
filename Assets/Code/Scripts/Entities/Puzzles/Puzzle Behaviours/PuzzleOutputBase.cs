@@ -4,9 +4,9 @@ using UnityEngine;
 public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput
 {
     //Base Fields
+    [Header("Base Fields")]
     [SerializeField] private bool _isSolved;
-
-    [SerializeField] private Animator _animator;
+    public Animator animator;
     
     //Events
     private EventBindings<PuzzleSolvedEvent> _puzzleSolvedEventListener;
@@ -36,13 +36,13 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput
     
     public virtual void OnPuzzleSolved(PuzzleSolvedEvent context)
     {
-        _animator.SetBool(Animator.StringToHash("IsSolved"), true);
+        animator.SetBool(Animator.StringToHash("IsSolved"), true);
         IsSolved = true;
     }
 
     public virtual void OnPuzzleReset(PuzzleResetEvent context)
     {
-        _animator.SetBool("IsSolved", false);
+        animator.SetBool(Animator.StringToHash("IsSolved"), false);
         IsSolved = false;
     }
 }
