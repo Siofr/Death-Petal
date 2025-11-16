@@ -1,41 +1,43 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class PuzzleInputBase : MonoBehaviour, IPuzzleInput
 {
     [Header("Base Puzzle Input Fields")] 
-    [SerializeField] private Transform _outputTransform;
+    [SerializeField] private List<GameObject> _outputObjects = new  List<GameObject>();
     
     //Non-Serializable Fields
-    private IPuzzleOutput _puzzleOutput;
+    private List<IPuzzleOutput> _puzzleOutputs = new List<IPuzzleOutput>();
     private List<Weakness> _weaknesses;
     
     //Properties
-    public IPuzzleOutput PuzzleOutput => _puzzleOutput;
+    public List<IPuzzleOutput> PuzzleOutputs => _puzzleOutputs;
     public List<Weakness> Weaknesses => _weaknesses;
 
     private void Awake()
     {
-        _outputTransform.TryGetComponent(out _puzzleOutput);
+        foreach (var outputs in _outputObjects)
+        {
+            if(outputs.TryGetComponent<PuzzleOutputBase>(out var puzzleOutput)) _puzzleOutputs.Add(puzzleOutput);
+        }
     }
 
     public abstract void OnShot(Weakness weakness, WeakTypes damageType);
 
 
-    public bool CompletionCondition(Func<bool> condition, bool reset)
+    public bool CompletionCondition(bool condition, IPuzzleOutput targetOutput)
     {
-        var result = condition.Invoke();
-
-        if (!result && reset)
+        Debug.Log("Evaluating Puzzle Conditions");
+        
+        if (!condition)
         {
-            if(_puzzleOutput.IsSolved) EventBus<PuzzleResetEvent>.Raise(new  PuzzleResetEvent());
+            if(targetOutput.IsSolved) EventBus<PuzzleResetEvent>.Raise(new  PuzzleResetEvent(targetOutput));
             return false;
         }
         
-        if(!_puzzleOutput.IsSolved) EventBus<PuzzleSolvedEvent>.Raise(new PuzzleSolvedEvent());
+        if(!targetOutput.IsSolved) EventBus<PuzzleSolvedEvent>.Raise(new PuzzleSolvedEvent(targetOutput));
         
-        return result;
+        return true;
     }
 }
 

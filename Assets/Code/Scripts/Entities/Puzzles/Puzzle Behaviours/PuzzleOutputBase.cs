@@ -36,12 +36,16 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput
     
     public virtual void OnPuzzleSolved(PuzzleSolvedEvent context)
     {
+        if ((PuzzleOutputBase)context.puzzleOutput != this) return;
+        
         animator.SetBool(Animator.StringToHash("IsSolved"), true);
         IsSolved = true;
     }
 
     public virtual void OnPuzzleReset(PuzzleResetEvent context)
     {
+        if ((PuzzleOutputBase)context.puzzleOutput != this) return;
+        
         animator.SetBool(Animator.StringToHash("IsSolved"), false);
         IsSolved = false;
     }

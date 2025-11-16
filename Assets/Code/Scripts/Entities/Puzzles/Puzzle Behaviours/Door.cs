@@ -20,7 +20,7 @@ public class Door : PuzzleOutputBase
         
         float updateStep = isEditor ? 1 / 60f : Time.deltaTime;
 
-        float value = 0f;
+        float value = isOpened ? 0f : 1f;
         
         for (float i = 0; i < 1; i += updateStep/openSpeed)
         {
@@ -34,9 +34,7 @@ public class Door : PuzzleOutputBase
 
         value = isOpened ? 1 : 0; 
         animator.SetFloat(Animator.StringToHash("Blend"), value);
-
-        IsSolved = isOpened;
-
+        
         _routineQueue.Dequeue();
         
         Debug.Log("Finished Routine");
@@ -53,11 +51,19 @@ public class Door : PuzzleOutputBase
 
     public override void OnPuzzleSolved(PuzzleSolvedEvent context)
     {
+        if (context.puzzleOutput != this) return;
+
+        IsSolved = true;
+        
         OpenDoor(openSpeed, true, false);
     }
 
     public override void OnPuzzleReset(PuzzleResetEvent context)
     {
+        if (context.puzzleOutput != this) return;
+        
+        IsSolved = false;
+        
         OpenDoor(openSpeed, false, false);
     }
 

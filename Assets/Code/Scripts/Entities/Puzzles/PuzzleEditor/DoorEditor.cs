@@ -14,7 +14,7 @@ public class DoorEditor : Editor
         
         if (GUILayout.Button("Open Door"))
         {
-            if (Application.isPlaying)
+            if (!Application.isPlaying)
             {
                 door.OpenDoor(door.openSpeed, true, true);
                 return;
@@ -29,7 +29,7 @@ public class DoorEditor : Editor
 
         if (GUILayout.Button("Close Door"))
         {
-            if (Application.isPlaying)
+            if (!Application.isPlaying)
             {
                 door.OpenDoor(door.openSpeed, false, true);
                 return;

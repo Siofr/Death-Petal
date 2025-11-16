@@ -30,10 +30,7 @@ public class Weakness : MonoBehaviour
     {
         _collider = GetComponent<SphereCollider>();
         _parentEntity = GetComponentInParent<IEntity>();
-    }
-
-    private void Start()
-    {
+        
         if(_parentEntity != null && !_parentEntity.Weaknesses.Contains(this)) _parentEntity.Weaknesses.Add(this);
     }
 
