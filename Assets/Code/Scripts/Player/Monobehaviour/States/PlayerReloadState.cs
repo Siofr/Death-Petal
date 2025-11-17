@@ -9,6 +9,7 @@ namespace State_Machine
 
         public override void OnEnter()
         {
+            InputHandler.HotkeyEvent += AddBullet;
             EventBus<StartLongReload>.Raise(new StartLongReload());
         }
 
@@ -19,6 +20,7 @@ namespace State_Machine
 
         public override void OnExit()
         {
+            InputHandler.HotkeyEvent -= AddBullet;
             EventBus<EndLongReload>.Raise(new EndLongReload());
         }
 
@@ -26,16 +28,16 @@ namespace State_Machine
         {
             if (axis.x < 0)
             {
-                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(PlayerManager.Instance.bulletTypes[0]));
+                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(player.bulletTypes[0]));
             }
             if (axis.x > 0)
             {
-                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(PlayerManager.Instance.bulletTypes[1]));
+                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(player.bulletTypes[1]));
             }
 
             if (axis.y > 0)
             {
-                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(PlayerManager.Instance.bulletTypes[2]));
+                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(player.bulletTypes[2]));
             }
             if (axis.y < 0)
             {

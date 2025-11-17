@@ -1,20 +1,22 @@
 using DG.Tweening;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIRevolverIndicator : MonoBehaviour
 {
     public Image[] bulletSprites = new Image[6];
+    private Color[] lastBulletColors = new Color[6];
     private int currentBullet = 0;
     private int shootIndex;
     private int bulletsLoaded;
-    private Transform _cylinder;
 
     private EventBindings<ShootEvent> _shootEventListener;
     private EventBindings<RemoveBulletEvent> _removeBulletEventListener;
     private EventBindings<AddBulletEvent> _addBulletEventListener;
     private EventBindings<EndLongReload> _endLongReloadEventListener;
     private EventBindings<StartLongReload> _startLongReloadListener;
+    private EventBindings<QuickReload> _quickReloadEventListener;
 
     private void Awake()
     {
@@ -23,6 +25,7 @@ public class UIRevolverIndicator : MonoBehaviour
         _addBulletEventListener = new EventBindings<AddBulletEvent>(AddBullet);
         _endLongReloadEventListener = new EventBindings<EndLongReload>(EndReload);
         _startLongReloadListener = new EventBindings<StartLongReload>(Initialize);
+        _quickReloadEventListener = new EventBindings<QuickReload>(QuickReload);
     }
 
     private void OnEnable()
@@ -32,14 +35,14 @@ public class UIRevolverIndicator : MonoBehaviour
         EventBus<AddBulletEvent>.Register(_addBulletEventListener);
         EventBus<EndLongReload>.Register(_endLongReloadEventListener);
         EventBus<StartLongReload>.Register(_startLongReloadListener);
+        EventBus<QuickReload>.Register(_quickReloadEventListener);
     }
 
     private void Start()
     {
-        _cylinder = transform.GetChild(0);
-        for (int i = 0; i < _cylinder.childCount;  i++)
+        for (int i = 0; i < transform.childCount;  i++)
         {
-            bulletSprites[i] = _cylinder.GetChild(i).GetComponent<Image>();
+            bulletSprites[i] = transform.GetChild(i).GetComponent<Image>();
         }
 
         DOTween.Init();
@@ -59,7 +62,7 @@ public class UIRevolverIndicator : MonoBehaviour
         bulletSprites[shootIndex].enabled = false;
         shootIndex += 1;
         currentBullet -= 1;
-        Rotate(1, 30);
+        Rotate(1, 30, 0.05f);
     }
 
     public void RemoveBullet()
@@ -69,7 +72,7 @@ public class UIRevolverIndicator : MonoBehaviour
 
         bulletSprites[currentBullet - 1].enabled = false;
         currentBullet -= 1;
-        Rotate(-1, 30);
+        Rotate(-1, 30, 0.05f);
     }
 
     public void AddBullet(AddBulletEvent ctx)
@@ -80,31 +83,60 @@ public class UIRevolverIndicator : MonoBehaviour
         bulletSprites[currentBullet].enabled = true;
         bulletSprites[currentBullet].color = ctx.bulletType.bulletColor;
         currentBullet += 1;
-        Rotate(1, 30);
+        Rotate(1, 30, 0.05f);
     }
 
-    public void Rotate(int direction, int angle)
+    public void Rotate(int direction, int angle, float speed)
     {
         // Rotate barrel in specified direction
-        int zRot = Mathf.RoundToInt(_cylinder.eulerAngles.z);
+        int zRot = Mathf.RoundToInt(transform.eulerAngles.z);
 
         if ((zRot + 30) / 30 % 2 == 0) { zRot = zRot + (angle * 2) * direction; }
         else { zRot = zRot + angle * direction; }
 
         Vector3 rot = new Vector3(0, 0, zRot);
-        _cylinder.transform.DORotate(rot, 0.05f, RotateMode.FastBeyond360);
+        transform.DORotate(rot, speed, RotateMode.FastBeyond360);
+    }
+
+    public void QuickReload()
+    {
+        Initialize();
+
+        for (int i = 0; i < lastBulletColors.Length; i++)
+        {
+            bulletSprites[i].color = lastBulletColors[i];
+            bulletSprites[i].enabled = true;
+            currentBullet += 1;
+        }
+
+        EndReload();
     }
 
     public void EndReload()
     {
         int diff = bulletSprites.Length - currentBullet;
         bulletsLoaded = currentBullet;
-        if (diff != 0) Rotate(1, diff * 30);
+        lastBulletColors = new Color[bulletsLoaded];
+
+        for (int i = 0; i < bulletsLoaded; i++)
+        {
+            lastBulletColors[i] = bulletSprites[i].color;
+        }
+
+        if (diff != 0) Rotate(1, diff * 30, 0.05f);
     }
 
     public void StartReload()
     {
+        currentBullet = 0;
+
         int diff = bulletSprites.Length - shootIndex;
-        if (diff != 0) Rotate(1, diff * 30);
+
+        for (int i = 0; i < bulletSprites.Length; i++)
+        {
+            bulletSprites[i].enabled = false;
+        }
+
+        if (diff != 0) Rotate(1, diff * 30, 0.00f);
     }
 }
