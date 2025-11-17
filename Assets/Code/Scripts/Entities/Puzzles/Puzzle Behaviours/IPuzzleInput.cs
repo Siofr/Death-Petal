@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface IPuzzleInput: IEntity
 {
-    IPuzzleOutput PuzzleOutput { get; }
+    public List<IPuzzleOutput> PuzzleOutputs { get; }
 
-    public bool CompletionCondition(Func<bool> condition, bool reset) ;
+    public bool CompletionCondition(bool condition, IPuzzleOutput targetOutput) ;
 }
