@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerGun : MonoBehaviour
 {
     private BulletSO[] bulletArray = new BulletSO[6];
+    private BulletSO[] lastBulletArray = new BulletSO[6];
     private int bulletIndex = 0;
 
     private void PrintContents(BulletSO[] arr)
@@ -16,12 +17,18 @@ public class PlayerGun : MonoBehaviour
     private EventBindings<ShootEvent> _shootEventListener;
     private EventBindings<AddBulletEvent> _addBulletEventListener;
     private EventBindings<RemoveBulletEvent> _removeEventListener;
+    private EventBindings<StartLongReload> _startLongReloadListener;
+    private EventBindings<EndLongReload> _endLongReloadListener;
+    private EventBindings<QuickReload> _quickReloadListener;
 
     public void Awake()
     {
         _shootEventListener = new EventBindings<ShootEvent>(ShootBullet);
         _addBulletEventListener = new EventBindings<AddBulletEvent>(AddBullet);
         _removeEventListener = new EventBindings<RemoveBulletEvent>(RemoveBullet);
+        _startLongReloadListener = new EventBindings<StartLongReload>(Initialize);
+        _endLongReloadListener = new EventBindings<EndLongReload>(SaveArray);
+        _quickReloadListener = new EventBindings<QuickReload>(QuickReload);
     }
 
     private void OnEnable()
@@ -29,6 +36,21 @@ public class PlayerGun : MonoBehaviour
         EventBus<ShootEvent>.Register(_shootEventListener);
         EventBus<AddBulletEvent>.Register(_addBulletEventListener);
         EventBus<RemoveBulletEvent>.Register(_removeEventListener);
+        EventBus<StartLongReload>.Register(_startLongReloadListener);
+        EventBus<EndLongReload>.Register(_endLongReloadListener);
+        EventBus<QuickReload>.Register(_quickReloadListener);
+    }
+
+    public void Initialize(StartLongReload ctx)
+    {
+        bulletIndex = 0;
+    }
+
+    private void QuickReload()
+    {
+        bulletIndex = 0;
+        bulletArray = CopyArray(lastBulletArray);
+        Debug.Log("Bullets Loaded" + bulletArray);
     }
 
     public void ShootBullet(ShootEvent ctx)
@@ -37,22 +59,19 @@ public class PlayerGun : MonoBehaviour
 
         if (bulletArray[0] == null) return;
 
+        EventBus<SpawnTrail>.Raise(new SpawnTrail(bulletArray[0].bulletColor));
+
         // Now remove it
-        Debug.Log("GUN Shooting" + bulletArray[0].bulletTypeName);
+        ctx.weakness?.ParentEntity.OnShot(ctx.weakness, bulletArray[0].weakness);
         bulletArray[0] = null;
 
         // Now Reorder it
         bulletArray = ReorderArray(bulletArray);
-
-        // Now check
-        PrintContents(bulletArray);
     }
 
     public void AddBullet(AddBulletEvent ctx)
     {
         if (bulletIndex >= bulletArray.Length) return;
-
-        Debug.Log("GUN Adding" + ctx.bulletType.bulletTypeName);
 
         bulletArray[bulletIndex] = ctx.bulletType;
         bulletIndex++;
@@ -61,8 +80,6 @@ public class PlayerGun : MonoBehaviour
     public void RemoveBullet()
     {
         if (bulletIndex - 1 < 0) return;
-
-        // I want to remove the latest element
 
         bulletArray[bulletIndex - 1] = null;
         bulletIndex--;
@@ -79,6 +96,26 @@ public class PlayerGun : MonoBehaviour
         }
 
         newArr[arr.Length - 1] = null;
+        return newArr;
+    }
+
+    private void SaveArray()
+    {
+        lastBulletArray = CopyArray(bulletArray);
+
+        Debug.Log("Bullets loaded" + lastBulletArray);
+    }
+
+    private BulletSO[] CopyArray(BulletSO[] arr)
+    {
+        BulletSO[] newArr = new BulletSO[6];
+
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (arr[i] == null) break;
+            newArr[i] = arr[i];
+        }
+
         return newArr;
     }
 }

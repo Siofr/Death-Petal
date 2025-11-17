@@ -10,6 +10,21 @@ public struct ShootEvent : IEvent
     }
 }
 
+public struct SpawnTrail : IEvent
+{
+    public Color bulletColor;
+
+    public SpawnTrail(Color newColor)
+    {
+        this.bulletColor = newColor;
+    }
+}
+
+public struct QuickReload : IEvent
+{
+
+}
+
 public class PlayerWeaponEvents : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created

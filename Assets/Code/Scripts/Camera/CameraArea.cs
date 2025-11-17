@@ -1,16 +1,24 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 [RequireComponent (typeof(BoxCollider))]
 public class CameraArea : MonoBehaviour
 {
     public Transform cameraPosition;
+    private CinemachineCamera cam;
+
+    private void Awake()
+    {
+        cam = GetComponentInChildren<CinemachineCamera>();
+        cam.Priority = 0;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("Player"))
         {
             // Trigger Event
-            EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(cameraPosition));
+            EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(cameraPosition, cam));
         }
     }
 
