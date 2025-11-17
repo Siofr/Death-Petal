@@ -19,10 +19,22 @@ public class WeightPuzzleEditor : Editor
         {
             TestWeight(puzzle.Weights[1]);
         }
+
+        if (GUILayout.Button("First Weight Fail Test"))
+        {
+            TestWeight(puzzle.Weights[0], true);
+        }
+        
+        if (GUILayout.Button("Second Weight Fail Test"))
+        {
+            TestWeight(puzzle.Weights[1], true);
+        }
     }
 
-    private void TestWeight(Weight weight)
+    private void TestWeight(Weight weight, bool isFail = false)
     {
-        weight.OnShot(weight.Weaknesses[0], weight.Weaknesses[0].WeakType);
+        WeakTypes bulletType = isFail ? WeakTypes.NONE : weight.Weaknesses[0].WeakType;
+            
+        weight.OnShot(weight.Weaknesses[0], bulletType);
     }
 }
