@@ -33,9 +33,9 @@ public class Weight: MonoBehaviour, IEntity
         var initPos = transform.position;
         var target = transform.position;
         
-        if (_routineAccess > _moveSteps)
+        if (_routineAccess > _moveSteps || reset)
         {
-            target.y -= _moveDist * 3;
+            target.y -= _moveDist * (_routineAccess-1);
             _routineAccess = 0;
         }
         else
