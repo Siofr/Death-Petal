@@ -10,6 +10,7 @@ namespace State_Machine
         public Transform activeCam;
         public BulletSO[] bulletTypes;
         private Camera _mainCam;
+        private float _ySpeed;
 
         public float playerWalkSpeed;
         public float playerSprintSpeed;
@@ -167,15 +168,20 @@ namespace State_Machine
             Vector3 camForward = Vector3.ProjectOnPlane(activeCam.transform.forward, GetPlaneNormal());
             Vector3 camRight = Vector3.ProjectOnPlane(activeCam.transform.right, GetPlaneNormal());
 
-            Vector3 dir = camForward * _movement.z + camRight * _movement.x;
+            Vector3 dir = (camForward * _movement.z + camRight * _movement.x).normalized;
             lookDir = dir;
+
+            if (_cc.isGrounded) _ySpeed = 0;
 
             if (lookDir == Vector3.zero) _animator.SetFloat("Speed", 0.0f);
             else _animator.SetFloat("Speed", Mathf.Clamp(currentSpeed / 10, 0.0f, 1.0f));
 
+            _ySpeed -= 9.8f * Time.deltaTime;
+
             transform.LookAt(transform.position + lookDir.normalized);
 
-            _cc.Move(dir.normalized * currentSpeed * Time.deltaTime);
+            dir.y = _ySpeed;
+            _cc.Move(dir * currentSpeed * Time.deltaTime);
         }
 
         public void HandleLook()

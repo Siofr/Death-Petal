@@ -1,7 +1,7 @@
 using UnityEngine;
 using Yarn.Unity;
 
-public class AreaDialogueTrigger : MonoBehaviour, IDialogueTrigger
+public class AreaDialogueTrigger : MonoBehaviour
 {
     public string nodeName;
 
@@ -34,6 +34,6 @@ public class AreaDialogueTrigger : MonoBehaviour, IDialogueTrigger
 
     public void Trigger(string node)
     {
-        Runner.StartDialogue(node);
+        EventBus<TriggerDialogueEvent>.Raise(new TriggerDialogueEvent(NodeName));
     }
 }
