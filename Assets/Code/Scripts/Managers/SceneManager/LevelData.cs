@@ -1,43 +1,82 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "LevelData", menuName = "Scriptable Objects/Level Data")]
 public class LevelData : ScriptableObject
 {
-    private ISaveable[] _saveables;
+    [Header("Level Data Fields")] 
+    [SerializeField] private string _dataAssetSavePath;
     
-    public void SaveLevelData()
+    //Non-Serializable Fields
+    public Dictionary<ISaveable, SaveData> saveables = new Dictionary<ISaveable, SaveData>();
+    public Dictionary<ISaveable, SaveData> defaultSaveables = new Dictionary<ISaveable, SaveData>();
+    
+    //Properties
+    public string AssetSavePath => _dataAssetSavePath;
+    public Dictionary<ISaveable, SaveData> Saveables => saveables;
+    public Dictionary<ISaveable, SaveData> DefaultSaveables => defaultSaveables;
+    
+    public void SaveLevelData(ref Dictionary<ISaveable, SaveData> saveRef)
     {
-        _saveables = FindSaveables();
+        var tempSaveables = FindSaveables();
 
-        if (_saveables.Length < 1) return;
-        
-        foreach (var saveable in _saveables)
+        if (tempSaveables.Count < 1)
         {
-            saveable.SaveData();
+            Debug.Log("No Saveables in Level");
+            return;
+        }
+
+        Debug.Log($"Saved {tempSaveables} to Level Data");
+        saveRef = tempSaveables;
+    }   
+
+    public void LoadLevelData(ref Dictionary<ISaveable, SaveData> loadRef)
+    {
+        var tempSaveables = loadRef;
+        
+        if (tempSaveables.Count < 1)
+        {
+            if (DefaultSaveables.Count < 1)
+            {
+                Debug.Log("No Baked Save Data");
+                return;
+            }
+
+            tempSaveables = DefaultSaveables;
         }
         
-        Debug.Log("Saved LevelData");
-    }
-
-    public void LoadLevelData()
-    {
-        if (_saveables == null || _saveables.Length < 1 || _saveables != FindSaveables()) return;
-        
-        foreach (var saveable in _saveables)
+        foreach (var saveable in tempSaveables)
         {
-            saveable.LoadSaveData();
+            saveable.Key.LoadSaveData(saveable.Value);
         }
+        
+        Debug.Log("Loaded Save Data");
     }
 
     public void ClearLevelData()
     {
-        _saveables = null;
+        defaultSaveables.Clear();   
+        saveables.Clear();
+        
+        Debug.Log("Cleared Level Data");
     }
-    
-    private static ISaveable[] FindSaveables()
-    {
-        ISaveable[] results = { };
 
-        return results;
+    public Dictionary<ISaveable, SaveData> FindSaveables()
+    {
+        var result = new Dictionary<ISaveable, SaveData>();
+
+        var gameObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+
+        foreach (var @object in gameObjects)
+        {
+            if (@object.TryGetComponent(out ISaveable saveable))
+            {
+                result.Add(saveable, saveable.GetSaveData(this));           
+            }
+        }
+
+        return result;
     }
 }
+

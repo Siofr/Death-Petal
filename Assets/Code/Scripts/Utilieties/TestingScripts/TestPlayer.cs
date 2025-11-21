@@ -1,15 +1,19 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class TestPlayer : MonoBehaviour, IEntity, ISaveable<PlayerSaveData>
+public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
 {
-    public PlayerSaveData SaveInfo { get; }
-    
-    private List<Weakness> _weaknesses = new List<Weakness>();
+    [SerializeField]
+    private PlayerSaveData _saveData;
+    public PlayerSaveData SaveInfo => _saveData;
 
-    public List<Weakness> Weaknesses => _weaknesses;
+    public void Awake()
+    {
+        base.Awake();
+    }
     
-    public void OnShot(Weakness weakness, WeakTypes damageType)
+    public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
         if (!Weaknesses.Contains(weakness)) return;
 
@@ -25,11 +29,29 @@ public class TestPlayer : MonoBehaviour, IEntity, ISaveable<PlayerSaveData>
         }
     }
 
-    public void LoadSaveData()
+    public SaveData GetSaveData(LevelData levelData)
     {
+        if (_saveData == null)
+        {
+            var dataInstance = ScriptableObject.CreateInstance<PlayerSaveData>();
+            AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
+            
+            _saveData = dataInstance;
+            _saveData.Save(transform.position, base.Weaknesses);
+        }
+        
+        return _saveData;
     }
 
     public void SaveData()
     {
+        _saveData.Save(transform.position, new List<Weakness>());
+    }
+
+    public void LoadSaveData(SaveData levelData)
+    {
+        _saveData = (PlayerSaveData)levelData;
+
+        _saveData.Load(transform, base.Weaknesses);
     }
 }

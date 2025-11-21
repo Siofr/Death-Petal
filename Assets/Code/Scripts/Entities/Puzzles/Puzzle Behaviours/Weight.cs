@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Weight: MonoBehaviour, IEntity
+public class Weight: EntityBase
 {
     [Header("Weight Fields")] 
     [SerializeField] private GameObject _linkedOutputObject;
@@ -16,7 +15,6 @@ public class Weight: MonoBehaviour, IEntity
     [SerializeField] private float _moveDist;
     
     //Non-Serializable Fields
-    private List<Weakness> _weaknesses = new List<Weakness>();
     private IPuzzleOutput _output;
 
     private Coroutine _moveRoutine;
@@ -24,8 +22,7 @@ public class Weight: MonoBehaviour, IEntity
     
     //Properties
     public IPuzzleOutput LinkedOutput => _output;
-    public List<Weakness> Weaknesses => _weaknesses;
-
+    
     private IEnumerator MoveWeightRoutine(bool reset)
     {
         _routineAccess++;
@@ -68,8 +65,8 @@ public class Weight: MonoBehaviour, IEntity
         _moveSpeed = moveSpeed;
         _moveDist = moveDist;
     }
-    
-    public void OnShot(Weakness weakness, WeakTypes damageType)
+
+    public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
         if (!Weaknesses.Contains(weakness) || _moveRoutine != null) return;
 
@@ -86,6 +83,7 @@ public class Weight: MonoBehaviour, IEntity
     
     private void Awake()
     {
+        base.Awake();
         if(_linkedOutputObject != null) _linkedOutputObject.TryGetComponent(out _output);
     }
 }

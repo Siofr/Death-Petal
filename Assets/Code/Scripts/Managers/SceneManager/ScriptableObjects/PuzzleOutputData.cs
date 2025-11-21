@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Puzzle Output Save Data", menuName = "Game SaveData", order = 3)]
+[CreateAssetMenu(fileName = "Puzzle Output Save Data")]
 public class PuzzleOutputData : SaveData
 {
     public bool isSolved;

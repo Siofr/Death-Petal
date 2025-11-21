@@ -12,7 +12,7 @@ struct EnemyDeathEvent: IEvent
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class EnemyBase : MonoBehaviour, IEntity
+public class EnemyBase : EntityBase, IEntity
 {
     [Header("Enemy Configuration")]
     public EnemyConfig_SO enemyData;
@@ -22,12 +22,8 @@ public class EnemyBase : MonoBehaviour, IEntity
     private NavMeshAgent _nmAgent;
     private StateMachine _enemyStateMachine;
     private Bounds _enemyAreaBounds;
-    private List<Weakness> _weaknesses = new List<Weakness>();
     
     public Transform target;
-    
-    //Properties
-    public List<Weakness> Weaknesses => _weaknesses;
 
     //Events
     private EventBindings<RoomPlayerEnterEvent> _playerRoomEnterEventListener;
@@ -119,7 +115,7 @@ public class EnemyBase : MonoBehaviour, IEntity
         target = null;
     }
     
-    public void OnShot( Weakness weakness, WeakTypes damageType)
+    public override void OnShot( Weakness weakness, WeakTypes damageType)
     {
         if (!Weaknesses.Contains(weakness))
             return;

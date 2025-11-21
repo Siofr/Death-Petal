@@ -5,6 +5,7 @@ public interface ISaveable<T>: ISaveable where T : SaveData
 
 public interface ISaveable
 {
-    public void LoadSaveData();
+    public SaveData GetSaveData(LevelData levelData);
+    public void LoadSaveData(SaveData levelData);
     public void SaveData();
 }

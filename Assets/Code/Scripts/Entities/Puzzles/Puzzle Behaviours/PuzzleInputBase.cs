@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PuzzleInputBase : MonoBehaviour, IPuzzleInput
+public abstract class PuzzleInputBase : EntityBase, IPuzzleInput
 {
     [Header("Base Puzzle Input Fields")] 
     [SerializeField] private List<GameObject> _outputObjects = new  List<GameObject>();
@@ -16,14 +16,17 @@ public abstract class PuzzleInputBase : MonoBehaviour, IPuzzleInput
 
     private void Awake()
     {
+        base.Awake();
+        
         foreach (var outputs in _outputObjects)
         {
             if(outputs.TryGetComponent<PuzzleOutputBase>(out var puzzleOutput)) _puzzleOutputs.Add(puzzleOutput);
         }
     }
 
-    public abstract void OnShot(Weakness weakness, WeakTypes damageType);
-
+    public override void OnShot(Weakness weakness, WeakTypes damageType)
+    {
+    }
 
     public bool CompletionCondition(bool condition, IPuzzleOutput targetOutput)
     {
