@@ -36,7 +36,7 @@ public class LevelData : ScriptableObject
     
     private static ISaveable[] FindSaveables()
     {
-        ISaveable[] result = { };
+        ISaveable[] results = { };
 
         return results;
     }
