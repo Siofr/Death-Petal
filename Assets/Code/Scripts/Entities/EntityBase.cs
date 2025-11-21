@@ -26,6 +26,11 @@ public abstract class EntityBase : MonoBehaviour, IEntity
             }
         }
     }
+
+    public void IntitialiseWeaknesses(List<Weakness> weaknesses)
+    {
+        _weaknesses = weaknesses;
+    }
     
     public abstract void OnShot(Weakness weakness, WeakTypes damageType);
 }

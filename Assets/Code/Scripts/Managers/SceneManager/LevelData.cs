@@ -27,6 +27,11 @@ public class LevelData : ScriptableObject
             return;
         }
 
+        foreach (var saveable in tempSaveables)
+        {
+            saveable.Key.SaveData();
+        }
+
         Debug.Log($"Saved {tempSaveables} to Level Data");
         saveRef = tempSaveables;
     }   
