@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestPlayer : MonoBehaviour, IEntity
+public class TestPlayer : MonoBehaviour, IEntity, ISaveable<PlayerSaveData>
 {
+    public PlayerSaveData SaveInfo { get; }
+    
     private List<Weakness> _weaknesses = new List<Weakness>();
 
     public List<Weakness> Weaknesses => _weaknesses;
@@ -21,5 +23,13 @@ public class TestPlayer : MonoBehaviour, IEntity
         {
             Destroy(gameObject);
         }
+    }
+
+    public void LoadSaveData()
+    {
+    }
+
+    public void SaveData()
+    {
     }
 }
