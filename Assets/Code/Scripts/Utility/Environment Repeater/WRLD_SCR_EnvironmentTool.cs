@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
 
@@ -24,7 +25,10 @@ public class WRLD_SCR_EnvironmentTool : MonoBehaviour
 
     private void Start()
     {
-        activeSequence = new List<GameObject>();
+        for (int i = 0; i <= transform.childCount; i++)
+        {
+            activeSequence.Add(transform.GetChild(i).gameObject);
+        }
         bounding = GetComponent<BoxCollider>();
         
         
@@ -80,6 +84,10 @@ public class WRLD_SCR_EnvironmentTool : MonoBehaviour
                 
                 var newSection = Instantiate(o, nextSlotPosition, Quaternion.identity);
                 newSection.transform.SetParent(transform);
+                newSection.transform.localPosition =
+                    new Vector3(newSection.transform.localPosition.x,
+                        0,
+                        newSection.transform.localPosition.z);
                 if(swapFlowDirection)
                     newSection.transform.Rotate(Vector3.up, 90);
                 if(flip)

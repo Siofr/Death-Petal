@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7737079959287697038
+--- !u!114 &-7196769722241828953
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,13 +20,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Back 3
-  m_Shader: {fileID: -6465566751694194690, guid: 2ecde74104d5d764a95a06915104adac, type: 3}
+  m_Name: Test Normal 1
+  m_Shader: {fileID: -6465566751694194690, guid: f38a24c496103f04f8f424d1dff04d4a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -37,6 +37,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -51,9 +55,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Amount: 0.00008
+    - _DepthMult: 75
     - _QueueControl: 0
     - _QueueOffset: 0
-    m_Colors: []
+    - _Value: 3
+    m_Colors:
+    - _BaseColour: {r: 0.10764508, g: 0.15515953, b: 0.38679248, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
