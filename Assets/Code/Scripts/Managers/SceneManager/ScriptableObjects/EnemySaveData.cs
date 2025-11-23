@@ -14,6 +14,12 @@ public class EnemySaveData : SaveData
 
     public void Load(Transform refTransform, List<Weakness> weaknesses)
     {
+        if (health == null || health.Count < 1)
+        {
+            refTransform.gameObject.SetActive(false);
+            return;
+        }
+        
         Load(refTransform);
         weaknesses = health;
     }

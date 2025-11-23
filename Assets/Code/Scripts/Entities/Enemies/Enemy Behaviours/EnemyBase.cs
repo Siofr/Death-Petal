@@ -24,7 +24,10 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
 {
     [Header("Enemy Configuration")]
     [SerializeField] private EnemySaveData _saveData;
+    public Animator animator;
     public EnemyConfig_SO enemyData;
+    public Vector3 defaultPos;
+    public Transform target;
     
     //[Header("EnemyFields")]
     //Non-Serializable Fields
@@ -32,7 +35,8 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     private StateMachine _enemyStateMachine;
     private Bounds _enemyAreaBounds;
     
-    public Transform target;
+    [NonSerialized]
+    public Coroutine attackRoutine = null;
     
     //Properties
     public EnemySaveData SaveInfo => _saveData;
@@ -40,10 +44,15 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     //Events
     private EventBindings<RoomPlayerEnterEvent> _playerRoomEnterEventListener;
     private EventBindings<RoomPlayerExitEvent> _playerRoomExitEventListener;
-    
+
     protected override void Awake()
     {
         base.Awake();
+        defaultPos =  transform.position;
+    }
+    
+    private void Start()
+    {
         Initialise();
     }
 
@@ -55,18 +64,18 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
 
         _nmAgent.speed = enemyData.movementSpeed;
 
-        _enemyAreaBounds = GetComponentInParent<Room>().Bounds;
+        _enemyAreaBounds = GetComponentInParent<Room>() != null ? GetComponentInParent<Room>().Bounds : new Bounds();
         
         //StateMachine Init
         var idleState = new EnemyIdleState(this);
         var chaseState = new EnemyChaseState(this);
         var attackState = new EnemyAttackState(this);
         
-        _enemyStateMachine.AddTransition(idleState, chaseState, new FuncPredicate( ()=> target!= null ));
-        _enemyStateMachine.AddTransition(chaseState, idleState, new FuncPredicate( () => target == null ));
+        _enemyStateMachine.AddTransition(idleState, chaseState, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
+        _enemyStateMachine.AddTransition(chaseState, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
         
         _enemyStateMachine.AddTransition(chaseState, attackState, new FuncPredicate( ()=>InAttackRange() ));
-        _enemyStateMachine.AddTransition(attackState, idleState, new FuncPredicate( ()=>!InAttackRange() ));
+        _enemyStateMachine.AddTransition(attackState, idleState, new FuncPredicate( ()=>!InAttackRange() && attackRoutine == null));
         
         _enemyStateMachine.SetState(idleState);
         
@@ -76,6 +85,8 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         
         EventBus<RoomPlayerEnterEvent>.Register(_playerRoomEnterEventListener);
         EventBus<RoomPlayerExitEvent>.Register(_playerRoomExitEventListener);
+        
+        Debug.Log("Enemy Initialised");
     }
 
     private void OnDisable()
@@ -89,18 +100,23 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         _enemyStateMachine.Update();
     }
     
-    private bool InAttackRange()
+    public bool InAttackRange()
     {
         if(target == null) return false;
         return Vector3.Distance(target.position, transform.position) < enemyData.attackRange;
     }
 
+    public bool InDefaultPosRange()
+    {
+        return Vector3.Distance(transform.position, defaultPos) < 1f;
+    }
+    
     public void SetTarget(Transform target)
     {
         
         if (target == null)
         {
-            _nmAgent.ResetPath();
+            _nmAgent.destination = defaultPos;
             return;
         }
         
@@ -109,11 +125,11 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     
     private void OnPlayerRoomEnter(RoomPlayerEnterEvent context)
     {
-        Debug.Log("Is Entering");
         var playerTransform =  context.playerTransform;
+
+        if (context.room.Bounds != _enemyAreaBounds) return;
         
-        if (!_enemyAreaBounds.Contains(playerTransform.position)) return;
-        
+        Debug.Log("Is Entering");
         target = playerTransform;
     }
 
