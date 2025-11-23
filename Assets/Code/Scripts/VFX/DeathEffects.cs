@@ -12,7 +12,7 @@ public class DeathEffects : MonoBehaviour
     private void OnEnable()
     {
         _enemyDeathEventListener = new EventBindings<EnemyDeathEvent>(OnDeath);
-        _wrongShotEventListener = new EventBindings<WrongShotEvent>();
+        _wrongShotEventListener = new EventBindings<WrongShotEvent>(OnWrongShot);
         
         EventBus<EnemyDeathEvent>.Register(_enemyDeathEventListener);
         EventBus<WrongShotEvent>.Register(_wrongShotEventListener);
@@ -48,7 +48,7 @@ public class DeathEffects : MonoBehaviour
 
         foreach (var effect in wrongShotEffectObjects)
         {
-            effect.SetActive(true);
+            //effect.SetActive(true);
         }
     }
 }
