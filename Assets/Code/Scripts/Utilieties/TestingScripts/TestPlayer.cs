@@ -37,7 +37,7 @@ public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
             AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
             
             _saveData = dataInstance;
-            _saveData.Save(transform.position, base.Weaknesses);
+            _saveData.Save(transform.position, Weaknesses);
         }
         
         return _saveData;
