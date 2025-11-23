@@ -31,6 +31,9 @@ namespace State_Machine
         private PlayerAimState _aimState;
         private PlayerIdleState _idleState;
 
+        [SerializeField]
+        private Material[] playerDependentMaterials;
+
         protected override void Awake()
         {
             base.Awake();
@@ -105,6 +108,11 @@ namespace State_Machine
 
             _movement = new Vector3(movementDirection.x, 0, movementDirection.y);
             _aim = aimDirection;
+            
+            foreach (var playerDependentMaterial in playerDependentMaterials)
+            {
+                playerDependentMaterial.SetVector("_PlayerPosition", transform.position);
+            }
 
             stateMachine.Update();
         }
