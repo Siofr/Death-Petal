@@ -12,6 +12,13 @@ struct EnemyDeathEvent: IEvent
     public EnemyDeathEvent(EnemyBase enemyReference) => enemy = enemyReference;
 }
 
+struct WrongShotEvent : IEvent
+{
+    public EnemyBase enemy;
+
+    public WrongShotEvent(EnemyBase enemyRefrence) => enemy = enemyRefrence;
+}
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
 {
@@ -128,7 +135,9 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         
         if(weakness.WeakType.HasFlag(damageType))
             weakness.RemoveWeakType(damageType);
-        
+        else
+            EventBus<WrongShotEvent>.Raise(new WrongShotEvent(this));
+
         if(weakness.WeakType == WeakTypes.NONE)
         {
             Weaknesses.Remove(weakness);
