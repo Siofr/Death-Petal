@@ -26,6 +26,7 @@ public abstract class PuzzleInputBase : EntityBase, IPuzzleInput
 
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
+        if (!Weaknesses.Contains(weakness)) return;
     }
 
     public bool CompletionCondition(bool condition, IPuzzleOutput targetOutput)

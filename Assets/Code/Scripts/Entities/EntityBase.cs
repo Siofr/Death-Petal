@@ -16,14 +16,15 @@ public abstract class EntityBase : MonoBehaviour, IEntity
     
     public void InitialiseWeaknesses()
     {
-        var weaknesses = GetComponentsInChildren<Weakness>();
+        if (_weaknesses == null) return;
         
-        if(weaknesses != null)
+        var weaknesses = GetComponentsInChildren<Weakness>();
+
+        if (weaknesses == null) return;
+        
+        foreach (var weakness in weaknesses)
         {
-            foreach (var weakness in weaknesses)
-            {
-                _weaknesses.Add(weakness);
-            }
+            _weaknesses.Add(weakness);
         }
     }
 

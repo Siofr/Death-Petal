@@ -11,7 +11,7 @@ public class PuzzleOutputData : SaveData
         isSolved = solvedCondition;
     }
 
-    public void Load(Transform refTransform, ref bool solvedCondition)
+    public void Load(Transform refTransform, bool solvedCondition)
     {
         Load(refTransform);
         solvedCondition = isSolved;
