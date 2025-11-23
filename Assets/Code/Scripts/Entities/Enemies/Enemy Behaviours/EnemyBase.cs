@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using State_Machine;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,9 +13,10 @@ struct EnemyDeathEvent: IEvent
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class EnemyBase : EntityBase, IEntity
+public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
 {
     [Header("Enemy Configuration")]
+    [SerializeField] private EnemySaveData _saveData;
     public EnemyConfig_SO enemyData;
     
     //[Header("EnemyFields")]
@@ -24,13 +26,17 @@ public class EnemyBase : EntityBase, IEntity
     private Bounds _enemyAreaBounds;
     
     public Transform target;
-
+    
+    //Properties
+    public EnemySaveData SaveInfo => _saveData;
+    
     //Events
     private EventBindings<RoomPlayerEnterEvent> _playerRoomEnterEventListener;
     private EventBindings<RoomPlayerExitEvent> _playerRoomExitEventListener;
     
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         Initialise();
     }
 
@@ -131,5 +137,31 @@ public class EnemyBase : EntityBase, IEntity
         
         if(Weaknesses.Count == 0)
             EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));
+    }
+
+    public SaveData GetSaveData(LevelData levelData)
+    {
+        if (_saveData == null)
+        {
+            var dataInstance = ScriptableObject.CreateInstance<EnemySaveData>();
+            AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
+            
+            _saveData = dataInstance;
+            _saveData.Save(transform.position, Weaknesses);
+        }
+        
+        return _saveData;
+    }
+
+    public void LoadSaveData(SaveData levelData)
+    {
+        _saveData = (EnemySaveData)levelData;
+        
+        _saveData.Load(transform, Weaknesses);
+    }
+
+    public void SaveData()
+    {
+        _saveData.Save(transform.position, Weaknesses);
     }
 }

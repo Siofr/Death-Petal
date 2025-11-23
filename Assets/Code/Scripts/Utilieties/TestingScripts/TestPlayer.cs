@@ -45,7 +45,6 @@ public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
 
     public void SaveData()
     {
-        Debug.Log("Saving");
         _saveData.Save(transform.position, new List<Weakness>());
     }
 

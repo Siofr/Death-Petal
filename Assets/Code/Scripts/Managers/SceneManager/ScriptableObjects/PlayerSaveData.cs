@@ -6,15 +6,15 @@ public class PlayerSaveData : SaveData
 {
     public List<Weakness> health;
 
-    public void Save(Vector3 @position, List<Weakness> @health)
+    public void Save(Vector3 pos, List<Weakness> weaknesses)
     {
-        Save(@position);
-        this.health = health;
+        Save(pos);
+        health = weaknesses;
     }
 
-    public void Load(Transform refTransform, List<Weakness> refHealth)
+    public void Load(Transform refTransform, List<Weakness> weaknesses)
     {
         Load(refTransform);
-        refHealth = this.health;
+        weaknesses = health;
     }
 }

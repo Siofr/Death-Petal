@@ -14,7 +14,7 @@ public abstract class PuzzleInputBase : EntityBase, IPuzzleInput
     public List<IPuzzleOutput> PuzzleOutputs => _puzzleOutputs;
     public List<Weakness> Weaknesses => _weaknesses;
 
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
         

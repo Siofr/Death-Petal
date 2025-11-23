@@ -9,7 +9,7 @@ public abstract class EntityBase : MonoBehaviour, IEntity
     //Properties
     public List<Weakness> Weaknesses => _weaknesses;
 
-    public void Awake()
+    protected virtual void Awake()
     {
         InitialiseWeaknesses();
     }
