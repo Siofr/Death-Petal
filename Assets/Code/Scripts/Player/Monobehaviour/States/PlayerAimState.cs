@@ -32,7 +32,7 @@ namespace State_Machine
 
         public void HandleShoot()
         {
-            animator.SetTrigger(ShootHash);
+            animator.SetTrigger("Shoot");
             Debug.Log("Handle Shoot");
             if (player.activeTarget == null) 
             {
