@@ -11,6 +11,13 @@ struct EnemyDeathEvent: IEvent
     public EnemyDeathEvent(EnemyBase enemyReference) => enemy = enemyReference;
 }
 
+struct WrongShotEvent : IEvent
+{
+    public EnemyBase enemy;
+
+    public WrongShotEvent(EnemyBase enemyRefrence) => enemy = enemyRefrence;
+}
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBase : MonoBehaviour, IEntity
 {
@@ -119,6 +126,7 @@ public class EnemyBase : MonoBehaviour, IEntity
         target = null;
     }
     
+    //TODO: refactor into an actual event and subsequently remove the WrongShotEvent event
     public void OnShot( Weakness weakness, WeakTypes damageType)
     {
         if (!Weaknesses.Contains(weakness))
@@ -126,7 +134,10 @@ public class EnemyBase : MonoBehaviour, IEntity
         
         if(weakness.WeakType.HasFlag(damageType))
             weakness.RemoveWeakType(damageType);
-        
+        //added by eva please remove upon refactoring/ if causes issues :D 
+        else
+            EventBus<WrongShotEvent>.Raise(new WrongShotEvent(this));
+
         if(weakness.WeakType == WeakTypes.NONE)
         {
             Weaknesses.Remove(weakness);
