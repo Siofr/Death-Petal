@@ -801,7 +801,7 @@ GameObject:
   - component: {fileID: 763188274}
   - component: {fileID: 763188273}
   - component: {fileID: 763188272}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1051,7 +1051,7 @@ GameObject:
   m_Component:
   - component: {fileID: 922187308}
   - component: {fileID: 922187309}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: VCam 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1473,6 +1473,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
   nonRigidbodyVelocity: 0
   attenuationObject: {fileID: 0}
+--- !u!1 &1146843613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1146843615}
+  - component: {fileID: 1146843614}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1146843614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146843613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc317e1c9f014634db1141f067c685a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXManager
+--- !u!4 &1146843615
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146843613}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.28112, y: 0.19678, z: 0.28112}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1193785194
 GameObject:
   m_ObjectHideFlags: 0
@@ -2616,7 +2660,7 @@ GameObject:
   - component: {fileID: 1724083651}
   - component: {fileID: 1724083650}
   - component: {fileID: 1724083653}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Area 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3220,7 +3264,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 677, y: -288}
+  m_AnchoredPosition: {x: 690, y: -290}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2051724633
@@ -3811,6 +3855,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5569318152563602577, guid: 00090865fc084e64aa7c7e3a88701921, type: 3}
+      propertyPath: shootSfxEventPath
+      value: event:/Weapons/Placeholder/shoot
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3870,9 +3918,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4269101041332560210, guid: 99f4407d601346948971df5e49a0f449, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7136695129663064136, guid: 99f4407d601346948971df5e49a0f449, type: 3}
       propertyPath: m_Name
       value: Area 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136695129663064136, guid: 99f4407d601346948971df5e49a0f449, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3889,6 +3945,7 @@ SceneRoots:
   - {fileID: 89865946}
   - {fileID: 2051724637}
   - {fileID: 796690490}
+  - {fileID: 1146843615}
   - {fileID: 2998084000118853583}
   - {fileID: 916585075}
   - {fileID: 1609589393}

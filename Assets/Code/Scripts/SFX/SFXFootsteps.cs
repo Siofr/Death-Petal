@@ -1,46 +1,26 @@
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
+using SFXUtil;
 
 public class SFXFootsteps : MonoBehaviour
 {
-    public string eventPath;
+    public EventReference eventPath;
+    private EventInstance eventInstance;
+
     private PARAMETER_ID _terrainParam;
     private PARAMETER_ID _walkParam;
 
     private void Start()
     {
-        _walkParam = AssignParamID("WalkRun");
-        _terrainParam = AssignParamID("Terrain");
+        _walkParam = SFXUtilities.AssignParamID("WalkRun", eventPath);
+        _terrainParam = SFXUtilities.AssignParamID("Terrain", eventPath);
+
+        eventInstance = SFXUtilities.CreateEventInstance(eventPath, this.gameObject);
     }
 
     public void PlayWalkSFX()
     {
-        PlayFootstep(0);
-    }
-
-    public void PlayRunSFX()
-    {
-        PlayFootstep(1);
-    }
-
-    void PlayFootstep(int motionState)
-    {
-        EventInstance Footstep = RuntimeManager.CreateInstance(eventPath);
-        RuntimeManager.AttachInstanceToGameObject(Footstep, this.gameObject);
-
-        Footstep.setParameterByID(_walkParam, motionState, false);
-
-        Footstep.start();
-        Footstep.release();
-    }
-
-    private PARAMETER_ID AssignParamID(string parameterName)
-    {
-        EventDescription eventDescription = RuntimeManager.GetEventDescription(eventPath);
-        PARAMETER_DESCRIPTION paramDescription;
-        eventDescription.getParameterDescriptionByName(parameterName, out paramDescription);
-
-        return paramDescription.id;
+        EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(eventInstance, this.gameObject));
     }
 }

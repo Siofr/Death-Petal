@@ -33,7 +33,6 @@ namespace State_Machine
         public void HandleShoot()
         {
             animator.SetTrigger("Shoot");
-            Debug.Log("Handle Shoot");
             if (player.activeTarget == null) 
             {
                 EventBus<ShootEvent>.Raise(new ShootEvent(null));
