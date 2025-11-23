@@ -506,7 +506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfeac05673444b4b5bb9a5c931845e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Room
-  _roomCameraTransform: {fileID: 0}
 --- !u!65 &763188273
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -935,6 +934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Weakness
   _weaknessType: 4
   _collider: {fileID: 0}
+  _weaknessIconTransform: {fileID: 0}
 --- !u!135 &1334865495
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1358,6 +1358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Weakness
   _weaknessType: 4
   _collider: {fileID: 0}
+  _weaknessIconTransform: {fileID: 0}
 --- !u!135 &1919372285
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1694,7 +1695,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBase
   _saveData: {fileID: 0}
+  animator: {fileID: 0}
   enemyData: {fileID: 11400000, guid: 3eec9ccb8468afa42879340caeb93e69, type: 2}
+  defaultPos: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
 --- !u!195 &2102873628
 NavMeshAgent:
@@ -1726,6 +1729,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5254198113425051415, guid: 47cbb4d5a310e1b4186116c199939254, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5441344749279382083, guid: 47cbb4d5a310e1b4186116c199939254, type: 3}
       propertyPath: m_Pivot.x
       value: 0
