@@ -77,7 +77,6 @@ public class LevelData : ScriptableObject
         {
             if (@object.TryGetComponent(out ISaveable saveable))
             {
-                if(@object.TryGetComponent(out IEntity entity)) entity.InitialiseWeaknesses();
                 result.Add(saveable, saveable.GetSaveData(this));           
             }
         }

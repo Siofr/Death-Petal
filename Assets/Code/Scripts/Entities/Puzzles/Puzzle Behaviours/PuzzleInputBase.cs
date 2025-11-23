@@ -8,11 +8,8 @@ public abstract class PuzzleInputBase : EntityBase, IPuzzleInput
     
     //Non-Serializable Fields
     private List<IPuzzleOutput> _puzzleOutputs = new List<IPuzzleOutput>();
-    private List<Weakness> _weaknesses;
-    
     //Properties
     public List<IPuzzleOutput> PuzzleOutputs => _puzzleOutputs;
-    public List<Weakness> Weaknesses => _weaknesses;
 
     protected override void Awake()
     {
