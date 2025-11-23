@@ -48,7 +48,7 @@ public class DeathEffects : MonoBehaviour
 
         foreach (var effect in wrongShotEffectObjects)
         {
-            //effect.SetActive(true);
+            effect.SetActive(true);
         }
     }
 }

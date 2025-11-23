@@ -32,6 +32,7 @@ public class ShineSphere : MonoBehaviour
         
         _material.SetFloat("_UnityTime", shineTime);
         
-        print("shine finished");
+        //print("shine finished");
+        gameObject.SetActive(false);
     }
 }

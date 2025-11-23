@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5adc4c43befde449e25ee5e220d1c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBase
+  _saveData: {fileID: 0}
   enemyData: {fileID: 11400000, guid: 3eec9ccb8468afa42879340caeb93e69, type: 2}
   target: {fileID: 0}
 --- !u!1 &7973400897225854533
@@ -293,8 +294,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d378b6040b7afbf4389ec388cbcf5d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathEffects
-  effectObjects:
-  - {fileID: 832164411721448939}
+  deathEffectObjects: []
+  wrongShotEffectObjects: []
 --- !u!1001 &8503452970638762022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -343,6 +344,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5801338590349138372, guid: 0ebebece04e60974f8daeeb67be2e3f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9047208781872176589, guid: 0ebebece04e60974f8daeeb67be2e3f0, type: 3}
       propertyPath: m_Name
       value: FlowerExplosion
@@ -352,11 +357,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ebebece04e60974f8daeeb67be2e3f0, type: 3}
---- !u!1 &832164411721448939 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9047208781872176589, guid: 0ebebece04e60974f8daeeb67be2e3f0, type: 3}
-  m_PrefabInstance: {fileID: 8503452970638762022}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6711698042430841511 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3109428380964979329, guid: 0ebebece04e60974f8daeeb67be2e3f0, type: 3}
