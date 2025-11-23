@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
-public class Weight: MonoBehaviour, IEntity
+public class Weight: EntityBase, ISaveable<PuzzleElementData>
 {
     [Header("Weight Fields")] 
+    [SerializeField] private PuzzleElementData _saveData;
     [SerializeField] private GameObject _linkedOutputObject;
     //[SerializeField] private Bounds _bounds;
     
@@ -16,7 +17,6 @@ public class Weight: MonoBehaviour, IEntity
     [SerializeField] private float _moveDist;
     
     //Non-Serializable Fields
-    private List<Weakness> _weaknesses = new List<Weakness>();
     private IPuzzleOutput _output;
 
     private Coroutine _moveRoutine;
@@ -24,8 +24,8 @@ public class Weight: MonoBehaviour, IEntity
     
     //Properties
     public IPuzzleOutput LinkedOutput => _output;
-    public List<Weakness> Weaknesses => _weaknesses;
-
+    public PuzzleElementData SaveInfo => _saveData;
+    
     private IEnumerator MoveWeightRoutine(bool reset)
     {
         _routineAccess++;
@@ -68,8 +68,8 @@ public class Weight: MonoBehaviour, IEntity
         _moveSpeed = moveSpeed;
         _moveDist = moveDist;
     }
-    
-    public void OnShot(Weakness weakness, WeakTypes damageType)
+
+    public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
         if (!Weaknesses.Contains(weakness) || _moveRoutine != null) return;
 
@@ -86,6 +86,33 @@ public class Weight: MonoBehaviour, IEntity
     
     private void Awake()
     {
+        base.Awake();
         if(_linkedOutputObject != null) _linkedOutputObject.TryGetComponent(out _output);
+    }
+
+    public SaveData GetSaveData(LevelData levelData)
+    {
+        if (_saveData == null)
+        {
+            var dataInstance = ScriptableObject.CreateInstance<PuzzleElementData>();
+            AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
+            
+            _saveData = dataInstance;
+            _saveData.Save(transform.position);
+        }
+        
+        return _saveData;
+    }
+
+    public void LoadSaveData(SaveData levelData)
+    {
+        _saveData = (PuzzleElementData)levelData;
+        
+        _saveData.Load(transform);
+    }
+
+    public void SaveData()
+    {
+        _saveData.Save(transform.position);
     }
 }

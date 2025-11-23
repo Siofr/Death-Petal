@@ -26,7 +26,7 @@ public struct RoomPlayerExitEvent : IEvent
 public class Room : MonoBehaviour
 {
     [SerializeField] private Transform _roomCameraTransform;
-    private BoxCollider _collider;    
+    private BoxCollider _collider;
     
     public Bounds Bounds => _collider.bounds;
     
