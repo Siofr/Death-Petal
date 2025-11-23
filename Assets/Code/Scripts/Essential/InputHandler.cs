@@ -24,6 +24,7 @@ public class InputHandler : MonoBehaviour
     public static event Action ReloadEvent;
     public static event Action LongReloadEvent;
     public static event Action LongReloadCancelledEvent;
+    public static event Action QuickReloadEvent;
 
     public static event Action AimEvent;
     public static event Action AimCancelledEvent;
@@ -124,11 +125,18 @@ public class InputHandler : MonoBehaviour
     {
         if (ctx.phase == InputActionPhase.Performed && ctx.interaction is HoldInteraction)
         {
+            Debug.Log("Reload Start");
             LongReloadEvent?.Invoke();
         }
-        if (ctx.phase == InputActionPhase.Canceled)
+        else if (ctx.phase == InputActionPhase.Canceled)
         {
+            Debug.Log("Reload Cancel");
             LongReloadCancelledEvent?.Invoke();
+        }
+
+        else
+        {
+            QuickReloadEvent?.Invoke();
         }
     }
 

@@ -8,11 +8,9 @@ namespace State_Machine
         protected readonly PlayerManager player;
         protected readonly Animator animator;
 
-        protected static readonly int WalkHash = Animator.StringToHash("Walk");
-        protected static readonly int SprintHash = Animator.StringToHash("Sprint");
-        protected static readonly int IdleHash = Animator.StringToHash("Idle");
-        protected static readonly int AimHash = Animator.StringToHash("Aim");
-        protected static readonly int ReloadHash = Animator.StringToHash("Reload");
+        protected static readonly int SpeedHash = Animator.StringToHash("Speed");
+        protected static readonly int AimHash = Animator.StringToHash("Aiming");
+        protected static readonly int ShootHash = Animator.StringToHash("Shoot");
 
         protected PlayerBaseState(PlayerManager player, Animator animator)
         {

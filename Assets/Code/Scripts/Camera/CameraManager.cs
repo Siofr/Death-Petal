@@ -1,12 +1,15 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 public struct CameraChangeEvent : IEvent
 {
     public Transform transform;
+    public CinemachineCamera cam;
 
-    public CameraChangeEvent (Transform newTransform)
+    public CameraChangeEvent (Transform newTransform, CinemachineCamera newCam)
     {
-        transform = newTransform;
+        this.transform = newTransform;
+        this.cam = newCam;
     }
 }
 
@@ -14,6 +17,7 @@ public class CameraManager : Singleton<CameraManager>
 {
     public Transform activeCam;
     public Transform lastCamTransform;
+    private CinemachineCamera _activeCineCam;
     public EventBindings<CameraChangeEvent> _cameraChangeEventListener;
 
     private void Start()
@@ -24,6 +28,8 @@ public class CameraManager : Singleton<CameraManager>
     public void Initialize()
     {
         lastCamTransform = activeCam;
+        _activeCineCam = activeCam.GetComponent<CinemachineCamera>();
+        _activeCineCam.Priority = 1;
     }
 
     private void OnEnable()
@@ -40,8 +46,12 @@ public class CameraManager : Singleton<CameraManager>
     private void OnChangeCamera(CameraChangeEvent ctx)
     {
         Debug.Log("Camera Changed");
+        // Change Priority instead
         lastCamTransform = activeCam;
+        _activeCineCam.Priority = 0;
+        _activeCineCam = ctx.cam;
         activeCam.gameObject.SetActive(false);
+        _activeCineCam.Priority = 1;
         activeCam = ctx.transform;
         activeCam.gameObject.SetActive(true);
     }
