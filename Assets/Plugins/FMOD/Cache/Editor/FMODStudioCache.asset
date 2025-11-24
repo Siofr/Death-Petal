@@ -20,6 +20,35 @@ MonoBehaviour:
   - Name: Desktop
     Value: 1266
   Exists: 1
+--- !u!114 &-8643609150533855556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Characters/Player Character/Placeholder/footsteps
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Characters/Player Character/Placeholder/footsteps
+  Guid:
+    Data1: 1219859637
+    Data2: 1103861269
+    Data3: 1668588701
+    Data4: 1732037063
+  Banks:
+  - {fileID: 6040658824176098348}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -4854942388765528748}
+  - {fileID: 3367428935809351869}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-8496765804753418632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +228,30 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &-4854942388765528748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/footsteps/walkRun
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: walkRun
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 4239618343
+    data2: 1367911708
+  Type: 1
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &-4597247090232066841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,6 +276,34 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &-4301712981515409468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Weapons/Placeholder/shoot
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Weapons/Placeholder/shoot
+  Guid:
+    Data1: 921784119
+    Data2: 1307219760
+    Data3: 2146561209
+    Data4: -73938475
+  Banks:
+  - {fileID: 6040658824176098348}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 4664125893753109977}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-3305520037871974764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,32 +549,24 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EventCache
   EditorBanks:
-  - {fileID: 1417773257217425584}
-  - {fileID: 6946487748844673881}
+  - {fileID: 6111956806373418789}
+  - {fileID: 6040658824176098348}
   EditorEvents:
-  - {fileID: 8055329968964817260}
-  - {fileID: 3164275995888188500}
-  - {fileID: 254767497876883361}
-  - {fileID: 184574815772466352}
-  - {fileID: -1557693991137555022}
+  - {fileID: 1846004374508406727}
+  - {fileID: -4301712981515409468}
+  - {fileID: 2742019659560465682}
+  - {fileID: -8643609150533855556}
+  - {fileID: 337615401124413675}
   EditorParameters: []
   MasterBanks:
-  - {fileID: 6946487748844673881}
+  - {fileID: 6040658824176098348}
   StringsBanks:
-  - {fileID: 1417773257217425584}
+  - {fileID: 6111956806373418789}
   cacheVersion: 131849
-  cacheTime: 638995833855325658
+  cacheTime: 638996063732336601
   SerializableEventsDict:
-  - key: event:/Weapons/Placeholder/shoot
-    index: 0
-  - key: snapshot:/Reverb Room/Reverb Room
-    index: 1
-  - key: event:/Characters/Player Character/Placeholder/footsteps
-    index: 2
   - key: event:/Test/Click Test
-    index: 3
-  - key: event:/Weapons/Placeholder/addRemoveBullet
-    index: 4
+    index: 0
 --- !u!114 &158568789112321128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,6 +648,34 @@ MonoBehaviour:
   Parameters:
   - {fileID: 8844036513161359795}
   - {fileID: -1099736840833673826}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &337615401124413675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Weapons/Placeholder/addRemoveBullet
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Weapons/Placeholder/addRemoveBullet
+  Guid:
+    Data1: 935302332
+    Data2: 1218877414
+    Data3: -1841470556
+    Data4: 193580785
+  Banks:
+  - {fileID: 6040658824176098348}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 5878381486264065283}
   MinDistance: 1
   MaxDistance: 20
   Length: 0
@@ -769,6 +870,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &2742019659560465682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: snapshot:/Reverb Room/Reverb Room
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: snapshot:/Reverb Room/Reverb Room
+  Guid:
+    Data1: -916298866
+    Data2: 1078979019
+    Data3: -1871299431
+    Data4: -986012743
+  Banks:
+  - {fileID: 6040658824176098348}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
 --- !u!114 &3164275995888188500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -796,6 +924,30 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
+--- !u!114 &3367428935809351869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/footsteps/Terrain
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Terrain
+  StudioPath: 
+  Min: 0
+  Max: 6
+  Default: 0
+  ID:
+    data1: 3161660159
+    data2: 2931364032
+  Type: 1
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &3681422739869240076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -867,7 +1019,55 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 227
+--- !u!114 &4664125893753109977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shoot/BulletLeft
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: BulletLeft
+  StudioPath: 
+  Min: 0
+  Max: 6
+  Default: 0
+  ID:
+    data1: 231920539
+    data2: 3689592368
+  Type: 1
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &5822569177562406050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/addRemoveBullet/AddRemoveBullet
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: AddRemoveBullet
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 3814497342
+    data2: 3365436511
+  Type: 1
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &5878381486264065283
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -906,10 +1106,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638994514300000000
+  lastModified: 638996063732326557
   FileSizes:
   - Name: Desktop
-    Value: 28864
+    Value: 35552
   Exists: 1
 --- !u!114 &6111956806373418789
 MonoBehaviour:
@@ -926,10 +1126,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638994514300000000
+  lastModified: 638996063732336601
   FileSizes:
   - Name: Desktop
-    Value: 1064
+    Value: 1266
   Exists: 1
 --- !u!114 &6482042051473157699
 MonoBehaviour:
