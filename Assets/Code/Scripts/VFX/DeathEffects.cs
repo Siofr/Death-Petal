@@ -26,6 +26,8 @@ public class DeathEffects : MonoBehaviour
 
     private void OnDeath(EnemyDeathEvent ctx)
     {
+        print("enemy died particles spawning");
+        
         if (ctx.enemy != GetComponentInParent<EnemyBase>())
             return;
         
@@ -43,12 +45,13 @@ public class DeathEffects : MonoBehaviour
 
     private void OnWrongShot(WrongShotEvent ctx)
     {
+        print("wrong shot particles spawning");
         if (ctx.enemy != GetComponentInParent<EnemyBase>())
             return;
 
         foreach (var effect in wrongShotEffectObjects)
         {
-            //effect.SetActive(true);
+            effect.SetActive(true);
         }
     }
 }

@@ -8,6 +8,7 @@ namespace State_Machine
         CharacterController _cc;
         public Animator _animator;
         public Transform activeCam;
+        public Transform newActiveCam;
         public BulletSO[] bulletTypes;
         private Camera _mainCam;
         private float _ySpeed;
@@ -31,12 +32,19 @@ namespace State_Machine
         private PlayerAimState _aimState;
         private PlayerIdleState _idleState;
 
+        private EventBindings<CameraChangeEvent> _cameraChangeEventListener;
+
         [SerializeField]
         private Material[] playerDependentMaterials;
 
         protected override void Awake()
         {
             base.Awake();
+
+            newActiveCam = activeCam;
+
+            _cameraChangeEventListener = new EventBindings<CameraChangeEvent>(OnChangeCamera);
+
             _cc = GetComponent<CharacterController>();
             _animator = GetComponentInChildren<Animator>();
             _mainCam = Camera.main;
@@ -48,6 +56,8 @@ namespace State_Machine
 
         private void OnEnable()
         {
+            EventBus<CameraChangeEvent>.Register(_cameraChangeEventListener);
+
             InputHandler.AimEvent += OnAim;
             InputHandler.SprintEvent += OnSprint;
             InputHandler.LongReloadEvent += OnReloadStart;
@@ -207,20 +217,28 @@ namespace State_Machine
         {
             RaycastHit hit;
             Weakness weakness;
-
+            Debug.Log("Shoot forward" + transform.forward);
             if (Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit, 30))
             {
-                if (hit.transform.TryGetComponent<Weakness>(out weakness) && hit.transform != activeTarget)
+                if (hit.transform.TryGetComponent<Weakness>(out weakness))
                 {
-                    activeTarget = hit.transform;
-                    EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(hit.transform));
+                    if (hit.transform != activeTarget)
+                    {
+                        activeTarget = hit.transform;
+                        EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(hit.transform));
+                    }
+
+                    return;
                 }
             }
 
-            if (activeTarget) return;
-
             activeTarget = null;
             EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
+        }
+
+        private void OnChangeCamera(CameraChangeEvent ctx)
+        {
+            newActiveCam = ctx.cam.transform;
         }
     }
 }
