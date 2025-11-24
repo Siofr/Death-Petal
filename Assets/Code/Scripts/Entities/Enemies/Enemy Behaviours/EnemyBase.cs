@@ -159,9 +159,14 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
             Weaknesses.Remove(weakness);
             Destroy(weakness.gameObject);
         }
-        
-        if(Weaknesses.Count == 0)
+
+        if (Weaknesses.Count == 0)
+        {
+            animator.SetTrigger("Death");
             EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));
+        }
+
+        
     }
 
     public SaveData GetSaveData(LevelData levelData)
