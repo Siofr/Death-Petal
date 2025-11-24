@@ -2,6 +2,11 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+public struct PlayerDamagedEvent : IEvent
+{
+    
+}
+
 public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
 {
     [SerializeField]
@@ -20,7 +25,9 @@ public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
         if (damageType == WeakTypes.PLAYER)
         {
             Weaknesses.Remove(weakness);
-            Destroy(weakness.gameObject);   
+            Destroy(weakness.gameObject);
+
+            EventBus<PlayerDamagedEvent>.Raise(new PlayerDamagedEvent());
         }
         
         if (Weaknesses.Count < 1)
