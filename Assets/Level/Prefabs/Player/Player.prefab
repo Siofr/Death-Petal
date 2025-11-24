@@ -187,6 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
   _animator: {fileID: 0}
   activeCam: {fileID: 0}
+  newActiveCam: {fileID: 0}
   bulletTypes:
   - {fileID: 11400000, guid: 10fedb77a8a8a03428b6a0bd9794af24, type: 2}
   - {fileID: 11400000, guid: adaef4b4914884a429570ed2efab51ea, type: 2}
@@ -202,6 +203,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 9ca328d04ca385d448299a495839286a, type: 2}
   - {fileID: 2100000, guid: a4f29bea978a9d9459fc41a7d926c690, type: 2}
   - {fileID: -876546973899608171, guid: f38a24c496103f04f8f424d1dff04d4a, type: 3}
+  - {fileID: 2100000, guid: b29b855caf3ef7d40ae7c5de1612203d, type: 2}
 --- !u!114 &5569318152563602577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -787,7 +789,10 @@ PrefabInstance:
       addedObject: {fileID: 1971263939375084536}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a052453e46b20954fb2be80eb50991cb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6098313729686679276}
+      addedObject: {fileID: 1090839714884340544}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a052453e46b20954fb2be80eb50991cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2902325352879853543}
   m_SourcePrefab: {fileID: 100100000, guid: a052453e46b20954fb2be80eb50991cb, type: 3}
 --- !u!1 &2483839008051085313 stripped
 GameObject:
@@ -813,7 +818,26 @@ MonoBehaviour:
       Data3: 1668588701
       Data4: 1732037063
     Path: event:/Characters/Player Character/Placeholder/footsteps
---- !u!82 &6098313729686679276
+--- !u!114 &1090839714884340544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483839008051085313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 543dc9f80c05fd147862bdc4f1a859d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXFootsteps
+  eventPath:
+    Guid:
+      Data1: 1219859637
+      Data2: 1103861269
+      Data3: 1668588701
+      Data4: 1732037063
+    Path: event:/Characters/Player Character/Placeholder/footsteps
+--- !u!82 &2902325352879853543
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
