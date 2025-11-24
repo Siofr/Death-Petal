@@ -7,6 +7,8 @@ public class EnemyMaterialController : MonoBehaviour
     [SerializeField]
     private Renderer[] animatedRenderers;
 
+    [SerializeField] private GameObject parent;
+
     public void Disintegrate()
     {
         StartCoroutine(AnimateDisintegration());
@@ -23,5 +25,7 @@ public class EnemyMaterialController : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
+        
+        Destroy(parent);
     }
 }
