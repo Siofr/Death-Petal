@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 
 public struct PlayerDamageEvent: IEvent{ }
 
+public struct PlayerDamagedEvent : IEvent
+{
+    
+}
+
 public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
 {
     [SerializeField]
@@ -25,7 +30,10 @@ public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
         {
             EventBus<PlayerDamageEvent>.Raise(new PlayerDamageEvent());
             Weaknesses.Remove(weakness);
+
             Destroy(weakness.transform.parent.gameObject);   
+            EventBus<PlayerDamagedEvent>.Raise(new PlayerDamagedEvent());
+
         }
         
         if (Weaknesses.Count < 1)
