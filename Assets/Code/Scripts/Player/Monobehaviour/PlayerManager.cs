@@ -119,10 +119,10 @@ namespace State_Machine
             _movement = new Vector3(movementDirection.x, 0, movementDirection.y);
             _aim = aimDirection;
             
-            //foreach (var playerDependentMaterial in playerDependentMaterials)
-            //{
-            //    playerDependentMaterial.SetVector("_PlayerPosition", transform.position);
-            //}
+            foreach (var playerDependentMaterial in playerDependentMaterials)
+            {
+                playerDependentMaterial.SetVector("_PlayerPosition", transform.position);
+            }
 
             stateMachine.Update();
         }
