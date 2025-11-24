@@ -1,25 +1,29 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+public struct PlayerDamageEvent: IEvent{ }
 
 public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
 {
     [SerializeField]
     private PlayerSaveData _saveData;
     public PlayerSaveData SaveInfo => _saveData;
-
+    
     public void Awake()
     {
         base.Awake();
     }
-    
+
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
         if (!Weaknesses.Contains(weakness)) return;
 
         if (damageType == WeakTypes.PLAYER)
         {
+            EventBus<PlayerDamageEvent>.Raise(new PlayerDamageEvent());
             Weaknesses.Remove(weakness);
             Destroy(weakness.transform.parent.gameObject);   
         }

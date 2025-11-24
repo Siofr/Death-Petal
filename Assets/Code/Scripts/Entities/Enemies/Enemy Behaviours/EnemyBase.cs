@@ -37,9 +37,12 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     
     [NonSerialized]
     public Coroutine attackRoutine = null;
+
+    private bool _isDead;
     
     //Properties
     public EnemySaveData SaveInfo => _saveData;
+    public bool IsDead => _isDead;
     
     //Events
     private EventBindings<RoomPlayerEnterEvent> _playerRoomEnterEventListener;
@@ -70,12 +73,15 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         var idleState = new EnemyIdleState(this);
         var chaseState = new EnemyChaseState(this);
         var attackState = new EnemyAttackState(this);
+        var deathState = new EnemyDeathState(this);
         
         _enemyStateMachine.AddTransition(idleState, chaseState, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
         _enemyStateMachine.AddTransition(chaseState, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
         
         _enemyStateMachine.AddTransition(chaseState, attackState, new FuncPredicate( ()=>InAttackRange() ));
         _enemyStateMachine.AddTransition(attackState, idleState, new FuncPredicate( ()=>!InAttackRange() && attackRoutine == null));
+        
+        _enemyStateMachine.AddAnyTransition(deathState, new FuncPredicate( ()=>IsDead ) );
         
         _enemyStateMachine.SetState(idleState);
         
@@ -109,6 +115,11 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     public bool InDefaultPosRange()
     {
         return Vector3.Distance(transform.position, defaultPos) < 1f;
+    }
+    
+    public void ClearPath()
+    {
+        _nmAgent.ResetPath();
     }
     
     public void SetTarget(Transform target)
@@ -164,9 +175,8 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         {
             animator.SetTrigger("Death");
             EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));
+            _isDead = true;
         }
-
-        
     }
 
     public SaveData GetSaveData(LevelData levelData)
