@@ -81,6 +81,6 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
 
     public void SaveData()
     {
-        _saveData.Load(transform, IsSolved);
+        _saveData.Save(transform.position, IsSolved);
     }
 }

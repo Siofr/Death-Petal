@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
 {
@@ -20,12 +21,12 @@ public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
         if (damageType == WeakTypes.PLAYER)
         {
             Weaknesses.Remove(weakness);
-            Destroy(weakness.gameObject);   
+            Destroy(weakness.transform.parent.gameObject);   
         }
         
         if (Weaknesses.Count < 1)
         {
-            Destroy(gameObject);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
     }
 

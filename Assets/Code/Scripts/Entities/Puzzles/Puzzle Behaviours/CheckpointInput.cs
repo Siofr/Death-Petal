@@ -25,7 +25,7 @@ public class CheckpointInput : PuzzleInputBase
         }
     }
 
-    [YarnCommand("update_checkpoint")]
+    [YarnCommand("update_checkpoint(saveSkullID)")]
     public void UpdateCheckpoint(float id)
     {
         if (_id != id) return;
