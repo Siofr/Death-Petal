@@ -8,8 +8,10 @@ namespace State_Machine
 
         public override void OnEnter()
         {
+            animator.SetBool(AimHash, true);
             EventBus<AimEvent>.Raise(new AimEvent());
             player.currentSpeed = player.playerAimSpeed;
+            InputHandler.AttackEvent += HandleShoot;
         }
 
         public override void Update()
@@ -21,23 +23,25 @@ namespace State_Machine
 
         public override void OnExit()
         {
+            animator.SetBool(AimHash, false);
             EventBus<AimEvent>.Raise(new AimEvent());
             EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
+            InputHandler.AttackEvent -= HandleShoot;
             player.currentSpeed = player.playerWalkSpeed;
         }
 
         public void HandleShoot()
         {
+            animator.SetTrigger(ShootHash);
             Debug.Log("Handle Shoot");
-            if (PlayerManager.Instance.activeTarget == null) 
+            if (player.activeTarget == null) 
             {
                 EventBus<ShootEvent>.Raise(new ShootEvent(null));
                 return;
             }
 
-            Weakness weakness = PlayerManager.Instance.activeTarget.GetComponent<Weakness>();
+            Weakness weakness = player.activeTarget.GetComponent<Weakness>();
             EventBus<ShootEvent>.Raise(new ShootEvent(weakness));
         }
     }
 }
-

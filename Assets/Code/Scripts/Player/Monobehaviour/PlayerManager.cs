@@ -1,5 +1,4 @@
 using State_Machine;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 namespace State_Machine
@@ -7,10 +6,11 @@ namespace State_Machine
     public class PlayerManager : Singleton<PlayerManager>
     {
         CharacterController _cc;
-        Animator _animator;
+        public Animator _animator;
         public Transform activeCam;
         public BulletSO[] bulletTypes;
         private Camera _mainCam;
+        private float _ySpeed;
 
         public float playerWalkSpeed;
         public float playerSprintSpeed;
@@ -35,7 +35,7 @@ namespace State_Machine
         {
             base.Awake();
             _cc = GetComponent<CharacterController>();
-            _animator = GetComponent<Animator>();
+            _animator = GetComponentInChildren<Animator>();
             _mainCam = Camera.main;
 
             currentSpeed = playerWalkSpeed;
@@ -47,18 +47,20 @@ namespace State_Machine
         {
             InputHandler.AimEvent += OnAim;
             InputHandler.SprintEvent += OnSprint;
-            InputHandler.LongReloadEvent += OnReload;
-            InputHandler.HotkeyEvent += _reloadState.AddBullet;
-            InputHandler.AttackEvent += _aimState.HandleShoot;
+            InputHandler.LongReloadEvent += OnReloadStart;
+            InputHandler.LongReloadCancelledEvent += OnReloadCancel;
+            InputHandler.QuickReloadEvent += OnQuickReload;
         }
 
         private void OnDisable()
         {
             InputHandler.AimEvent -= OnAim;
             InputHandler.SprintEvent -= OnSprint;
-            InputHandler.LongReloadEvent -= OnReload;
+            InputHandler.LongReloadEvent -= OnReloadStart;
+            InputHandler.LongReloadCancelledEvent -= OnReloadCancel;
             InputHandler.HotkeyEvent -= _reloadState.AddBullet;
             InputHandler.AttackEvent -= _aimState.HandleShoot;
+            InputHandler.QuickReloadEvent -= OnQuickReload;
         }
 
         void SetupStateMachine()
@@ -122,14 +124,19 @@ namespace State_Machine
             _isAiming = false;
         }
 
-        void OnReload()
+        void OnReloadStart()
         {
-            if (!_isReloading)
-            {
-                _isReloading = true;
-                return;
-            }
-            _isReloading = false;
+            _isReloading = true;
+        }
+
+        void OnReloadCancel()
+        {
+            if (_isReloading) _isReloading = false;
+        }
+
+        void OnQuickReload()
+        {
+            EventBus<QuickReload>.Raise(new QuickReload());
         }
 
         void OnSprint()
@@ -161,12 +168,20 @@ namespace State_Machine
             Vector3 camForward = Vector3.ProjectOnPlane(activeCam.transform.forward, GetPlaneNormal());
             Vector3 camRight = Vector3.ProjectOnPlane(activeCam.transform.right, GetPlaneNormal());
 
-            Vector3 dir = camForward * _movement.z + camRight * _movement.x;
+            Vector3 dir = (camForward * _movement.z + camRight * _movement.x).normalized;
             lookDir = dir;
+
+            if (_cc.isGrounded) _ySpeed = 0;
+
+            if (lookDir == Vector3.zero) _animator.SetFloat("Speed", 0.0f);
+            else _animator.SetFloat("Speed", Mathf.Clamp(currentSpeed / 10, 0.0f, 1.0f));
+
+            _ySpeed -= 9.8f * Time.deltaTime;
 
             transform.LookAt(transform.position + lookDir.normalized);
 
-            _cc.Move(dir.normalized * currentSpeed * Time.deltaTime);
+            dir.y = _ySpeed;
+            _cc.Move(dir * currentSpeed * Time.deltaTime);
         }
 
         public void HandleLook()
