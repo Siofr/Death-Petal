@@ -154,6 +154,7 @@ namespace State_Machine
 
         void OnQuickReload()
         {
+            _animator.SetTrigger("Reload");
             EventBus<QuickReload>.Raise(new QuickReload());
         }
 
