@@ -82,6 +82,11 @@ public class InputHandler : MonoBehaviour
         MOVE.Disable();
         INTERACT.Disable();
         LOOK.Disable();
+        AIM.Disable();
+        ATTACK.Disable();
+        RELOAD.Disable();
+        SPRINT.Disable();
+        HOTKEY.Disable();
     }
 
     private void OnMovePerformed(InputAction.CallbackContext ctx)
@@ -123,20 +128,13 @@ public class InputHandler : MonoBehaviour
 
     private void OnReload(InputAction.CallbackContext ctx)
     {
-        if (ctx.phase == InputActionPhase.Performed && ctx.interaction is HoldInteraction)
+        if (ctx.phase == InputActionPhase.Performed)
         {
-            Debug.Log("Reload Start");
             LongReloadEvent?.Invoke();
         }
-        else if (ctx.phase == InputActionPhase.Canceled)
+        if (ctx.phase == InputActionPhase.Canceled)
         {
-            Debug.Log("Reload Cancel");
             LongReloadCancelledEvent?.Invoke();
-        }
-
-        else
-        {
-            QuickReloadEvent?.Invoke();
         }
     }
 

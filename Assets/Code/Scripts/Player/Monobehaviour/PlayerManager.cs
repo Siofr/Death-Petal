@@ -119,10 +119,10 @@ namespace State_Machine
             _movement = new Vector3(movementDirection.x, 0, movementDirection.y);
             _aim = aimDirection;
             
-            foreach (var playerDependentMaterial in playerDependentMaterials)
-            {
-                playerDependentMaterial.SetVector("_PlayerPosition", transform.position);
-            }
+            //foreach (var playerDependentMaterial in playerDependentMaterials)
+            //{
+            //    playerDependentMaterial.SetVector("_PlayerPosition", transform.position);
+            //}
 
             stateMachine.Update();
         }
@@ -224,16 +224,16 @@ namespace State_Machine
                 {
                     if (hit.transform != activeTarget)
                     {
-                        activeTarget = hit.transform;
-                        EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(hit.transform));
+                        //activeTarget = hit.transform;
+                        //EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(hit.transform));
                     }
 
                     return;
                 }
             }
 
-            activeTarget = null;
-            EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
+            //activeTarget = null;
+            //EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
         }
 
         private void OnChangeCamera(CameraChangeEvent ctx)
