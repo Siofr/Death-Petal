@@ -48,7 +48,7 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
         for (float i = 0; i < 1; i += Time.deltaTime / _moveSpeed)
         {
             transform.position = Vector3.Lerp(initPos, target, i);
-
+            EventBus<WeightShotEvent>.Raise(new WeightShotEvent(this));
             yield return null;
         }
 
