@@ -25,7 +25,9 @@ public class Weakness : MonoBehaviour
     
     public WeakTypes WeakType => _weaknessType;
     public IEntity ParentEntity => _parentEntity;
-
+    
+    public Transform WeaknessIconTransform => _weaknessIconTransform;
+    
     public void RemoveWeakType(WeakTypes weakType)
     {
         _weaknessType &= ~weakType;

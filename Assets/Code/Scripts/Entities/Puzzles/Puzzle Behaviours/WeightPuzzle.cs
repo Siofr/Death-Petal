@@ -1,6 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct WeightShotEvent: IEvent
+{
+    public Weight weight;
+    public Collider collider;
+    
+    public WeightShotEvent(Weight value)
+    {
+        weight = value;
+        collider = weight.GetComponent<Collider>();
+    }
+}
+
 public class WeightPuzzle : PuzzleInputBase
 {
     [Header("Weight Puzzle Fields")] 
@@ -13,9 +25,32 @@ public class WeightPuzzle : PuzzleInputBase
     
     //Non-Serializable Fields   
     private Dictionary<Collider, Weight> _weightColliders = new Dictionary<Collider, Weight>();
+    private Collider _puzzleCollider;
     
     //Properties
     public List<Weight> Weights => _weights;
+    
+    //Events
+    public EventBindings<WeightShotEvent> _weightShotEventListener;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        InitializeWeights();
+        _puzzleCollider = TryGetComponent(out Collider temp) ? temp : null;
+    }
+
+    private void OnEnable()
+    {
+        _weightShotEventListener = new EventBindings<WeightShotEvent>(OnWeightShot);
+        
+        EventBus<WeightShotEvent>.Register(_weightShotEventListener);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<WeightShotEvent>.Unregister(_weightShotEventListener);
+    }
     
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
@@ -63,36 +98,21 @@ public class WeightPuzzle : PuzzleInputBase
         }
     }
     
-    private void Start()
+
+    private void OnWeightShot(WeightShotEvent context)
     {
-        InitializeWeights();
-    }
-    
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Weight"))
+        if (_puzzleCollider.bounds.Intersects(context.collider.bounds))
         {
-            Debug.Log("Checking Weights");
-            
-            if(!_weightColliders.ContainsKey(other) && other.TryGetComponent(out Weight weight))
+            if (!_weightColliders.ContainsKey(context.collider))
             {
-                _weightColliders.Add(other, weight);
+                _weightColliders.Add(context.collider, context.weight);       
             }
-            
-            CheckCompletionConditions();
         }
-
-        Debug.Log(other.gameObject.name);
-        Debug.Log($"Number of Weight Collider {_weightColliders.Count}");
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Weight"))
+        else
         {
-            _weightColliders.Remove(other);
-            
-            CheckCompletionConditions();
+            _weightColliders.Remove(context.collider);
         }
+        
+        CheckCompletionConditions();
     }
 }
