@@ -8,6 +8,8 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
     [Header("Weight Fields")] 
     [SerializeField] private PuzzleElementData _saveData;
     [SerializeField] private GameObject _linkedOutputObject;
+
+    
     //[SerializeField] private Bounds _bounds;
     
     [SerializeField] private int _moveSteps;
