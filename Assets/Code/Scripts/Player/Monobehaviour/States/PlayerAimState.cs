@@ -26,6 +26,7 @@ namespace State_Machine
             animator.SetBool(AimHash, false);
             EventBus<AimEvent>.Raise(new AimEvent());
             EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
+            player.activeTarget = null;
             InputHandler.AttackEvent -= HandleShoot;
             player.currentSpeed = player.playerWalkSpeed;
         }

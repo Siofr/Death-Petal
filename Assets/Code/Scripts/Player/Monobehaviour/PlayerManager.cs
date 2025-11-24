@@ -220,14 +220,17 @@ namespace State_Machine
             Debug.Log("Shoot forward" + transform.forward);
             if (Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit, 30))
             {
-                if (hit.transform.TryGetComponent<Weakness>(out weakness) && hit.transform != activeTarget)
+                if (hit.transform.TryGetComponent<Weakness>(out weakness))
                 {
-                    activeTarget = hit.transform;
-                    EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(hit.transform));
+                    if (hit.transform != activeTarget)
+                    {
+                        activeTarget = hit.transform;
+                        EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(hit.transform));
+                    }
+
+                    return;
                 }
             }
-
-            if (activeTarget) return;
 
             activeTarget = null;
             EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
