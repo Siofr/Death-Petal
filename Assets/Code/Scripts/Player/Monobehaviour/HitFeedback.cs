@@ -16,6 +16,19 @@ public class HitFeedback : MonoBehaviour
 
     private Vignette _vignette;
 
+    private EventBindings<PlayerDamageEvent> _playerDamageEventListener;
+    
+    private void OnEnable()
+    {
+        _playerDamageEventListener = new EventBindings<PlayerDamageEvent>(OnEnemyHit);
+        EventBus<PlayerDamageEvent>.Register(_playerDamageEventListener);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<PlayerDamageEvent>.Unregister(_playerDamageEventListener);
+    }
+    
     private void Awake()
     {
         globalProfile.TryGet<Vignette>(out _vignette);
