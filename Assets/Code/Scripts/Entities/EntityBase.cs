@@ -9,21 +9,22 @@ public abstract class EntityBase : MonoBehaviour, IEntity
     //Properties
     public List<Weakness> Weaknesses => _weaknesses;
 
-    public void Awake()
+    protected virtual void Awake()
     {
         InitialiseWeaknesses();
     }
     
     public void InitialiseWeaknesses()
     {
-        var weaknesses = GetComponentsInChildren<Weakness>();
+        if (_weaknesses == null) return;
         
-        if(weaknesses != null)
+        var weaknesses = GetComponentsInChildren<Weakness>();
+
+        if (weaknesses == null) return;
+        
+        foreach (var weakness in weaknesses)
         {
-            foreach (var weakness in weaknesses)
-            {
-                _weaknesses.Add(weakness);
-            }
+            _weaknesses.Add(weakness);
         }
     }
 

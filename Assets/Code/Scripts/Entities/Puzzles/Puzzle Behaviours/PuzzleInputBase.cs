@@ -8,13 +8,10 @@ public abstract class PuzzleInputBase : EntityBase, IPuzzleInput
     
     //Non-Serializable Fields
     private List<IPuzzleOutput> _puzzleOutputs = new List<IPuzzleOutput>();
-    private List<Weakness> _weaknesses;
-    
     //Properties
     public List<IPuzzleOutput> PuzzleOutputs => _puzzleOutputs;
-    public List<Weakness> Weaknesses => _weaknesses;
 
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
         
@@ -26,6 +23,7 @@ public abstract class PuzzleInputBase : EntityBase, IPuzzleInput
 
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
+        if (!Weaknesses.Contains(weakness)) return;
     }
 
     public bool CompletionCondition(bool condition, IPuzzleOutput targetOutput)

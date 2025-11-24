@@ -81,7 +81,7 @@ public class UIRevolverIndicator : MonoBehaviour
         if (currentBullet >= bulletSprites.Length) return;
 
         bulletSprites[currentBullet].enabled = true;
-        bulletSprites[currentBullet].color = ctx.bulletType.bulletColor;
+        bulletSprites[currentBullet].sprite = ctx.bulletType.bulletSprite;
         currentBullet += 1;
         Rotate(1, 30, 0.05f);
     }
@@ -91,8 +91,8 @@ public class UIRevolverIndicator : MonoBehaviour
         // Rotate barrel in specified direction
         int zRot = Mathf.RoundToInt(transform.eulerAngles.z);
 
-        if ((zRot + 30) / 30 % 2 == 0) { zRot = zRot + (angle * 2) * direction; }
-        else { zRot = zRot + angle * direction; }
+        if ((zRot + 30) / 30 % 2 == 0) {  zRot = zRot + angle * direction; }
+        else { zRot = zRot + (angle * 2) * direction; }
 
         Vector3 rot = new Vector3(0, 0, zRot);
         transform.DORotate(rot, speed, RotateMode.FastBeyond360);

@@ -14,5 +14,12 @@ public class EntityBaseEditor : Editor
             
             entityBase.InitialiseWeaknesses();
         }
+
+        if (GUILayout.Button("Test OnShot Success"))
+        {
+            EntityBase entityBase = (EntityBase) target;
+            
+            entityBase.OnShot(entityBase.Weaknesses[0], entityBase.Weaknesses[0].WeakType);
+        }
     }
 }

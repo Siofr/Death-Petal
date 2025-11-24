@@ -1,4 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using State_Machine;
+using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 public class EnemyBaseState : IState
@@ -23,5 +26,22 @@ public class EnemyBaseState : IState
 
     public virtual void OnExit()
     {
+    }
+    
+    public IEnumerator LerpBlendState(string blendName, float targetValue, float time)
+    {
+        var blendVariableID = Animator.StringToHash(blendName);
+        
+        var startValue = enemyController.animator.GetFloat(blendVariableID);
+        var lerpValue = 0f;
+
+        while (lerpValue < 1)
+        {
+            enemyController.animator.SetFloat(blendVariableID, Mathf.Lerp(startValue, targetValue, lerpValue));
+            lerpValue += Time.deltaTime / time;
+            yield return null;
+        }
+
+        enemyController.animator.SetFloat(blendVariableID, Mathf.Lerp(startValue, targetValue, 1));
     }
 }

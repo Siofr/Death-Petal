@@ -31,6 +31,9 @@ namespace State_Machine
         private PlayerAimState _aimState;
         private PlayerIdleState _idleState;
 
+        [SerializeField]
+        private Material[] playerDependentMaterials;
+
         protected override void Awake()
         {
             base.Awake();
@@ -105,6 +108,11 @@ namespace State_Machine
 
             _movement = new Vector3(movementDirection.x, 0, movementDirection.y);
             _aim = aimDirection;
+            
+            foreach (var playerDependentMaterial in playerDependentMaterials)
+            {
+                playerDependentMaterial.SetVector("_PlayerPosition", transform.position);
+            }
 
             stateMachine.Update();
         }
@@ -202,14 +210,16 @@ namespace State_Machine
 
             if (Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit, 30))
             {
-                if (hit.transform.TryGetComponent<Weakness>(out weakness))
+                if (hit.transform.TryGetComponent<Weakness>(out weakness) && hit.transform != activeTarget)
                 {
                     activeTarget = hit.transform;
                     EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(hit.transform));
-                    return;
                 }
             }
 
+            if (activeTarget) return;
+
+            activeTarget = null;
             EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
         }
     }
