@@ -157,7 +157,7 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         if(weakness.WeakType == WeakTypes.NONE)
         {
             Weaknesses.Remove(weakness);
-            Destroy(weakness.gameObject);
+            Destroy(weakness.transform.parent.gameObject);
         }
         
         if(Weaknesses.Count == 0)

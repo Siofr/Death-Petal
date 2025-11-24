@@ -26,6 +26,8 @@ public class DeathEffects : MonoBehaviour
 
     private void OnDeath(EnemyDeathEvent ctx)
     {
+        print("enemy died particles spawning");
+        
         if (ctx.enemy != GetComponentInParent<EnemyBase>())
             return;
         
