@@ -17,7 +17,7 @@ public class LevelData : ScriptableObject
     public Dictionary<ISaveable, SaveData> Saveables => saveables;
     public Dictionary<ISaveable, SaveData> DefaultSaveables => defaultSaveables;
     
-    public void SaveLevelData(ref Dictionary<ISaveable, SaveData> saveRef)
+    public void SaveLevelData(Dictionary<ISaveable, SaveData> saveRef)
     {
         var tempSaveables = FindSaveables();
 
@@ -36,7 +36,7 @@ public class LevelData : ScriptableObject
         saveRef = tempSaveables;
     }   
 
-    public void LoadLevelData(ref Dictionary<ISaveable, SaveData> loadRef)
+    public void LoadLevelData(Dictionary<ISaveable, SaveData> loadRef)
     {
         var tempSaveables = loadRef;
         

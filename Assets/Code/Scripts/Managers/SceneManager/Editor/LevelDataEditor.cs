@@ -13,14 +13,14 @@ public class LevelDataEditor : Editor
         {
             LevelData levelData = (LevelData) target;
             
-            levelData.SaveLevelData(ref levelData.defaultSaveables);    
+            levelData.SaveLevelData(levelData.defaultSaveables);    
         }
         
         if (GUILayout.Button("Load Default Save Data"))
         {
             LevelData levelData = (LevelData) target;
             
-            levelData.LoadLevelData(ref levelData.defaultSaveables);    
+            levelData.LoadLevelData(levelData.defaultSaveables);    
         }
 
         if (GUILayout.Button("Clear Save Data"))
