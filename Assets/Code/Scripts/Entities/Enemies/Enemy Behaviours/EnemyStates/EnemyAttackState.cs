@@ -24,7 +24,7 @@ public class EnemyAttackState : EnemyBaseState
         }
         
         Debug.Log("Attack Phase Over");
-
+        
         enemyController.attackRoutine = null;
     }
     
@@ -33,8 +33,10 @@ public class EnemyAttackState : EnemyBaseState
         Debug.Log("Entering Attack State");
         //enemyController.SetTarget(null);
         
-        enemyController.animator.SetBool(Animator.StringToHash("Attack"), true);
+        enemyController.StopAllCoroutines();
+        enemyController.animator.SetFloat(Animator.StringToHash("Blend"),0f);
         
+        enemyController.animator.SetBool(Animator.StringToHash("Attack"), true);
         enemyController.attackRoutine = enemyController.StartCoroutine(DealDamage(enemyController.enemyData.attackSpeed));
     }
 
