@@ -64,7 +64,7 @@ public class PlayerGun : MonoBehaviour
 
     public void Initialize(StartLongReload ctx)
     {
-        bulletIndex = 0;
+        // bulletIndex = 0;
     }
 
     private void QuickReload()

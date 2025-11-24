@@ -8,6 +8,7 @@ public class UIRevolverIndicator : MonoBehaviour
     public Image[] bulletSprites = new Image[6];
     private Color[] lastBulletColors = new Color[6];
     private int currentBullet = 0;
+    private int lastBulletCount;
     private int shootIndex;
     private int bulletsLoaded;
 
@@ -51,7 +52,6 @@ public class UIRevolverIndicator : MonoBehaviour
     public void Initialize()
     {
         StartReload();
-        shootIndex = 0;
     }
 
     public void ShootBullet()
@@ -61,7 +61,6 @@ public class UIRevolverIndicator : MonoBehaviour
 
         bulletSprites[shootIndex].enabled = false;
         shootIndex += 1;
-        currentBullet -= 1;
         Rotate(1, 30, 0.05f);
     }
 
@@ -128,14 +127,18 @@ public class UIRevolverIndicator : MonoBehaviour
 
     public void StartReload()
     {
-        currentBullet = 0;
-
-        int diff = bulletSprites.Length - shootIndex;
-
-        for (int i = 0; i < bulletSprites.Length; i++)
+        int diff = 0;
+        if (currentBullet != bulletsLoaded)
         {
-            bulletSprites[i].enabled = false;
+            diff = (currentBullet - shootIndex) - lastBulletCount;
+            currentBullet += diff;
         }
+        else diff = currentBullet;
+        Debug.Log("Bullet Diff " + diff);
+        //for (int i = 0; i < bulletSprites.Length; i++)
+        //{
+        //    bulletSprites[i].enabled = false;
+        //}
 
         if (diff != 0) Rotate(1, diff * 30, 0.00f);
     }

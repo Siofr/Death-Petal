@@ -152,7 +152,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""id"": ""1a6d09cf-2999-4a55-a3bf-85d1865ac617"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold,Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
