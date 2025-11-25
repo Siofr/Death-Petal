@@ -1,87 +1,120 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using UnityEngine;
+
+[System.Serializable]
+public struct LevelJsonData
+{
+    public SaveData[] saveData;
+    
+    public LevelJsonData(SaveData[] saveData)
+    {
+        this.saveData = saveData;
+    }
+}
 
 [CreateAssetMenu(fileName = "LevelData", menuName = "Scriptable Objects/Level Data")]
 public class LevelData : ScriptableObject
 {
-    [Header("Level Data Fields")] 
-    [SerializeField] private string _dataAssetSavePath;
+    public LevelJsonData saveDataJson;
     
     //Non-Serializable Fields
     public Dictionary<ISaveable, SaveData> saveables = new Dictionary<ISaveable, SaveData>();
     public Dictionary<ISaveable, SaveData> defaultSaveables = new Dictionary<ISaveable, SaveData>();
     
     //Properties
-    public string AssetSavePath => _dataAssetSavePath;
     public Dictionary<ISaveable, SaveData> Saveables => saveables;
     public Dictionary<ISaveable, SaveData> DefaultSaveables => defaultSaveables;
     
-    public void SaveLevelData(Dictionary<ISaveable, SaveData> saveRef)
+    public void SaveLevelData(ref Dictionary<ISaveable, SaveData> refSaveables)
     {
-        var tempSaveables = FindSaveables();
-
-        if (tempSaveables.Count < 1)
+        if (refSaveables.Count < 1)
         {
-            Debug.Log("No Saveables in Level");
+            var tempSaveables = FindSaveables();
+            
+            if (tempSaveables.Count < 1)
+            {
+                Debug.Log("No Saveable Objects in Level");
+                return;
+
+            }
+            
+            refSaveables = tempSaveables;
+        }
+        
+        foreach(var saveable in refSaveables.Keys) saveable.SaveData();
+        
+        saveDataJson = new LevelJsonData(refSaveables.Values.ToArray());
+        
+        File.WriteAllText(GetLevelDataPath(), JsonUtility.ToJson(saveDataJson));
+        Debug.Log("Saved Level Data");
+    }
+
+    public void BakeLevelData()
+    {
+        SaveLevelData(ref defaultSaveables);
+        if(DefaultSaveables.Count > 0) Debug.Log("Baked Level Data");
+    }
+    
+    public void LoadLevelData(ref Dictionary<ISaveable, SaveData> refSaveables)
+    {
+        if (refSaveables.Count < 0)
+        {
+            if (defaultSaveables.Count < 1)
+            {
+                Debug.Log("No Available Level Data");
+            }
+            
+            Debug.Log("Loading Default Level Data");
+            refSaveables = DefaultSaveables;
+        }
+        
+        saveDataJson =  JsonUtility.FromJson<LevelJsonData>(File.ReadAllText(GetLevelDataPath()));
+        var saveablesArray = refSaveables.Keys.ToArray();
+
+        if (saveablesArray.Length != saveDataJson.saveData.Length)
+        {
+            Debug.LogError("Loading Level Data Failed");
             return;
         }
-
-        foreach (var saveable in tempSaveables)
-        {
-            saveable.Key.SaveData();
-        }
-
-        Debug.Log($"Saved {tempSaveables} to Level Data");
-        saveRef = tempSaveables;
-    }   
-
-    public void LoadLevelData(Dictionary<ISaveable, SaveData> loadRef)
-    {
-        var tempSaveables = loadRef;
         
-        if (tempSaveables.Count < 1)
+        refSaveables.Clear();
+        
+        for (var i = 0; i < saveablesArray.Length; i++)
         {
-            if (DefaultSaveables.Count < 1)
-            {
-                Debug.Log("No Baked Save Data");
-                return;
-            }
-
-            tempSaveables = DefaultSaveables;
+            saveablesArray[i].LoadData(saveDataJson.saveData[i]);
+            refSaveables.Add(saveablesArray[i], saveDataJson.saveData[i]);
         }
         
-        foreach (var saveable in tempSaveables)
-        {
-            saveable.Key.LoadSaveData(saveable.Value);
-        }
-        
-        Debug.Log("Loaded Save Data");
+        Debug.Log("Loaded Level Data");
     }
 
-    public void ClearLevelData()
+    public void LoadDefaultLevelData()
     {
-        defaultSaveables.Clear();   
-        saveables.Clear();
-        
-        Debug.Log("Cleared Level Data");
+        LoadLevelData(ref defaultSaveables);
     }
-
+    
+    public string GetLevelDataPath()
+    {
+        Debug.Log(Application.persistentDataPath);
+        return Application.persistentDataPath + $"/{name}.lvl";
+    }
+    
     public Dictionary<ISaveable, SaveData> FindSaveables()
     {
-        var result = new Dictionary<ISaveable, SaveData>();
+        var results = new Dictionary<ISaveable, SaveData>();
+        var sceneObjects = FindObjectsByType<GameObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
-        var gameObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
-
-        foreach (var @object in gameObjects)
+        foreach (var gameObject in sceneObjects)
         {
-            if (@object.TryGetComponent(out ISaveable saveable))
-            {
-                result.Add(saveable, saveable.GetSaveData(this));           
-            }
+            if(!gameObject.TryGetComponent(out ISaveable saveable)) continue;
+            
+            results.Add(saveable, saveable.GetSaveInfo());
         }
 
-        return result;
+        return results;
     }
 }
 

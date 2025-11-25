@@ -8,26 +8,28 @@ public class LevelDataEditor : Editor
     {
         DrawDefaultInspector();
 
+        if (GUILayout.Button("Find Saveables"))
+        {
+            LevelData levelData = (LevelData)target;
+            
+            levelData.FindSaveables();
+        }
         
         if (GUILayout.Button("Bake Save Data"))
         {
-            LevelData levelData = (LevelData) target;
-            
-            levelData.SaveLevelData(levelData.defaultSaveables);    
+            var levelData = (LevelData) target;
+            levelData.BakeLevelData();
         }
         
         if (GUILayout.Button("Load Default Save Data"))
         {
-            LevelData levelData = (LevelData) target;
-            
-            levelData.LoadLevelData(levelData.defaultSaveables);    
+            var levelData = (LevelData) target;
+            levelData.LoadDefaultLevelData();
         }
 
-        if (GUILayout.Button("Clear Save Data"))
-        {
-            LevelData levelData = (LevelData) target;
-
-            levelData.ClearLevelData();
-        }
+        // if (GUILayout.Button("Clear Save Data"))
+        // {
+        //     var levelData = (LevelData) target;
+        // }
     }
 }

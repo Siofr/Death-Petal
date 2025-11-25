@@ -31,6 +31,7 @@ public class Weakness : MonoBehaviour
     public void RemoveWeakType(WeakTypes weakType)
     {
         _weaknessType &= ~weakType;
+        SetWeaknessColor();
     }
     
     private void Awake()
@@ -39,6 +40,13 @@ public class Weakness : MonoBehaviour
         _parentEntity = GetComponentInParent<IEntity>();
         _renderer = _weaknessIconTransform.GetComponent<MeshRenderer>();
         
+        SetWeaknessColor();
+
+        _player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    private void SetWeaknessColor()
+    {
         _renderer.material.color = _weaknessType switch
         {
             WeakTypes.RED => Color.red,
@@ -50,11 +58,7 @@ public class Weakness : MonoBehaviour
             WeakTypes.RED | WeakTypes.BLUE | WeakTypes.GREEN => Color.white,
             _ => Color.clear
         };
-
-        _player = GameObject.FindGameObjectWithTag("Player");
     }
-
-
     
     private void Update()
     {
@@ -66,6 +70,11 @@ public class Weakness : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if(ParentEntity.Weaknesses.Contains(this)) ParentEntity.Weaknesses.Remove(this);
+    }
+    
     /*private void OnDrawGizmos()
     {
         var gizmoColor = _weaknessType switch

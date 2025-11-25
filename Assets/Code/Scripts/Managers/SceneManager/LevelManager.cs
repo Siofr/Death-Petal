@@ -36,22 +36,14 @@ public class LevelManager : Singleton<LevelManager>
     
     private void OnSave()
     {
-        _levelData.LoadLevelData(_levelData.saveables);
     }
 
     private void OnLoad(LoadEvent context)
     {
-        if (!context.isDefault)
-        {
-            _levelData.LoadLevelData( _levelData.saveables);
-            return;
-        }
-        
-        _levelData.LoadLevelData( _levelData.defaultSaveables);
     }
 
-    private void Start()
-    {
-        _levelData.LoadLevelData(_levelData.defaultSaveables);
-    }
+    // private void Start()
+    // {
+    //     _levelData.LoadLevelData(_levelData.defaultSaveables);
+    // }
 }

@@ -20,7 +20,7 @@ struct WrongShotEvent : IEvent
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
+public class EnemyBase : EntityBase
 {
     [Header("Enemy Configuration")]
     [SerializeField] private EnemySaveData _saveData;
@@ -177,31 +177,5 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
             EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));
             _isDead = true;
         }
-    }
-
-    public SaveData GetSaveData(LevelData levelData)
-    {
-        if (_saveData == null)
-        {
-            var dataInstance = ScriptableObject.CreateInstance<EnemySaveData>();
-            AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
-            
-            _saveData = dataInstance;
-            _saveData.Save(transform.position, Weaknesses);
-        }
-        
-        return _saveData;
-    }
-
-    public void LoadSaveData(SaveData levelData)
-    {
-        _saveData = (EnemySaveData)levelData;
-        
-        _saveData.Load(transform, Weaknesses);
-    }
-
-    public void SaveData()
-    {
-        _saveData.Save(transform.position, Weaknesses);
     }
 }

@@ -11,7 +11,7 @@ public struct PlayerDamagedEvent : IEvent
     
 }
 
-public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
+public class TestPlayer : EntityBase, ISaveable<PlayerSaveData>
 {
     [SerializeField]
     private PlayerSaveData _saveData;
@@ -42,29 +42,22 @@ public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
         }
     }
 
-    public SaveData GetSaveData(LevelData levelData)
+    public SaveData GetSaveInfo()
     {
-        if (_saveData == null)
-        {
-            var dataInstance = ScriptableObject.CreateInstance<PlayerSaveData>();
-            AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
-            
-            _saveData = dataInstance;
-            _saveData.Save(transform.position, Weaknesses);
-        }
+        if (_saveData == null) _saveData = ScriptableObject.CreateInstance<PlayerSaveData>();
         
         return _saveData;
     }
 
-    public void SaveData()
+    public void LoadData(SaveData saveData)
     {
-        _saveData.Save(transform.position, new List<Weakness>());
+        _saveData = (PlayerSaveData)saveData;
+        
+        _saveData.Load(transform, weaknesses);
     }
 
-    public void LoadSaveData(SaveData levelData)
+    public void SaveData()
     {
-        _saveData = (PlayerSaveData)levelData;
-
-        _saveData.Load(transform, base.Weaknesses);
+        _saveData.Save(transform.position, weaknesses);
     }
 }

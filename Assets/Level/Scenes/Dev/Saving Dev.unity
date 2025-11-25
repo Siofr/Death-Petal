@@ -235,7 +235,8 @@ Transform:
   m_LocalPosition: {x: 2.48717, y: 0, z: 1.35963}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 757104175}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &96200271
@@ -368,6 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e35e3a0f1a1e4219acebd162b789b9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestPlayer
+  weaknesses: []
   _saveData: {fileID: 11400000, guid: de52befb79585d842b16ac1628b174a4, type: 2}
 --- !u!4 &757104175
 Transform:
@@ -377,14 +379,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 757104173}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 148, y: -166, z: 363}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 145.14, y: -166, z: 361.64038}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2059173262}
   - {fileID: 578004815}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 61767711}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &778824219
 GameObject:
@@ -822,6 +824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 606cf771ddcb48c9ad7aa452f91e4fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CheckpointInput
+  weaknesses: []
   _outputObjects:
   - {fileID: 1235148943}
   _id: 0
@@ -1500,7 +1503,6 @@ SceneRoots:
   - {fileID: 61767711}
   - {fileID: 23588983}
   - {fileID: 3632562354809568486}
-  - {fileID: 757104175}
   - {fileID: 1235148944}
   - {fileID: 835222326}
   - {fileID: 5008807402891432469}

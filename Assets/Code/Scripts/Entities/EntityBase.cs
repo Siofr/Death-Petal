@@ -3,11 +3,11 @@ using UnityEngine;
 
 public abstract class EntityBase : MonoBehaviour, IEntity
 {
-    //Non-Serializable Fields
-    private List<Weakness> _weaknesses = new List<Weakness>();
+    [Header("BaseEntityFields")]
+    public List<Weakness> weaknesses = new List<Weakness>();
     
     //Properties
-    public List<Weakness> Weaknesses => _weaknesses;
+    public List<Weakness> Weaknesses => weaknesses;
 
     protected virtual void Awake()
     {
@@ -16,21 +16,21 @@ public abstract class EntityBase : MonoBehaviour, IEntity
     
     public void InitialiseWeaknesses()
     {
-        if (_weaknesses == null) return;
-        
-        var weaknesses = GetComponentsInChildren<Weakness>();
-
         if (weaknesses == null) return;
         
-        foreach (var weakness in weaknesses)
+        var _weaknesses = GetComponentsInChildren<Weakness>();
+
+        if (_weaknesses == null) return;
+        
+        foreach (var weakness in _weaknesses)
         {
-            _weaknesses.Add(weakness);
+            weaknesses.Add(weakness);
         }
     }
 
-    public void IntitialiseWeaknesses(List<Weakness> weaknesses)
+    public void IntitialiseWeaknesses(List<Weakness> _weaknesses)
     {
-        _weaknesses = weaknesses;
+        weaknesses = _weaknesses;
     }
     
     public abstract void OnShot(Weakness weakness, WeakTypes damageType);

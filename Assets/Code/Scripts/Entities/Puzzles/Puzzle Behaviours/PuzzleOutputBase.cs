@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable<PuzzleOutputData>
+public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput
 {
     //Base Fields
     [Header("Base Fields")]
@@ -56,31 +56,5 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         
         animator.SetBool(Animator.StringToHash("IsSolved"), false);
         IsSolved = false;
-    }
-
-    public SaveData GetSaveData(LevelData levelData)
-    {
-        if (_saveData == null)
-        {
-            var dataInstance = ScriptableObject.CreateInstance<PuzzleOutputData>();
-            AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
-            
-            _saveData = dataInstance;
-            _saveData.Save(transform.position, _isSolved);
-        }
-        
-        return _saveData;
-    }
-
-    public void LoadSaveData(SaveData levelData)
-    {
-        _saveData = (PuzzleOutputData)levelData;
-
-        _saveData.Load(transform, IsSolved);
-    }
-
-    public void SaveData()
-    {
-        _saveData.Save(transform.position, IsSolved);
     }
 }
