@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+public struct WrongShotPuzzleEvent: IEvent
+{
+    public Weight weight;
+    public WrongShotPuzzleEvent(Weight weightReference) => weight = weightReference;
+}
+
 public class Weight: EntityBase, ISaveable<PuzzleElementData>
 {
     [Header("Weight Fields")] 
@@ -79,6 +85,7 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
         {
             //TODO
             MoveWeight(true);
+            EventBus<WrongShotPuzzleEvent>.Raise(new WrongShotPuzzleEvent(this));
         }
         else
         {
