@@ -4,35 +4,45 @@ using UnityEngine;
 public class EnemyAttackState : EnemyBaseState
 {
     public EnemyAttackState(EnemyBase enemyController) : base(enemyController) { }
-
+    
     private IEnumerator DealDamage(float attackSpeed)
     {
         IEntity playerEntity;
         
         enemyController.target.TryGetComponent(out playerEntity);
         
-        while (playerEntity.Weaknesses.Count > 0 && enemyController.target != null)
+        yield return new WaitForSeconds(attackSpeed);
+        
+        while (playerEntity.Weaknesses.Count > 0)
         {
             playerEntity.OnShot(playerEntity.Weaknesses[0], WeakTypes.PLAYER);
             Debug.Log("Damage Dealt to Player");
             
             yield return new WaitForSeconds(attackSpeed);
+
+            if (!enemyController.InAttackRange()) break;
         }
         
         Debug.Log("Attack Phase Over");
+        
+        enemyController.attackRoutine = null;
     }
     
     public override void OnEnter()
     {
         Debug.Log("Entering Attack State");
-        enemyController.SetTarget(null);
-
-        enemyController.StartCoroutine(DealDamage(enemyController.enemyData.attackSpeed));
+        //enemyController.SetTarget(null);
+        
+        enemyController.StopAllCoroutines();
+        enemyController.animator.SetFloat(Animator.StringToHash("Blend"),0f);
+        
+        enemyController.animator.SetBool(Animator.StringToHash("Attack"), true);
+        enemyController.attackRoutine = enemyController.StartCoroutine(DealDamage(enemyController.enemyData.attackSpeed));
     }
 
     public override void OnExit()
     {
-        enemyController.StopAllCoroutines();
+        enemyController.animator.SetBool(Animator.StringToHash("Attack"), false);
         Debug.Log("Exiting Attack State");
     }
 }

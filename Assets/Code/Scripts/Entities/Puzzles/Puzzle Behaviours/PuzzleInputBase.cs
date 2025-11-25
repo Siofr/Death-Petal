@@ -1,29 +1,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PuzzleInputBase : MonoBehaviour, IPuzzleInput
+public abstract class PuzzleInputBase : EntityBase, IPuzzleInput
 {
     [Header("Base Puzzle Input Fields")] 
     [SerializeField] private List<GameObject> _outputObjects = new  List<GameObject>();
     
     //Non-Serializable Fields
     private List<IPuzzleOutput> _puzzleOutputs = new List<IPuzzleOutput>();
-    private List<Weakness> _weaknesses;
-    
     //Properties
     public List<IPuzzleOutput> PuzzleOutputs => _puzzleOutputs;
-    public List<Weakness> Weaknesses => _weaknesses;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         foreach (var outputs in _outputObjects)
         {
             if(outputs.TryGetComponent<PuzzleOutputBase>(out var puzzleOutput)) _puzzleOutputs.Add(puzzleOutput);
         }
     }
 
-    public abstract void OnShot(Weakness weakness, WeakTypes damageType);
-
+    public override void OnShot(Weakness weakness, WeakTypes damageType)
+    {
+        if (!Weaknesses.Contains(weakness)) return;
+    }
 
     public bool CompletionCondition(bool condition, IPuzzleOutput targetOutput)
     {

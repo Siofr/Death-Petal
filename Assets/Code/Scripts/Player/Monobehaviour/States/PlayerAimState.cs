@@ -26,14 +26,14 @@ namespace State_Machine
             animator.SetBool(AimHash, false);
             EventBus<AimEvent>.Raise(new AimEvent());
             EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
+            player.activeTarget = null;
             InputHandler.AttackEvent -= HandleShoot;
             player.currentSpeed = player.playerWalkSpeed;
         }
 
         public void HandleShoot()
         {
-            animator.SetTrigger(ShootHash);
-            Debug.Log("Handle Shoot");
+            animator.SetTrigger("Shoot");
             if (player.activeTarget == null) 
             {
                 EventBus<ShootEvent>.Raise(new ShootEvent(null));

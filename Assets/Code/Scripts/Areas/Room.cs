@@ -5,10 +5,12 @@ using UnityEngine;
 public struct RoomPlayerEnterEvent: IEvent
 {
     public Transform playerTransform;
+    public Room room;
     
     public RoomPlayerEnterEvent(Transform playerTransform, Room room)
     {
         this.playerTransform = playerTransform;
+        this.room = room;
     }
 }
 
@@ -25,8 +27,7 @@ public struct RoomPlayerExitEvent : IEvent
 [RequireComponent(typeof(BoxCollider))]
 public class Room : MonoBehaviour
 {
-    [SerializeField] private Transform _roomCameraTransform;
-    private BoxCollider _collider;    
+    private BoxCollider _collider;
     
     public Bounds Bounds => _collider.bounds;
     
@@ -39,7 +40,6 @@ public class Room : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            _roomCameraTransform.gameObject.SetActive(true);
             EventBus<RoomPlayerEnterEvent>.Raise(new RoomPlayerEnterEvent(other.transform, this));
         }
     }
@@ -48,7 +48,6 @@ public class Room : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            _roomCameraTransform.gameObject.SetActive(false);
             EventBus<RoomPlayerExitEvent>.Raise(new RoomPlayerExitEvent(this));
         }
     }

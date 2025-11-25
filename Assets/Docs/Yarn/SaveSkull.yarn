@@ -1,4 +1,5 @@
 title: SaveSkull
+
 tags:
 ---
 SaveSkull: Would you like to save the game?
@@ -10,10 +11,16 @@ SaveSkull: Would you like to save the game?
 
 title: PositiveResponse
 ---
+<<update_checkpoint(saveSkullID)>>
 Your game has been saved
 ===
 
 title: NegativeResponse
 ---
 Your game has not been saved
+===
+
+title: SaveSkullVariables
+---
+<<declare $saveSkullID = 0>>
 ===

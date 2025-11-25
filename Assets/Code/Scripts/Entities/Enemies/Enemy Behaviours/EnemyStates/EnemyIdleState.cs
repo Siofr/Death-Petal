@@ -8,4 +8,11 @@ public class EnemyIdleState : EnemyBaseState
     {
         Debug.Log("Entering Idle State");
     }
+    
+    public override void OnExit()
+    {
+        
+    }
+    
+    
 }

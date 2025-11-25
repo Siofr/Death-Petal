@@ -1,25 +1,70 @@
+using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class TestPlayer : MonoBehaviour, IEntity
+public struct PlayerDamageEvent: IEvent{ }
+
+public struct PlayerDamagedEvent : IEvent
 {
-    private List<Weakness> _weaknesses = new List<Weakness>();
-
-    public List<Weakness> Weaknesses => _weaknesses;
     
-    public void OnShot(Weakness weakness, WeakTypes damageType)
+}
+
+public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
+{
+    [SerializeField]
+    private PlayerSaveData _saveData;
+    public PlayerSaveData SaveInfo => _saveData;
+    
+    public void Awake()
+    {
+        base.Awake();
+    }
+
+    public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
         if (!Weaknesses.Contains(weakness)) return;
 
         if (damageType == WeakTypes.PLAYER)
         {
+            EventBus<PlayerDamageEvent>.Raise(new PlayerDamageEvent());
             Weaknesses.Remove(weakness);
-            Destroy(weakness.gameObject);   
+
+            Destroy(weakness.transform.parent.gameObject);   
+            EventBus<PlayerDamagedEvent>.Raise(new PlayerDamagedEvent());
+
         }
         
         if (Weaknesses.Count < 1)
         {
-            Destroy(gameObject);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
+    }
+
+    public SaveData GetSaveData(LevelData levelData)
+    {
+        if (_saveData == null)
+        {
+            var dataInstance = ScriptableObject.CreateInstance<PlayerSaveData>();
+            AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
+            
+            _saveData = dataInstance;
+            _saveData.Save(transform.position, Weaknesses);
+        }
+        
+        return _saveData;
+    }
+
+    public void SaveData()
+    {
+        _saveData.Save(transform.position, new List<Weakness>());
+    }
+
+    public void LoadSaveData(SaveData levelData)
+    {
+        _saveData = (PlayerSaveData)levelData;
+
+        _saveData.Load(transform, base.Weaknesses);
     }
 }

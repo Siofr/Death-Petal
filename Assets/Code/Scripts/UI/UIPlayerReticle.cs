@@ -29,7 +29,7 @@ public class UIPlayerReticle : MonoBehaviour
     {
         if (_activeTarget)
         {
-            Vector3 screenPos = _cam.WorldToScreenPoint(_activeTarget.position);
+            Vector3 screenPos = _cam.WorldToScreenPoint(_activeTarget.parent.position);
             _reticle.position = screenPos;
         }
     }
@@ -38,7 +38,7 @@ public class UIPlayerReticle : MonoBehaviour
     {
         _activeTarget = ctx.activeTarget;
 
-        if (_activeTarget)
+        if (_activeTarget != null)
         {
             _reticle.gameObject.SetActive(true);
             return;

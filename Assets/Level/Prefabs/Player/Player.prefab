@@ -187,6 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
   _animator: {fileID: 0}
   activeCam: {fileID: 0}
+  newActiveCam: {fileID: 0}
   bulletTypes:
   - {fileID: 11400000, guid: 10fedb77a8a8a03428b6a0bd9794af24, type: 2}
   - {fileID: 11400000, guid: adaef4b4914884a429570ed2efab51ea, type: 2}
@@ -197,6 +198,12 @@ MonoBehaviour:
   currentSpeed: 0
   lookDir: {x: 0, y: 0, z: 0}
   activeTarget: {fileID: 0}
+  playerDependentMaterials:
+  - {fileID: 2100000, guid: 341d364530d4c5441bd580dd31ef7927, type: 2}
+  - {fileID: 2100000, guid: 9ca328d04ca385d448299a495839286a, type: 2}
+  - {fileID: 2100000, guid: a4f29bea978a9d9459fc41a7d926c690, type: 2}
+  - {fileID: -876546973899608171, guid: f38a24c496103f04f8f424d1dff04d4a, type: 3}
+  - {fileID: 2100000, guid: b29b855caf3ef7d40ae7c5de1612203d, type: 2}
 --- !u!114 &5569318152563602577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,6 +216,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a9f1bc02074bb9419fc5a547233569c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGun
+  shootSfxEventPath:
+    Guid:
+      Data1: 921784119
+      Data2: 1307219760
+      Data3: 2146561209
+      Data4: -73938475
+    Path: event:/Weapons/Placeholder/shoot
+  AddRemoveSFXEvent:
+    Guid:
+      Data1: 935302332
+      Data2: 1218877414
+      Data3: -1841470556
+      Data4: 193580785
+    Path: event:/Weapons/Placeholder/addRemoveBullet
 --- !u!1 &6786558166313280823
 GameObject:
   m_ObjectHideFlags: 0
@@ -762,8 +783,157 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a052453e46b20954fb2be80eb50991cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1971263939375084536}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a052453e46b20954fb2be80eb50991cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1090839714884340544}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a052453e46b20954fb2be80eb50991cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2902325352879853543}
   m_SourcePrefab: {fileID: 100100000, guid: a052453e46b20954fb2be80eb50991cb, type: 3}
+--- !u!1 &2483839008051085313 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a052453e46b20954fb2be80eb50991cb, type: 3}
+  m_PrefabInstance: {fileID: 3366783473240636752}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1971263939375084536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483839008051085313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 543dc9f80c05fd147862bdc4f1a859d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXFootsteps
+  eventPath:
+    Guid:
+      Data1: 1219859637
+      Data2: 1103861269
+      Data3: 1668588701
+      Data4: 1732037063
+    Path: event:/Characters/Player Character/Placeholder/footsteps
+--- !u!114 &1090839714884340544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483839008051085313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 543dc9f80c05fd147862bdc4f1a859d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXFootsteps
+  eventPath:
+    Guid:
+      Data1: 1219859637
+      Data2: 1103861269
+      Data3: 1668588701
+      Data4: 1732037063
+    Path: event:/Characters/Player Character/Placeholder/footsteps
+--- !u!82 &2902325352879853543
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483839008051085313}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 350
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &2968873562042309307 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a052453e46b20954fb2be80eb50991cb, type: 3}

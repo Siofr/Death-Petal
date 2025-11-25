@@ -1,10 +1,22 @@
 using UnityEngine;
+using FMOD.Studio;
+using SFXUtil;
+using FMODUnity;
 
 public class PlayerGun : MonoBehaviour
 {
+    public EventReference shootSfxEventPath;
+    private EventInstance _shootEvent;
+    private PARAMETER_ID _bulletsLeft;
+
+    public EventReference AddRemoveSFXEvent;
+    private EventInstance _addRemoveEvent;
+    private PARAMETER_ID _addRemove;
+
     private BulletSO[] bulletArray = new BulletSO[6];
     private BulletSO[] lastBulletArray = new BulletSO[6];
     private int bulletIndex = 0;
+    private int lastBulletIndex;
 
     private void PrintContents(BulletSO[] arr)
     {
@@ -41,14 +53,23 @@ public class PlayerGun : MonoBehaviour
         EventBus<QuickReload>.Register(_quickReloadListener);
     }
 
+    private void Start()
+    {
+        _bulletsLeft = SFXUtilities.AssignParamID("BulletLeft", shootSfxEventPath);
+        _shootEvent = SFXUtilities.CreateEventInstance(shootSfxEventPath, this.gameObject);
+
+        _addRemove = SFXUtilities.AssignParamID("AddRemoveBullet", AddRemoveSFXEvent);
+        _addRemoveEvent = SFXUtilities.CreateEventInstance(AddRemoveSFXEvent, this.gameObject);
+    }
+
     public void Initialize(StartLongReload ctx)
     {
-        bulletIndex = 0;
+        // bulletIndex = 0;
     }
 
     private void QuickReload()
     {
-        bulletIndex = 0;
+        bulletIndex = lastBulletIndex;
         bulletArray = CopyArray(lastBulletArray);
         Debug.Log("Bullets Loaded" + bulletArray);
     }
@@ -56,15 +77,22 @@ public class PlayerGun : MonoBehaviour
     public void ShootBullet(ShootEvent ctx)
     {
         // I want to shoot element at 0 always
+        _shootEvent.setParameterByID(_bulletsLeft, bulletIndex);
+        EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
 
         if (bulletArray[0] == null) return;
 
         EventBus<SpawnTrail>.Raise(new SpawnTrail(bulletArray[0].bulletColor));
 
         // Now remove it
-        ctx.weakness?.ParentEntity.OnShot(ctx.weakness, bulletArray[0].weakness);
+        if (ctx.weakness)
+        {
+            ctx.weakness.ParentEntity.OnShot(ctx.weakness, bulletArray[0].weakness);
+        }
+
         bulletArray[0] = null;
 
+        bulletIndex--;
         // Now Reorder it
         bulletArray = ReorderArray(bulletArray);
     }
@@ -73,16 +101,24 @@ public class PlayerGun : MonoBehaviour
     {
         if (bulletIndex >= bulletArray.Length) return;
 
+        _addRemoveEvent.setParameterByID(_addRemove, 1);
+        EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_addRemoveEvent, this.gameObject));
+
         bulletArray[bulletIndex] = ctx.bulletType;
         bulletIndex++;
+        lastBulletIndex = bulletIndex;
     }
 
     public void RemoveBullet()
     {
         if (bulletIndex - 1 < 0) return;
 
+        _addRemoveEvent.setParameterByID(_addRemove, 0);
+        EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_addRemoveEvent, this.gameObject));
+
         bulletArray[bulletIndex - 1] = null;
         bulletIndex--;
+        lastBulletIndex = bulletIndex;
     }
 
     public BulletSO[] ReorderArray(BulletSO[] arr)
