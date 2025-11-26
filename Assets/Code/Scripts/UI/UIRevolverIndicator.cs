@@ -6,28 +6,22 @@ using UnityEngine.UI;
 public class UIRevolverIndicator : MonoBehaviour
 {
     public Image[] bulletSprites = new Image[6];
-    private Color[] lastBulletColors = new Color[6];
     private int currentBullet = 0;
-    private int lastBulletCount;
     private int shootIndex;
-    private int currentBulletsLoaded;
-    private int lastBulletsLoaded;
 
     private EventBindings<ShootEvent> _shootEventListener;
     private EventBindings<RemoveBulletEvent> _removeBulletEventListener;
     private EventBindings<AddBulletEvent> _addBulletEventListener;
     private EventBindings<EndLongReload> _endLongReloadEventListener;
     private EventBindings<StartLongReload> _startLongReloadListener;
-    private EventBindings<QuickReload> _quickReloadEventListener;
 
     private void Awake()
     {
-        _shootEventListener = new EventBindings<ShootEvent>(NewShootBullet);
-        _removeBulletEventListener = new EventBindings<RemoveBulletEvent>(NewRemoveBullet);
-        _addBulletEventListener = new EventBindings<AddBulletEvent>(NewAddBullet);
+        _shootEventListener = new EventBindings<ShootEvent>(ShootBullet);
+        _removeBulletEventListener = new EventBindings<RemoveBulletEvent>(RemoveBullet);
+        _addBulletEventListener = new EventBindings<AddBulletEvent>(AddBullet);
         _endLongReloadEventListener = new EventBindings<EndLongReload>(EndReload);
         _startLongReloadListener = new EventBindings<StartLongReload>(Initialize);
-        _quickReloadEventListener = new EventBindings<QuickReload>(QuickReload);
     }
 
     private void OnEnable()
@@ -37,7 +31,6 @@ public class UIRevolverIndicator : MonoBehaviour
         EventBus<AddBulletEvent>.Register(_addBulletEventListener);
         EventBus<EndLongReload>.Register(_endLongReloadEventListener);
         EventBus<StartLongReload>.Register(_startLongReloadListener);
-        EventBus<QuickReload>.Register(_quickReloadEventListener);
     }
 
     private void Start()
@@ -55,41 +48,6 @@ public class UIRevolverIndicator : MonoBehaviour
         StartReload();
     }
 
-    public void ShootBullet()
-    {
-        // 0. Sanity Check 1. Remove current bullet 2. Rotate barrel counter clockwise
-        if (shootIndex >= bulletSprites.Length || shootIndex >= currentBullet) return;
-
-        bulletSprites[shootIndex].enabled = false;
-        currentBulletsLoaded -= 1;
-        shootIndex += 1;
-        Rotate(1, 30, 0.05f);
-    }
-
-    public void RemoveBullet()
-    {
-        // 0. Sanity Check 1. Remove last bullet 2. Rotate barrel clockwise
-        if (currentBullet - 1 < 0) currentBullet = 1;
-
-        bulletSprites[currentBullet - 1].enabled = false;
-        currentBulletsLoaded -= 1;
-        currentBullet -= 1;
-        Rotate(-1, 30, 0.05f);
-    }
-
-    public void AddBullet(AddBulletEvent ctx)
-    {
-        // 0. Sanity check 1. Add Bullet 2. Rotate Barrel counter clockwise
-        if (currentBullet >= bulletSprites.Length) currentBullet = 0;
-
-        bulletSprites[currentBullet + shootIndex].enabled = true;
-        bulletSprites[currentBullet + shootIndex].sprite = ctx.bulletType.bulletSprite;
-
-        currentBulletsLoaded += 1;
-        currentBullet += 1;
-        Rotate(1, 30, 0.05f);
-    }
-
     public void Rotate(int direction, int angle, float speed)
     {
         Debug.Log("Rotate");
@@ -103,31 +61,10 @@ public class UIRevolverIndicator : MonoBehaviour
         transform.DORotate(rot, speed, RotateMode.FastBeyond360);
     }
 
-    public void QuickReload()
-    {
-        Initialize();
-
-        for (int i = 0; i < lastBulletColors.Length; i++)
-        {
-            bulletSprites[i].color = lastBulletColors[i];
-            bulletSprites[i].enabled = true;
-            currentBullet += 1;
-        }
-
-        EndReload();
-    }
-
     public void EndReload()
     {
         shootIndex = 0;
         int diff = bulletSprites.Length - currentBullet;
-
-        // lastBulletColors = new Color[bulletsLoaded];
-
-        // for (int i = 0; i < bulletsLoaded; i++)
-        // {
-        //    lastBulletColors[i] = bulletSprites[i].color;
-        // }
 
         if (diff != 0) Rotate(1, diff * 30, 0.05f);
     }
@@ -136,17 +73,11 @@ public class UIRevolverIndicator : MonoBehaviour
     {
         int diff = 0;
         diff = currentBullet;
-        // currentBullet -= shootIndex;
-
-        //for (int i = 0; i < bulletSprites.Length; i++)
-        //{
-        //    bulletSprites[i].enabled = false;
-        //}
 
         if (diff != 0) Rotate(1, diff * 30, 0.00f);
     }
 
-    public void NewShootBullet()
+    public void ShootBullet()
     {
         if (bulletSprites[0].enabled == false) return;
 
@@ -160,11 +91,8 @@ public class UIRevolverIndicator : MonoBehaviour
         Rotate(1, 30, 0.05f);
     }
 
-    public void NewAddBullet(AddBulletEvent ctx)
+    public void AddBullet(AddBulletEvent ctx)
     {
-        Debug.Log("Bullet why current " + currentBullet);
-        Debug.Log("Bullet why Shoot Index " + shootIndex);
-
         if (shootIndex != 0 && currentBullet + shootIndex <= bulletSprites.Length)
         {
             bulletSprites[currentBullet].sprite = ctx.bulletType.bulletSprite;
@@ -184,7 +112,7 @@ public class UIRevolverIndicator : MonoBehaviour
         Rotate(1, 30, 0.05f);
     }
 
-    public void NewRemoveBullet()
+    public void RemoveBullet()
     {
 
         if (shootIndex != 0 && currentBullet + shootIndex - 1 !> bulletSprites.Length)
