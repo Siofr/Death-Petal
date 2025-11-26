@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DeathScreen : MonoBehaviour
 {
@@ -8,16 +10,19 @@ public class DeathScreen : MonoBehaviour
     public float rotationSpeed;
 
     public GameObject DeathPlayer;
+    public Button startButton;
     
     private Camera _deathCamera;
     private GameObject _deathParticles;
     private GameObject _player;
+    private EventSystem _eventSystem;
     void Awake()
     {
         _player = GameObject.FindWithTag("Player");
         
         _deathCamera = GetComponentInChildren<Camera>();
         _deathParticles = GameObject.Find("PlayerDeathParticles");
+        _eventSystem = EventSystem.current;
     }
 
     private void OnEnable()
@@ -44,6 +49,11 @@ public class DeathScreen : MonoBehaviour
     void SetupParticles()
     {
         _deathParticles.transform.position = _player.transform.position + particleOffset;
+    }
+
+    void SetupButtons()
+    {
+        _eventSystem.SetSelectedGameObject(startButton.gameObject);
     }
 
     void Update()
