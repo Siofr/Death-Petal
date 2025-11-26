@@ -225,16 +225,16 @@ namespace State_Machine
                 {
                     if (hit.transform != activeTarget)
                     {
-                        //activeTarget = hit.transform;
-                        //EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(hit.transform));
+                        activeTarget = hit.transform;
+                        EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(hit.transform));
                     }
 
                     return;
                 }
             }
 
-            //activeTarget = null;
-            //EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
+            activeTarget = null;
+            EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
         }
 
         private void OnChangeCamera(CameraChangeEvent ctx)
