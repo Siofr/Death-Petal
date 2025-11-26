@@ -6,6 +6,8 @@ public class DeathScreen : MonoBehaviour
     //public GameObject DeathUiObject;
     public Vector3 particleOffset;
     public float rotationSpeed;
+
+    public GameObject DeathPlayer;
     
     private Camera _deathCamera;
     private GameObject _deathParticles;
@@ -20,8 +22,14 @@ public class DeathScreen : MonoBehaviour
 
     private void OnEnable()
     {
+        SetupDeadPlayer();
         SetupCamera();
         SetupParticles();
+    }
+
+    void SetupDeadPlayer()
+    {
+        Instantiate(DeathPlayer, _player.transform.position, _player.transform.rotation);
     }
 
     void SetupCamera()
