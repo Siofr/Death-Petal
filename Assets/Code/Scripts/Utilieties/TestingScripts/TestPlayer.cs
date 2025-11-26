@@ -11,11 +11,17 @@ public struct PlayerDamagedEvent : IEvent
     
 }
 
-public class TestPlayer : EntityBase, ISaveable<PlayerSaveData>
+public class TestPlayer : EntityBase, ISaveable<EntitySaveData>
 {
-    [SerializeField]
-    private PlayerSaveData _saveData;
-    public PlayerSaveData SaveInfo => _saveData;
+    [SerializeField] private EntitySaveData _saveData;
+
+    private int _saveID = ISaveableHelper.GenerateISaveableID();
+    
+    public EntitySaveData SaveInfo => _saveData;
+    public int SaveID
+    {
+        get => _saveID;
+    }
     
     public void Awake()
     {
@@ -42,22 +48,13 @@ public class TestPlayer : EntityBase, ISaveable<PlayerSaveData>
         }
     }
 
-    public SaveData GetSaveInfo()
+    public void HandleLoadData()
     {
-        if (_saveData == null) _saveData = ScriptableObject.CreateInstance<PlayerSaveData>();
-        
-        return _saveData;
+        _saveData.Load(transform, ref weaknesses);
     }
 
-    public void LoadData(SaveData saveData)
+    public void HandleSaveData()
     {
-        _saveData = (PlayerSaveData)saveData;
-        
-        _saveData.Load(transform, weaknesses);
-    }
-
-    public void SaveData()
-    {
-        _saveData.Save(transform.position, weaknesses);
+        _saveData.Save(transform.position, Weaknesses);
     }
 }

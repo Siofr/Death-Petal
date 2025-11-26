@@ -33,6 +33,11 @@ public class Weakness : MonoBehaviour
         _weaknessType &= ~weakType;
         SetWeaknessColor();
     }
+
+    public void SetWeaknessType(WeakTypes weakType)
+    {
+        _weaknessType = weakType;
+    }
     
     private void Awake()
     {
