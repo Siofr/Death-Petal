@@ -34,7 +34,7 @@ public class HitStopEffects : MonoBehaviour
         _correctShotPuzzleEventListener = new EventBindings<CorrectShotPuzzleEvent>(OnPuzzleShot);
         EventBus<CorrectShotPuzzleEvent>.Register(_correctShotPuzzleEventListener);
 
-        _playerDamageEventListener = new EventBindings<PlayerDamageEvent>(DoHitStopEffect);
+        _playerDamageEventListener = new EventBindings<PlayerDamageEvent>(OnPlayerDamage);
         EventBus<PlayerDamageEvent>.Register(_playerDamageEventListener);
     }
 
@@ -58,8 +58,13 @@ public class HitStopEffects : MonoBehaviour
             return;
         
         DoHitStopEffect();
-        
-        
+    }
+
+    private void OnPlayerDamage(PlayerDamageEvent ctx)
+    {
+        if(ctx.testPlayer != GetComponentInParent<TestPlayer>())
+            return;
+        DoHitStopEffect();
     }
     private void DoHitStopEffect()
     {

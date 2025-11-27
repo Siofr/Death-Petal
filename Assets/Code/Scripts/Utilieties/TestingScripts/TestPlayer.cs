@@ -4,7 +4,12 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public struct PlayerDamageEvent: IEvent{ }
+public struct PlayerDamageEvent: IEvent
+{
+    public TestPlayer testPlayer;
+    
+    public PlayerDamageEvent(TestPlayer testPlayerRefrence) => testPlayer =  testPlayerRefrence;
+}
 
 public struct PlayerDamagedEvent : IEvent
 {
@@ -30,7 +35,8 @@ public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
 
         if (damageType == WeakTypes.PLAYER)
         {
-            EventBus<PlayerDamageEvent>.Raise(new PlayerDamageEvent());
+            print("player damaged");
+            EventBus<PlayerDamageEvent>.Raise(new PlayerDamageEvent(this));
             Weaknesses.Remove(weakness);
 
             Destroy(weakness.transform.parent.gameObject);   

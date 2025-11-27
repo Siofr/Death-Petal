@@ -299,6 +299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1240857200261891403}
   - component: {fileID: 5379855324015867488}
+  - component: {fileID: 6743637687206976134}
   m_Layer: 0
   m_Name: PlayerVFX
   m_TagString: Untagged
@@ -337,6 +338,21 @@ MonoBehaviour:
   particleSystems:
   - {fileID: 4048612208209357354}
   - {fileID: 2338542747091400110}
+--- !u!114 &6743637687206976134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6814331718074213930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497ac92aa1884df458680ab71f952195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitStopEffects
+  hitStopTime: 0.1
+  hitStopPower: 0
+  modelParent: {fileID: 7249666322484350803}
 --- !u!1 &7249666322484350803
 GameObject:
   m_ObjectHideFlags: 0
