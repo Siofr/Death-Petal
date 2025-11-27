@@ -20,7 +20,7 @@ public struct LevelDeloadedEvent : IEvent
 {
 }
 
-public class SceneManager : Singleton<SceneManager>
+public class PrefabSceneManager : Singleton<PrefabSceneManager>
 {
     [Header("Levels")] [SerializeField] private Transform _levelContainer;
     [SerializeField] private GameObject[] _levelPrefabs;

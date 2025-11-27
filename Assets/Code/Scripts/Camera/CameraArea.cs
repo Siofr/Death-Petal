@@ -10,6 +10,7 @@ public class CameraArea : MonoBehaviour
     private void Awake()
     {
         cam = GetComponentInChildren<CinemachineCamera>();
+        cameraPosition = cam.transform;
         cam.Priority = 0;
     }
 

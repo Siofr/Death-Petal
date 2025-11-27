@@ -19,6 +19,11 @@ public class UIPlayerReticle : MonoBehaviour
         EventBus<ActiveTargetEvent>.Register(activeTargetEventListener);
     }
 
+    private void OnDisable()
+    {
+        EventBus<ActiveTargetEvent>.Unregister(activeTargetEventListener);
+    }
+
     void Start()
     {
         _cam = Camera.main;

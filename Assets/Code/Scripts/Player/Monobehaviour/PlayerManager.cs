@@ -26,6 +26,8 @@ namespace State_Machine
         private bool _isReloading;
         public Transform activeTarget;
 
+        private bool _isDialogue;
+
         public StateMachine stateMachine;
 
         private PlayerReloadState _reloadState;
@@ -33,6 +35,8 @@ namespace State_Machine
         private PlayerIdleState _idleState;
 
         private EventBindings<CameraChangeEvent> _cameraChangeEventListener;
+        private EventBindings<TriggerDialogueEvent> _dialogueEnteredListener;
+        private EventBindings<ExitDialogueEvent> _exitDialogueEventListener;
 
         [SerializeField]
         private Material[] playerDependentMaterials;
@@ -41,22 +45,18 @@ namespace State_Machine
         {
             base.Awake();
 
-            newActiveCam = activeCam;
-
-            _cameraChangeEventListener = new EventBindings<CameraChangeEvent>(OnChangeCamera);
-
-            _cc = GetComponent<CharacterController>();
-            _animator = GetComponentInChildren<Animator>();
-            _mainCam = Camera.main;
-
             currentSpeed = playerWalkSpeed;
 
-            SetupStateMachine();
+            _cameraChangeEventListener = new EventBindings<CameraChangeEvent>(OnChangeCamera);
+            _dialogueEnteredListener = new EventBindings<TriggerDialogueEvent>(OnDialogueEntered);
+            _exitDialogueEventListener = new EventBindings<ExitDialogueEvent>(OnDialogueExited);
         }
 
         private void OnEnable()
         {
             EventBus<CameraChangeEvent>.Register(_cameraChangeEventListener);
+            EventBus<TriggerDialogueEvent>.Register(_dialogueEnteredListener);
+            EventBus<ExitDialogueEvent>.Register(_exitDialogueEventListener);
 
             InputHandler.AimEvent += OnAim;
             InputHandler.SprintEvent += OnSprint;
@@ -67,6 +67,10 @@ namespace State_Machine
 
         private void OnDisable()
         {
+            EventBus<CameraChangeEvent>.Unregister(_cameraChangeEventListener);
+            EventBus<TriggerDialogueEvent>.Unregister(_dialogueEnteredListener);
+            EventBus<ExitDialogueEvent>.Unregister(_exitDialogueEventListener);
+
             InputHandler.AimEvent -= OnAim;
             InputHandler.SprintEvent -= OnSprint;
             InputHandler.LongReloadEvent -= OnReloadStart;
@@ -85,26 +89,42 @@ namespace State_Machine
             _idleState = new PlayerIdleState(this, _animator);
             var sprintState = new PlayerSprintState(this, _animator);
             _reloadState = new PlayerReloadState(this, _animator);
+            var dialogueState = new PlayerDialogueState(this, _animator);
 
             At(_aimState, _idleState, new FuncPredicate(() => _aim == Vector2.zero));
+            At(_aimState, _reloadState, new FuncPredicate(() => _isReloading));
 
             At(_idleState, _aimState, new FuncPredicate(() => _aim != Vector2.zero));
             At(_idleState, moveState, new FuncPredicate(() => _movement != Vector3.zero));
+            At(_idleState, _reloadState, new FuncPredicate(() => _isReloading));
 
             At(moveState, _idleState, new FuncPredicate(() => _movement == Vector3.zero));
             At(moveState, sprintState, new FuncPredicate(() => _isSprinting));
             At(moveState, _aimState, new FuncPredicate(() => _aim != Vector2.zero));
+            At(moveState, _reloadState, new FuncPredicate(() => _isReloading));
 
             At(sprintState, moveState, new FuncPredicate(() => !_isSprinting));
             At(sprintState, _idleState, new FuncPredicate(() => _movement == Vector3.zero));
             At(sprintState, _aimState, new FuncPredicate(() => _aim != Vector2.zero));
+            At(sprintState, _reloadState, new FuncPredicate(() => _isReloading));
 
-            Any(_reloadState, new FuncPredicate(() => _isReloading));
             At(_reloadState, _idleState, new FuncPredicate(() => !_isReloading));
+
+            Any(dialogueState, new FuncPredicate(() => _isDialogue));
+            At(dialogueState, _idleState, new FuncPredicate(() => !_isDialogue));
         }
 
         private void Start()
         {
+            newActiveCam = activeCam;
+
+            _cc = GetComponent<CharacterController>();
+            _animator = GetComponentInChildren<Animator>();
+            _mainCam = Camera.main;
+
+            EventBus<TransmitPlayerInfo>.Raise(new TransmitPlayerInfo(this.transform));
+
+            SetupStateMachine();
             stateMachine.SetState(_idleState);
         }
 
@@ -154,7 +174,6 @@ namespace State_Machine
 
         void OnQuickReload()
         {
-            _animator.SetTrigger("Reload");
             EventBus<QuickReload>.Raise(new QuickReload());
         }
 
@@ -218,28 +237,38 @@ namespace State_Machine
         {
             RaycastHit hit;
             Weakness weakness;
-            Debug.Log("Shoot forward" + transform.forward);
+
             if (Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit, 30))
             {
                 if (hit.transform.TryGetComponent<Weakness>(out weakness))
                 {
                     if (hit.transform != activeTarget)
                     {
-                        //activeTarget = hit.transform;
-                        //EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(hit.transform));
+                        activeTarget = hit.transform;
+                        EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(hit.transform));
                     }
 
                     return;
                 }
             }
 
-            //activeTarget = null;
-            //EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
+            activeTarget = null;
+            EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
         }
 
         private void OnChangeCamera(CameraChangeEvent ctx)
         {
             newActiveCam = ctx.cam.transform;
+        }
+
+        private void OnDialogueEntered()
+        {
+            _isDialogue = true;
+        }
+
+        private void OnDialogueExited()
+        {
+            _isDialogue = false;
         }
     }
 }

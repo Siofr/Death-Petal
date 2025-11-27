@@ -11,12 +11,17 @@ public struct TriggerDialogueEvent : IEvent
     }
 }
 
+public struct ExitDialogueEvent : IEvent
+{
+
+}
+
 public class DialogueManager : Singleton<DialogueManager>
 {
     private DialogueRunner dialogueRunner;
     private EventBindings<TriggerDialogueEvent> _triggerDialogueEventListener;
 
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
         _triggerDialogueEventListener = new EventBindings<TriggerDialogueEvent>(OnDialogueTrigger);
@@ -27,14 +32,25 @@ public class DialogueManager : Singleton<DialogueManager>
         EventBus<TriggerDialogueEvent>.Register(_triggerDialogueEventListener);
     }
 
+    private void OnDisable()
+    {
+        EventBus<TriggerDialogueEvent>.Unregister(_triggerDialogueEventListener);
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         dialogueRunner = FindFirstObjectByType<DialogueRunner>();
+        dialogueRunner.onDialogueComplete.AddListener(OnDialogueEnd);
     }
 
     public void OnDialogueTrigger(TriggerDialogueEvent ctx)
     {
         dialogueRunner.StartDialogue(ctx.yarnNodeName);
+    }
+
+    private void OnDialogueEnd()
+    {
+        EventBus<ExitDialogueEvent>.Raise(new ExitDialogueEvent());
     }
 }
