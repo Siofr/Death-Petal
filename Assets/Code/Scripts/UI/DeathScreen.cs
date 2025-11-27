@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class DeathScreen : MonoBehaviour
@@ -9,7 +10,8 @@ public class DeathScreen : MonoBehaviour
     public Vector3 particleOffset;
     public float rotationSpeed;
 
-    public GameObject DeathPlayer;
+    [FormerlySerializedAs("DeathPlayer")] public GameObject deathPlayer;
+    public GameObject particleRoot;
     public Button startButton;
     
     private Camera _deathCamera;
@@ -38,8 +40,8 @@ public class DeathScreen : MonoBehaviour
         //var deadPlayer = Instantiate(DeathPlayer, _player.transform.position, _player.transform.rotation);
         //deadPlayer.transform.SetParent(gameObject.transform);
 
-        DeathPlayer.transform.position = _player.transform.position;
-        DeathPlayer.transform.rotation = _player.transform.rotation;
+        deathPlayer.transform.position = _player.transform.position;
+        deathPlayer.transform.rotation = _player.transform.rotation;
 
         //Debug.LogWarning(deadPlayer.name);
     }
@@ -55,7 +57,7 @@ public class DeathScreen : MonoBehaviour
 
     void SetupParticles()
     {
-        _deathParticles.transform.position = _player.transform.position + particleOffset;
+        _deathParticles.transform.position = particleRoot.transform.position + particleOffset;
     }
 
     void SetupButtons()
@@ -66,6 +68,7 @@ public class DeathScreen : MonoBehaviour
     void Update()
     {
         SpinCamera();
+        SetupParticles();
     }
     
     void SpinCamera()

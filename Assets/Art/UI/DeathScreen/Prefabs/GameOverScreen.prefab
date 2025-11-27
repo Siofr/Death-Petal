@@ -4834,9 +4834,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3b36569755a5f5498036a87b8f856a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathScreen
-  particleOffset: {x: 0.015, y: -0.035, z: 0.128}
+  particleOffset: {x: 0, y: 0, z: 0}
   rotationSpeed: 33
-  DeathPlayer: {fileID: 278583765029810002}
+  deathPlayer: {fileID: 278583765029810002}
+  particleRoot: {fileID: 6988397628430984538}
   startButton: {fileID: 6626316792423771838}
 --- !u!114 &7323501173202745397
 MonoBehaviour:
@@ -10166,7 +10167,7 @@ Transform:
   m_GameObject: {fileID: 9046379602990256589}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.00051541254, z: 0}
+  m_LocalPosition: {x: 0, y: 0.00051541254, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
