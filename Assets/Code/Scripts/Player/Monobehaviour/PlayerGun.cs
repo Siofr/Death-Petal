@@ -105,6 +105,7 @@ public class PlayerGun : MonoBehaviour
         bulletIndex--;
         // Now Reorder it
         bulletArray = ReorderArray(bulletArray);
+        GetNextBullet();
     }
 
     public void AddBullet(AddBulletEvent ctx)
@@ -148,6 +149,7 @@ public class PlayerGun : MonoBehaviour
     private void SaveArray()
     {
         lastBulletArray = CopyArray(bulletArray);
+        GetNextBullet();
 
         Debug.Log("Bullets loaded" + lastBulletArray);
     }
@@ -163,5 +165,11 @@ public class PlayerGun : MonoBehaviour
         }
 
         return newArr;
+    }
+
+    private void GetNextBullet()
+    {
+        BulletSO nextBullet = bulletArray[0];
+        EventBus<NextBulletEvent>.Raise(new NextBulletEvent(nextBullet));
     }
 }
