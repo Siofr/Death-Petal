@@ -13,6 +13,7 @@ public class HitStopEffects : MonoBehaviour
     
     private EventBindings<CorrectShotEvent> _correctShotEventListener;
     private EventBindings<CorrectShotPuzzleEvent> _correctShotPuzzleEventListener;
+    private EventBindings<PlayerDamageEvent> _playerDamageEventListener;
     
     private List<Renderer>  _renderers;
     //private List<Material>  _originMaterials;
@@ -32,12 +33,16 @@ public class HitStopEffects : MonoBehaviour
         
         _correctShotPuzzleEventListener = new EventBindings<CorrectShotPuzzleEvent>(OnPuzzleShot);
         EventBus<CorrectShotPuzzleEvent>.Register(_correctShotPuzzleEventListener);
+
+        _playerDamageEventListener = new EventBindings<PlayerDamageEvent>(DoHitStopEffect);
+        EventBus<PlayerDamageEvent>.Register(_playerDamageEventListener);
     }
 
     private void OnDisable()
     {
         EventBus<CorrectShotEvent>.Unregister(_correctShotEventListener);
         EventBus<CorrectShotPuzzleEvent>.Unregister(_correctShotPuzzleEventListener);
+        EventBus<PlayerDamageEvent>.Unregister(_playerDamageEventListener);
     }
 
     private void OnPuzzleShot(CorrectShotPuzzleEvent ctx)
