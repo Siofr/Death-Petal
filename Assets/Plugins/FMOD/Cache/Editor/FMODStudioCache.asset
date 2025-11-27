@@ -587,13 +587,14 @@ MonoBehaviour:
   - {fileID: 713176747660227648}
   - {fileID: -5930770138713622826}
   - {fileID: 4248091686513240844}
+  - {fileID: 839533017839069239}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6040658824176098348}
   StringsBanks:
   - {fileID: 6111956806373418789}
   cacheVersion: 131849
-  cacheTime: 638998767660000000
+  cacheTime: 638998787820000000
   SerializableEventsDict:
   - key: event:/Test/Click Test
     index: 0
@@ -611,6 +612,8 @@ MonoBehaviour:
     index: 6
   - key: event:/Weapons/Placeholder/bulletRicochet
     index: 7
+  - key: event:/Interactables/Puzzles/weightPuzzle
+    index: 8
 --- !u!114 &158568789112321128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,6 +753,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &839533017839069239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Interactables/Puzzles/weightPuzzle
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Interactables/Puzzles/weightPuzzle
+  Guid:
+    Data1: 530524706
+    Data2: 1288108779
+    Data3: -1295941469
+    Data4: 513527521
+  Banks:
+  - {fileID: 6040658824176098348}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 500
 --- !u!114 &967159733497643643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1204,10 +1234,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638998767660000000
+  lastModified: 638998787820000000
   FileSizes:
   - Name: Desktop
-    Value: 44736
+    Value: 52512
   Exists: 1
 --- !u!114 &6111956806373418789
 MonoBehaviour:
@@ -1224,10 +1254,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638998767660000000
+  lastModified: 638998787820000000
   FileSizes:
   - Name: Desktop
-    Value: 1408
+    Value: 1474
   Exists: 1
 --- !u!114 &6482042051473157699
 MonoBehaviour:
