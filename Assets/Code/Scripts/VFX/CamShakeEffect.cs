@@ -49,7 +49,7 @@ public class CamShakeEffect : MonoBehaviour
     
     IEnumerator ShakingCoroutine()
     {
-        print("Attempting to shake Camera Shake");
+        //print("Attempting to shake Camera Shake");
 
         //_cinemachineBrain.ActiveVirtualCamera;
         
@@ -64,7 +64,7 @@ public class CamShakeEffect : MonoBehaviour
 
             camShaker.AmplitudeGain = ShakeAmplitude;
         
-            print(camShaker.name + " in " + camShaker.gameObject.transform.parent.name + " is shaking by: " + camShaker.AmplitudeGain);
+            //print(camShaker.name + " in " + camShaker.gameObject.transform.parent.name + " is shaking by: " + camShaker.AmplitudeGain);
         
             yield return new WaitForSecondsRealtime(ShakeTime);
         
