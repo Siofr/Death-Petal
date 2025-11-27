@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using FMOD.Studio;
+using FMODUnity;
 
 public struct WrongShotPuzzleEvent: IEvent
 {
@@ -29,7 +31,10 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
     [SerializeField] private float _moveSpeed;
     [Header("In Unity Units")]
     [SerializeField] private float _moveDist;
-    
+
+    [Header("Audio Paths")]
+    public EventReference onMoveEventPath;
+
     //Non-Serializable Fields
     private IPuzzleOutput _output;
 
@@ -72,7 +77,8 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
     private void MoveWeight(bool reset)
     {
         if (_moveRoutine != null) return;
-        
+
+        RuntimeManager.PlayOneShot(onMoveEventPath, transform.position);
         _moveRoutine = StartCoroutine(MoveWeightRoutine(reset));
     }
     

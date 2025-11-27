@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using FMOD.Studio;
+using FMODUnity;
 
 public class DeathEffects : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class DeathEffects : MonoBehaviour
     
     public List<GameObject> deathEffectObjects;
     public List<GameObject> wrongShotEffectObjects;
+
+    public EventReference onWrongHitEventPath;
 
     private void OnEnable()
     {
@@ -48,6 +52,8 @@ public class DeathEffects : MonoBehaviour
         print("wrong shot particles spawning");
         if (ctx.enemy != GetComponentInParent<EnemyBase>())
             return;
+
+        RuntimeManager.PlayOneShot(onWrongHitEventPath, transform.position);
 
         foreach (var effect in wrongShotEffectObjects)
         {
