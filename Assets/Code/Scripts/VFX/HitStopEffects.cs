@@ -6,20 +6,22 @@ using UnityEngine;
 public class HitStopEffects : MonoBehaviour
 {
     public float hitStopTime = 1f;
-    [Range(0,1)]public float hitStopStrenght = 0.1f;
-    public Material hitStopMaterial;
+    [Range(0,1)]public float hitStopPower = 0.1f;
+    //public Material hitStopMaterial;
+    //public Shader[] hitStopShaders;
+    public GameObject modelParent;
     
     private EventBindings<CorrectShotEvent> _correctShotEventListener;
     private EventBindings<CorrectShotPuzzleEvent> _correctShotPuzzleEventListener;
     
     private List<Renderer>  _renderers;
-    private List<Material>  _originMaterials;
+    //private List<Material>  _originMaterials;
 
     private void Awake()
     {
-       _renderers = gameObject.transform.parent.Find("MODEL").GetComponentsInChildren<Renderer>().ToList();
+       _renderers = modelParent.GetComponentsInChildren<Renderer>().ToList();
        
-       _originMaterials = new List<Material>();
+       //_originMaterials = new List<Material>();
     }
     
 
@@ -49,33 +51,33 @@ public class HitStopEffects : MonoBehaviour
     {
         if (ctx.enemy != GetComponentInParent<EnemyBase>())
             return;
+        
         DoHitStopEffect();
+        
+        
     }
     private void DoHitStopEffect()
     {
-        _originMaterials.Clear();
-        foreach (var VARIABLE in _renderers)
-        {
-            _originMaterials.Add(VARIABLE.material);
-        }
-        
         if (Time.timeScale != 0f)
             StartCoroutine(HitStopEffectCoroutine());
     }
 
     IEnumerator HitStopEffectCoroutine()
     {
-        foreach (var VARIABLE in _renderers)
+        foreach (var r in _renderers)
         {
-            VARIABLE.material = hitStopMaterial;
+            
+            r.material.SetFloat("_HitStop", 1);
+            
         }
-        Time.timeScale = 0.2f;
+        
+        Time.timeScale = hitStopPower;
         yield return new WaitForSecondsRealtime(hitStopTime);
         Time.timeScale = 1f;
-
-        for(int i = 0; i < _renderers.Count; i++)
+        
+        foreach (var r in _renderers)
         {
-            _renderers[i].material = _originMaterials[i];
+            r.material.SetFloat("_HitStop", 0);
         }
     }
 }
