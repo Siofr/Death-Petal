@@ -42,7 +42,8 @@ public class TestPlayer : EntityBase, ISaveable<EntitySaveData>
     public void CreateSaveInstance()
     {
         _saveID = ISaveableHelper.GenerateISaveableID();
-
+        ReInitializeWeaknesses();
+        
         var health = new List<int>();
         Weaknesses.ForEach(x=>health.Add((int)x.WeakType));
         
@@ -68,6 +69,8 @@ public class TestPlayer : EntityBase, ISaveable<EntitySaveData>
 
             _saveData = data;
             _saveData.Load(transform, ref weaknesses);
+            
+            ReInitializeWeaknesses();
             return;
         }
     }

@@ -4,64 +4,63 @@ using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager>
 {
-    public LevelSaveData levelSaveData = new LevelSaveData();
-
-    public HashSet<ISaveable> _saveables = new HashSet<ISaveable>();
-    public HashSet<ISaveable> _defaultSaveables = new HashSet<ISaveable>();
+    [Header("LevelManager Fields, Attach Component to Level Prefab")]
+    public LevelSaveData levelSaveData;
     
-    public void SaveLevelData(ref HashSet<ISaveable> refSaveables)
+    public HashSet<ISaveable> saveables = new HashSet<ISaveable>();
+    
+    public void SaveLevelData(bool isBaking = false)
     {
-        if (_defaultSaveables.Count < 1)
+        if (saveables.Count < 1)
         {
             var tempSaveables = FindSaveables();
 
-            if (tempSaveables.Count < 1)
-            {
-                Debug.Log("No Saveable Objects in Level");
-                return;
-            }
-                
-            Debug.Log("Baking Level Data");
-            refSaveables = _defaultSaveables;
-            _defaultSaveables = tempSaveables.ToHashSet();
-        }
+            if (tempSaveables.Count < 1) return;
 
-        foreach (var saveable in refSaveables)
+            saveables = tempSaveables.ToHashSet();
+        }
+        
+        foreach (var saveable in saveables)
         {
             saveable.HandleSaveData(ref levelSaveData);
         }
+        
+        if (isBaking)
+        {
+            levelSaveData.levelName = transform.name + "Default";
+            SaveSystem.SaveLevelData(levelSaveData);
+            Debug.Log("Baked Level Data");
+            return;
+        }
+        
+        SaveSystem.SaveLevelData(levelSaveData);
+        
+        Debug.Log("Saved Level Data");
     }
 
-    public void LoadLevelData(ref HashSet<ISaveable> refSaveables)
+    public void LoadLevelData(bool isDefault = false)
     {
-        if (refSaveables.Count < 1)
-        {
-            if (_defaultSaveables.Count < 1)
-            {
-                Debug.Log("No Baked Level Data Found");
-                return;
-            }
-            
-            Debug.Log("Loading Default Level Data");
-            refSaveables = _defaultSaveables;
-        }
+        var tempName = transform.name;
+        if(isDefault) tempName = transform.name + "Default";
+        
+        var temp = SaveSystem.GetLevelData(tempName);
 
-        foreach (var saveable in refSaveables)
+        if (temp.levelName != transform.name || temp.levelName != transform.name + "Default") return;
+
+        levelSaveData = temp;
+        
+        foreach (var saveable in saveables)
         {
             saveable.HandleLoadData(ref levelSaveData);
         }
-    }
 
-    public void BakeLevelData()
-    {
-        SaveLevelData(ref _defaultSaveables);
-        Debug.Log("Baked Default Level Data");
-    }
-
-    public void LoadDefaultData()
-    {
-        LoadLevelData(ref _defaultSaveables);
-        Debug.Log("Loaded Default Level Data");
+        if (tempName == transform.name+"Default")
+        {
+            Debug.Log("Loaded Default Level Data");
+            return;
+        }
+        
+        Debug.Log("Loaded Level Data");
     }
     
     public List<ISaveable> FindSaveables()
@@ -88,21 +87,17 @@ public class LevelManager : Singleton<LevelManager>
 
     public void ClearData()
     {
-        foreach (var saveable in _defaultSaveables)
-        {
-            saveable.DeleteSaveInstance();
-        }
-
-        foreach (var saveable in _saveables)
+        foreach (var saveable in saveables)
         {
             saveable.DeleteSaveInstance();
         }
         
-        levelSaveData =  new LevelSaveData();
-        _saveables.Clear();
-        _defaultSaveables.Clear();
+        levelSaveData =  new LevelSaveData(transform.name);
+        saveables.Clear();
         
         Debug.Log("Cleared Saveable Objects");
+        
+        SaveSystem.RemoveLevelData(transform.name);
     }
 }
 

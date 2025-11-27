@@ -19,14 +19,14 @@ public class LevelManagerEditor : Editor
         {
             var instance = (LevelManager)target;
             
-            instance.BakeLevelData();
+            instance.SaveLevelData(true);
         }
 
         if (GUILayout.Button("Load Default Level Data"))
         {
             var instance = (LevelManager)target;
             
-            instance.LoadDefaultData();
+            instance.LoadLevelData(true);
         }
         
         if (GUILayout.Button("Clear Data"))

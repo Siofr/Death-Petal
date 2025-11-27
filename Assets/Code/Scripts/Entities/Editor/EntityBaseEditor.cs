@@ -12,7 +12,7 @@ public class EntityBaseEditor : Editor
         {
             EntityBase entityBase = (EntityBase) target;
             
-            entityBase.InitialiseWeaknesses();
+            entityBase.ReInitializeWeaknesses();
         }
 
         if (GUILayout.Button("Test OnShot Success"))

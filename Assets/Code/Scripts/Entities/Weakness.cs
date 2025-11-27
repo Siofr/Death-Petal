@@ -20,6 +20,7 @@ public class Weakness : MonoBehaviour
     //Non-Serializable
     private MeshRenderer _renderer;
     private GameObject _player;
+    private Material _weaknessMaterial;
     
     private IEntity _parentEntity;
     
@@ -27,6 +28,7 @@ public class Weakness : MonoBehaviour
     public IEntity ParentEntity => _parentEntity;
     
     public Transform WeaknessIconTransform => _weaknessIconTransform;
+    
     
     public void RemoveWeakType(WeakTypes weakType)
     {
@@ -38,21 +40,31 @@ public class Weakness : MonoBehaviour
     {
         _weaknessType = weakType;
     }
-    
-    private void Awake()
+
+    public void Initialize(WeakTypes weakType)
     {
+        _weaknessType = weakType;
         _collider = GetComponent<SphereCollider>();
         _parentEntity = GetComponentInParent<IEntity>();
         _renderer = _weaknessIconTransform.GetComponent<MeshRenderer>();
         
-        SetWeaknessColor();
+        if(Application.isPlaying)
+            SetWeaknessColor();
 
         _player = GameObject.FindGameObjectWithTag("Player");
+    }
+    
+    private void Awake()
+    {
+        Initialize(_weaknessType);
     }
 
     private void SetWeaknessColor()
     {
-        _renderer.material.color = _weaknessType switch
+        if (_weaknessMaterial == null)
+            _weaknessMaterial = _renderer.material;
+        
+        _weaknessMaterial.color = _weaknessType switch
         {
             WeakTypes.RED => Color.red,
             WeakTypes.BLUE => Color.blue,
@@ -63,6 +75,8 @@ public class Weakness : MonoBehaviour
             WeakTypes.RED | WeakTypes.BLUE | WeakTypes.GREEN => Color.white,
             _ => Color.clear
         };
+        
+        _renderer.material = _weaknessMaterial;
     }
     
     private void Update()

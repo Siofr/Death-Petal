@@ -6,9 +6,12 @@ public abstract class EntityBase : MonoBehaviour, IEntity
     [Header("BaseEntityFields")]
     public List<Weakness> weaknesses = new List<Weakness>();
     
+    //Non-Serialized Fields
+    private bool _isInitialized;
+    
     //Properties
     public List<Weakness> Weaknesses => weaknesses;
-
+    
     protected virtual void Awake()
     {
         InitialiseWeaknesses();
@@ -16,7 +19,7 @@ public abstract class EntityBase : MonoBehaviour, IEntity
     
     public void InitialiseWeaknesses()
     {
-        if (weaknesses == null) return;
+        if (weaknesses == null || _isInitialized) return;
         
         var _weaknesses = GetComponentsInChildren<Weakness>();
 
@@ -25,13 +28,20 @@ public abstract class EntityBase : MonoBehaviour, IEntity
         foreach (var weakness in _weaknesses)
         {
             weaknesses.Add(weakness);
+            weakness.Initialize(weakness.WeakType);
         }
+        
+        _isInitialized = true;
     }
 
-    public void IntitialiseWeaknesses(List<Weakness> _weaknesses)
+    public void ReInitializeWeaknesses()
     {
-        weaknesses = _weaknesses;
+        weaknesses.Clear();
+        _isInitialized = false;
+        
+        InitialiseWeaknesses();
     }
+    
     
     public abstract void OnShot(Weakness weakness, WeakTypes damageType);
 }
