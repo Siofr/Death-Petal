@@ -95,6 +95,38 @@ Transform:
   - {fileID: 5645598082045449435}
   m_Father: {fileID: 3109400863374770073}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &278583765029810002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 485706111470410200}
+  m_Layer: 0
+  m_Name: HarmonyHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &485706111470410200
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278583765029810002}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6311261402339553031}
+  m_Father: {fileID: 3708355677800783104}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &299061541752508802
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,7 +1066,7 @@ Transform:
   m_GameObject: {fileID: 2474839473018349321}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.8274004, z: -0, w: 0.56161255}
-  m_LocalPosition: {x: 20.690708, y: 2.14001, z: -48.38263}
+  m_LocalPosition: {x: 0.015, y: -0.035, z: 0.128}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3760,7 +3792,7 @@ Transform:
   m_GameObject: {fileID: 6691727143759869373}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 960, y: 560.5, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3769,7 +3801,7 @@ Transform:
   - {fileID: 4507983319211111180}
   - {fileID: 1412034589312399619}
   - {fileID: 3669816929730411309}
-  m_Father: {fileID: 3708355677800783104}
+  m_Father: {fileID: 485706111470410200}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &105331126962812285
 Animator:
@@ -4621,7 +4653,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7007153801456165306}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7323501173202745397}
+        m_TargetAssemblyTypeName: TempSceneManager, Assembly-CSharp
+        m_MethodName: reloadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &5150395232607913737
 Animator:
   serializedVersion: 7
@@ -4750,6 +4794,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3708355677800783104}
   - component: {fileID: 2351921199582674326}
+  - component: {fileID: 7323501173202745397}
   m_Layer: 0
   m_Name: GameOverScreen
   m_TagString: Untagged
@@ -4772,7 +4817,7 @@ Transform:
   m_Children:
   - {fileID: 3257108932595671596}
   - {fileID: 4459597435978503573}
-  - {fileID: 6311261402339553031}
+  - {fileID: 485706111470410200}
   - {fileID: 2411293216148882720}
   - {fileID: 7911883700354981871}
   m_Father: {fileID: 0}
@@ -4789,10 +4834,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3b36569755a5f5498036a87b8f856a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathScreen
-  particleOffset: {x: 0, y: 0.5, z: 0}
+  particleOffset: {x: 0.015, y: -0.035, z: 0.128}
   rotationSpeed: 33
-  DeathPlayer: {fileID: 6691727143759869373}
+  DeathPlayer: {fileID: 278583765029810002}
   startButton: {fileID: 6626316792423771838}
+--- !u!114 &7323501173202745397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7756021516273804536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fa88ba538d6463439ef93bf67c0c2e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TempSceneManager
 --- !u!1 &8108885791494765307
 GameObject:
   m_ObjectHideFlags: 0
