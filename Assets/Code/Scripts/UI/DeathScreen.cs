@@ -30,6 +30,7 @@ public class DeathScreen : MonoBehaviour
         SetupDeadPlayer();
         SetupCamera();
         SetupParticles();
+        SetupButtons();
     }
 
     void SetupDeadPlayer()
