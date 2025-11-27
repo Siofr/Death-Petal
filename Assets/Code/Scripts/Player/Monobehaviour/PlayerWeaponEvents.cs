@@ -1,5 +1,15 @@
 using UnityEngine;
 
+public struct NextBulletEvent : IEvent
+{
+    public BulletSO bulletType;
+
+    public NextBulletEvent(BulletSO bulletType)
+    {
+        this.bulletType = bulletType;
+    }
+}
+
 public struct ShootEvent : IEvent
 {
     public Weakness weakness;
