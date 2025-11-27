@@ -22,7 +22,7 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
     [Header("Weight Fields")] 
     [SerializeField] private PuzzleElementData _saveData;
     [SerializeField] private GameObject _linkedOutputObject;
-
+    [SerializeField] private Animator _weightModelAnimator;
     
     //[SerializeField] private Bounds _bounds;
     
@@ -101,6 +101,7 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
         }
         else
         {
+            _weightModelAnimator.SetTrigger("Hit");
             MoveWeight(false);
             EventBus<CorrectShotPuzzleEvent>.Raise(new CorrectShotPuzzleEvent(this));
         }
