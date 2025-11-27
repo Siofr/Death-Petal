@@ -37,6 +37,11 @@ public class CameraManager : Singleton<CameraManager>
         EventBus<CameraChangeEvent>.Register(_cameraChangeEventListener);
     }
 
+    private void OnDisable()
+    {
+        EventBus<CameraChangeEvent>.Unregister(_cameraChangeEventListener);
+    }
+
     protected override void Awake()
     {
         base.Awake();

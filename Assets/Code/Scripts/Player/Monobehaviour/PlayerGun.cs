@@ -53,6 +53,16 @@ public class PlayerGun : MonoBehaviour
         EventBus<QuickReload>.Register(_quickReloadListener);
     }
 
+    private void OnDisable()
+    {
+        EventBus<ShootEvent>.Unregister(_shootEventListener);
+        EventBus<AddBulletEvent>.Unregister(_addBulletEventListener);
+        EventBus<RemoveBulletEvent>.Unregister(_removeEventListener);
+        EventBus<StartLongReload>.Unregister(_startLongReloadListener);
+        EventBus<EndLongReload>.Unregister(_endLongReloadListener);
+        EventBus<QuickReload>.Unregister(_quickReloadListener);
+    }
+
     private void Start()
     {
         _bulletsLeft = SFXUtilities.AssignParamID("BulletLeft", shootSfxEventPath);

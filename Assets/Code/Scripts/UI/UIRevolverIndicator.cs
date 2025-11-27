@@ -1,5 +1,6 @@
 using DG.Tweening;
-using System.Runtime.CompilerServices;
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,10 @@ public class UIRevolverIndicator : MonoBehaviour
     public Image[] bulletSprites = new Image[6];
     private int currentBullet = 0;
     private int shootIndex;
+
+    private bool _isRotating;
+
+    Tween animationTween;
 
     private EventBindings<ShootEvent> _shootEventListener;
     private EventBindings<RemoveBulletEvent> _removeBulletEventListener;
@@ -33,6 +38,15 @@ public class UIRevolverIndicator : MonoBehaviour
         EventBus<StartLongReload>.Register(_startLongReloadListener);
     }
 
+    private void OnDisable()
+    {
+        EventBus<ShootEvent>.Unregister(_shootEventListener);
+        EventBus<RemoveBulletEvent>.Unregister(_removeBulletEventListener);
+        EventBus<AddBulletEvent>.Unregister(_addBulletEventListener);
+        EventBus<EndLongReload>.Unregister(_endLongReloadEventListener);
+        EventBus<StartLongReload>.Unregister(_startLongReloadListener);
+    }
+
     private void Start()
     {
         for (int i = 0; i < transform.childCount;  i++)
@@ -43,13 +57,22 @@ public class UIRevolverIndicator : MonoBehaviour
         DOTween.Init();
     }
 
+    private void Update()
+    {
+        
+    }
+
     public void Initialize()
     {
         StartReload();
     }
 
-    public void Rotate(int direction, int angle, float speed)
+    IEnumerator Rotate(int direction, int angle, float speed)
     {
+        if (_isRotating) yield return animationTween.WaitForCompletion();
+
+        _isRotating = true;
+
         Debug.Log("Rotate");
         // Rotate barrel in specified direction
         int zRot = Mathf.RoundToInt(transform.eulerAngles.z);
@@ -58,7 +81,10 @@ public class UIRevolverIndicator : MonoBehaviour
         else { zRot = zRot + (angle * 2) * direction; }
 
         Vector3 rot = new Vector3(0, 0, zRot);
-        transform.DORotate(rot, speed, RotateMode.FastBeyond360);
+        animationTween = transform.DORotate(rot, speed, RotateMode.FastBeyond360);
+        yield return animationTween.WaitForCompletion();
+
+        _isRotating = false;
     }
 
     public void EndReload()
@@ -66,7 +92,7 @@ public class UIRevolverIndicator : MonoBehaviour
         shootIndex = 0;
         int diff = bulletSprites.Length - currentBullet;
 
-        if (diff != 0) Rotate(1, diff * 30, 0.05f);
+        if (diff != 0) StartCoroutine(Rotate(1, diff * 30, 0.05f));
     }
 
     public void StartReload()
@@ -74,7 +100,7 @@ public class UIRevolverIndicator : MonoBehaviour
         int diff = 0;
         diff = currentBullet;
 
-        if (diff != 0) Rotate(1, diff * 30, 0.00f);
+        if (diff != 0) StartCoroutine(Rotate(1, diff * 30, 0.00f));
     }
 
     public void ShootBullet()
@@ -88,7 +114,7 @@ public class UIRevolverIndicator : MonoBehaviour
         // Now Reorder it
         bulletSprites = ReorderArray(bulletSprites);
 
-        Rotate(1, 30, 0.05f);
+        StartCoroutine(Rotate(1, 30, 0.05f));
     }
 
     public void AddBullet(AddBulletEvent ctx)
@@ -99,7 +125,7 @@ public class UIRevolverIndicator : MonoBehaviour
             bulletSprites[currentBullet].enabled = true;
             shootIndex--;
             currentBullet++;
-            Rotate(1, 30, 0.05f);
+            StartCoroutine(Rotate(1, 30, 0.05f));
             return;
         }
 
@@ -109,7 +135,7 @@ public class UIRevolverIndicator : MonoBehaviour
         bulletSprites[currentBullet + shootIndex].enabled = true;
         currentBullet++;
 
-        Rotate(1, 30, 0.05f);
+        StartCoroutine(Rotate(1, 30, 0.05f));
     }
 
     public void RemoveBullet()
@@ -119,7 +145,7 @@ public class UIRevolverIndicator : MonoBehaviour
         {
             bulletSprites[currentBullet + shootIndex - 1].enabled = false;
             currentBullet--;
-            Rotate(-1, 30, 0.05f);
+            StartCoroutine(Rotate(-1, 30, 0.05f));
             return;
         }
 
@@ -128,7 +154,7 @@ public class UIRevolverIndicator : MonoBehaviour
         bulletSprites[currentBullet - 1].enabled = false;
         currentBullet--;
 
-        Rotate(-1, 30, 0.05f);
+        StartCoroutine(Rotate(-1, 30, 0.05f));
     }
 
     private Image[] CopyArray(Image[] arr)
