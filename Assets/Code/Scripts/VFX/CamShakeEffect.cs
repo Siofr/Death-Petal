@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -10,6 +11,13 @@ public class CamShakeEffect : MonoBehaviour
     
     public float ShakeAmplitude = 1f;
     public float ShakeTime = 1f;
+    
+    private CinemachineBrain _cinemachineBrain;
+
+    public void Start()
+    {
+        _cinemachineBrain = GameObject.FindAnyObjectByType<CinemachineBrain>();
+    }
     private void OnEnable()
     {
         _correctShotEventListener = new EventBindings<CorrectShotEvent>(ShakeCamera);
@@ -31,24 +39,39 @@ public class CamShakeEffect : MonoBehaviour
 
     private void ShakeCamera()
     {
-        print("Starting Camera Shake");
-        StartCoroutine("ShakingCoroutine");
+        //print("Starting Camera Shake");
+        
+        StartCoroutine(ShakingCoroutine());
 
     }
+
     
-    IEnumerable ShakingCoroutine()
+    
+    IEnumerator ShakingCoroutine()
     {
-        CinemachineBasicMultiChannelPerlin camShaker = GameObject.FindFirstObjectByType<CinemachineBasicMultiChannelPerlin>();
-        
-        print(camShaker.name + "is shaking");
+        print("Attempting to shake Camera Shake");
 
-        if (camShaker.AmplitudeGain != 0f) 
-            yield return null;
+        //_cinemachineBrain.ActiveVirtualCamera;
+        
+        //CinemachineBasicMultiChannelPerlin camShaker = GameObject.FindFirstObjectByType<CinemachineBasicMultiChannelPerlin>();
 
-        camShaker.AmplitudeGain = ShakeAmplitude;
+        if (_cinemachineBrain.ActiveVirtualCamera is CinemachineCamera cam)
+        {
+            CinemachineBasicMultiChannelPerlin camShaker = cam.GetComponent<CinemachineBasicMultiChannelPerlin>();
+            
+            if (camShaker.AmplitudeGain != 0f) 
+                yield return null;
+
+            camShaker.AmplitudeGain = ShakeAmplitude;
         
-        yield return new WaitForSecondsRealtime(ShakeTime);
+            print(camShaker.name + " in " + camShaker.gameObject.transform.parent.name + " is shaking by: " + camShaker.AmplitudeGain);
         
-        camShaker.AmplitudeGain = 0f;
+            yield return new WaitForSecondsRealtime(ShakeTime);
+        
+            camShaker.AmplitudeGain = 0f;
+        }
+        
+
+        
     }
 }
