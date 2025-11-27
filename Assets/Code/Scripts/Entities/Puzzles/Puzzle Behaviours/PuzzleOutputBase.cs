@@ -7,7 +7,6 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput
 {
     //Base Fields
     [Header("Base Fields")]
-    [SerializeField] private PuzzleOutputData _saveData;
     [SerializeField] private bool _isSolved;
     public Animator animator;
     
@@ -16,8 +15,6 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput
     private EventBindings<PuzzleResetEvent> _puzzleResetEventListener;
     
     //Properties
-    public PuzzleOutputData SaveInfo => _saveData;
-    
     public bool IsSolved
     {
         get => _isSolved;

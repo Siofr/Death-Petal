@@ -11,14 +11,6 @@ public static class SaveSystem
     {
         return Application.persistentDataPath + "/Save.dps";
     }
-
-    public static void SaveData<T>(T Data)
-    {
-    }
-
-    public static void LoadData<T>()
-    {
-    }
 }
 
 #region Save Data Types
@@ -32,7 +24,7 @@ public struct GameSaveData
 public struct LevelSaveData
 {
     public string levelName;
-    public List<uint> saveableIDs;
+    public List<int> saveableID;
     
     public List<EntitySaveData> entitySaveData;
     public List<PuzzleOutputSaveData> puzzleOutputSaveData;
@@ -42,9 +34,18 @@ public struct LevelSaveData
 [Serializable]
 public struct EntitySaveData
 {
+    public int id;
+    
     public Vector3 position;
     public List<int> health;
 
+    public EntitySaveData(int id, Vector3 position,  List<int> health)
+    {
+        this.id = id;
+        this.position = position;
+        this.health = health;
+    }
+    
     public void Save(Vector3 pos, List<Weakness> refWeaknesses)
     {
         position = pos;
@@ -57,13 +58,13 @@ public struct EntitySaveData
 
     public void Load(Transform refTransform, ref List<Weakness> refWeaknesses)
     {
+        refTransform.position = position;
+        
         if (refWeaknesses.Count > health.Count)
         {
             Debug.LogError("Fragmented Health SaveData");
             return;
         }
-        
-        refTransform.position = position;
         
         for (var i = 0; i < refWeaknesses.Count; i++)
         {

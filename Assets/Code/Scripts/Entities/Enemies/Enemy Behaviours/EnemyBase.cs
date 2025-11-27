@@ -23,7 +23,6 @@ struct WrongShotEvent : IEvent
 public class EnemyBase : EntityBase
 {
     [Header("Enemy Configuration")]
-    [SerializeField] private EnemySaveData _saveData;
     public Animator animator;
     public EnemyConfig_SO enemyData;
     public Vector3 defaultPos;
@@ -41,7 +40,6 @@ public class EnemyBase : EntityBase
     private bool _isDead;
     
     //Properties
-    public EnemySaveData SaveInfo => _saveData;
     public bool IsDead => _isDead;
     
     //Events

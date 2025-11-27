@@ -14,20 +14,11 @@ public struct PlayerDamagedEvent : IEvent
 public class TestPlayer : EntityBase, ISaveable<EntitySaveData>
 {
     [SerializeField] private EntitySaveData _saveData;
-
-    private int _saveID = ISaveableHelper.GenerateISaveableID();
     
-    public EntitySaveData SaveInfo => _saveData;
-    public int SaveID
-    {
-        get => _saveID;
-    }
+    private int _saveID;
+    public EntitySaveData SaveInfo =>  _saveData;
+    public int SaveID => _saveID;
     
-    public void Awake()
-    {
-        base.Awake();
-    }
-
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
         if (!Weaknesses.Contains(weakness)) return;
@@ -48,13 +39,53 @@ public class TestPlayer : EntityBase, ISaveable<EntitySaveData>
         }
     }
 
-    public void HandleLoadData()
+    public void CreateSaveInstance()
     {
-        _saveData.Load(transform, ref weaknesses);
+        _saveID = ISaveableHelper.GenerateISaveableID();
+
+        var health = new List<int>();
+        Weaknesses.ForEach(x=>health.Add((int)x.WeakType));
+        
+        _saveData = new EntitySaveData(_saveID, transform.position, health);
     }
 
-    public void HandleSaveData()
+    public void DeleteSaveInstance()
     {
+        if (SaveID == 0) return;
+        ISaveableHelper.RemoveExistingID(_saveID);
+        
+        _saveID = 0;
+        _saveData = new EntitySaveData();
+    }
+    
+    public void HandleLoadData(ref LevelSaveData refData)
+    {
+        if (!refData.saveableID.Contains(SaveID)) return;
+
+        foreach (var data in refData.entitySaveData)
+        {
+            if (data.id != SaveID) continue;
+
+            _saveData = data;
+            _saveData.Load(transform, ref weaknesses);
+            return;
+        }
+    }
+
+    public void HandleSaveData(ref LevelSaveData refData)
+    {
+        if (!refData.saveableID.Contains(SaveID)) return;
+        
         _saveData.Save(transform.position, Weaknesses);
+
+        for (var i = 0; i < refData.entitySaveData.Count; i++)
+        {
+            if (refData.entitySaveData[i].id != SaveID) continue;
+
+            refData.entitySaveData[i] = _saveData;
+            return;
+        }
+        
+        refData.entitySaveData.Add(_saveData);
     }
 }

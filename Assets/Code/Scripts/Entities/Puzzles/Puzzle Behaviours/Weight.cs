@@ -11,8 +11,7 @@ public struct WrongShotPuzzleEvent: IEvent
 
 public class Weight: EntityBase
 {
-    [Header("Weight Fields")] 
-    [SerializeField] private PuzzleElementData _saveData;
+    [Header("Weight Fields")]
     [SerializeField] private GameObject _linkedOutputObject;
 
     
@@ -32,7 +31,6 @@ public class Weight: EntityBase
     
     //Properties
     public IPuzzleOutput LinkedOutput => _output;
-    public PuzzleElementData SaveInfo => _saveData;
     
     private IEnumerator MoveWeightRoutine(bool reset)
     {
