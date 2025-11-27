@@ -35,7 +35,13 @@ public class DeathScreen : MonoBehaviour
 
     void SetupDeadPlayer()
     {
-        Instantiate(DeathPlayer, _player.transform.position, _player.transform.rotation);
+        //var deadPlayer = Instantiate(DeathPlayer, _player.transform.position, _player.transform.rotation);
+        //deadPlayer.transform.SetParent(gameObject.transform);
+
+        DeathPlayer.transform.position = _player.transform.position;
+        DeathPlayer.transform.rotation = _player.transform.rotation;
+
+        //Debug.LogWarning(deadPlayer.name);
     }
 
     void SetupCamera()

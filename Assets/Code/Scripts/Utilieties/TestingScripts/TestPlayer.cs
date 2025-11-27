@@ -11,6 +11,8 @@ public struct PlayerDamagedEvent : IEvent
     
 }
 
+public struct PlayerDeathEvent : IEvent { }
+
 public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
 {
     [SerializeField]
@@ -38,7 +40,9 @@ public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
         
         if (Weaknesses.Count < 1)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            //UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            print("Player diad");
+            EventBus<PlayerDeathEvent>.Raise(new PlayerDeathEvent());
         }
     }
 
