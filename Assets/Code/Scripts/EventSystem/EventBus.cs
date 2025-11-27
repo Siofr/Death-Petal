@@ -23,7 +23,7 @@ public static class EventBus<T> where T : IEvent
     //Send Message to listeners of event T
     public static void Raise(T @event)
     {
-        Debug.Log($"Raising Event Type {typeof(T).Name}");
+        //Debug.Log($"Raising Event Type {typeof(T).Name}");
         
         foreach (var binding in _eventBindings)
         {
@@ -36,6 +36,6 @@ public static class EventBus<T> where T : IEvent
     public static void Clear()
     {
         _eventBindings.Clear(); 
-        Debug.Log($"Cleared Bus of Event Type {typeof(T).Name}");
+        //Debug.Log($"Cleared Bus of Event Type {typeof(T).Name}");
     }
 }
