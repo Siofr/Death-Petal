@@ -9,6 +9,12 @@ public struct WrongShotPuzzleEvent: IEvent
     public WrongShotPuzzleEvent(Weight weightReference) => weight = weightReference;
 }
 
+public struct CorrectShotPuzzleEvent : IEvent
+{
+    public Weight weight;
+    public CorrectShotPuzzleEvent(Weight weightReference) => weight = weightReference;
+}
+
 public class Weight: EntityBase, ISaveable<PuzzleElementData>
 {
     [Header("Weight Fields")] 
@@ -90,6 +96,7 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
         else
         {
             MoveWeight(false);
+            EventBus<CorrectShotPuzzleEvent>.Raise(new CorrectShotPuzzleEvent(this));
         }
     }
     

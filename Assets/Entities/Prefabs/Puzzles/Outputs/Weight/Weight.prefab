@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7367588025323363678}
   - component: {fileID: 7873811945187551377}
+  - component: {fileID: 4001149639118262341}
   m_Layer: 0
   m_Name: VFX
   m_TagString: Untagged
@@ -47,6 +48,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PuzzleEffects
   wrongShotEffectObjects:
   - {fileID: 6502091213947007285}
+--- !u!114 &4001149639118262341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5907587589497082152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497ac92aa1884df458680ab71f952195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitStopEffects
+  hitStopTime: 0.2
+  hitStopStrenght: 0.001
+  hitStopMaterial: {fileID: 2100000, guid: d762e7229cd8cbb468d386561ae2848f, type: 2}
 --- !u!1 &7155040247714572167
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2042533583087983378}
   m_Layer: 0
-  m_Name: Model
+  m_Name: MODEL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

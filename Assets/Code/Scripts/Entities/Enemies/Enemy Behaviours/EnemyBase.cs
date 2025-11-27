@@ -19,6 +19,13 @@ struct WrongShotEvent : IEvent
     public WrongShotEvent(EnemyBase enemyRefrence) => enemy = enemyRefrence;
 }
 
+struct CorrectShotEvent : IEvent
+{
+    public EnemyBase enemy;
+
+    public CorrectShotEvent(EnemyBase enemyRefrence) => enemy = enemyRefrence;
+}
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
 {
@@ -169,6 +176,7 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         {
             Weaknesses.Remove(weakness);
             Destroy(weakness.transform.parent.gameObject);
+            EventBus<CorrectShotEvent>.Raise(new CorrectShotEvent(this));
         }
 
         if (Weaknesses.Count == 0)
