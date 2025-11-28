@@ -22,8 +22,6 @@ public abstract class EntityBase : MonoBehaviour, IEntity
 
         if (weaknesses == null) return;
         
-        _weaknesses.Clear();
-        
         foreach (var weakness in weaknesses)
         {
             _weaknesses.Add(weakness);

@@ -9,11 +9,9 @@ public class BoxDestructible : EntityBase
     [SerializeField] private float _postDestructionLifetime = 1f;
 
     [SerializeField] private float _postDestructionFadeTime = 1f;
-    
+
     [SerializeField] private GameObject _solidBox;
     [SerializeField] private GameObject _fragmentedBox;
-
-    [SerializeField] [Range(0, 1)] private float _petalDropChance; 
 
     private Renderer[] _fragmentedRenderers;
     private bool _hasBeenShot = false;
@@ -23,7 +21,6 @@ public class BoxDestructible : EntityBase
 
     protected override void Awake()
     {
-        base.Awake();
         _solidBox.SetActive(true);
         _fragmentedBox.SetActive(false);
 
@@ -39,10 +36,6 @@ public class BoxDestructible : EntityBase
 
         _hasBeenShot = true;
         StartCoroutine(DisposeBox());
-
-        var petalSpawnChance = Random.value;
-
-        if (petalSpawnChance < _petalDropChance) EventBus<PetalSpawnEvent>.Raise(new PetalSpawnEvent(transform.position));
     }
 
     private IEnumerator DisposeBox()
