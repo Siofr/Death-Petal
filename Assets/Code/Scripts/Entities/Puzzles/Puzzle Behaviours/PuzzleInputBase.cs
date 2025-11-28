@@ -8,6 +8,7 @@ public abstract class PuzzleInputBase : EntityBase, IPuzzleInput
     
     //Non-Serializable Fields
     private List<IPuzzleOutput> _puzzleOutputs = new List<IPuzzleOutput>();
+    
     //Properties
     public List<IPuzzleOutput> PuzzleOutputs => _puzzleOutputs;
 
@@ -29,6 +30,8 @@ public abstract class PuzzleInputBase : EntityBase, IPuzzleInput
     public bool CompletionCondition(bool condition, IPuzzleOutput targetOutput)
     {
         Debug.Log("Evaluating Puzzle Conditions");
+
+        if (!_puzzleOutputs.Contains(targetOutput)) return false;
         
         if (!condition)
         {
