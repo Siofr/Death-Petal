@@ -102,7 +102,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 600
 --- !u!114 &-7399423723133149940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,13 +642,15 @@ MonoBehaviour:
   - {fileID: 4884352887839379079}
   - {fileID: -8127943665920165290}
   - {fileID: -455875428209466579}
+  - {fileID: 9073706768260867682}
+  - {fileID: 7822863918727596067}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6040658824176098348}
   StringsBanks:
   - {fileID: 6111956806373418789}
   cacheVersion: 131849
-  cacheTime: 638998799069339239
+  cacheTime: 638999254719199226
   SerializableEventsDict:
   - key: event:/Test/Click Test
     index: 0
@@ -668,6 +670,10 @@ MonoBehaviour:
     index: 7
   - key: event:/Weapons/Placeholder/bulletRicochet
     index: 8
+  - key: event:/Interactables/Puzzles/doorOpen
+    index: 9
+  - key: event:/Interactables/Destructable/woodBoxDestruction
+    index: 10
 --- !u!114 &158568789112321128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1234,10 +1240,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638998799069339239
+  lastModified: 638999254718997533
   FileSizes:
   - Name: Desktop
-    Value: 52512
+    Value: 95360
   Exists: 1
 --- !u!114 &6111956806373418789
 MonoBehaviour:
@@ -1254,10 +1260,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638998799069339239
+  lastModified: 638999254719199226
   FileSizes:
   - Name: Desktop
-    Value: 1474
+    Value: 1598
   Exists: 1
 --- !u!114 &6482042051473157699
 MonoBehaviour:
@@ -1323,6 +1329,33 @@ MonoBehaviour:
   - Name: Desktop
     Value: 35424
   Exists: 1
+--- !u!114 &7822863918727596067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Interactables/Destructable/woodBoxDestruction
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Interactables/Destructable/woodBoxDestruction
+  Guid:
+    Data1: -1439608626
+    Data2: 1235727833
+    Data3: 654811528
+    Data4: 716509318
+  Banks:
+  - {fileID: 6040658824176098348}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1040
 --- !u!114 &7948571013851073083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1428,3 +1461,30 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &9073706768260867682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Interactables/Puzzles/doorOpen
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Interactables/Puzzles/doorOpen
+  Guid:
+    Data1: -2100675261
+    Data2: 1130364842
+    Data3: -2007614842
+    Data4: -1722247365
+  Banks:
+  - {fileID: 6040658824176098348}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1500
