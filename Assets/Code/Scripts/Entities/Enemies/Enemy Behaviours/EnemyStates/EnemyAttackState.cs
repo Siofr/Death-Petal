@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using FMODUnity;
 
 public class EnemyAttackState : EnemyBaseState
 {
@@ -32,7 +33,9 @@ public class EnemyAttackState : EnemyBaseState
     {
         Debug.Log("Entering Attack State");
         //enemyController.SetTarget(null);
-        
+
+        RuntimeManager.PlayOneShot(enemyController.onEnemyAttackEventPath, enemyController.transform.position);
+
         enemyController.StopAllCoroutines();
         enemyController.animator.SetFloat(Animator.StringToHash("Blend"),0f);
         
