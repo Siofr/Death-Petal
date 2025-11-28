@@ -4,20 +4,26 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.EditorCoroutines.Editor;
 using UnityEngine;
+using FMOD.Studio;
+using FMODUnity;
 
 public class Door : PuzzleOutputBase
 {
     [Header("Door Fields")]
     [Header("In Seconds")]
     public float openSpeed;
-    
+
+    [Header("Audio Paths")]
+    public EventReference onOpenEventPath;
+
     //Non-Serializable fields
     private Queue<IEnumerator> _routineQueue = new Queue<IEnumerator>();
     
     private IEnumerator OpenDoorRoutine(bool isOpened, float openSpeed, bool isEditor = false)
     {
         Debug.Log("Starting OpenDoor Routine");
-        
+        RuntimeManager.PlayOneShot(onOpenEventPath, transform.position);
+
         float updateStep = isEditor ? 1 / 60f : Time.deltaTime;
 
         float value = isOpened ? 0f : 1f;
