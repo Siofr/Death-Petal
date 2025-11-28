@@ -1,4 +1,5 @@
 using System;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 
@@ -32,3 +33,4 @@ public class UTIL_SCR_ShaderDisable : MonoBehaviour
         }
     }
 }
+#endif

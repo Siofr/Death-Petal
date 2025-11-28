@@ -1,4 +1,6 @@
 using System;
+#if UNITY_EDITOR
+
 using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -48,3 +50,4 @@ public class DoorEditor : Editor
         }
     }
 }
+#endif

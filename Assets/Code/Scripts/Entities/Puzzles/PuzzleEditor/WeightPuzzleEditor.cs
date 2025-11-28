@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(WeightPuzzle))]
 public class WeightPuzzleEditor : Editor
 {
@@ -38,3 +39,4 @@ public class WeightPuzzleEditor : Editor
         weight.OnShot(weight.Weaknesses[0], bulletType);
     }
 }
+#endif

@@ -1,5 +1,7 @@
 using System;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using FMOD.Studio;
 using FMODUnity;
@@ -70,8 +72,11 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         if (_saveData == null)
         {
             var dataInstance = ScriptableObject.CreateInstance<PuzzleOutputData>();
-            AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
-            
+
+            # if UNITY_EDITOR
+                AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
+            #endif
+
             _saveData = dataInstance;
             _saveData.Save(transform.position, _isSolved);
         }

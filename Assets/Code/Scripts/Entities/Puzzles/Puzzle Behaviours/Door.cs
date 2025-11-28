@@ -2,7 +2,9 @@
 
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using Unity.EditorCoroutines.Editor;
+#endif
 using UnityEngine;
 using FMODUnity;
 
@@ -78,11 +80,13 @@ public class Door : PuzzleOutputBase
         
         if (_routineQueue.Count < 2)
         {
+#if UNITY_EDITOR
             if (!isEditor)
             {
                 EditorCoroutineUtility.StartCoroutine(OpenDoorRoutine(isOpened, openSpeed, true), this);
                 return;
             }
+            #endif
             
             StartCoroutine(OpenDoorRoutine(isOpened, openSpeed, false));
         }
