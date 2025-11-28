@@ -37,7 +37,28 @@ public class Weakness : MonoBehaviour
     {
         _collider = GetComponent<SphereCollider>();
         _parentEntity = GetComponentInParent<IEntity>();
-        _renderer = _weaknessIconTransform.GetComponent<MeshRenderer>();
+        _renderer = _weaknessIconTransform.GetComponent<MeshRenderer>();   
+        
+        Initialise();
+
+        _player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    public void Initialise(WeakTypes weakType, Vector3 iconPosition)
+    {
+        _weaknessType = weakType;
+        _weaknessIconTransform.position = iconPosition;
+        SetWeaknessColor();
+    }
+
+    public void Initialise()
+    {
+        Initialise(_weaknessType, _weaknessIconTransform.position);
+    }
+
+    public void SetWeaknessColor()
+    {
+        if (!Application.isPlaying) return;
         
         _renderer.material.color = _weaknessType switch
         {
@@ -50,11 +71,7 @@ public class Weakness : MonoBehaviour
             WeakTypes.RED | WeakTypes.BLUE | WeakTypes.GREEN => Color.white,
             _ => Color.clear
         };
-
-        _player = GameObject.FindGameObjectWithTag("Player");
     }
-
-
     
     private void Update()
     {
