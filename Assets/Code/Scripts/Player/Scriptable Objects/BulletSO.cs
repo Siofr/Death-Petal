@@ -7,4 +7,5 @@ public class BulletSO : ScriptableObject
     public Color bulletColor;
     public WeakTypes weakness;
     public Sprite bulletSprite;
+    public Sprite bulletReticle;
 }

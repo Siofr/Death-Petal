@@ -1,23 +1,24 @@
 using DG.Tweening;
-using System.Runtime.CompilerServices;
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIRevolverIndicator : MonoBehaviour
 {
     public Image[] bulletSprites = new Image[6];
-    private Color[] lastBulletColors = new Color[6];
     private int currentBullet = 0;
-    private int lastBulletCount;
     private int shootIndex;
-    private int bulletsLoaded;
+
+    private bool _isRotating;
+
+    Tween animationTween;
 
     private EventBindings<ShootEvent> _shootEventListener;
     private EventBindings<RemoveBulletEvent> _removeBulletEventListener;
     private EventBindings<AddBulletEvent> _addBulletEventListener;
     private EventBindings<EndLongReload> _endLongReloadEventListener;
     private EventBindings<StartLongReload> _startLongReloadListener;
-    private EventBindings<QuickReload> _quickReloadEventListener;
 
     private void Awake()
     {
@@ -26,7 +27,6 @@ public class UIRevolverIndicator : MonoBehaviour
         _addBulletEventListener = new EventBindings<AddBulletEvent>(AddBullet);
         _endLongReloadEventListener = new EventBindings<EndLongReload>(EndReload);
         _startLongReloadListener = new EventBindings<StartLongReload>(Initialize);
-        _quickReloadEventListener = new EventBindings<QuickReload>(QuickReload);
     }
 
     private void OnEnable()
@@ -36,7 +36,15 @@ public class UIRevolverIndicator : MonoBehaviour
         EventBus<AddBulletEvent>.Register(_addBulletEventListener);
         EventBus<EndLongReload>.Register(_endLongReloadEventListener);
         EventBus<StartLongReload>.Register(_startLongReloadListener);
-        EventBus<QuickReload>.Register(_quickReloadEventListener);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<ShootEvent>.Unregister(_shootEventListener);
+        EventBus<RemoveBulletEvent>.Unregister(_removeBulletEventListener);
+        EventBus<AddBulletEvent>.Unregister(_addBulletEventListener);
+        EventBus<EndLongReload>.Unregister(_endLongReloadEventListener);
+        EventBus<StartLongReload>.Unregister(_startLongReloadListener);
     }
 
     private void Start()
@@ -49,44 +57,23 @@ public class UIRevolverIndicator : MonoBehaviour
         DOTween.Init();
     }
 
+    private void Update()
+    {
+        
+    }
+
     public void Initialize()
     {
         StartReload();
     }
 
-    public void ShootBullet()
+    IEnumerator Rotate(int direction, int angle, float speed)
     {
-        // 0. Sanity Check 1. Remove current bullet 2. Rotate barrel counter clockwise
-        if (shootIndex >= bulletSprites.Length || shootIndex >= bulletsLoaded) return;
+        if (_isRotating) yield return animationTween.WaitForCompletion();
 
-        bulletSprites[shootIndex].enabled = false;
-        shootIndex += 1;
-        Rotate(1, 30, 0.05f);
-    }
+        _isRotating = true;
 
-    public void RemoveBullet()
-    {
-        // 0. Sanity Check 1. Remove last bullet 2. Rotate barrel clockwise
-        if (currentBullet - 1 < 0) return;
-
-        bulletSprites[currentBullet - 1].enabled = false;
-        currentBullet -= 1;
-        Rotate(-1, 30, 0.05f);
-    }
-
-    public void AddBullet(AddBulletEvent ctx)
-    {
-        // 0. Sanity check 1. Add Bullet 2. Rotate Barrel counter clockwise
-        if (currentBullet >= bulletSprites.Length) return;
-
-        bulletSprites[currentBullet].enabled = true;
-        bulletSprites[currentBullet].sprite = ctx.bulletType.bulletSprite;
-        currentBullet += 1;
-        Rotate(1, 30, 0.05f);
-    }
-
-    public void Rotate(int direction, int angle, float speed)
-    {
+        Debug.Log("Rotate");
         // Rotate barrel in specified direction
         int zRot = Mathf.RoundToInt(transform.eulerAngles.z);
 
@@ -94,52 +81,106 @@ public class UIRevolverIndicator : MonoBehaviour
         else { zRot = zRot + (angle * 2) * direction; }
 
         Vector3 rot = new Vector3(0, 0, zRot);
-        transform.DORotate(rot, speed, RotateMode.FastBeyond360);
-    }
+        animationTween = transform.DORotate(rot, speed, RotateMode.FastBeyond360);
+        yield return animationTween.WaitForCompletion();
 
-    public void QuickReload()
-    {
-        Initialize();
-
-        for (int i = 0; i < lastBulletColors.Length; i++)
-        {
-            bulletSprites[i].color = lastBulletColors[i];
-            bulletSprites[i].enabled = true;
-            currentBullet += 1;
-        }
-
-        EndReload();
+        _isRotating = false;
     }
 
     public void EndReload()
     {
+        shootIndex = 0;
         int diff = bulletSprites.Length - currentBullet;
-        bulletsLoaded = currentBullet;
-        lastBulletColors = new Color[bulletsLoaded];
 
-        for (int i = 0; i < bulletsLoaded; i++)
-        {
-            lastBulletColors[i] = bulletSprites[i].color;
-        }
-
-        if (diff != 0) Rotate(1, diff * 30, 0.05f);
+        if (diff != 0) StartCoroutine(Rotate(1, diff * 30, 0.05f));
     }
 
     public void StartReload()
     {
         int diff = 0;
-        if (currentBullet != bulletsLoaded)
-        {
-            diff = (currentBullet - shootIndex) - lastBulletCount;
-            currentBullet += diff;
-        }
-        else diff = currentBullet;
-        Debug.Log("Bullet Diff " + diff);
-        //for (int i = 0; i < bulletSprites.Length; i++)
-        //{
-        //    bulletSprites[i].enabled = false;
-        //}
+        diff = currentBullet;
 
-        if (diff != 0) Rotate(1, diff * 30, 0.00f);
+        if (diff != 0) StartCoroutine(Rotate(1, diff * 30, 0.00f));
+    }
+
+    public void ShootBullet()
+    {
+        if (bulletSprites[0].enabled == false) return;
+
+        bulletSprites[0].enabled = false;
+
+        shootIndex++;
+        currentBullet--;
+        // Now Reorder it
+        bulletSprites = ReorderArray(bulletSprites);
+
+        StartCoroutine(Rotate(1, 30, 0.05f));
+    }
+
+    public void AddBullet(AddBulletEvent ctx)
+    {
+        if (shootIndex != 0 && currentBullet + shootIndex <= bulletSprites.Length)
+        {
+            bulletSprites[currentBullet].sprite = ctx.bulletType.bulletSprite;
+            bulletSprites[currentBullet].enabled = true;
+            shootIndex--;
+            currentBullet++;
+            StartCoroutine(Rotate(1, 30, 0.05f));
+            return;
+        }
+
+        if (currentBullet + shootIndex >= bulletSprites.Length) return;
+
+        bulletSprites[currentBullet + shootIndex].sprite = ctx.bulletType.bulletSprite;
+        bulletSprites[currentBullet + shootIndex].enabled = true;
+        currentBullet++;
+
+        StartCoroutine(Rotate(1, 30, 0.05f));
+    }
+
+    public void RemoveBullet()
+    {
+
+        if (shootIndex != 0 && currentBullet + shootIndex - 1 !> bulletSprites.Length)
+        {
+            bulletSprites[currentBullet + shootIndex - 1].enabled = false;
+            currentBullet--;
+            StartCoroutine(Rotate(-1, 30, 0.05f));
+            return;
+        }
+
+        if (currentBullet - 1 < 0) return;
+
+        bulletSprites[currentBullet - 1].enabled = false;
+        currentBullet--;
+
+        StartCoroutine(Rotate(-1, 30, 0.05f));
+    }
+
+    private Image[] CopyArray(Image[] arr)
+    {
+        Image[] newArr = new Image[6];
+
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (arr[i] == null) break;
+            newArr[i] = arr[i];
+        }
+
+        return newArr;
+    }
+
+    public Image[] ReorderArray(Image[] arr)
+    {
+        // Reorder the array
+        Image[] newArr = new Image[arr.Length];
+
+        for (int i = 0; i < arr.Length - 1; i++)
+        {
+            newArr[i] = arr[i + 1];
+        }
+
+        newArr[arr.Length - 1] = arr[0];
+        return newArr;
     }
 }

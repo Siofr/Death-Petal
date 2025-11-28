@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 
-public class InputHandler : MonoBehaviour
+public class InputHandler : Singleton<InputHandler>
 {
     private InputSystem_Actions _inputActions;
 
@@ -34,12 +34,14 @@ public class InputHandler : MonoBehaviour
     public static event Action SprintEvent;
     public static event Action SprintCancelledEvent;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         _inputActions = new InputSystem_Actions();
     }
 
-    void Start()
+    void OnEnable()
     {
         MOVE = _inputActions.Player.Move;
         MOVE.Enable();

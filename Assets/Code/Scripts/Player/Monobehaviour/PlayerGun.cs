@@ -53,6 +53,16 @@ public class PlayerGun : MonoBehaviour
         EventBus<QuickReload>.Register(_quickReloadListener);
     }
 
+    private void OnDisable()
+    {
+        EventBus<ShootEvent>.Unregister(_shootEventListener);
+        EventBus<AddBulletEvent>.Unregister(_addBulletEventListener);
+        EventBus<RemoveBulletEvent>.Unregister(_removeEventListener);
+        EventBus<StartLongReload>.Unregister(_startLongReloadListener);
+        EventBus<EndLongReload>.Unregister(_endLongReloadListener);
+        EventBus<QuickReload>.Unregister(_quickReloadListener);
+    }
+
     private void Start()
     {
         _bulletsLeft = SFXUtilities.AssignParamID("BulletLeft", shootSfxEventPath);
@@ -95,6 +105,7 @@ public class PlayerGun : MonoBehaviour
         bulletIndex--;
         // Now Reorder it
         bulletArray = ReorderArray(bulletArray);
+        GetNextBullet();
     }
 
     public void AddBullet(AddBulletEvent ctx)
@@ -138,6 +149,7 @@ public class PlayerGun : MonoBehaviour
     private void SaveArray()
     {
         lastBulletArray = CopyArray(bulletArray);
+        GetNextBullet();
 
         Debug.Log("Bullets loaded" + lastBulletArray);
     }
@@ -153,5 +165,11 @@ public class PlayerGun : MonoBehaviour
         }
 
         return newArr;
+    }
+
+    private void GetNextBullet()
+    {
+        BulletSO nextBullet = bulletArray[0];
+        EventBus<NextBulletEvent>.Raise(new NextBulletEvent(nextBullet));
     }
 }

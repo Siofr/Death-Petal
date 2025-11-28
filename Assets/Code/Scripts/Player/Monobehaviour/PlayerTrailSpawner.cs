@@ -19,17 +19,18 @@ public class PlayerTrailSpawner : MonoBehaviour
         _trailObject = transform.GetChild(0).gameObject;
     }
 
-    private void Update()
-    {
-
-    }
-
     private void OnEnable()
     {
         EventBus<SpawnTrail>.Register(_onShootEventListener);
         EventBus<ActiveTargetEvent>.Register(_onActiveTargetEventListener);
     }
 
+
+    private void OnDisable()
+    {
+        EventBus<SpawnTrail>.Unregister(_onShootEventListener);
+        EventBus<ActiveTargetEvent>.Unregister(_onActiveTargetEventListener);
+    }
     private void SpawnTrail(SpawnTrail ctx)
     {
         Quaternion rotation = new Quaternion();

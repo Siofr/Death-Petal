@@ -37,6 +37,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Rocks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Tex:
         m_Texture: {fileID: 2800000, guid: 49f48d998c278074fa37b19ed63e11c0, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -56,10 +60,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _DepthMult: 75
+    - _HitStop: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Value: 3.95
     m_Colors:
     - _BaseColour: {r: 1, g: 1, b: 1, a: 1}
+    - _HitStopColor: {r: 1, g: 0, b: 0, a: 1}
+    - _PlayerPosition: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

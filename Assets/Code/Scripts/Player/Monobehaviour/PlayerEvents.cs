@@ -11,6 +11,16 @@ public struct ActiveTargetEvent : IEvent
     }
 }
 
+public struct TransmitPlayerInfo : IEvent
+{
+    public Transform player;
+
+    public TransmitPlayerInfo(Transform player)
+    {
+        this.player = player;
+    }
+}
+
 public struct AimEvent : IEvent { }
 
 // Reload Events

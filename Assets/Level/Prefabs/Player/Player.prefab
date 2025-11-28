@@ -123,6 +123,9 @@ GameObject:
   - component: {fileID: 8543887564667533573}
   - component: {fileID: 2752580990786439412}
   - component: {fileID: 5569318152563602577}
+  - component: {fileID: 6976398069148049693}
+  - component: {fileID: 8011774994662831887}
+  - component: {fileID: 1073544426128530289}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -193,7 +196,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: adaef4b4914884a429570ed2efab51ea, type: 2}
   - {fileID: 11400000, guid: 95d0503eeda4d7b438a37b599d6500ed, type: 2}
   playerWalkSpeed: 4
-  playerSprintSpeed: 5.5
+  playerSprintSpeed: 10
   playerAimSpeed: 2.5
   currentSpeed: 0
   lookDir: {x: 0, y: 0, z: 0}
@@ -230,6 +233,45 @@ MonoBehaviour:
       Data3: -1841470556
       Data4: 193580785
     Path: event:/Weapons/Placeholder/addRemoveBullet
+--- !u!114 &6976398069148049693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3997147908757342861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6e80a90fe55f614f9db2806d67ae903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathHandler
+  deathScreenPrefab: {fileID: 7756021516273804536, guid: 727af855c6180a24ea0e8d42a37455ab, type: 3}
+--- !u!114 &8011774994662831887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3997147908757342861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb68b127deb1584d9ae47143a0e8f7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGunAnimation
+--- !u!114 &1073544426128530289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3997147908757342861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ce42027b85fec4b9334dd79c397b01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CamShakeEffect
+  ShakeAmplitude: 1
+  ShakeTime: 0.2
 --- !u!1 &6786558166313280823
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,6 +327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1240857200261891403}
   - component: {fileID: 5379855324015867488}
+  - component: {fileID: 6743637687206976134}
   m_Layer: 0
   m_Name: PlayerVFX
   m_TagString: Untagged
@@ -323,6 +366,21 @@ MonoBehaviour:
   particleSystems:
   - {fileID: 4048612208209357354}
   - {fileID: 2338542747091400110}
+--- !u!114 &6743637687206976134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6814331718074213930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497ac92aa1884df458680ab71f952195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitStopEffects
+  hitStopTime: 0.1
+  hitStopPower: 0
+  modelParent: {fileID: 7249666322484350803}
 --- !u!1 &7249666322484350803
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,6 +698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTrail
   lifetime: 3
   speed: 100
+  target: {fileID: 0}
 --- !u!1001 &637211225691761335
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -789,9 +848,6 @@ PrefabInstance:
       addedObject: {fileID: 1971263939375084536}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a052453e46b20954fb2be80eb50991cb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1090839714884340544}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a052453e46b20954fb2be80eb50991cb, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2902325352879853543}
   m_SourcePrefab: {fileID: 100100000, guid: a052453e46b20954fb2be80eb50991cb, type: 3}
 --- !u!1 &2483839008051085313 stripped
@@ -806,26 +862,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2483839008051085313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 543dc9f80c05fd147862bdc4f1a859d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SFXFootsteps
-  eventPath:
-    Guid:
-      Data1: 1219859637
-      Data2: 1103861269
-      Data3: 1668588701
-      Data4: 1732037063
-    Path: event:/Characters/Player Character/Placeholder/footsteps
---- !u!114 &1090839714884340544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2483839008051085313}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 543dc9f80c05fd147862bdc4f1a859d8, type: 3}
   m_Name: 

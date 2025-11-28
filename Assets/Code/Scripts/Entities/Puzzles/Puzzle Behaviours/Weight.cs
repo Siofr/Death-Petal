@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using FMOD.Studio;
+using FMODUnity;
 
 public struct WrongShotPuzzleEvent: IEvent
 {
@@ -9,12 +11,18 @@ public struct WrongShotPuzzleEvent: IEvent
     public WrongShotPuzzleEvent(Weight weightReference) => weight = weightReference;
 }
 
+public struct CorrectShotPuzzleEvent : IEvent
+{
+    public Weight weight;
+    public CorrectShotPuzzleEvent(Weight weightReference) => weight = weightReference;
+}
+
 public class Weight: EntityBase, ISaveable<PuzzleElementData>
 {
     [Header("Weight Fields")] 
     [SerializeField] private PuzzleElementData _saveData;
     [SerializeField] private GameObject _linkedOutputObject;
-
+    [SerializeField] private Animator _weightModelAnimator;
     
     //[SerializeField] private Bounds _bounds;
     
@@ -23,7 +31,10 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
     [SerializeField] private float _moveSpeed;
     [Header("In Unity Units")]
     [SerializeField] private float _moveDist;
-    
+
+    [Header("Audio Paths")]
+    public EventReference onMoveEventPath;
+
     //Non-Serializable Fields
     private IPuzzleOutput _output;
 
@@ -66,7 +77,8 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
     private void MoveWeight(bool reset)
     {
         if (_moveRoutine != null) return;
-        
+
+        RuntimeManager.PlayOneShot(onMoveEventPath, transform.position);
         _moveRoutine = StartCoroutine(MoveWeightRoutine(reset));
     }
     
@@ -89,7 +101,9 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
         }
         else
         {
+            _weightModelAnimator.SetTrigger("Hit");
             MoveWeight(false);
+            EventBus<CorrectShotPuzzleEvent>.Raise(new CorrectShotPuzzleEvent(this));
         }
     }
     
