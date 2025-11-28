@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using FMOD.Studio;
 using FMODUnity;
@@ -118,8 +120,11 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
         if (_saveData == null)
         {
             var dataInstance = ScriptableObject.CreateInstance<PuzzleElementData>();
-            AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
-            
+
+            # if UNITY_EDITOR
+                AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
+            #endif
+
             _saveData = dataInstance;
             _saveData.Save(transform.position);
         }

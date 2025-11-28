@@ -2,22 +2,27 @@
 
 using System.Collections;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using Unity.EditorCoroutines.Editor;
+#endif
 using UnityEngine;
+using FMODUnity;
 
 public class Door : PuzzleOutputBase
 {
     [Header("Door Fields")]
     [Header("In Seconds")]
     public float openSpeed;
-    
+
     //Non-Serializable fields
     private Queue<IEnumerator> _routineQueue = new Queue<IEnumerator>();
     
     private IEnumerator OpenDoorRoutine(bool isOpened, float openSpeed, bool isEditor = false)
     {
         Debug.Log("Starting OpenDoor Routine");
-        
+
+        RuntimeManager.PlayOneShot(onCompletionEventPath, transform.position);
+
         float updateStep = isEditor ? 1 / 60f : Time.deltaTime;
 
         float value = isOpened ? 0f : 1f;
@@ -75,11 +80,13 @@ public class Door : PuzzleOutputBase
         
         if (_routineQueue.Count < 2)
         {
+#if UNITY_EDITOR
             if (!isEditor)
             {
                 EditorCoroutineUtility.StartCoroutine(OpenDoorRoutine(isOpened, openSpeed, true), this);
                 return;
             }
+            #endif
             
             StartCoroutine(OpenDoorRoutine(isOpened, openSpeed, false));
         }

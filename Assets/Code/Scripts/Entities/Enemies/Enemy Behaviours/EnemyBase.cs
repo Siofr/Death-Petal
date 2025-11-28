@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using State_Machine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.AI;
+using FMODUnity;
 
 struct EnemyDeathEvent: IEvent
 {
@@ -54,6 +57,9 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     //Events
     private EventBindings<RoomPlayerEnterEvent> _playerRoomEnterEventListener;
     private EventBindings<RoomPlayerExitEvent> _playerRoomExitEventListener;
+
+    [Header("Audio Paths")]
+    public EventReference onEnemyAttackEventPath;
 
     protected override void Awake()
     {
@@ -192,8 +198,10 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         if (_saveData == null)
         {
             var dataInstance = ScriptableObject.CreateInstance<EnemySaveData>();
+            #if UNITY_EDITOR
             AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
-            
+            #endif
+
             _saveData = dataInstance;
             _saveData.Save(transform.position, Weaknesses);
         }

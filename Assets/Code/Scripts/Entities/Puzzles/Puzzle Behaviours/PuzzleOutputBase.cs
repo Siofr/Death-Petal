@@ -1,6 +1,10 @@
 using System;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
+using FMOD.Studio;
+using FMODUnity;
 
 [RequireComponent(typeof(Animator))]
 public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable<PuzzleOutputData>
@@ -14,7 +18,11 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     //Events
     private EventBindings<PuzzleSolvedEvent> _puzzleSolvedEventListener;
     private EventBindings<PuzzleResetEvent> _puzzleResetEventListener;
-    
+
+    // SFX
+    [Header("Audio Paths")]
+    public EventReference onCompletionEventPath;
+
     //Properties
     public PuzzleOutputData SaveInfo => _saveData;
     
@@ -45,7 +53,8 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     public virtual void OnPuzzleSolved(PuzzleSolvedEvent context)
     {
         if ((PuzzleOutputBase)context.puzzleOutput != this) return;
-        
+
+        RuntimeManager.PlayOneShot(onCompletionEventPath, transform.position);
         animator.SetBool(Animator.StringToHash("IsSolved"), true);
         IsSolved = true;
     }
@@ -63,8 +72,11 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         if (_saveData == null)
         {
             var dataInstance = ScriptableObject.CreateInstance<PuzzleOutputData>();
-            AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
-            
+
+            # if UNITY_EDITOR
+                AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
+            #endif
+
             _saveData = dataInstance;
             _saveData.Save(transform.position, _isSolved);
         }

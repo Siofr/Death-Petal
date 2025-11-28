@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using FMOD.Studio;
+using FMODUnity;
 
 public class HitStopEffects : MonoBehaviour
 {
@@ -17,6 +19,9 @@ public class HitStopEffects : MonoBehaviour
     
     private List<Renderer>  _renderers;
     //private List<Material>  _originMaterials;
+
+    [Header("Audio Paths")]
+    public EventReference onEnemyShotEventPath;
 
     private void Awake()
     {
@@ -56,7 +61,8 @@ public class HitStopEffects : MonoBehaviour
     {
         if (ctx.enemy != GetComponentInParent<EnemyBase>())
             return;
-        
+
+        RuntimeManager.PlayOneShot(onEnemyShotEventPath, transform.position);
         DoHitStopEffect();
     }
 
@@ -64,6 +70,8 @@ public class HitStopEffects : MonoBehaviour
     {
         if(ctx.testPlayer != GetComponentInParent<TestPlayer>())
             return;
+
+        RuntimeManager.PlayOneShot(onEnemyShotEventPath, transform.position);
         DoHitStopEffect();
     }
     private void DoHitStopEffect()
