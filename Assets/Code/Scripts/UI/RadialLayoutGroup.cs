@@ -12,6 +12,7 @@ public class RadialLayoutGroup : MonoBehaviour
     public float distance;
 
     public bool ignoreInactive = false;
+    public bool rotateChildren = false;
 
     private float internalRadius;
     private float eligibleChildCount = 0;
@@ -26,6 +27,12 @@ public class RadialLayoutGroup : MonoBehaviour
 
 
         childObject.position = new Vector3(x, y, 0);
+        
+        if(!rotateChildren) return;
+        
+        var angleStep = distance /  transform.childCount;
+        childObject.eulerAngles = new Vector3(0, 0, angleStep * childCount *-1);
+        childObject.name = childCount.ToString();
     }
 
     public void Update()
