@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -57,8 +59,10 @@ public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
         if (_saveData == null)
         {
             var dataInstance = ScriptableObject.CreateInstance<PlayerSaveData>();
+            #if UNITY_EDITOR
             AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
-            
+            #endif
+
             _saveData = dataInstance;
             _saveData.Save(transform.position, Weaknesses);
         }
