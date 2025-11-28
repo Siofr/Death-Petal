@@ -593,6 +593,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2420833712427050482, guid: 406e35981abfe0348a979d2cf3db9ee6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.381
+      objectReference: {fileID: 0}
+    - target: {fileID: 2420833712427050482, guid: 406e35981abfe0348a979d2cf3db9ee6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -25.245
+      objectReference: {fileID: 0}
     - target: {fileID: 3318179467877156162, guid: 406e35981abfe0348a979d2cf3db9ee6, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.013449165
@@ -3266,7 +3274,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e35e3a0f1a1e4219acebd162b789b9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestPlayer
-  _saveData: {fileID: 0}
+  _saveData:
+    id: 0
+    position: {x: 0, y: 0, z: 0}
+    health: 
+  weaknesses: []
 --- !u!1001 &2025281462
 PrefabInstance:
   m_ObjectHideFlags: 0
