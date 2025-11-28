@@ -109,5 +109,7 @@ public class Weight: EntityBase
     {
         base.Awake();
         if(_linkedOutputObject != null) _linkedOutputObject.TryGetComponent(out _output);
+        
+        Debug.Log(_output);
     }
 }

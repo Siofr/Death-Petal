@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveData>
@@ -11,15 +12,17 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
     //Non-Serialized Fields
     private bool _isInitialized;
     private int _saveID;
+    private SerializedProperty _saveDataProperty;
     
     //Properties
     public List<Weakness> Weaknesses => weaknesses;
     public EntitySaveData SaveInfo =>  _saveData;
     public int SaveID => _saveID;
-
+    
     protected virtual void Awake()
     {
         _saveID = _saveData.id;
+        ReInitializeWeaknesses();
     }
     
     public void InitialiseWeaknesses()
@@ -60,6 +63,8 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
         Weaknesses.ForEach(x=>health.Add((int)x.WeakType));
         
         _saveData = new EntitySaveData(_saveID, transform.position, health);
+        
+        //PrefabUtility.UnpackPrefabInstance(gameObject, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
     }
 
     public void DeleteSaveInstance()

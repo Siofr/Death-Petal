@@ -20,6 +20,8 @@ public abstract class PuzzleInputBase : EntityBase, IPuzzleInput
         {
             if(outputs.TryGetComponent<PuzzleOutputBase>(out var puzzleOutput)) _puzzleOutputs.Add(puzzleOutput);
         }
+        
+        Debug.Log(PuzzleOutputs.Count);
     }
 
     public override void OnShot(Weakness weakness, WeakTypes damageType)
@@ -29,7 +31,7 @@ public abstract class PuzzleInputBase : EntityBase, IPuzzleInput
 
     public bool CompletionCondition(bool condition, IPuzzleOutput targetOutput)
     {
-        Debug.Log("Evaluating Puzzle Conditions");
+        //Debug.Log("Evaluating Puzzle Conditions");
 
         if (!_puzzleOutputs.Contains(targetOutput)) return false;
         

@@ -6,7 +6,7 @@ using System.IO.Hashing;
 using Random = UnityEngine.Random;
 
 
-public interface ISaveable<T>: ISaveable where T : struct
+public interface ISaveable<T> : ISaveable where T : struct
 {
     public T SaveInfo { get; }
 }

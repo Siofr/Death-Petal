@@ -1,13 +1,21 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
+
+public struct LevelSaveEvent: IEvent{ }
 
 public class LevelManager : Singleton<LevelManager>
 {
     [Header("LevelManager Fields, Attach Component to Level Prefab")]
     public LevelSaveData levelSaveData;
 
+    //Non-Serializable Fields
     public List<ISaveable> saveables = new List<ISaveable>();
+    
+    //Events
+    private EventBindings<LevelSaveEvent> _levelSaveListener;
     
     public void SaveLevelData(bool isBaking = false)
     {
@@ -49,6 +57,11 @@ public class LevelManager : Singleton<LevelManager>
         Debug.Log("Saved Level Data");
     }
 
+    public void SaveLevelData()
+    {
+        SaveLevelData(false);
+    }
+    
     public void LoadLevelData(bool isDefault = false)
     {
         var tempName = transform.name;
@@ -109,7 +122,18 @@ public class LevelManager : Singleton<LevelManager>
         SaveSystem.RemoveLevelData(transform.name);
     }
 
-    public void Start()
+    private void OnEnable()
+    {
+        _levelSaveListener = new EventBindings<LevelSaveEvent>(SaveLevelData);
+        EventBus<LevelSaveEvent>.Register(_levelSaveListener);
+    }
+
+    protected override void OnDisable()
+    {
+        EventBus<LevelSaveEvent>.Unregister(_levelSaveListener);
+    }
+    
+    private void Start()
     {
         if(saveables.Count < 1) saveables = FindSaveables();
         LoadLevelData();
