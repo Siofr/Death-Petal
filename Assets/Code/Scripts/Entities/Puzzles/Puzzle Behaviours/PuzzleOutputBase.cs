@@ -1,6 +1,8 @@
 using System;
 using UnityEditor;
 using UnityEngine;
+using FMOD.Studio;
+using FMODUnity;
 
 [RequireComponent(typeof(Animator))]
 public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable<PuzzleOutputData>
@@ -14,7 +16,11 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     //Events
     private EventBindings<PuzzleSolvedEvent> _puzzleSolvedEventListener;
     private EventBindings<PuzzleResetEvent> _puzzleResetEventListener;
-    
+
+    // SFX
+    [Header("Audio Paths")]
+    public EventReference onCompletionEventPath;
+
     //Properties
     public PuzzleOutputData SaveInfo => _saveData;
     
@@ -45,7 +51,8 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     public virtual void OnPuzzleSolved(PuzzleSolvedEvent context)
     {
         if ((PuzzleOutputBase)context.puzzleOutput != this) return;
-        
+
+        RuntimeManager.PlayOneShot(onCompletionEventPath, transform.position);
         animator.SetBool(Animator.StringToHash("IsSolved"), true);
         IsSolved = true;
     }
