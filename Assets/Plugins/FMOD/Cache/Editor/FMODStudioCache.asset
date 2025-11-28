@@ -156,6 +156,33 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &-3881462654763797652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Interactables/Puzzles/torchOn
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Interactables/Puzzles/torchOn
+  Guid:
+    Data1: 208033110
+    Data2: 1208665162
+    Data3: 732776876
+    Data4: -709198609
+  Banks:
+  - {fileID: -3747984595115796839}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1500
 --- !u!114 &-3761189710231247303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,10 +225,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638998911878041617
+  lastModified: 638999371340000000
   FileSizes:
   - Name: Desktop
-    Value: 95360
+    Value: 135584
   Exists: 1
 --- !u!114 &-3111722852418190321
 MonoBehaviour:
@@ -227,6 +254,33 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &-3048418251880799740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Characters/Enemies/enemySwipe
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Characters/Enemies/enemySwipe
+  Guid:
+    Data1: 1386666450
+    Data2: 1224467063
+    Data3: 1121615513
+    Data4: -463641041
+  Banks:
+  - {fileID: -3747984595115796839}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1000
 --- !u!114 &-2902728522589969418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,10 +320,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638998911878061639
+  lastModified: 638999371340000000
   FileSizes:
   - Name: Desktop
-    Value: 1598
+    Value: 1754
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -298,13 +352,16 @@ MonoBehaviour:
   - {fileID: 5541816601100417278}
   - {fileID: -8759157009586843720}
   - {fileID: -6033241914140438137}
+  - {fileID: 8854027442004202068}
+  - {fileID: -3048418251880799740}
+  - {fileID: -3881462654763797652}
   EditorParameters: []
   MasterBanks:
   - {fileID: -3747984595115796839}
   StringsBanks:
   - {fileID: -829887763728483246}
   cacheVersion: 131849
-  cacheTime: 638998911878061639
+  cacheTime: 638999371340000000
   SerializableEventsDict:
   - key: event:/Interactables/Puzzles/weightPuzzle
     index: 0
@@ -328,6 +385,12 @@ MonoBehaviour:
     index: 9
   - key: event:/Interactables/Destructable/woodBoxDestruction
     index: 10
+  - key: event:/Characters/Player Character/Placeholder/damageReceived
+    index: 11
+  - key: event:/Characters/Enemies/enemySwipe
+    index: 12
+  - key: event:/Interactables/Puzzles/torchOn
+    index: 13
 --- !u!114 &79272933940728059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,3 +557,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &8854027442004202068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Characters/Player Character/Placeholder/damageReceived
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Characters/Player Character/Placeholder/damageReceived
+  Guid:
+    Data1: 1786441671
+    Data2: 1075538391
+    Data3: -1543723645
+    Data4: -1689807132
+  Banks:
+  - {fileID: -3747984595115796839}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1040
