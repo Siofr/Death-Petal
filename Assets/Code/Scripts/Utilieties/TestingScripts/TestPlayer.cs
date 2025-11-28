@@ -18,10 +18,7 @@ public struct PlayerDamagedEvent : IEvent
 
 public struct PlayerDeathEvent : IEvent { }
 
-<<<<<<< HEAD
 public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
-=======
->>>>>>> parent of 2c8a5f9 (MinorHiccup)
 {
     [SerializeField]
     private PlayerSaveData _saveData;
