@@ -26,16 +26,11 @@ SaveSkully: Your gun will be used for all interactions, from puzzles to combat, 
 
 title: PositiveResponse
 ---
-<<update_checkpoint(saveSkullID)>>
+<<update_checkpoint Checkpoint>>
 Your game has been saved
 ===
 
 title: NegativeResponse
 ---
 Your game has not been saved
-===
-
-title: SaveSkullVariables
----
-<<declare $saveSkullID = 0>>
 ===

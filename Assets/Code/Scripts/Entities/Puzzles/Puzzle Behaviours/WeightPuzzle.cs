@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public struct WeightShotEvent: IEvent
@@ -26,6 +27,7 @@ public class WeightPuzzle : PuzzleInputBase
     //Non-Serializable Fields   
     private Dictionary<Collider, Weight> _weightColliders = new Dictionary<Collider, Weight>();
     private Collider _puzzleCollider;
+    private List<IPuzzleOutput> _linkedWeightOutputs = new List<IPuzzleOutput>();
     
     //Properties
     public List<Weight> Weights => _weights;
@@ -39,6 +41,8 @@ public class WeightPuzzle : PuzzleInputBase
         InitializeWeights();
         _puzzleCollider = TryGetComponent(out Collider temp) ? temp : null;
     }
+    
+    
 
     private void OnEnable()
     {
@@ -64,7 +68,7 @@ public class WeightPuzzle : PuzzleInputBase
         {
             if (weight.LinkedOutput != null && PuzzleOutputs.Contains(weight.LinkedOutput))
             {
-                PuzzleOutputs.Remove(weight.LinkedOutput);
+                _linkedWeightOutputs.Add(weight.LinkedOutput);
             }
             else
             {
@@ -94,6 +98,7 @@ public class WeightPuzzle : PuzzleInputBase
 
         foreach (var output in PuzzleOutputs)
         {
+            if (_linkedWeightOutputs.Contains(output)) continue;
             CompletionCondition(overallCondition, output);
         }
     }
