@@ -18,6 +18,7 @@ public struct PlayerDamagedEvent : IEvent
 
 public struct PlayerDeathEvent : IEvent { }
 
+public class TestPlayer: EntityBase
 {
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
