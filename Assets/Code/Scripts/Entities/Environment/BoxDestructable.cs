@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class BoxDestructible : EntityBase
 {
@@ -15,6 +16,9 @@ public class BoxDestructible : EntityBase
     private Renderer[] _fragmentedRenderers;
     private bool _hasBeenShot = false;
 
+    [Header("Audio Paths")]
+    public EventReference onBoxShotEventPath;
+
     protected override void Awake()
     {
         _solidBox.SetActive(true);
@@ -25,6 +29,8 @@ public class BoxDestructible : EntityBase
     
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
+        RuntimeManager.PlayOneShot(onBoxShotEventPath, transform.position);
+
         _solidBox.SetActive(false);
         _fragmentedBox.SetActive(true);
 
