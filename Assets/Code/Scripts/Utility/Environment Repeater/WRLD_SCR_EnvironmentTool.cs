@@ -4,7 +4,7 @@ using TreeEditor;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
 
-
+#if UNITY_EDITOR
 [ExecuteInEditMode]
 public class WRLD_SCR_EnvironmentTool : MonoBehaviour
 {
@@ -122,3 +122,4 @@ public class WRLD_SCR_EnvironmentTool : MonoBehaviour
 
 }
 */
+#endif
