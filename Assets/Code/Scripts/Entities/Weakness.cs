@@ -20,7 +20,6 @@ public class Weakness : MonoBehaviour
     //Non-Serializable
     private MeshRenderer _renderer;
     private GameObject _player;
-    private Material _weaknessMaterial;
     
     private IEntity _parentEntity;
     
@@ -29,48 +28,18 @@ public class Weakness : MonoBehaviour
     
     public Transform WeaknessIconTransform => _weaknessIconTransform;
     
-    
     public void RemoveWeakType(WeakTypes weakType)
     {
         _weaknessType &= ~weakType;
-        SetWeaknessColor();
-    }
-
-    public void RemoveWeakness()
-    {
-        if(!Application.isPlaying) DestroyImmediate(transform.parent.gameObject);
-        else Destroy(transform.parent.gameObject);
-    }
-    
-    public void SetWeaknessType(WeakTypes weakType)
-    {
-        _weaknessType = weakType;
-    }
-
-    public void Initialize(WeakTypes weakType)
-    {
-        _weaknessType = weakType;
-        _collider = GetComponent<SphereCollider>();
-        _parentEntity = GetComponentInParent<IEntity>();
-        _renderer = _weaknessIconTransform.GetComponent<MeshRenderer>();
-        
-        if(Application.isPlaying)
-            SetWeaknessColor();
-
-        _player = GameObject.FindGameObjectWithTag("Player");
     }
     
     private void Awake()
     {
-        Initialize(_weaknessType);
-    }
-
-    private void SetWeaknessColor()
-    {
-        if (_weaknessMaterial == null)
-            _weaknessMaterial = _renderer.material;
+        _collider = GetComponent<SphereCollider>();
+        _parentEntity = GetComponentInParent<IEntity>();
+        _renderer = _weaknessIconTransform.GetComponent<MeshRenderer>();
         
-        _weaknessMaterial.color = _weaknessType switch
+        _renderer.material.color = _weaknessType switch
         {
             WeakTypes.RED => Color.red,
             WeakTypes.BLUE => Color.blue,
@@ -81,9 +50,11 @@ public class Weakness : MonoBehaviour
             WeakTypes.RED | WeakTypes.BLUE | WeakTypes.GREEN => Color.white,
             _ => Color.clear
         };
-        
-        _renderer.material = _weaknessMaterial;
+
+        _player = GameObject.FindGameObjectWithTag("Player");
     }
+
+
     
     private void Update()
     {
@@ -95,11 +66,6 @@ public class Weakness : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        if(ParentEntity.Weaknesses.Contains(this)) ParentEntity.Weaknesses.Remove(this);
-    }
-    
     /*private void OnDrawGizmos()
     {
         var gizmoColor = _weaknessType switch

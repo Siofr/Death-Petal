@@ -5,7 +5,7 @@ using Yarn.Unity;
 public class CheckpointInput : PuzzleInputBase
 {
     [Header("Checkpoint Fields")] 
-    [SerializeField] private int _checkpointID;
+    [SerializeField] private int _id;
     
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
@@ -17,7 +17,7 @@ public class CheckpointInput : PuzzleInputBase
             float saveSkullID;
             
             yarnVariableManager.TryGetValue("$saveSkullID", out saveSkullID);
-            saveSkullID = _checkpointID;
+            saveSkullID = _id;
             
             yarnVariableManager.SetValue("$saveSkullID", saveSkullID);
             
@@ -28,7 +28,7 @@ public class CheckpointInput : PuzzleInputBase
     [YarnCommand("update_checkpoint(saveSkullID)")]
     public void UpdateCheckpoint(float id)
     {
-        if (_checkpointID != id) return;
+        if (_id != id) return;
         
         CompletionCondition(true, PuzzleOutputs[0]);
     }

@@ -8,11 +8,11 @@ public class EntityBaseEditor : Editor
     {
         base.OnInspectorGUI();
 
-        if (GUILayout.Button("Initialise Weaknesses"))
+        if (GUILayout.Button("Initialise Weights"))
         {
             EntityBase entityBase = (EntityBase) target;
             
-            entityBase.ReInitializeWeaknesses();
+            entityBase.InitialiseWeaknesses();
         }
 
         if (GUILayout.Button("Test OnShot Success"))
