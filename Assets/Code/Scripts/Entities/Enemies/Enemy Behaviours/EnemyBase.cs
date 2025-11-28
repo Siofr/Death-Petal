@@ -38,6 +38,7 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     public EnemyConfig_SO enemyData;
     public Vector3 defaultPos;
     public Transform target;
+    [Range(0, 1)] public float petalDropChance;
     
     //[Header("EnemyFields")]
     //Non-Serializable Fields
