@@ -10,7 +10,7 @@ public class RadialLayoutGroup : MonoBehaviour
     public float rotationOffset;
     public float radius;
     public float distance;
-
+    
     public bool ignoreInactive = false;
     public bool rotateChildren = false;
 
@@ -32,7 +32,7 @@ public class RadialLayoutGroup : MonoBehaviour
         
         var angleStep = distance /  transform.childCount;
         childObject.eulerAngles = new Vector3(0, 0, angleStep * childCount *-1);
-        childObject.name = childCount.ToString();
+        //childObject.name = childCount.ToString();
     }
 
     public void Update()
