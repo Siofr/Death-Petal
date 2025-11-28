@@ -76,6 +76,33 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
+--- !u!114 &-8127943665920165290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Weapons/Placeholder/bulletImpact
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Weapons/Placeholder/bulletImpact
+  Guid:
+    Data1: 668263050
+    Data2: 1154092997
+    Data3: -1736497257
+    Data4: 1386102785
+  Banks:
+  - {fileID: 6040658824176098348}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-7399423723133149940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +331,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-3898999333599340856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Interactables/Puzzles/weightPuzzle
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Interactables/Puzzles/weightPuzzle
+  Guid:
+    Data1: 530524706
+    Data2: 1288108779
+    Data3: -1295941469
+    Data4: 513527521
+  Banks:
+  - {fileID: 6040658824176098348}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 500
 --- !u!114 &-3305520037871974764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -536,6 +590,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-455875428209466579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Weapons/Placeholder/bulletRicochet
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Weapons/Placeholder/bulletRicochet
+  Guid:
+    Data1: -1830509122
+    Data2: 1280696238
+    Data3: 994187166
+    Data4: 2010272635
+  Banks:
+  - {fileID: 6040658824176098348}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 500
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,13 +638,17 @@ MonoBehaviour:
   - {fileID: 2742019659560465682}
   - {fileID: -8643609150533855556}
   - {fileID: 337615401124413675}
+  - {fileID: -3898999333599340856}
+  - {fileID: 4884352887839379079}
+  - {fileID: -8127943665920165290}
+  - {fileID: -455875428209466579}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6040658824176098348}
   StringsBanks:
   - {fileID: 6111956806373418789}
   cacheVersion: 131849
-  cacheTime: 638996694625672311
+  cacheTime: 638998829387728721
   SerializableEventsDict:
   - key: event:/Test/Click Test
     index: 0
@@ -575,6 +660,14 @@ MonoBehaviour:
     index: 3
   - key: event:/Weapons/Placeholder/addRemoveBullet
     index: 4
+  - key: event:/Interactables/Puzzles/weightPuzzle
+    index: 5
+  - key: event:/Characters/Player Character/Placeholder/death
+    index: 6
+  - key: event:/Weapons/Placeholder/bulletImpact
+    index: 7
+  - key: event:/Weapons/Placeholder/bulletRicochet
+    index: 8
 --- !u!114 &158568789112321128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1051,6 +1144,33 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &4884352887839379079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Characters/Player Character/Placeholder/death
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Characters/Player Character/Placeholder/death
+  Guid:
+    Data1: -484375723
+    Data2: 1233190224
+    Data3: 105127047
+    Data4: -2065206722
+  Banks:
+  - {fileID: 6040658824176098348}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &5822569177562406050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1114,10 +1234,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638996694625672311
+  lastModified: 638998829387683501
   FileSizes:
   - Name: Desktop
-    Value: 35552
+    Value: 52512
   Exists: 1
 --- !u!114 &6111956806373418789
 MonoBehaviour:
@@ -1134,10 +1254,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638996694625672311
+  lastModified: 638998829387728721
   FileSizes:
   - Name: Desktop
-    Value: 1266
+    Value: 1474
   Exists: 1
 --- !u!114 &6482042051473157699
 MonoBehaviour:
