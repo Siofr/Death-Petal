@@ -113,8 +113,6 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
     {
         base.Awake();
         if(_linkedOutputObject != null) _linkedOutputObject.TryGetComponent(out _output);
-        
-        Debug.Log(_output);
     }
 
     public SaveData GetSaveData(LevelData levelData)
