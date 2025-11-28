@@ -1,14 +1,10 @@
 using UnityEngine;
-using FMODUnity;
 
 public class PlayerDeathHandler : MonoBehaviour
 {
     public GameObject deathScreenPrefab;
     
     private EventBindings<PlayerDeathEvent> _playerDeathEventListener;
-
-    [Header("Audio Paths")]
-    public EventReference onPlayerDeathEventPath;
 
     private void OnEnable()
     {
@@ -23,7 +19,6 @@ public class PlayerDeathHandler : MonoBehaviour
     
     private void OnDeath()
     {
-        RuntimeManager.PlayOneShot(onPlayerDeathEventPath);
         Instantiate(deathScreenPrefab, transform.position, transform.rotation);
     }
 }
