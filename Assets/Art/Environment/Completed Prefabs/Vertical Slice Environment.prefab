@@ -448,7 +448,7 @@ GameObject:
   - component: {fileID: 6953988405442789887}
   - component: {fileID: 3206483013037922891}
   m_Layer: 0
-  m_Name: Wall Main (26)
+  m_Name: Enemy room 2 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -462,8 +462,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 56531272794957620}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.71, y: 1.491, z: 43.37}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.71, y: 1.4910002, z: 43.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -480,7 +480,7 @@ Transform:
   - {fileID: 803881370901145237}
   - {fileID: 2294843942216002802}
   - {fileID: 238544520270811756}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 1212011368595950325}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6953988405442789887
 MonoBehaviour:
@@ -839,6 +839,41 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &83187444687353218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 333360118063356230}
+  m_Layer: 0
+  m_Name: Enemy Room 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &333360118063356230
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83187444687353218}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5880631761368224116}
+  - {fileID: 6736343026384983240}
+  - {fileID: 7169676021868671128}
+  - {fileID: 7252443328695202497}
+  m_Father: {fileID: 9199497692838314433}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &86867857949630728
 GameObject:
   m_ObjectHideFlags: 0
@@ -4181,7 +4216,7 @@ GameObject:
   - component: {fileID: 3722504586336764539}
   - component: {fileID: 7488040037659005189}
   m_Layer: 0
-  m_Name: Wall Main (21)
+  m_Name: Enemy room 1 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4195,8 +4230,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334395002766218071}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.66, y: 1.56, z: 34.221}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.6599984, y: 1.56, z: 34.221004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4207,7 +4242,7 @@ Transform:
   - {fileID: 2448051800326747160}
   - {fileID: 6212666653353892869}
   - {fileID: 4649629607627616262}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 333360118063356230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3722504586336764539
 MonoBehaviour:
@@ -4446,15 +4481,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 357926068493368850}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.557, y: 1.56, z: -0.424}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.5570002, y: 1.56, z: -0.4239999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7884311912423506175}
   - {fileID: 8677407536790312661}
   - {fileID: 2749720662209444827}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4813671446509939284}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5838683610106300755
 MonoBehaviour:
@@ -8710,7 +8745,7 @@ GameObject:
   - component: {fileID: 248474611154017846}
   - component: {fileID: 1764229183389629609}
   m_Layer: 0
-  m_Name: Wall Main (10)
+  m_Name: Save Room 1 Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8724,7 +8759,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 677266551557534030}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 12.952, y: 1.56, z: 12.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8733,7 +8768,7 @@ Transform:
   - {fileID: 912250209341892209}
   - {fileID: 9085101055844720845}
   - {fileID: 4003226497391082983}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 8287931751970647536}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &248474611154017846
 MonoBehaviour:
@@ -10194,7 +10229,7 @@ GameObject:
   - component: {fileID: 4453495075047275190}
   - component: {fileID: 872873997999179006}
   m_Layer: 0
-  m_Name: Wall Main (30)
+  m_Name: Save room 2 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10208,8 +10243,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763844580835592737}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.14, y: 1.491, z: 49.88}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 22.14, y: 1.4910002, z: 49.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10218,7 +10253,7 @@ Transform:
   - {fileID: 6011861663697806973}
   - {fileID: 8476843156683977295}
   - {fileID: 3277032383028583000}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 2915435123320313069}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4453495075047275190
 MonoBehaviour:
@@ -13414,12 +13449,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1068623426704007306}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 3.26, y: 2.95, z: 27.36}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 3.2599993, y: 2.95, z: 27.36}
   m_LocalScale: {x: 0.29455, y: 1, z: 0.19282398}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &7369515698345456905
 MeshFilter:
@@ -13689,7 +13724,7 @@ GameObject:
   - component: {fileID: 6153977424223870444}
   - component: {fileID: 8501019169723456706}
   m_Layer: 0
-  m_Name: Wall Main (20)
+  m_Name: Hallway 3 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13703,8 +13738,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1093958218006960493}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.91, y: 1.491, z: 35.54}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.910001, y: 1.4910002, z: 35.540005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13715,7 +13750,7 @@ Transform:
   - {fileID: 989261612303483381}
   - {fileID: 5011880782533098647}
   - {fileID: 2677698685223780013}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4449992274345887978}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6153977424223870444
 MonoBehaviour:
@@ -19772,11 +19807,11 @@ Transform:
   m_GameObject: {fileID: 1608065358958221061}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 11.1653, y: 2.95, z: 34.79}
-  m_LocalScale: {x: 0.29455, y: 1, z: 0.19282398}
+  m_LocalPosition: {x: 11.165301, y: 2.95, z: 34.79}
+  m_LocalScale: {x: 0.29455, y: 1, z: 0.19282396}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!33 &4787362491628666726
 MeshFilter:
@@ -22189,7 +22224,7 @@ GameObject:
   - component: {fileID: 1504378030076100856}
   - component: {fileID: 6009793544018610528}
   m_Layer: 0
-  m_Name: Obfuscator (2)
+  m_Name: Obfuscator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22204,11 +22239,11 @@ Transform:
   m_GameObject: {fileID: 1807870361692083245}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5006011, y: -0.50060123, z: 0.49939817, w: 0.49939817}
-  m_LocalPosition: {x: 4.48, y: 2.95, z: 12.775}
-  m_LocalScale: {x: 0.29455, y: 1, z: 0.18303795}
+  m_LocalPosition: {x: 4.4799995, y: 2.95, z: 12.775001}
+  m_LocalScale: {x: 0.29454997, y: 1, z: 0.18303795}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4443017995058130708}
   m_LocalEulerAnglesHint: {x: 0, y: -90.138, z: 90}
 --- !u!33 &16644901414068773
 MeshFilter:
@@ -23325,7 +23360,7 @@ GameObject:
   - component: {fileID: 5953815663091161277}
   - component: {fileID: 4839093164813177199}
   m_Layer: 0
-  m_Name: Wall Main (16)
+  m_Name: Hallway 4 Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23339,8 +23374,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881979380477241179}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.875, y: 1.491, z: 29.53}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.8749995, y: 1.4910002, z: 29.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23352,7 +23387,7 @@ Transform:
   - {fileID: 3042310029563271755}
   - {fileID: 1767608180711035041}
   - {fileID: 4311115496462677312}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 8539444508473023553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5953815663091161277
 MonoBehaviour:
@@ -23866,6 +23901,39 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1933404314728564794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4686218066640401397}
+  m_Layer: 0
+  m_Name: Hallway 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4686218066640401397
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933404314728564794}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6655272356400037674}
+  - {fileID: 8086162937430792230}
+  m_Father: {fileID: 9199497692838314433}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1936346014982064198
 GameObject:
   m_ObjectHideFlags: 0
@@ -24293,7 +24361,7 @@ GameObject:
   - component: {fileID: 8999302296838172182}
   - component: {fileID: 2275090450480437753}
   m_Layer: 0
-  m_Name: Wall Main (36)
+  m_Name: Hallway 4 fence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24307,8 +24375,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994155183692048151}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 1.491, z: 28.38}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.2999999, y: 1.4910002, z: 28.379997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24336,7 +24404,7 @@ Transform:
   - {fileID: 2867407555530179578}
   - {fileID: 5472869564817256196}
   - {fileID: 8556529060872678545}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 8539444508473023553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8999302296838172182
 MonoBehaviour:
@@ -26773,7 +26841,7 @@ GameObject:
   - component: {fileID: 1727126863753839398}
   - component: {fileID: 5942758784515785130}
   m_Layer: 0
-  m_Name: Wall Main (11)
+  m_Name: Save room 1 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26787,8 +26855,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2297567477716810919}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.355, y: 1.56, z: 17.592}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.354999, y: 1.56, z: 17.592}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -26796,7 +26864,7 @@ Transform:
   - {fileID: 6503935786241875386}
   - {fileID: 1985882564167223846}
   - {fileID: 3715494071260210537}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 8287931751970647536}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1727126863753839398
 MonoBehaviour:
@@ -27377,7 +27445,7 @@ GameObject:
   - component: {fileID: 6771890816929796506}
   - component: {fileID: 853928731401381410}
   m_Layer: 0
-  m_Name: Wall Main (13)
+  m_Name: Hallway 2 Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27391,8 +27459,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2361837650037890995}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.2769995, y: 1.491, z: 18.67}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.276998, y: 1.4910002, z: 18.670002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -27407,7 +27475,7 @@ Transform:
   - {fileID: 8534016954645634012}
   - {fileID: 4018635919044458598}
   - {fileID: 6296685488056473367}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 5878693476515533689}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6771890816929796506
 MonoBehaviour:
@@ -37002,7 +37070,7 @@ GameObject:
   - component: {fileID: 8832434186707991479}
   - component: {fileID: 7031242141833896890}
   m_Layer: 0
-  m_Name: Wall Main (9)
+  m_Name: Save Room Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37016,8 +37084,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3101710178409568250}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.877, y: 1.56, z: 11.411}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 12.877, y: 1.56, z: 11.410999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -37025,7 +37093,7 @@ Transform:
   - {fileID: 2151785039740993397}
   - {fileID: 3480501708003496095}
   - {fileID: 8234814852409270068}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 8287931751970647536}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8832434186707991479
 MonoBehaviour:
@@ -37145,11 +37213,11 @@ Transform:
   m_GameObject: {fileID: 3119756423742339455}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 5.96, y: 2.95, z: 34.79}
-  m_LocalScale: {x: 0.29455, y: 1, z: 0.19282398}
+  m_LocalPosition: {x: 5.9599996, y: 2.95, z: 34.790005}
+  m_LocalScale: {x: 0.29455, y: 1, z: 0.19282396}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!33 &9187720528767366634
 MeshFilter:
@@ -37585,6 +37653,43 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3151644209851828974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4813671446509939284}
+  m_Layer: 0
+  m_Name: Spawn Room
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4813671446509939284
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3151644209851828974}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5614996560435376237}
+  - {fileID: 5627420432510907482}
+  - {fileID: 518392653146984354}
+  - {fileID: 7716623569277016626}
+  - {fileID: 4760819310395212822}
+  - {fileID: 5984759099943414673}
+  m_Father: {fileID: 9199497692838314433}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3157734279149720049
 GameObject:
   m_ObjectHideFlags: 0
@@ -39051,10 +39156,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.5006011, y: -0.50060123, z: 0.49939817, w: 0.49939817}
   m_LocalPosition: {x: 9.57, y: 2.95, z: 13.26}
-  m_LocalScale: {x: 0.29455, y: 1, z: 0.49859396}
+  m_LocalScale: {x: 0.29454997, y: 1, z: 0.498594}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: -90.138, z: 90}
 --- !u!33 &8012195658957256355
 MeshFilter:
@@ -41584,7 +41689,7 @@ GameObject:
   - component: {fileID: 4640689589115305066}
   - component: {fileID: 7801583727289759736}
   m_Layer: 0
-  m_Name: Wall Main (37)
+  m_Name: Hallway 4 fence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41598,8 +41703,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3435451347038825469}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 1.491, z: 53.39}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.29999942, y: 1.4910002, z: 53.390003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -41622,7 +41727,7 @@ Transform:
   - {fileID: 1401335350754710802}
   - {fileID: 9042918574446962544}
   - {fileID: 3538625182588823331}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 8539444508473023553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4640689589115305066
 MonoBehaviour:
@@ -42643,12 +42748,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3517213764082924231}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 3.26, y: 2.95, z: 32.69}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 3.2599998, y: 2.95, z: 32.690002}
   m_LocalScale: {x: 0.29455, y: 1, z: 0.19282398}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &1076150184880571196
 MeshFilter:
@@ -42876,12 +42981,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3546166958868508610}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: 0, w: 0}
-  m_LocalPosition: {x: 9.98, y: 2.95, z: 38.625}
-  m_LocalScale: {x: 0.29455, y: 1, z: 0.71818995}
+  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: -0, w: 0}
+  m_LocalPosition: {x: 9.98, y: 2.95, z: 38.625004}
+  m_LocalScale: {x: 0.29455, y: 1, z: 0.71819}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
 --- !u!33 &1406184815615312814
 MeshFilter:
@@ -43894,7 +43999,7 @@ GameObject:
   - component: {fileID: 984113676932249453}
   - component: {fileID: 8731473163257986522}
   m_Layer: 0
-  m_Name: Wall Main (27)
+  m_Name: Enemy room 2 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43908,8 +44013,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3673238744392003331}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.71, y: 1.491, z: 54.5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.709999, y: 1.4910002, z: 54.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -43926,7 +44031,7 @@ Transform:
   - {fileID: 1263706159615401364}
   - {fileID: 804804841940259561}
   - {fileID: 176866087356022000}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 1212011368595950325}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &984113676932249453
 MonoBehaviour:
@@ -45528,7 +45633,7 @@ GameObject:
   - component: {fileID: 6654397109910760157}
   - component: {fileID: 5914265637038617433}
   m_Layer: 0
-  m_Name: Wall Main (35)
+  m_Name: Hallway 4 fence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45542,8 +45647,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3832900107123868117}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.17, y: 1.491, z: 32.55}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.17000014, y: 1.4910002, z: 32.550003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -45598,7 +45703,7 @@ Transform:
   - {fileID: 6377467406321590372}
   - {fileID: 4909727586237345281}
   - {fileID: 2242217689894140572}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 8539444508473023553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6654397109910760157
 MonoBehaviour:
@@ -45757,7 +45862,7 @@ GameObject:
   - component: {fileID: 6109879651706782244}
   - component: {fileID: 6543868459049887646}
   m_Layer: 0
-  m_Name: Wall Main (3)
+  m_Name: Spawn Room Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45771,15 +45876,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3833923324311642973}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.54, y: 1.56, z: -0.424}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.5400008, y: 1.56, z: -0.42400002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1413967459308772191}
   - {fileID: 4849286207581601493}
   - {fileID: 8823824685799059750}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4813671446509939284}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6109879651706782244
 MonoBehaviour:
@@ -48075,12 +48180,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4064061657509630279}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -6.465, y: 2.95, z: 39.9438}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -6.465, y: 2.95, z: 39.94381}
   m_LocalScale: {x: 0.29455, y: 1, z: 2.358225}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &123759427817158739
 MeshFilter:
@@ -48187,12 +48292,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4083865349857748658}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 1.07, y: 2.95, z: 47.344}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 1.0700005, y: 2.95, z: 47.344}
   m_LocalScale: {x: 0.29455, y: 1, z: 0.17732134}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &87396199479259459
 MeshFilter:
@@ -50179,7 +50284,7 @@ GameObject:
   - component: {fileID: 2825955545259645603}
   - component: {fileID: 2876176838663631865}
   m_Layer: 0
-  m_Name: Wall Main (19)
+  m_Name: Hallway 3 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50193,8 +50298,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4171637205611068585}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.2769995, y: 1.491, z: 35.54}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 7.276999, y: 1.4910002, z: 35.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -50206,7 +50311,7 @@ Transform:
   - {fileID: 2842474758506533722}
   - {fileID: 3988647647456514143}
   - {fileID: 6404412858317674786}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4449992274345887978}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2825955545259645603
 MonoBehaviour:
@@ -52388,7 +52493,7 @@ GameObject:
   - component: {fileID: 1206486687138258196}
   - component: {fileID: 2856665234838816426}
   m_Layer: 0
-  m_Name: Wall Main (24)
+  m_Name: Enemy room 1 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52402,8 +52507,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4367541355581246512}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.36, y: 1.56, z: 35.09}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 14.359999, y: 1.56, z: 35.090004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -52416,7 +52521,7 @@ Transform:
   - {fileID: 9047475972703754754}
   - {fileID: 5651839900275303694}
   - {fileID: 6440068701765442246}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 333360118063356230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1206486687138258196
 MonoBehaviour:
@@ -52634,7 +52739,7 @@ GameObject:
   - component: {fileID: 3309662089391974290}
   - component: {fileID: 686831348695395886}
   m_Layer: 0
-  m_Name: Wall Main (8)
+  m_Name: Puzzle Room Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52648,8 +52753,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4399650986577491057}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.79, y: 1.56, z: 18.73}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.78999996, y: 1.56, z: 18.730001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -52657,7 +52762,7 @@ Transform:
   - {fileID: 7872288201039028791}
   - {fileID: 7216032925059756537}
   - {fileID: 1359712213232919556}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4443017995058130708}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3309662089391974290
 MonoBehaviour:
@@ -55624,6 +55729,46 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &4689066362359715570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8539444508473023553}
+  m_Layer: 0
+  m_Name: Hallway 4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8539444508473023553
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4689066362359715570}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 925753725296261793}
+  - {fileID: 8329727293913356108}
+  - {fileID: 2810716228077566006}
+  - {fileID: 8760526277886774725}
+  - {fileID: 1670695040562043844}
+  - {fileID: 107047241363599423}
+  - {fileID: 4680650099469455151}
+  - {fileID: 8537743941418839850}
+  - {fileID: 2009160832048958265}
+  m_Father: {fileID: 9199497692838314433}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4695239205290766686
 GameObject:
   m_ObjectHideFlags: 0
@@ -56872,7 +57017,7 @@ GameObject:
   - component: {fileID: 2956600952762446661}
   - component: {fileID: 7232123957633011515}
   m_Layer: 0
-  m_Name: Wall Main (23)
+  m_Name: Enemy room 1 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56886,8 +57031,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4790676900539730888}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.66, y: 1.56, z: 25.56}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.660001, y: 1.56, z: 25.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -56898,7 +57043,7 @@ Transform:
   - {fileID: 1766396800690645846}
   - {fileID: 5235629905297400688}
   - {fileID: 5908310165460702460}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 333360118063356230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2956600952762446661
 MonoBehaviour:
@@ -57406,11 +57551,11 @@ Transform:
   m_GameObject: {fileID: 4835391063644285108}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: -0, w: 0}
-  m_LocalPosition: {x: 3.75, y: 2.95, z: 2.8959}
-  m_LocalScale: {x: 0.29455, y: 1, z: 0.21011625}
+  m_LocalPosition: {x: 3.750001, y: 2.95, z: 2.8958998}
+  m_LocalScale: {x: 0.29455, y: 1, z: 0.21011627}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4813671446509939284}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
 --- !u!33 &5689993891037131310
 MeshFilter:
@@ -58862,7 +59007,7 @@ GameObject:
   - component: {fileID: 174181722605036003}
   - component: {fileID: 76887635369131474}
   m_Layer: 0
-  m_Name: Wall Main (18)
+  m_Name: Hallway 4 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58876,8 +59021,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4926834543167085399}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.8749995, y: 1.491, z: 51.85}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.8749986, y: 1.4910002, z: 51.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -58887,7 +59032,7 @@ Transform:
   - {fileID: 2107184422945135199}
   - {fileID: 4841397735623689650}
   - {fileID: 4024337157442364948}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 8539444508473023553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &174181722605036003
 MonoBehaviour:
@@ -59495,7 +59640,7 @@ GameObject:
   - component: {fileID: 5079210400602174671}
   - component: {fileID: 3724468733505130463}
   m_Layer: 0
-  m_Name: Obfuscator (1)
+  m_Name: Obfuscator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59509,12 +59654,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4990975648034851871}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -1.8, y: 2.95, z: 2.8959}
-  m_LocalScale: {x: 0.29455, y: 1, z: 0.21011625}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -1.7999992, y: 2.95, z: 2.8959}
+  m_LocalScale: {x: 0.29455, y: 1, z: 0.21011627}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4813671446509939284}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &287225379109033825
 MeshFilter:
@@ -60108,7 +60253,7 @@ GameObject:
   - component: {fileID: 4964187793414642299}
   - component: {fileID: 2076645399034722694}
   m_Layer: 0
-  m_Name: Wall Main (15)
+  m_Name: Hallway 2 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60122,8 +60267,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5064858879810964299}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.91, y: 1.491, z: 18.67}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.91, y: 1.4910002, z: 18.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -60134,7 +60279,7 @@ Transform:
   - {fileID: 6372431465457077405}
   - {fileID: 7012522293601737221}
   - {fileID: 6595280802820560529}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 5878693476515533689}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4964187793414642299
 MonoBehaviour:
@@ -60347,6 +60492,39 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5071498606458072910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4449992274345887978}
+  m_Layer: 0
+  m_Name: Hallway 3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4449992274345887978
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5071498606458072910}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5097345476559174358}
+  - {fileID: 6265278252422231582}
+  m_Father: {fileID: 9199497692838314433}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5079802704304375439
 GameObject:
   m_ObjectHideFlags: 0
@@ -60375,8 +60553,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5079802704304375439}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.08543733, y: -0.653774, z: 0.075134344, w: -0.74808747}
-  m_LocalPosition: {x: -2.363905, y: -0.76037073, z: 14.997425}
+  m_LocalRotation: {x: -0.0031804524, y: 0.99249095, z: -0.0264405, w: -0.11938393}
+  m_LocalPosition: {x: 9.306461, y: 0.8898301, z: 38.721085}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -61886,7 +62064,7 @@ GameObject:
   - component: {fileID: 7899841249816502225}
   - component: {fileID: 1039565559412895602}
   m_Layer: 0
-  m_Name: Wall Main (29)
+  m_Name: Save room 2 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61900,8 +62078,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5237976378153973337}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.225, y: 1.491, z: 49.88}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 22.225002, y: 1.4910002, z: 49.880005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -61910,7 +62088,7 @@ Transform:
   - {fileID: 4033309032720863496}
   - {fileID: 479494055609843974}
   - {fileID: 7910747230314098701}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 2915435123320313069}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7899841249816502225
 MonoBehaviour:
@@ -62776,11 +62954,11 @@ Transform:
   m_GameObject: {fileID: 5319137245660457492}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 8.5276, y: 2.95, z: 53.97}
+  m_LocalPosition: {x: 8.527599, y: 2.95, z: 53.97}
   m_LocalScale: {x: 0.29455, y: 1, z: 1.455996}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!33 &7865131737475742878
 MeshFilter:
@@ -62976,12 +63154,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5321900069689450616}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 1.07, y: 2.95, z: 52.32}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 1.0700009, y: 2.95, z: 52.320004}
   m_LocalScale: {x: 0.29455, y: 1, z: 0.17732134}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &436166955862181776
 MeshFilter:
@@ -65195,7 +65373,7 @@ GameObject:
   - component: {fileID: 5641143331851445997}
   - component: {fileID: 8899580617769667699}
   m_Layer: 0
-  m_Name: Wall Main (22)
+  m_Name: Enemy room 1 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65209,8 +65387,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5462413622467031774}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.81, y: 1.56, z: 35.09}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.81, y: 1.56, z: 35.090004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -65222,7 +65400,7 @@ Transform:
   - {fileID: 5891933208430132023}
   - {fileID: 2190388527844101953}
   - {fileID: 6327747228664583503}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 333360118063356230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5641143331851445997
 MonoBehaviour:
@@ -67083,12 +67261,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5624889197118645802}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: 0, w: 0}
+  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: -0, w: 0}
   m_LocalPosition: {x: 13.124, y: 2.95, z: 30.54}
-  m_LocalScale: {x: 0.29455, y: 1, z: 0.71818995}
+  m_LocalScale: {x: 0.29455, y: 1, z: 0.71819}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
 --- !u!33 &3264053110207745463
 MeshFilter:
@@ -69677,6 +69855,75 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.503461, y: 0.7348218, z: 0.09318054}
   m_Center: {x: 0.2482695, y: 0.37823635, z: -0.014353029}
+--- !u!1 &5885642785515887766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8287931751970647536}
+  m_Layer: 0
+  m_Name: Save Room 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8287931751970647536
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5885642785515887766}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1721254686768877402}
+  - {fileID: 8271407000001068013}
+  - {fileID: 1538407790392853780}
+  m_Father: {fileID: 9199497692838314433}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5888656714484038598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1212011368595950325}
+  m_Layer: 0
+  m_Name: Enemy Room 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1212011368595950325
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5888656714484038598}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1169499252430409220}
+  - {fileID: 4621255189673925307}
+  - {fileID: 6413800654484544089}
+  - {fileID: 204349028947036044}
+  m_Father: {fileID: 9199497692838314433}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5907540867503248933
 GameObject:
   m_ObjectHideFlags: 0
@@ -73975,8 +74222,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6340774223037641056}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.06, y: 1.56, z: -0.31}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.0600002, y: 1.56, z: -0.30999994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -73984,7 +74231,7 @@ Transform:
   - {fileID: 7636332830974036099}
   - {fileID: 34238775739695264}
   - {fileID: 5802463912147607054}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4813671446509939284}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4072761211197487999
 MonoBehaviour:
@@ -76679,7 +76926,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9199497692838314433}
   m_Layer: 0
-  m_Name: Walls
+  m_Name: Level Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76698,61 +76945,17 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5627420432510907482}
-  - {fileID: 4760819310395212822}
-  - {fileID: 518392653146984354}
-  - {fileID: 7716623569277016626}
-  - {fileID: 7562598059608469822}
-  - {fileID: 5483305660076930504}
-  - {fileID: 5880631761368224116}
-  - {fileID: 7711824232615117768}
-  - {fileID: 5067531232224664531}
-  - {fileID: 6736343026384983240}
-  - {fileID: 7169676021868671128}
-  - {fileID: 522100035275938353}
-  - {fileID: 2171381034151662580}
-  - {fileID: 1169499252430409220}
-  - {fileID: 6130941775833684895}
-  - {fileID: 5053099964100070091}
-  - {fileID: 4621255189673925307}
-  - {fileID: 7252443328695202497}
-  - {fileID: 374446465692871408}
-  - {fileID: 1721254686768877402}
-  - {fileID: 7899813996073254546}
-  - {fileID: 7006632474548792172}
-  - {fileID: 5614996560435376237}
-  - {fileID: 5984759099943414673}
-  - {fileID: 2773798328236294213}
-  - {fileID: 8053565310695012495}
-  - {fileID: 1538407790392853780}
-  - {fileID: 8551275291409622830}
-  - {fileID: 8271407000001068013}
-  - {fileID: 7924977984069564959}
-  - {fileID: 6655272356400037674}
-  - {fileID: 8086162937430792230}
-  - {fileID: 10240032218374416}
-  - {fileID: 5097345476559174358}
-  - {fileID: 5930357607286342386}
-  - {fileID: 6265278252422231582}
-  - {fileID: 957196091496869266}
-  - {fileID: 925753725296261793}
-  - {fileID: 8329727293913356108}
-  - {fileID: 2810716228077566006}
-  - {fileID: 8760526277886774725}
-  - {fileID: 1670695040562043844}
-  - {fileID: 107047241363599423}
-  - {fileID: 4680650099469455151}
-  - {fileID: 4551207305725805739}
-  - {fileID: 6413800654484544089}
-  - {fileID: 204349028947036044}
-  - {fileID: 5188187494248467750}
-  - {fileID: 472801530553981603}
-  - {fileID: 7815613178835356815}
-  - {fileID: 8586720785753303303}
-  - {fileID: 8537743941418839850}
-  - {fileID: 2469591409699810292}
-  - {fileID: 2009160832048958265}
-  - {fileID: 64638308798330739}
+  - {fileID: 4813671446509939284}
+  - {fileID: 4686218066640401397}
+  - {fileID: 4443017995058130708}
+  - {fileID: 5878693476515533689}
+  - {fileID: 333360118063356230}
+  - {fileID: 8287931751970647536}
+  - {fileID: 4449992274345887978}
+  - {fileID: 8539444508473023553}
+  - {fileID: 1212011368595950325}
+  - {fileID: 2915435123320313069}
+  - {fileID: 4395281240418775517}
   m_Father: {fileID: 1346527737651404452}
   m_LocalEulerAnglesHint: {x: 0, y: -0.471, z: 0}
 --- !u!1 &6597844052816090353
@@ -77180,7 +77383,7 @@ GameObject:
   - component: {fileID: 5905063207687408620}
   - component: {fileID: 2617785804305057910}
   m_Layer: 0
-  m_Name: Wall Main (7)
+  m_Name: Puzzle Room Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77194,8 +77397,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6635352512764951669}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.54, y: 1.56, z: 11.97}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.5399998, y: 1.56, z: 11.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -77203,7 +77406,7 @@ Transform:
   - {fileID: 7131352642874405001}
   - {fileID: 8378411603822557462}
   - {fileID: 1124492375084763681}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4443017995058130708}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5905063207687408620
 MonoBehaviour:
@@ -79654,7 +79857,7 @@ GameObject:
   - component: {fileID: 485555783888310524}
   - component: {fileID: 4917039492976722022}
   m_Layer: 0
-  m_Name: Wall Main (6)
+  m_Name: Puzzle Room Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79668,8 +79871,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6917980536181242894}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.95, y: 1.56, z: 12.39}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.95000076, y: 1.56, z: 12.389999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -79678,7 +79881,7 @@ Transform:
   - {fileID: 5215621936096834816}
   - {fileID: 3960447105931038912}
   - {fileID: 8695115009928939505}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4443017995058130708}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &485555783888310524
 MonoBehaviour:
@@ -80307,6 +80510,42 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6936519150461362989
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4443017995058130708}
+  m_Layer: 0
+  m_Name: Puzzle Room
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4443017995058130708
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6936519150461362989}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7562598059608469822}
+  - {fileID: 7006632474548792172}
+  - {fileID: 2773798328236294213}
+  - {fileID: 8053565310695012495}
+  - {fileID: 5483305660076930504}
+  m_Father: {fileID: 9199497692838314433}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6948480837849949908
 GameObject:
   m_ObjectHideFlags: 0
@@ -81200,15 +81439,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7032676364274401574}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.95, y: 1.56, z: 4.69}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.9500005, y: 1.56, z: 4.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8142889136883600204}
   - {fileID: 7752581686695006745}
   - {fileID: 350468673730442435}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4813671446509939284}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5888129849201502279
 MonoBehaviour:
@@ -81621,6 +81860,40 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7064090252654305178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2915435123320313069}
+  m_Layer: 0
+  m_Name: Save Room 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2915435123320313069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7064090252654305178}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 472801530553981603}
+  - {fileID: 7815613178835356815}
+  - {fileID: 8586720785753303303}
+  m_Father: {fileID: 9199497692838314433}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7076450354805557712
 GameObject:
   m_ObjectHideFlags: 0
@@ -83230,7 +83503,7 @@ GameObject:
   - component: {fileID: 6239304269018621445}
   - component: {fileID: 5632534559649694021}
   m_Layer: 0
-  m_Name: Wall Main (31)
+  m_Name: Save room 2 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83244,8 +83517,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7213605336256078887}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.14, y: 1.491, z: 49.88}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 22.14, y: 1.4910002, z: 49.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -83254,7 +83527,7 @@ Transform:
   - {fileID: 7710251425897189305}
   - {fileID: 2987819147040653898}
   - {fileID: 778704049023519596}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 2915435123320313069}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6239304269018621445
 MonoBehaviour:
@@ -84178,6 +84451,39 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7287491623265487463
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5878693476515533689}
+  m_Layer: 0
+  m_Name: Hallway 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5878693476515533689
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7287491623265487463}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 10240032218374416}
+  - {fileID: 5930357607286342386}
+  m_Father: {fileID: 9199497692838314433}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7294597003515210761
 GameObject:
   m_ObjectHideFlags: 0
@@ -85965,7 +86271,7 @@ GameObject:
   - component: {fileID: 7497011934442869780}
   - component: {fileID: 4172594324432973225}
   m_Layer: 0
-  m_Name: Wall Main (17)
+  m_Name: Hallway 4 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85979,8 +86285,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7473337475011257945}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.8749995, y: 1.491, z: 29.53}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.8749995, y: 1.4910002, z: 29.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -86003,7 +86309,7 @@ Transform:
   - {fileID: 3806247211037815134}
   - {fileID: 1497100026283803031}
   - {fileID: 7212021896354054521}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 8539444508473023553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7497011934442869780
 MonoBehaviour:
@@ -86066,11 +86372,11 @@ Transform:
   m_GameObject: {fileID: 7473822286096028501}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -2.6856, y: 2.95, z: 51.1}
-  m_LocalScale: {x: 0.29455, y: 1, z: 0.70839113}
+  m_LocalPosition: {x: -2.6856008, y: 2.95, z: 51.100002}
+  m_LocalScale: {x: 0.29455, y: 1, z: 0.7083912}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!33 &6832069692618158020
 MeshFilter:
@@ -87051,7 +87357,7 @@ GameObject:
   - component: {fileID: 8794690151953159463}
   - component: {fileID: 7935045789567523548}
   m_Layer: 0
-  m_Name: Wall Main (1)
+  m_Name: Hallway 1 Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87065,8 +87371,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7552427418388677340}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.363, y: 1.44, z: 6.2}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.3629994, y: 1.44, z: 6.1999993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -87076,7 +87382,7 @@ Transform:
   - {fileID: 1635808174346276853}
   - {fileID: 3389304999993513734}
   - {fileID: 6344623379965090996}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4686218066640401397}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8794690151953159463
 MonoBehaviour:
@@ -88554,7 +88860,7 @@ GameObject:
   - component: {fileID: 7941706661626263576}
   - component: {fileID: 478290615787234280}
   m_Layer: 0
-  m_Name: Wall Main (32)
+  m_Name: Hallway 4 fence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88568,8 +88874,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7681209245000006436}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.451, y: 1.491, z: 31.983}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.4509997, y: 1.4910002, z: 31.983002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -88587,7 +88893,7 @@ Transform:
   - {fileID: 2815635220257386893}
   - {fileID: 1801749259232598673}
   - {fileID: 8745798149501207652}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 8539444508473023553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7941706661626263576
 MonoBehaviour:
@@ -89636,7 +89942,7 @@ GameObject:
   - component: {fileID: 6645804387605946281}
   - component: {fileID: 7974493765643695915}
   m_Layer: 0
-  m_Name: Wall Main (25)
+  m_Name: Enemy room 2 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89650,8 +89956,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7764387176457264331}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.53, y: 1.56, z: 54.75}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.5300007, y: 1.56, z: 54.750004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -89664,7 +89970,7 @@ Transform:
   - {fileID: 2011177112590437250}
   - {fileID: 4868703736950957165}
   - {fileID: 1873156637179731307}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 1212011368595950325}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6645804387605946281
 MonoBehaviour:
@@ -90968,7 +91274,7 @@ GameObject:
   - component: {fileID: 4635528330679308236}
   - component: {fileID: 2742108897739718028}
   m_Layer: 0
-  m_Name: Wall Main (2)
+  m_Name: Hallway 1 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90982,8 +91288,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7856671507426357723}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.33, y: 1.44, z: 6.2}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.33000097, y: 1.44, z: 6.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -90993,7 +91299,7 @@ Transform:
   - {fileID: 8482170308301417823}
   - {fileID: 4854330117974198458}
   - {fileID: 9184333933292553820}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4686218066640401397}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4635528330679308236
 MonoBehaviour:
@@ -91527,7 +91833,7 @@ GameObject:
   - component: {fileID: 6594971696618762778}
   - component: {fileID: 7160450267817802632}
   m_Layer: 0
-  m_Name: Wall Main (33)
+  m_Name: Hallway 4 fence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91541,8 +91847,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7914433457813389475}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.58, y: 1.491, z: 32.55}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.5800004, y: 1.4910002, z: 32.550003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -91580,7 +91886,7 @@ Transform:
   - {fileID: 1158726397459548205}
   - {fileID: 6369390326793706542}
   - {fileID: 2591713025026710721}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 8539444508473023553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6594971696618762778
 MonoBehaviour:
@@ -93332,7 +93638,7 @@ GameObject:
   - component: {fileID: 3762034096576996551}
   - component: {fileID: 7527738362360356255}
   m_Layer: 0
-  m_Name: Wall Main (28)
+  m_Name: Enemy room 2 wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93346,7 +93652,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8084244663086214094}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 17.51, y: 1.56, z: 54.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -93360,7 +93666,7 @@ Transform:
   - {fileID: 2262982780642741383}
   - {fileID: 8401696267978271714}
   - {fileID: 2263976926626202754}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 1212011368595950325}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3762034096576996551
 MonoBehaviour:
@@ -95990,11 +96296,11 @@ Transform:
   m_GameObject: {fileID: 8308915270707315097}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7070771, y: -0.70707726, z: 0.0064733196, w: 0.0064734844}
-  m_LocalPosition: {x: 12.94, y: 2.95, z: 15.71}
-  m_LocalScale: {x: 0.29455, y: 1, z: 0.49859396}
+  m_LocalPosition: {x: 12.940001, y: 2.95, z: 15.710001}
+  m_LocalScale: {x: 0.29454997, y: 1, z: 0.49859396}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: -178.951, z: 90}
 --- !u!33 &2584252577716537644
 MeshFilter:
@@ -96589,7 +96895,7 @@ GameObject:
   - component: {fileID: 8613145283484287467}
   - component: {fileID: 6359410781524729377}
   m_Layer: 0
-  m_Name: Wall Main (12)
+  m_Name: Puzzle Room Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96603,7 +96909,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8336810358163076831}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 5.58, y: 1.56, z: 11.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -96611,7 +96917,7 @@ Transform:
   - {fileID: 6450284825814074681}
   - {fileID: 7398997882745613073}
   - {fileID: 3905382466434725506}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4443017995058130708}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2222305684636501941
 MonoBehaviour:
@@ -97649,11 +97955,11 @@ Transform:
   m_GameObject: {fileID: 8427823424545470350}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -1.4269, y: 2.95, z: 28.741}
-  m_LocalScale: {x: 0.29455, y: 1, z: 0.96013975}
+  m_LocalPosition: {x: -1.4269007, y: 2.95, z: 28.741}
+  m_LocalScale: {x: 0.29455, y: 1, z: 0.9601398}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 90}
 --- !u!33 &4465740494765206695
 MeshFilter:
@@ -100200,6 +100506,52 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8578447236986282379
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4395281240418775517}
+  m_Layer: 0
+  m_Name: Obfuscators
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4395281240418775517
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8578447236986282379}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7711824232615117768}
+  - {fileID: 5067531232224664531}
+  - {fileID: 522100035275938353}
+  - {fileID: 2171381034151662580}
+  - {fileID: 6130941775833684895}
+  - {fileID: 5053099964100070091}
+  - {fileID: 374446465692871408}
+  - {fileID: 7899813996073254546}
+  - {fileID: 8551275291409622830}
+  - {fileID: 7924977984069564959}
+  - {fileID: 957196091496869266}
+  - {fileID: 4551207305725805739}
+  - {fileID: 5188187494248467750}
+  - {fileID: 2469591409699810292}
+  - {fileID: 64638308798330739}
+  m_Father: {fileID: 9199497692838314433}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8578538079748320051
 GameObject:
   m_ObjectHideFlags: 0
@@ -100227,12 +100579,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8578538079748320051}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.49880773, y: -0.4988077, z: -0.5011896, w: -0.50118935}
+  m_LocalRotation: {x: -0.4988078, y: -0.49880776, z: -0.5011896, w: -0.50118935}
   m_LocalPosition: {x: 11.4096, y: 2.95, z: 18.0662}
-  m_LocalScale: {x: 0.29455, y: 1, z: 0.28086746}
+  m_LocalScale: {x: 0.29454997, y: 1, z: 0.28086746}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 4395281240418775517}
   m_LocalEulerAnglesHint: {x: 0, y: -270.273, z: 90}
 --- !u!33 &7800001911798957102
 MeshFilter:
@@ -101648,7 +102000,7 @@ GameObject:
   - component: {fileID: 7825847000933165610}
   - component: {fileID: 3957401896369308204}
   m_Layer: 0
-  m_Name: Wall Main (34)
+  m_Name: Hallway 4 fence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101662,8 +102014,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8779246472290385860}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.433, y: 1.491, z: 49.152}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.4330006, y: 1.4910002, z: 49.151997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -101677,7 +102029,7 @@ Transform:
   - {fileID: 7364246153883517735}
   - {fileID: 8058837320476554923}
   - {fileID: 9035550802038924457}
-  m_Father: {fileID: 9199497692838314433}
+  m_Father: {fileID: 8539444508473023553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7825847000933165610
 MonoBehaviour:
