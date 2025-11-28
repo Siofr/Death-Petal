@@ -4,6 +4,7 @@ using State_Machine;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using FMODUnity;
 
 struct EnemyDeathEvent: IEvent
 {
@@ -54,6 +55,9 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     //Events
     private EventBindings<RoomPlayerEnterEvent> _playerRoomEnterEventListener;
     private EventBindings<RoomPlayerExitEvent> _playerRoomExitEventListener;
+
+    [Header("Audio Paths")]
+    public EventReference onEnemyAttackEventPath;
 
     protected override void Awake()
     {

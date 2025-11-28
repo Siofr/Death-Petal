@@ -70,6 +70,8 @@ public class HitStopEffects : MonoBehaviour
     {
         if(ctx.testPlayer != GetComponentInParent<TestPlayer>())
             return;
+
+        RuntimeManager.PlayOneShot(onEnemyShotEventPath, transform.position);
         DoHitStopEffect();
     }
     private void DoHitStopEffect()
