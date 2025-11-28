@@ -44,6 +44,7 @@ public class CheckpointInput : PuzzleInputBase
 
     public void CheckCondition(CheckpointActivatedEvent context)
     {
+        _skullAnimator.SetBool(Animator.StringToHash("IsActivated"), false);
         tag = "Untagged";
         
         if(this != context.checkpointInput) CompletionCondition(false, PuzzleOutputs[0]);
