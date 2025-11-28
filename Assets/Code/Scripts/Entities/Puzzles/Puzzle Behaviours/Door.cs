@@ -49,6 +49,13 @@ public class Door : PuzzleOutputBase
         }
     }
 
+    public override void SetSolved(bool isSolved)
+    {
+        base.SetSolved(isSolved);
+        var value =  isSolved ? 1f : 0f;
+        animator.SetFloat(Animator.StringToHash("Blend"), value);
+    }
+
     public override void OnPuzzleSolved(PuzzleSolvedEvent context)
     {
         if (context.puzzleOutput != this) return;
@@ -84,7 +91,7 @@ public class Door : PuzzleOutputBase
             StartCoroutine(OpenDoorRoutine(isOpened, openSpeed, false));
         }
     }
-
+    
     public void ClearAnimationQueue()
     {
         _routineQueue.Clear();

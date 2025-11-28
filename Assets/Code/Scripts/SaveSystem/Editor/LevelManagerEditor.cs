@@ -8,13 +8,6 @@ public class LevelManagerEditor : Editor
     {
         base.DrawDefaultInspector();
 
-        if (GUILayout.Button("FindSaveables"))
-        {
-            var instance = (LevelManager)target;
-            
-            instance.FindSaveables();
-        }
-
         if (GUILayout.Button("Bake Level Data"))
         {
             var instance = (LevelManager)target;
@@ -27,6 +20,20 @@ public class LevelManagerEditor : Editor
             var instance = (LevelManager)target;
             
             instance.LoadLevelData(true);
+        }
+
+        if (GUILayout.Button("Save Level Data"))
+        {
+            var instance = (LevelManager)target;
+            
+            instance.SaveLevelData(false);
+        }
+
+        if (GUILayout.Button("Load Level Data"))
+        {
+            var instance = (LevelManager)target;
+            
+            instance.LoadLevelData(false);
         }
         
         if (GUILayout.Button("Clear Data"))

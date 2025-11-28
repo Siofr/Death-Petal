@@ -36,6 +36,12 @@ public class Weakness : MonoBehaviour
         SetWeaknessColor();
     }
 
+    public void RemoveWeakness()
+    {
+        if(!Application.isPlaying) DestroyImmediate(transform.parent.gameObject);
+        else Destroy(transform.parent.gameObject);
+    }
+    
     public void SetWeaknessType(WeakTypes weakType)
     {
         _weaknessType = weakType;

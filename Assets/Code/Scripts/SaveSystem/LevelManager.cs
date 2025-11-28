@@ -6,18 +6,26 @@ public class LevelManager : Singleton<LevelManager>
 {
     [Header("LevelManager Fields, Attach Component to Level Prefab")]
     public LevelSaveData levelSaveData;
-    
-    public HashSet<ISaveable> saveables = new HashSet<ISaveable>();
+
+    public List<ISaveable> saveables = new List<ISaveable>();
     
     public void SaveLevelData(bool isBaking = false)
     {
         if (saveables.Count < 1)
         {
             var tempSaveables = FindSaveables();
-
+            
             if (tempSaveables.Count < 1) return;
+            
+            saveables = tempSaveables;
+            var tempIDs = new List<int>();
+            
+            foreach (var saveable in saveables)
+            {
+                tempIDs.Add(saveable.SaveID);
+            }
 
-            saveables = tempSaveables.ToHashSet();
+            levelSaveData.saveableID = tempIDs;
         }
         
         foreach (var saveable in saveables)
@@ -27,11 +35,14 @@ public class LevelManager : Singleton<LevelManager>
         
         if (isBaking)
         {
-            levelSaveData.levelName = transform.name + "Default";
-            SaveSystem.SaveLevelData(levelSaveData);
+            var defaultSave = new LevelSaveData(transform.name + "Default", levelSaveData);
+            
+            SaveSystem.SaveLevelData(defaultSave);
             Debug.Log("Baked Level Data");
             return;
         }
+
+        levelSaveData.levelName = transform.name;
         
         SaveSystem.SaveLevelData(levelSaveData);
         
@@ -44,8 +55,8 @@ public class LevelManager : Singleton<LevelManager>
         if(isDefault) tempName = transform.name + "Default";
         
         var temp = SaveSystem.GetLevelData(tempName);
-
-        if (temp.levelName != transform.name || temp.levelName != transform.name + "Default") return;
+        
+        if (temp.levelName != transform.name && temp.levelName != transform.name + "Default") return;
 
         levelSaveData = temp;
         
@@ -71,11 +82,9 @@ public class LevelManager : Singleton<LevelManager>
         
         foreach (var gameObj in sceneObjects)
         {
-            if(!gameObj.TryGetComponent(out ISaveable saveable)) continue;
+            if (!gameObj.TryGetComponent(out ISaveable saveable)) continue;
             
             if(saveable.SaveID == 0) saveable.CreateSaveInstance();
-            
-            levelSaveData.saveableID.Add(saveable.SaveID);
             
             tempSaveables.Add(saveable);
         }
@@ -98,6 +107,12 @@ public class LevelManager : Singleton<LevelManager>
         Debug.Log("Cleared Saveable Objects");
         
         SaveSystem.RemoveLevelData(transform.name);
+    }
+
+    public void Start()
+    {
+        if(saveables.Count < 1) saveables = FindSaveables();
+        LoadLevelData();
     }
 }
 

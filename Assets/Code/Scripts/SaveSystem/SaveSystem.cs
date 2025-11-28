@@ -109,17 +109,15 @@ public struct LevelSaveData
     
     public List<EntitySaveData> entitySaveData;
     public List<PuzzleOutputSaveData> puzzleOutputSaveData;
-    public List<PuzzleElementSaveData> puzzleElementSaveData;
-
+    
     public LevelSaveData(string levelName)
     {
         this.levelName = levelName;
         saveableID = new List<int>();
         entitySaveData = new List<EntitySaveData>();
         puzzleOutputSaveData = new List<PuzzleOutputSaveData>();
-        puzzleElementSaveData = new List<PuzzleElementSaveData>();
     }
-
+    
     public LevelSaveData(string levelName, LevelSaveData levelSaveData)
     {
         this = levelSaveData;
@@ -160,7 +158,15 @@ public struct EntitySaveData
 
         if (health.Count < 1)
         {
+            refTransform.gameObject.SetActive(false);
             refWeaknesses.Clear();
+
+            return;
+        }
+
+        if (health.Count < refWeaknesses.Count)
+        {
+            refWeaknesses[refWeaknesses.Count-1].RemoveWeakness();
         }
     }
 }
@@ -168,35 +174,26 @@ public struct EntitySaveData
 [Serializable]
 public struct PuzzleOutputSaveData
 {
-    public Vector3 position;
+    public int id;
     public bool isSolved;
-    
-    public void Save(Vector3 pos, bool solvedCondition)
+
+    public PuzzleOutputSaveData(int id, bool isSolved)
     {
-        position = pos;
-        isSolved = solvedCondition;
+        this.id = id;
+        this.isSolved = isSolved;
     }
 
-    public void Load(Transform refTransform, ref bool refSolvedCondition)
+    public void Save(bool isSolved)
     {
-        refTransform.position = position;
-        refSolvedCondition = isSolved;
+        this.isSolved = isSolved;
+    }
+
+    public void Load(ref IPuzzleOutput puzzleOutput)
+    {
+        puzzleOutput.IsSolved = isSolved;
+        
+        puzzleOutput.SetSolved(isSolved);
     }
 }
 
-[Serializable]
-public struct PuzzleElementSaveData
-{
-    public Vector3 position;
-    
-    public void Save(Vector3 pos)
-    {
-        position = pos;
-    }
-
-    public void Load(Transform refTransform)
-    {
-        refTransform.position = position;
-    }
-}
 #endregion

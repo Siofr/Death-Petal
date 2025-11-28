@@ -3,12 +3,16 @@ using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput
+public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable<PuzzleOutputSaveData>
 {
     //Base Fields
-    [Header("Base Fields")]
+    [Header("Base Fields")] 
+    [SerializeField] private PuzzleOutputSaveData _saveData;
     [SerializeField] private bool _isSolved;
     public Animator animator;
+    
+    //Non-Serializable Fields
+    private int _saveID;
     
     //Events
     private EventBindings<PuzzleSolvedEvent> _puzzleSolvedEventListener;
@@ -20,9 +24,67 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput
         get => _isSolved;
         set => _isSolved = value;
     }
+    
+    public PuzzleOutputSaveData SaveInfo => _saveData;
+    public int SaveID => _saveID;
+    public void CreateSaveInstance()
+    {
+        _saveID = ISaveableHelper.GenerateISaveableID();
+        
+        _saveData = new PuzzleOutputSaveData(_saveID, _isSolved);
+    }
+
+    public void DeleteSaveInstance()
+    {
+        if (SaveID == 0) return;
+        ISaveableHelper.RemoveExistingID(ref _saveID);
+
+        _saveData = new PuzzleOutputSaveData();
+    }
+
+    public void HandleSaveData(ref LevelSaveData refData)
+    {
+        if (!refData.saveableID.Contains(SaveID)) return;
+        
+        _saveData.Save(IsSolved);
+        
+        for (var i = 0; i < refData.puzzleOutputSaveData.Count; i++)
+        {
+            if (refData.puzzleOutputSaveData[i].id != SaveID) continue;
+            
+            refData.puzzleOutputSaveData[i] = _saveData;
+            return;
+        }
+        
+        refData.puzzleOutputSaveData.Add(_saveData);
+    }
+
+    public void HandleLoadData(ref LevelSaveData refData)
+    {
+        if (!refData.saveableID.Contains(SaveID))
+        {
+            Debug.Log("No Puzzle ID in Saveables");
+            return;
+        }
+        
+        foreach (var data in refData.puzzleOutputSaveData)
+        {
+            if (data.id != SaveID) continue;
+
+            _saveData = data;
+            
+            var output = GetComponent<IPuzzleOutput>();
+            
+            _saveData.Load(ref output);
+            return;
+        }
+    }
+
 
     public virtual void Awake()
     {
+        _saveID = _saveData.id;
+        
         _puzzleSolvedEventListener = new EventBindings<PuzzleSolvedEvent>(OnPuzzleSolved);
         _puzzleResetEventListener = new EventBindings<PuzzleResetEvent>(OnPuzzleReset);
     }
@@ -37,6 +99,11 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput
     {
         EventBus<PuzzleSolvedEvent>.Unregister(_puzzleSolvedEventListener);
         EventBus<PuzzleResetEvent>.Unregister(_puzzleResetEventListener);
+    }
+
+    public virtual void SetSolved(bool isSolved)
+    {
+        animator.SetBool(Animator.StringToHash("IsSolved"), isSolved);        
     }
     
     public virtual void OnPuzzleSolved(PuzzleSolvedEvent context)

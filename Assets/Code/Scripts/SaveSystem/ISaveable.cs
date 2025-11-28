@@ -39,8 +39,9 @@ public class ISaveableHelper
         return tempID;
     }
     
-    public static void RemoveExistingID(int id)
+    public static void RemoveExistingID(ref int id)
     {
         _existingIDs.Remove(id);
+        id = 0;
     }
 }
