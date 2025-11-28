@@ -9,5 +9,7 @@ public class EnemyDeathState: EnemyBaseState
 	    enemyController.StopAllCoroutines();
 	    enemyController.animator.SetFloat(Animator.StringToHash("Blend"),0f);
         enemyController.ClearPath();
+
+        if (enemyController.petalDropChance < Random.value) EventBus<PetalSpawnEvent>.Raise(new PetalSpawnEvent(enemyController.transform.position));
     }
 }

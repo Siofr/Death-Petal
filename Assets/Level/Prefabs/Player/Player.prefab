@@ -246,6 +246,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathHandler
   deathScreenPrefab: {fileID: 7756021516273804536, guid: 727af855c6180a24ea0e8d42a37455ab, type: 3}
+  onPlayerDeathEventPath:
+    Guid:
+      Data1: -320038907
+      Data2: 1280738331
+      Data3: 1076966536
+      Data4: -327226889
+    Path: event:/Characters/Player Character/Placeholder/death
 --- !u!114 &8011774994662831887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,6 +335,7 @@ GameObject:
   - component: {fileID: 1240857200261891403}
   - component: {fileID: 5379855324015867488}
   - component: {fileID: 6743637687206976134}
+  - component: {fileID: 4433594625596512732}
   m_Layer: 0
   m_Name: PlayerVFX
   m_TagString: Untagged
@@ -388,6 +396,21 @@ MonoBehaviour:
       Data3: -1543723645
       Data4: -1689807132
     Path: event:/Characters/Player Character/Placeholder/damageReceived
+--- !u!114 &4433594625596512732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6814331718074213930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d08288a560e9754cbfa1559ffb8b2ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIHealthPetals
+  healthContainer: {fileID: 0}
+  maxHealth: 9
+  player: {fileID: 3997147908757342861}
 --- !u!1 &7249666322484350803
 GameObject:
   m_ObjectHideFlags: 0
