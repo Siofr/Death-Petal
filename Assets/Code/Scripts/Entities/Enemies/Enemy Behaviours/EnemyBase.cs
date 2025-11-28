@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using FMODUnity;
+using Random = UnityEngine.Random;
 
 struct EnemyDeathEvent: IEvent
 {
@@ -38,6 +39,7 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     public EnemyConfig_SO enemyData;
     public Vector3 defaultPos;
     public Transform target;
+    [Range(0, 1)] public float petalDropChance;
     
     //[Header("EnemyFields")]
     //Non-Serializable Fields
@@ -190,6 +192,9 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
             animator.SetTrigger("Death");
             EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));
             _isDead = true;
+
+            var random = Random.value;
+            if (random <= petalDropChance) EventBus<PetalSpawnEvent>.Raise(new PetalSpawnEvent(transform.position));
         }
     }
 
