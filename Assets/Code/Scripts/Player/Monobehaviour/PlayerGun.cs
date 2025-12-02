@@ -90,9 +90,14 @@ public class PlayerGun : MonoBehaviour
         _shootEvent.setParameterByID(_bulletsLeft, bulletIndex);
         EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
 
-        if (bulletArray[0] == null) return;
+        if (bulletArray[0] == null)
+        {
+            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.5f, 0.15f));
+            return;
+        }
 
         EventBus<SpawnTrail>.Raise(new SpawnTrail(bulletArray[0].bulletColor));
+        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.25f));
 
         // Now remove it
         if (ctx.weakness)
@@ -113,6 +118,7 @@ public class PlayerGun : MonoBehaviour
         if (bulletIndex >= bulletArray.Length) return;
 
         _addRemoveEvent.setParameterByID(_addRemove, 1);
+        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.05f, 0.15f));
         EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_addRemoveEvent, this.gameObject));
 
         bulletArray[bulletIndex] = ctx.bulletType;
@@ -125,6 +131,7 @@ public class PlayerGun : MonoBehaviour
         if (bulletIndex - 1 < 0) return;
 
         _addRemoveEvent.setParameterByID(_addRemove, 0);
+        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.05f, 0.0f, 0.15f));
         EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_addRemoveEvent, this.gameObject));
 
         bulletArray[bulletIndex - 1] = null;

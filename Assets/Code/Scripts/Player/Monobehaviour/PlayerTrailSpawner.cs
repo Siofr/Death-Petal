@@ -7,6 +7,7 @@ public class PlayerTrailSpawner : MonoBehaviour
     private GameObject _trailObject;
     private Transform _activeTarget;
     public GameObject _particleSystem;
+    public float _particleLifetime;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -18,6 +19,10 @@ public class PlayerTrailSpawner : MonoBehaviour
     private void Start()
     {
         _trailObject = transform.GetChild(0).gameObject;
+
+        ParticleSystem _parentParticles = _particleSystem.GetComponent<ParticleSystem>();
+        ParticleSystem _childParticles = _particleSystem.transform.GetChild(0).GetComponent<ParticleSystem>();
+        _particleLifetime = _parentParticles.main.startLifetime.constant + _childParticles.main.startLifetime.constant;
     }
 
     private void OnEnable()
@@ -35,7 +40,21 @@ public class PlayerTrailSpawner : MonoBehaviour
 
     private void SpawnParticle(SpawnTrail ctx)
     {
-        Instantiate(_particleSystem, transform.position, transform.rotation);
+        Quaternion rotation = new Quaternion();
+
+        if (_activeTarget)
+        {
+            Debug.Log("Active Target");
+            var lookPos = _activeTarget.parent.position - transform.position;
+            rotation = Quaternion.LookRotation(lookPos);
+        }
+        else
+        {
+            rotation = transform.rotation;
+        }
+
+        GameObject newParticle = Instantiate(_particleSystem, transform.position, rotation);
+        Destroy(newParticle, _particleLifetime);
     }
 
     private void SpawnTrail(SpawnTrail ctx)
