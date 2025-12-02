@@ -6,11 +6,12 @@ public class PlayerTrailSpawner : MonoBehaviour
     private EventBindings<ActiveTargetEvent> _onActiveTargetEventListener;
     private GameObject _trailObject;
     private Transform _activeTarget;
+    public GameObject _particleSystem;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        _onShootEventListener = new EventBindings<SpawnTrail>(SpawnTrail);
+        _onShootEventListener = new EventBindings<SpawnTrail>(SpawnParticle);
         _onActiveTargetEventListener = new EventBindings<ActiveTargetEvent>(ActivateTarget);
     }
 
@@ -31,6 +32,12 @@ public class PlayerTrailSpawner : MonoBehaviour
         EventBus<SpawnTrail>.Unregister(_onShootEventListener);
         EventBus<ActiveTargetEvent>.Unregister(_onActiveTargetEventListener);
     }
+
+    private void SpawnParticle(SpawnTrail ctx)
+    {
+        Instantiate(_particleSystem, transform.position, transform.rotation);
+    }
+
     private void SpawnTrail(SpawnTrail ctx)
     {
         Quaternion rotation = new Quaternion();
