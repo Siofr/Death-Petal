@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+using UnityEngine.SceneManagement;
 
 public class InputHandler : Singleton<InputHandler>
 {
@@ -15,6 +16,7 @@ public class InputHandler : Singleton<InputHandler>
     public static InputAction RELOAD;
     public static InputAction HOTKEY;
     public static InputAction SPRINT;
+    public static InputAction RESTART;
 
     public static event Action<Vector2> MoveEvent;
     public static event Action InteractEvent;
@@ -77,6 +79,10 @@ public class InputHandler : Singleton<InputHandler>
         HOTKEY = _inputActions.Player.Hotkey;
         HOTKEY.Enable();
         HOTKEY.performed += OnHotkeyPerformed;
+
+        RESTART = _inputActions.Player.Restart;
+        RESTART.Enable();
+        RESTART.performed += OnRestartPerformed;
     }
 
     private void OnDisable()
@@ -143,5 +149,10 @@ public class InputHandler : Singleton<InputHandler>
     private void OnHotkeyPerformed(InputAction.CallbackContext ctx)
     {
         HotkeyEvent?.Invoke(ctx.ReadValue<Vector2>());
+    }
+
+    private void OnRestartPerformed(InputAction.CallbackContext ctx)
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
