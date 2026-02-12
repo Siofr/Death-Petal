@@ -9,74 +9,23 @@ using UnityEngine.AI;
 using FMODUnity;
 using Random = UnityEngine.Random;
 
-struct EnemyDeathEvent: IEvent
+public class BossBase : EnemyBase, ISaveable<EnemySaveData>
 {
-    public EnemyBase enemy;
-    
-    public EnemyDeathEvent(EnemyBase enemyReference) => enemy = enemyReference;
-}
-
-struct WrongShotEvent : IEvent
-{
-    public EnemyBase enemy;
-
-    public WrongShotEvent(EnemyBase enemyRefrence) => enemy = enemyRefrence;
-}
-
-struct CorrectShotEvent : IEvent
-{
-    public EnemyBase enemy;
-
-    public CorrectShotEvent(EnemyBase enemyRefrence) => enemy = enemyRefrence;
-}
-
-[RequireComponent(typeof(NavMeshAgent))]
-public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
-{
-    [Header("Enemy Configuration")]
-    [SerializeField] protected EnemySaveData _saveData;
-    public Animator animator;
-    public EnemyConfig_SO enemyData;
-    public Vector3 defaultPos;
-    public Transform target;
-    [Range(0, 1)] public float petalDropChance;
-    
-    //[Header("EnemyFields")]
-    //Non-Serializable Fields
-    protected NavMeshAgent _nmAgent;
-    protected StateMachine _enemyStateMachine;
-    protected Bounds _enemyAreaBounds;
-    
-    [NonSerialized]
-    public Coroutine attackRoutine = null;
-
-    protected bool _isDead;
-    
-    //Properties
-    public EnemySaveData SaveInfo => _saveData;
-    public bool IsDead => _isDead;
-    
-    //Events
-    protected EventBindings<RoomPlayerEnterEvent> _playerRoomEnterEventListener;
-    protected EventBindings<RoomPlayerExitEvent> _playerRoomExitEventListener;
-
-    [Header("Audio Paths")]
-    public EventReference onEnemyAttackEventPath;
-
     protected override void Awake()
     {
         base.Awake();
         defaultPos =  transform.position;
     }
     
-    protected void Start()
+    private void Start()
     {
         Initialise();
     }
 
-    protected void Initialise()
+    private void Initialise()
     {
         //Field Init
+        print("Init Boss!");
         _nmAgent = GetComponent<NavMeshAgent>();
         _enemyStateMachine = new StateMachine();
 
@@ -85,18 +34,18 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         _enemyAreaBounds = GetComponentInParent<Room>() != null ? GetComponentInParent<Room>().Bounds : new Bounds();
         
         //StateMachine Init
-        var idleState = new EnemyIdleState(this);
-        var chaseState = new EnemyChaseState(this);
-        var attackState = new EnemyAttackState(this);
-        var deathState = new EnemyDeathState(this);
+        var idleState = new BossIdleState(this);
+        var attack1State = new BossAttackStage1State(this);
+        var attack2State = new BossAttackStage2State(this);
+        var defeatState = new BossDefeatState(this);
         
-        _enemyStateMachine.AddTransition(idleState, chaseState, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
-        _enemyStateMachine.AddTransition(chaseState, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
+        _enemyStateMachine.AddTransition(idleState, attack1State, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
+        _enemyStateMachine.AddTransition(attack1State, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
         
-        _enemyStateMachine.AddTransition(chaseState, attackState, new FuncPredicate( ()=>InAttackRange() ));
-        _enemyStateMachine.AddTransition(attackState, idleState, new FuncPredicate( ()=>!InAttackRange() && attackRoutine == null));
+        _enemyStateMachine.AddTransition(attack1State, attack2State, new FuncPredicate( InAttackRange));
+        _enemyStateMachine.AddTransition(attack2State, idleState, new FuncPredicate( ()=>!InAttackRange() && attackRoutine == null));
         
-        _enemyStateMachine.AddAnyTransition(deathState, new FuncPredicate( ()=>IsDead ) );
+        _enemyStateMachine.AddAnyTransition(defeatState, new FuncPredicate( ()=>IsDead ) );
         
         _enemyStateMachine.SetState(idleState);
         
@@ -226,3 +175,4 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         _saveData.Save(transform.position, Weaknesses);
     }
 }
+
