@@ -32,7 +32,6 @@ public class BossAttackStage1State : BossBaseState
     public override void OnEnter()
     {
         Debug.Log("Entering Attack State");
-        //enemyController.SetTarget(null);
 
         RuntimeManager.PlayOneShot(bossController.onEnemyAttackEventPath, bossController.transform.position);
 
@@ -43,6 +42,12 @@ public class BossAttackStage1State : BossBaseState
         bossController.attackRoutine = bossController.StartCoroutine(DealDamage(bossController.enemyData.attackSpeed));
     }
 
+    // attack states phase 1
+    // Targeted Spit
+    // Radial Spit
+    // Summon Backup 
+    
+    
     public override void OnExit()
     {
         bossController.animator.SetBool(Animator.StringToHash("Attack"), false);
