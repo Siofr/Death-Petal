@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using FMODUnity;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 struct EnemyDeathEvent: IEvent
@@ -33,8 +34,9 @@ struct CorrectShotEvent : IEvent
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
 {
+    [FormerlySerializedAs("_saveData")]
     [Header("Enemy Configuration")]
-    [SerializeField] private EnemySaveData _saveData;
+    [SerializeField] protected EnemySaveData __saveData;
     public Animator animator;
     public EnemyConfig_SO enemyData;
     public Vector3 defaultPos;
@@ -44,7 +46,7 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     //[Header("EnemyFields")]
     //Non-Serializable Fields
     private NavMeshAgent _nmAgent;
-    private StateMachine _enemyStateMachine;
+    protected StateMachine __enemyStateMachine;
     private Bounds _enemyAreaBounds;
     
     [NonSerialized]
@@ -53,7 +55,7 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     private bool _isDead;
     
     //Properties
-    public EnemySaveData SaveInfo => _saveData;
+    public EnemySaveData SaveInfo => __saveData;
     public bool IsDead => _isDead;
     
     //Events
@@ -78,27 +80,14 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     {
         //Field Init
         _nmAgent = GetComponent<NavMeshAgent>();
-        _enemyStateMachine = new StateMachine();
+        __enemyStateMachine = new StateMachine();
 
         _nmAgent.speed = enemyData.movementSpeed;
 
         _enemyAreaBounds = GetComponentInParent<Room>() != null ? GetComponentInParent<Room>().Bounds : new Bounds();
         
         //StateMachine Init
-        var idleState = new EnemyIdleState(this);
-        var chaseState = new EnemyChaseState(this);
-        var attackState = new EnemyAttackState(this);
-        var deathState = new EnemyDeathState(this);
-        
-        _enemyStateMachine.AddTransition(idleState, chaseState, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
-        _enemyStateMachine.AddTransition(chaseState, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
-        
-        _enemyStateMachine.AddTransition(chaseState, attackState, new FuncPredicate( ()=>InAttackRange() ));
-        _enemyStateMachine.AddTransition(attackState, idleState, new FuncPredicate( ()=>!InAttackRange() && attackRoutine == null));
-        
-        _enemyStateMachine.AddAnyTransition(deathState, new FuncPredicate( ()=>IsDead ) );
-        
-        _enemyStateMachine.SetState(idleState);
+        InitialiseStateMachine();
         
         //Event Init
         _playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
@@ -107,9 +96,29 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         EventBus<RoomPlayerEnterEvent>.Register(_playerRoomEnterEventListener);
         EventBus<RoomPlayerExitEvent>.Register(_playerRoomExitEventListener);
         
+        
         Debug.Log("Enemy Initialised");
     }
 
+    protected virtual void InitialiseStateMachine()
+    {
+        var idleState = new EnemyIdleState(this);
+        var chaseState = new EnemyChaseState(this);
+        var attackState = new EnemyAttackState(this);
+        var deathState = new EnemyDeathState(this);
+        
+        __enemyStateMachine.AddTransition(idleState, chaseState, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
+        __enemyStateMachine.AddTransition(chaseState, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
+        
+        __enemyStateMachine.AddTransition(chaseState, attackState, new FuncPredicate( ()=>InAttackRange() ));
+        __enemyStateMachine.AddTransition(attackState, idleState, new FuncPredicate( ()=>!InAttackRange() && attackRoutine == null));
+        
+        __enemyStateMachine.AddAnyTransition(deathState, new FuncPredicate( ()=>IsDead ) );
+        
+        __enemyStateMachine.SetState(idleState);
+
+    }
+    
     private void OnDisable()
     {
         EventBus<RoomPlayerEnterEvent>.Unregister(_playerRoomEnterEventListener);
@@ -118,7 +127,7 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     
     private void Update()
     {
-        _enemyStateMachine.Update();
+        __enemyStateMachine.Update();
     }
     
     public bool InAttackRange()
@@ -200,29 +209,29 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
 
     public SaveData GetSaveData(LevelData levelData)
     {
-        if (_saveData == null)
+        if (__saveData == null)
         {
             var dataInstance = ScriptableObject.CreateInstance<EnemySaveData>();
             #if UNITY_EDITOR
             AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
             #endif
 
-            _saveData = dataInstance;
-            _saveData.Save(transform.position, Weaknesses);
+            __saveData = dataInstance;
+            __saveData.Save(transform.position, Weaknesses);
         }
         
-        return _saveData;
+        return __saveData;
     }
 
     public void LoadSaveData(SaveData levelData)
     {
-        _saveData = (EnemySaveData)levelData;
+        __saveData = (EnemySaveData)levelData;
         
-        _saveData.Load(transform, Weaknesses);
+        __saveData.Load(transform, Weaknesses);
     }
 
     public void SaveData()
     {
-        _saveData.Save(transform.position, Weaknesses);
+        __saveData.Save(transform.position, Weaknesses);
     }
 }
