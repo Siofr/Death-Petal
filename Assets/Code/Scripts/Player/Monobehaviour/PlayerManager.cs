@@ -63,6 +63,8 @@ namespace State_Machine
             InputHandler.LongReloadEvent += OnReloadStart;
             InputHandler.LongReloadCancelledEvent += OnReloadCancel;
             InputHandler.QuickReloadEvent += OnQuickReload;
+            InputHandler.HotkeyEvent += AddBullet;
+            InputHandler.RotateBarrelEvent += OnRotateBarrel;
         }
 
         private void OnDisable()
@@ -78,6 +80,7 @@ namespace State_Machine
             InputHandler.HotkeyEvent -= _reloadState.AddBullet;
             InputHandler.AttackEvent -= _aimState.HandleShoot;
             InputHandler.QuickReloadEvent -= OnQuickReload;
+            InputHandler.RotateBarrelEvent -= OnRotateBarrel;
         }
 
         void SetupStateMachine()
@@ -186,6 +189,12 @@ namespace State_Machine
             }
             _isSprinting = false;
         }
+
+        void OnRotateBarrel(int direction)
+        {
+            EventBus<RotateBarrelEvent>.Raise(new RotateBarrelEvent(direction));
+        }
+
         private Vector3 GetPlaneNormal()
         {
             Ray ray = new Ray(transform.position, -transform.up);
@@ -254,6 +263,27 @@ namespace State_Machine
 
             activeTarget = null;
             EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
+        }
+
+        public void AddBullet(Vector2 axis)
+        {
+            if (axis.x < 0)
+            {
+                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(bulletTypes[0]));
+            }
+            if (axis.x > 0)
+            {
+                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(bulletTypes[1]));
+            }
+
+            if (axis.y > 0)
+            {
+                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(bulletTypes[2]));
+            }
+            if (axis.y < 0)
+            {
+                EventBus<RemoveBulletEvent>.Raise(new RemoveBulletEvent(-1, -1));
+            }
         }
 
         private void OnChangeCamera(CameraChangeEvent ctx)

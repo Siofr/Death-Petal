@@ -17,16 +17,18 @@ public class UIRevolverIndicator : MonoBehaviour
     private EventBindings<ShootEvent> _shootEventListener;
     private EventBindings<RemoveBulletEvent> _removeBulletEventListener;
     private EventBindings<AddBulletEvent> _addBulletEventListener;
-    private EventBindings<EndLongReload> _endLongReloadEventListener;
-    private EventBindings<StartLongReload> _startLongReloadListener;
+    private EventBindings<RotateBarrelEvent> _rotateBarrelListener;
+    // private EventBindings<EndLongReload> _endLongReloadEventListener;
+    // private EventBindings<StartLongReload> _startLongReloadListener;
 
     private void Awake()
     {
         _shootEventListener = new EventBindings<ShootEvent>(ShootBullet);
         _removeBulletEventListener = new EventBindings<RemoveBulletEvent>(RemoveBullet);
         _addBulletEventListener = new EventBindings<AddBulletEvent>(AddBullet);
-        _endLongReloadEventListener = new EventBindings<EndLongReload>(EndReload);
-        _startLongReloadListener = new EventBindings<StartLongReload>(Initialize);
+        _rotateBarrelListener = new EventBindings<RotateBarrelEvent>(RotateBarrel);
+        // _endLongReloadEventListener = new EventBindings<EndLongReload>(EndReload);
+        // _startLongReloadListener = new EventBindings<StartLongReload>(Initialize);
     }
 
     private void OnEnable()
@@ -34,8 +36,9 @@ public class UIRevolverIndicator : MonoBehaviour
         EventBus<ShootEvent>.Register(_shootEventListener);
         EventBus<RemoveBulletEvent>.Register(_removeBulletEventListener);
         EventBus<AddBulletEvent>.Register(_addBulletEventListener);
-        EventBus<EndLongReload>.Register(_endLongReloadEventListener);
-        EventBus<StartLongReload>.Register(_startLongReloadListener);
+        EventBus<RotateBarrelEvent>.Register(_rotateBarrelListener);
+        // EventBus<EndLongReload>.Register(_endLongReloadEventListener);
+        // EventBus<StartLongReload>.Register(_startLongReloadListener);
     }
 
     private void OnDisable()
@@ -43,8 +46,9 @@ public class UIRevolverIndicator : MonoBehaviour
         EventBus<ShootEvent>.Unregister(_shootEventListener);
         EventBus<RemoveBulletEvent>.Unregister(_removeBulletEventListener);
         EventBus<AddBulletEvent>.Unregister(_addBulletEventListener);
-        EventBus<EndLongReload>.Unregister(_endLongReloadEventListener);
-        EventBus<StartLongReload>.Unregister(_startLongReloadListener);
+        EventBus<RotateBarrelEvent>.Unregister(_rotateBarrelListener);
+        // EventBus<EndLongReload>.Unregister(_endLongReloadEventListener);
+        // EventBus<StartLongReload>.Unregister(_startLongReloadListener);
     }
 
     private void Start()
@@ -57,18 +61,23 @@ public class UIRevolverIndicator : MonoBehaviour
         DOTween.Init();
     }
 
-    private void Update()
-    {
-        
-    }
-
     public void Initialize()
     {
         StartReload();
     }
 
+    public void RotateBarrel(RotateBarrelEvent ctx)
+    {
+        StartCoroutine(Rotate(ctx.direction, 30, 0.05f));
+    }
+
     IEnumerator Rotate(int direction, int angle, float speed)
     {
+        currentBullet += direction;
+
+        if (currentBullet < 0) { currentBullet = bulletSprites.Length - 1; }
+        if (currentBullet > bulletSprites.Length - 1) { currentBullet = 0; }
+
         if (_isRotating) yield return animationTween.WaitForCompletion();
 
         _isRotating = true;
@@ -105,21 +114,25 @@ public class UIRevolverIndicator : MonoBehaviour
 
     public void ShootBullet()
     {
-        if (bulletSprites[0].enabled == false) return;
+        if (bulletSprites[currentBullet].enabled == false) return;
 
-        bulletSprites[0].enabled = false;
+        bulletSprites[currentBullet].enabled = false;
 
         shootIndex++;
-        currentBullet--;
         // Now Reorder it
-        bulletSprites = ReorderArray(bulletSprites);
+        // bulletSprites = ReorderArray(bulletSprites);
 
-        StartCoroutine(Rotate(1, 30, 0.05f));
+        StartCoroutine(Rotate(-1, 30, 0.05f));
     }
 
     public void AddBullet(AddBulletEvent ctx)
     {
-        if (shootIndex != 0 && currentBullet + shootIndex <= bulletSprites.Length)
+        if (bulletSprites[currentBullet].enabled) return;
+
+        bulletSprites[currentBullet].sprite = ctx.bulletType.bulletSprite;
+        bulletSprites[currentBullet].enabled = true;
+
+/*        if (shootIndex != 0 && currentBullet + shootIndex <= bulletSprites.Length)
         {
             bulletSprites[currentBullet].sprite = ctx.bulletType.bulletSprite;
             bulletSprites[currentBullet].enabled = true;
@@ -132,16 +145,18 @@ public class UIRevolverIndicator : MonoBehaviour
         if (currentBullet + shootIndex >= bulletSprites.Length) return;
 
         bulletSprites[currentBullet + shootIndex].sprite = ctx.bulletType.bulletSprite;
-        bulletSprites[currentBullet + shootIndex].enabled = true;
-        currentBullet++;
+        bulletSprites[currentBullet + shootIndex].enabled = true;*/
 
         StartCoroutine(Rotate(1, 30, 0.05f));
     }
 
     public void RemoveBullet()
     {
+        if (!bulletSprites[currentBullet].enabled) return;
 
-        if (shootIndex != 0 && currentBullet + shootIndex - 1 !> bulletSprites.Length)
+        bulletSprites[currentBullet].enabled = false;
+
+/*        if (shootIndex != 0 && currentBullet + shootIndex - 1 !> bulletSprites.Length)
         {
             bulletSprites[currentBullet + shootIndex - 1].enabled = false;
             currentBullet--;
@@ -152,7 +167,7 @@ public class UIRevolverIndicator : MonoBehaviour
         if (currentBullet - 1 < 0) return;
 
         bulletSprites[currentBullet - 1].enabled = false;
-        currentBullet--;
+        currentBullet--;*/
 
         StartCoroutine(Rotate(-1, 30, 0.05f));
     }
