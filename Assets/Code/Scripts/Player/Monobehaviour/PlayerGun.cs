@@ -96,6 +96,7 @@ public class PlayerGun : MonoBehaviour
 
         bulletArray[currentChamber] = null;
         RotateBarrel(-1);
+        GetNextBullet();
     }
 
     public void AddBullet(AddBulletEvent ctx)
@@ -107,6 +108,13 @@ public class PlayerGun : MonoBehaviour
         EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_addRemoveEvent, this.gameObject));
 
         bulletArray[currentChamber] = ctx.bulletType;
+        GetNextBullet();
+
+        if (TEMP_ReloadTesting.Instance.manualRotate)
+        {
+            return;
+        }
+
         RotateBarrel(1);
     }
 
@@ -120,12 +128,20 @@ public class PlayerGun : MonoBehaviour
         EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_addRemoveEvent, this.gameObject));
 
         bulletArray[currentChamber] = null;
+        GetNextBullet();
+
+        if (TEMP_ReloadTesting.Instance.manualRotate)
+        {
+            return;
+        }
+
         RotateBarrel(-1);
     }
 
     public void OnRotateBarrel(RotateBarrelEvent ctx)
     {
         RotateBarrel(ctx.direction);
+        GetNextBullet();
     }
 
     public void RotateBarrel(int direction)
@@ -134,8 +150,6 @@ public class PlayerGun : MonoBehaviour
 
         if (currentChamber > bulletArray.Length - 1) currentChamber = 0;
         else if (currentChamber < 0) currentChamber = bulletArray.Length - 1;
-
-        GetNextBullet();
     }
 
     public BulletSO[] ReorderArray(BulletSO[] arr)
