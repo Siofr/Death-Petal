@@ -125,6 +125,8 @@ namespace State_Machine
             _animator = GetComponentInChildren<Animator>();
             _mainCam = Camera.main;
 
+            if (newActiveCam == null) newActiveCam = _mainCam.transform;
+
             EventBus<TransmitPlayerInfo>.Raise(new TransmitPlayerInfo(this.transform));
 
             SetupStateMachine();

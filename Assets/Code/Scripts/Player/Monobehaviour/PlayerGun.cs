@@ -31,9 +31,6 @@ public class PlayerGun : MonoBehaviour
     private EventBindings<AddBulletEvent> _addBulletEventListener;
     private EventBindings<RemoveBulletEvent> _removeEventListener;
     private EventBindings<RotateBarrelEvent> _rotateBarrelEventListener;
-    // private EventBindings<StartLongReload> _startLongReloadListener;
-    // private EventBindings<EndLongReload> _endLongReloadListener;
-    // private EventBindings<QuickReload> _quickReloadListener;
 
     public void Awake()
     {
