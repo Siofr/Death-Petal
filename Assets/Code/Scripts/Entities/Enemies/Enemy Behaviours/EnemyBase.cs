@@ -99,10 +99,9 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         Debug.Log("Enemy Initialised");
     }
 
-    public void Initialise(EnemyConfig_SO config, WeakTypes[] weaknesses)
+    public void Initialise(EnemyConfig_SO config)
     {
         enemyData = config;
-        
         Initialise();
     }
     
