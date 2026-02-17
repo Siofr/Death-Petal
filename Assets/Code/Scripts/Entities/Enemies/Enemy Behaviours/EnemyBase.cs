@@ -34,9 +34,8 @@ struct CorrectShotEvent : IEvent
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
 {
-    [FormerlySerializedAs("_saveData")]
     [Header("Enemy Configuration")]
-    [SerializeField] protected EnemySaveData __saveData;
+    protected EnemySaveData __saveData;
     public Animator animator;
     public EnemyConfig_SO enemyData;
     public Vector3 defaultPos;
@@ -64,7 +63,7 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
 
     [Header("Audio Paths")]
     public EventReference onEnemyAttackEventPath;
-
+    
     protected override void Awake()
     {
         base.Awake();
@@ -100,6 +99,13 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         Debug.Log("Enemy Initialised");
     }
 
+    public void Initialise(EnemyConfig_SO config, WeakTypes[] weaknesses)
+    {
+        enemyData = config;
+        
+        Initialise();
+    }
+    
     protected virtual void InitialiseStateMachine()
     {
         var idleState = new EnemyIdleState(this);
