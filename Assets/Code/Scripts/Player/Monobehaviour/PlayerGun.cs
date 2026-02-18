@@ -73,14 +73,17 @@ public class PlayerGun : MonoBehaviour
     public void ShootBullet(ShootEvent ctx)
     {
         // I want to shoot element at 0 always
-        _shootEvent.setParameterByID(_bulletsLeft, bulletIndex);
-        EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
+        _shootEvent.setParameterByID(_bulletsLeft, 5);
 
         if (bulletArray[currentChamber] == null)
         {
+            _shootEvent.setParameterByID(_bulletsLeft, 0);
             EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.5f, 0.15f));
+            EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
             return;
         }
+
+        EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
 
         EventBus<SpawnTrail>.Raise(new SpawnTrail(bulletArray[currentChamber].bulletColor));
         EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.25f));
@@ -139,6 +142,14 @@ public class PlayerGun : MonoBehaviour
     {
         RotateBarrel(ctx.direction);
         GetNextBullet();
+
+        if (ctx.direction < 0)
+        {
+            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.05f, 0.0f, 0.1f));
+            return;
+        }
+
+        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.05f, 0.1f));
     }
 
     public void RotateBarrel(int direction)
