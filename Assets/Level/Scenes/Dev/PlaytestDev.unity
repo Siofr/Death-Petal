@@ -331,6 +331,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3072248958998834312, guid: 406e35981abfe0348a979d2cf3db9ee6, type: 3}
   m_PrefabInstance: {fileID: 450108717}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &159808698 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3997147908757342861, guid: 00090865fc084e64aa7c7e3a88701921, type: 3}
+  m_PrefabInstance: {fileID: 1620339557}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &267246394
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1677,6 +1682,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 24.098694
       objectReference: {fileID: 0}
+    - target: {fileID: 6438783646949278103, guid: 47cbb4d5a310e1b4186116c199939254, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 6438783646949278103, guid: 47cbb4d5a310e1b4186116c199939254, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 360
+      objectReference: {fileID: 0}
     - target: {fileID: 6459135956764770101, guid: 47cbb4d5a310e1b4186116c199939254, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -94.77789
@@ -2587,7 +2600,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3997147908757342861, guid: 00090865fc084e64aa7c7e3a88701921, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2013902973}
   m_SourcePrefab: {fileID: 100100000, guid: 00090865fc084e64aa7c7e3a88701921, type: 3}
 --- !u!1 &1643603355 stripped
 GameObject:
@@ -2859,6 +2875,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1398715432841325139, guid: 00090865fc084e64aa7c7e3a88701921, type: 3}
   m_PrefabInstance: {fileID: 1620339557}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2013902973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159808698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d642aacf84a15d439f69cc428685ede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TEMP_ReloadTesting
+  manualRotate: 1
 --- !u!1001 &2084239514
 PrefabInstance:
   m_ObjectHideFlags: 0

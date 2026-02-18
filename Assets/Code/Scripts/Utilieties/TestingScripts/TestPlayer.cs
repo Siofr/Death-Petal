@@ -15,7 +15,12 @@ public struct PlayerDamageEvent: IEvent
 
 public struct PlayerDamagedEvent : IEvent
 {
-    
+    public int health;
+
+    public PlayerDamagedEvent(int health)
+    {
+        this.health = health;
+    }
 }
 
 public struct PlayerDeathEvent : IEvent { }
@@ -42,7 +47,7 @@ public class TestPlayer : EntityBase, IEntity, ISaveable<PlayerSaveData>
             Weaknesses.Remove(weakness);
 
             Destroy(weakness.transform.parent.gameObject);   
-            EventBus<PlayerDamagedEvent>.Raise(new PlayerDamagedEvent());
+            EventBus<PlayerDamagedEvent>.Raise(new PlayerDamagedEvent(Weaknesses.Count));
 
         }
         

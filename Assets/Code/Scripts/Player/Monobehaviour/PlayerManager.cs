@@ -1,4 +1,5 @@
 using State_Machine;
+using System.Collections;
 using UnityEngine;
 
 namespace State_Machine
@@ -37,6 +38,7 @@ namespace State_Machine
         private EventBindings<CameraChangeEvent> _cameraChangeEventListener;
         private EventBindings<TriggerDialogueEvent> _dialogueEnteredListener;
         private EventBindings<ExitDialogueEvent> _exitDialogueEventListener;
+        private EventBindings<PlayerDamagedEvent> _playerDamageEventListener;
 
         [SerializeField]
         private Material[] playerDependentMaterials;
@@ -50,6 +52,7 @@ namespace State_Machine
             _cameraChangeEventListener = new EventBindings<CameraChangeEvent>(OnChangeCamera);
             _dialogueEnteredListener = new EventBindings<TriggerDialogueEvent>(OnDialogueEntered);
             _exitDialogueEventListener = new EventBindings<ExitDialogueEvent>(OnDialogueExited);
+            _playerDamageEventListener = new EventBindings<PlayerDamagedEvent>(OnPlayerDamage);
         }
 
         private void OnEnable()
@@ -57,12 +60,15 @@ namespace State_Machine
             EventBus<CameraChangeEvent>.Register(_cameraChangeEventListener);
             EventBus<TriggerDialogueEvent>.Register(_dialogueEnteredListener);
             EventBus<ExitDialogueEvent>.Register(_exitDialogueEventListener);
+            EventBus<PlayerDamagedEvent>.Register(_playerDamageEventListener);
 
             InputHandler.AimEvent += OnAim;
             InputHandler.SprintEvent += OnSprint;
             InputHandler.LongReloadEvent += OnReloadStart;
             InputHandler.LongReloadCancelledEvent += OnReloadCancel;
             InputHandler.QuickReloadEvent += OnQuickReload;
+            InputHandler.HotkeyEvent += AddBullet;
+            InputHandler.RotateBarrelEvent += OnRotateBarrel;
         }
 
         private void OnDisable()
@@ -70,6 +76,7 @@ namespace State_Machine
             EventBus<CameraChangeEvent>.Unregister(_cameraChangeEventListener);
             EventBus<TriggerDialogueEvent>.Unregister(_dialogueEnteredListener);
             EventBus<ExitDialogueEvent>.Unregister(_exitDialogueEventListener);
+            EventBus<PlayerDamagedEvent>.Unregister(_playerDamageEventListener);
 
             InputHandler.AimEvent -= OnAim;
             InputHandler.SprintEvent -= OnSprint;
@@ -78,6 +85,7 @@ namespace State_Machine
             InputHandler.HotkeyEvent -= _reloadState.AddBullet;
             InputHandler.AttackEvent -= _aimState.HandleShoot;
             InputHandler.QuickReloadEvent -= OnQuickReload;
+            InputHandler.RotateBarrelEvent -= OnRotateBarrel;
         }
 
         void SetupStateMachine()
@@ -121,6 +129,8 @@ namespace State_Machine
             _cc = GetComponent<CharacterController>();
             _animator = GetComponentInChildren<Animator>();
             _mainCam = Camera.main;
+
+            if (newActiveCam == null) newActiveCam = _mainCam.transform;
 
             EventBus<TransmitPlayerInfo>.Raise(new TransmitPlayerInfo(this.transform));
 
@@ -186,6 +196,12 @@ namespace State_Machine
             }
             _isSprinting = false;
         }
+
+        void OnRotateBarrel(int direction)
+        {
+            EventBus<RotateBarrelEvent>.Raise(new RotateBarrelEvent(direction));
+        }
+
         private Vector3 GetPlaneNormal()
         {
             Ray ray = new Ray(transform.position, -transform.up);
@@ -256,6 +272,27 @@ namespace State_Machine
             EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
         }
 
+        public void AddBullet(Vector2 axis)
+        {
+            if (axis.x < 0)
+            {
+                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(bulletTypes[0]));
+            }
+            if (axis.x > 0)
+            {
+                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(bulletTypes[1]));
+            }
+
+            if (axis.y > 0)
+            {
+                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(bulletTypes[2]));
+            }
+            if (axis.y < 0)
+            {
+                EventBus<RemoveBulletEvent>.Raise(new RemoveBulletEvent(-1, -1));
+            }
+        }
+
         private void OnChangeCamera(CameraChangeEvent ctx)
         {
             newActiveCam = ctx.cam.transform;
@@ -269,6 +306,25 @@ namespace State_Machine
         private void OnDialogueExited()
         {
             _isDialogue = false;
+        }
+
+        private void OnPlayerDamage(PlayerDamagedEvent ctx)
+        {
+            Debug.Log(ctx.health);
+
+            if (ctx.health == 1)
+            {
+                StartCoroutine(LowHealthEffect());
+            }
+        }
+
+        IEnumerator LowHealthEffect()
+        {
+            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.75f, 0.75f, 0.15f));
+
+            yield return new WaitForSeconds(1.5f);
+
+            StartCoroutine(LowHealthEffect());
         }
     }
 }
