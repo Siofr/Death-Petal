@@ -2,9 +2,9 @@ using System.Collections;
 using UnityEngine;
 using FMODUnity;
 
-public class EnemyAttackState : EnemyBaseState
+public class EnemyAttackState<T> : EnemyBaseState<T> where T : EnemyBase
 {
-    public EnemyAttackState(EnemyBase enemyController) : base(enemyController) { }
+    public EnemyAttackState(T enemyController) : base(enemyController) { }
     
     private IEnumerator DealDamage(float attackSpeed)
     {

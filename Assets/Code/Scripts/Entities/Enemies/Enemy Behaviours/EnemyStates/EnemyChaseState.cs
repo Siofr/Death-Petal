@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class EnemyChaseState : EnemyBaseState
+public class EnemyChaseState<T> : EnemyBaseState<T> where T: EnemyBase
 {
-    public EnemyChaseState(EnemyBase enemyController) : base(enemyController) { }
+    public EnemyChaseState(T enemyController) : base(enemyController) { }
     
     public override void Update()
     {

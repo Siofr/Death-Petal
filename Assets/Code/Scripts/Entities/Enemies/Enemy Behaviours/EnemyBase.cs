@@ -58,8 +58,8 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     public bool IsDead => _isDead;
     
     //Events
-    private EventBindings<RoomPlayerEnterEvent> _playerRoomEnterEventListener;
-    private EventBindings<RoomPlayerExitEvent> _playerRoomExitEventListener;
+    protected EventBindings<RoomPlayerEnterEvent> __playerRoomEnterEventListener;
+    protected EventBindings<RoomPlayerExitEvent> __playerRoomExitEventListener;
 
     [Header("Audio Paths")]
     public EventReference onEnemyAttackEventPath;
@@ -74,6 +74,16 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     {
         Initialise();
     }
+    
+    public void LookAtTarget()
+    {
+        if (target == null) return;
+
+        var targetPos = target.position;
+        targetPos.y = transform.position.y;
+        
+        transform.LookAt(targetPos);
+    }
 
     private void Initialise()
     {
@@ -84,17 +94,13 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         _nmAgent.speed = enemyData.movementSpeed;
 
         _enemyAreaBounds = GetComponentInParent<Room>() != null ? GetComponentInParent<Room>().Bounds : new Bounds();
+
+        var player = GameObject.FindWithTag("Player");
+        
+        if (player != null && _enemyAreaBounds.Contains(player.transform.position)) target = player.transform;
         
         //StateMachine Init
         InitialiseStateMachine();
-        
-        //Event Init
-        _playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
-        _playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
-        
-        EventBus<RoomPlayerEnterEvent>.Register(_playerRoomEnterEventListener);
-        EventBus<RoomPlayerExitEvent>.Register(_playerRoomExitEventListener);
-        
         
         Debug.Log("Enemy Initialised");
     }
@@ -107,10 +113,10 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     
     protected virtual void InitialiseStateMachine()
     {
-        var idleState = new EnemyIdleState(this);
-        var chaseState = new EnemyChaseState(this);
-        var attackState = new EnemyAttackState(this);
-        var deathState = new EnemyDeathState(this);
+        var idleState = new EnemyIdleState<EnemyBase>(this);
+        var chaseState = new EnemyChaseState<EnemyBase>(this);
+        var attackState = new EnemyAttackState<EnemyBase>(this);
+        var deathState = new EnemyDeathState<EnemyBase>(this);
         
         __enemyStateMachine.AddTransition(idleState, chaseState, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
         __enemyStateMachine.AddTransition(chaseState, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
@@ -123,11 +129,20 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         __enemyStateMachine.SetState(idleState);
 
     }
-    
-    private void OnDisable()
+
+    protected void OnEnable()
     {
-        EventBus<RoomPlayerEnterEvent>.Unregister(_playerRoomEnterEventListener);
-        EventBus<RoomPlayerExitEvent>.Unregister(_playerRoomExitEventListener);
+        __playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
+        __playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
+        
+        EventBus<RoomPlayerEnterEvent>.Register(__playerRoomEnterEventListener);
+        EventBus<RoomPlayerExitEvent>.Register(__playerRoomExitEventListener);
+    }
+
+    protected virtual void OnDisable()
+    {
+        EventBus<RoomPlayerEnterEvent>.Unregister(__playerRoomEnterEventListener);
+        EventBus<RoomPlayerExitEvent>.Unregister(__playerRoomExitEventListener);
     }
     
     private void Update()
@@ -238,5 +253,10 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     public void SaveData()
     {
         __saveData.Save(transform.position, Weaknesses);
+    }
+
+    public virtual void StopAllStateRoutines()
+    {
+        StopAllCoroutines();
     }
 }

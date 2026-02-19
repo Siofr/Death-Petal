@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class EnemyArcherTargetState: EnemyBaseState
+public class EnemyArcherTargetState: EnemyBaseState<EnemyArcher>
 {
     public EnemyArcherTargetState(EnemyArcher enemyController) : base(enemyController)
     {
@@ -21,11 +21,11 @@ public class EnemyArcherTargetState: EnemyBaseState
     public override void OnExit()
     {
         _archer.ToggleLineRenderer(false);
-        _archer.StopAllArcherRoutines();
+        _archer.StopAllStateRoutines();
     }
 }
 
-public class EnemyArcherShootState : EnemyBaseState
+public class EnemyArcherShootState : EnemyBaseState<EnemyArcher>
 {
     public EnemyArcherShootState(EnemyArcher enemyController) : base(enemyController)
     {
@@ -43,11 +43,11 @@ public class EnemyArcherShootState : EnemyBaseState
     
     public override void OnExit()
     {
-        _archer.StopAllArcherRoutines();
+        _archer.StopAllStateRoutines();
     }
 }
 
-public class EnemyArcherAlertState : EnemyBaseState
+public class EnemyArcherAlertState : EnemyBaseState<EnemyArcher>
 {
     public EnemyArcherAlertState(EnemyArcher enemyController) : base(enemyController)
     {
@@ -70,6 +70,6 @@ public class EnemyArcherAlertState : EnemyBaseState
     
     public override void OnExit()
     {
-        _archer.StopAllArcherRoutines();
+        _archer.StopAllStateRoutines();
     }
 }

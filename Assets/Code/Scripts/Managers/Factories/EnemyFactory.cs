@@ -1,20 +1,43 @@
 using System;
+using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
 
 public struct SpawnEnemyEvent : IEvent
 {
     public Vector3 position;
-    public List
     public Type entityType;
-
-    public SpawnEnemyEvent(Vector3 pos, Type type)
+    public Transform roomTransform;
+    [CanBeNull] public GameObject requestObj;
+    
+    public SpawnEnemyEvent(Vector3 pos, Type type, Transform room, GameObject obj = null)
     {
         position = pos;
         entityType = type;
+        roomTransform = room;
+        requestObj = obj;
     }
 }
 
-public class EnemyFactory<T> : MonoBehaviour where T: EnemyBase
+public struct SpawnedEnemyEvent : IEvent
+{
+    public EnemyBase enemy;
+    public GameObject requestObj;
+
+    public SpawnedEnemyEvent(EnemyBase enemy, GameObject requestObj)
+    {
+        this.enemy = enemy;
+        this.requestObj = requestObj;
+    }
+}
+
+public interface IEnemyFactory<out T> where T: EnemyBase
+{
+    public IEnemyFactory<T> GetType();
+    public void CreateEnemy(Vector3 position, Transform parentRoom, GameObject requestObj = null);
+}
+
+public class EnemyFactory<T> : MonoBehaviour, IEnemyFactory<T> where T: EnemyBase
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private EnemyConfig_SO config;
@@ -22,27 +45,42 @@ public class EnemyFactory<T> : MonoBehaviour where T: EnemyBase
     //Event Fields
     private EventBindings<SpawnEnemyEvent> _spawnEnemyEventListener;
     
-    public void CreateEnemy(Vector3 position, WeakTypes[] weaknesses)
+    public IEnemyFactory<T> GetType()
     {
-        var enemyObj = Instantiate(enemyPrefab, position, enemyPrefab.transform.rotation);
-        var enemyController = enemyObj.GetComponent<EnemyBase>();
-        enemyController.Initialise(config, weaknesses);
+        return this;
+    }
+
+    public void CreateEnemy(Vector3 position, Transform parentRoom, GameObject requestObj = null)
+    {
+        var enemyObj = Instantiate(enemyPrefab, position, enemyPrefab.transform.rotation, parentRoom);
+        var enemyController = enemyObj.GetComponent<T>();
+        enemyController.Initialise(config);
+
+        if (requestObj != null)
+        {
+            EventBus<SpawnedEnemyEvent>.Raise(new SpawnedEnemyEvent(enemyController, requestObj));
+        }
     }
 
     private void OnSpawnEnemy(SpawnEnemyEvent context)
     {
         if (context.entityType != typeof(T)) return;
         
-        CreateEnemy(context.position,);
+        CreateEnemy(context.position, context.roomTransform, context.requestObj);
     }
     
     private void OnEnable()
     {
-        
+        _spawnEnemyEventListener = new EventBindings<SpawnEnemyEvent>(OnSpawnEnemy);
+        EventBus<SpawnEnemyEvent>.Register(_spawnEnemyEventListener);
     }
 
     private void OnDisable()
     {
-        
+        EventBus<SpawnEnemyEvent>.Unregister(_spawnEnemyEventListener);
     }
 }
+
+
+
+

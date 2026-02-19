@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class EnemyIdleState : EnemyBaseState
+public class EnemyIdleState<T> : EnemyBaseState<T> where T: EnemyBase
 {
-    public EnemyIdleState(EnemyBase enemyController) : base(enemyController) { }
+    public EnemyIdleState(T enemyController) : base(enemyController) { }
     
     public override void OnEnter()
     {
         Debug.Log("Entering Idle State");
+        enemyController.StopAllStateRoutines();
     }
     
     public override void OnExit()

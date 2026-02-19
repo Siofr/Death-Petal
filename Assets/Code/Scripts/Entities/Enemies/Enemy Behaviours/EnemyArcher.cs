@@ -3,11 +3,13 @@ using System.Collections;
 using System.Timers;
 using State_Machine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EnemyArcher: EnemyBase
 {
+    [FormerlySerializedAs("_targetLineRender")]
     [Header("Archer Fields")]
-    [SerializeField] private LineRenderer _targetLineRender;
+    public LineRenderer targetLineRender;
     [SerializeField] private Transform _LOSRef;
     public float targetTime;
     public float maxLOSRadius;
@@ -21,23 +23,24 @@ public class EnemyArcher: EnemyBase
     
     protected override void Awake()
     {
-        _targetLineRender.enabled = false;
-        _targetLineRender.SetPosition(0, _LOSRef.position);
+        targetLineRender.enabled = false;
+        targetLineRender.SetPosition(0, _LOSRef.position);
     }
     
     protected override void InitialiseStateMachine()
     {
-        var idleState = new EnemyIdleState(this);
-        var deathState = new EnemyDeathState(this);
+        var idleState = new EnemyIdleState<EnemyArcher>(this);
+        var deathState = new EnemyDeathState<EnemyArcher>(this);
         var alertState = new EnemyArcherAlertState(this);
         var targetState = new EnemyArcherTargetState(this);
         var shootState = new EnemyArcherShootState(this);
         
         __enemyStateMachine.AddAnyTransition(deathState, new FuncPredicate( () => IsDead));
-        __enemyStateMachine.AddAnyTransition(idleState, new FuncPredicate( ()=> target == null));
-        __enemyStateMachine.AddAnyTransition(alertState, new FuncPredicate( ()=> target != null));
         
-        __enemyStateMachine.AddTransition(alertState, targetState, new FuncPredicate( ()=> _alertRoutine == null));
+        __enemyStateMachine.AddTransition(alertState, idleState, new FuncPredicate( ()=> target == null));
+        __enemyStateMachine.AddTransition(idleState, alertState, new FuncPredicate( ()=> target != null));
+        
+        __enemyStateMachine.AddTransition(alertState, targetState, new FuncPredicate( ()=> _inLos));
         __enemyStateMachine.AddTransition(targetState, alertState, new FuncPredicate( ()=> !_inLos ));
         
         __enemyStateMachine.AddTransition(targetState, shootState, new FuncPredicate( () => _targetRoutine == null));
@@ -84,22 +87,9 @@ public class EnemyArcher: EnemyBase
         Gizmos.DrawLine(_LOSRef.position, _LOSRef.position + _LOSRef.forward*enemyData.attackRange);
     }
 
-    private void LookAtTarget()
-    {
-        if (target == null) return;
-        if (!_inLos) return;
-
-        var targetPos = target.position;
-        targetPos.y = transform.position.y;
-        
-        transform.LookAt(targetPos);
-        
-        _targetLineRender.SetPosition(1, target.position);
-    }
-
     public void ToggleLineRenderer(bool enable)
     {
-        _targetLineRender.enabled = enable;
+        targetLineRender.enabled = enable;
     }
 
     public void StartAlertRoutine(float pauseTime, float angle, float speed)
@@ -163,8 +153,6 @@ public class EnemyArcher: EnemyBase
 
     private IEnumerator TargetingRoutine(float time)
     {
-        StopCoroutine(_timerRoutine);
-        
         _timerRoutine = StartCoroutine(TimerRoutine(time));
         
         while (_timerRoutine != null)
@@ -210,12 +198,13 @@ public class EnemyArcher: EnemyBase
         _timerRoutine = null;
     }
 
-    public void StopAllArcherRoutines()
+    public override void StopAllStateRoutines()
     {
-        StopAllCoroutines();
+        base.StopAllStateRoutines();
+        
         _alertRoutine = null;
-        _timerRoutine = null;
-        _shotRoutine = null;
         _targetRoutine = null;
+        _shotRoutine = null;
+        _timerRoutine = null;
     }
 }
