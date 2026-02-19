@@ -7,9 +7,9 @@ using UnityEngine.Serialization;
 
 public class EnemyArcher: EnemyBase
 {
-    [FormerlySerializedAs("_targetLineRender")]
+    [FormerlySerializedAs("targetLineRender")]
     [Header("Archer Fields")]
-    public LineRenderer targetLineRender;
+    [SerializeField] private LineRenderer _targetLineRender;
     [SerializeField] private Transform _LOSRef;
     public float targetTime;
     public float maxLOSRadius;
@@ -23,8 +23,8 @@ public class EnemyArcher: EnemyBase
     
     protected override void Awake()
     {
-        targetLineRender.enabled = false;
-        targetLineRender.SetPosition(0, _LOSRef.position);
+        _targetLineRender.enabled = false;
+        _targetLineRender.SetPosition(0, _LOSRef.position);
     }
     
     protected override void InitialiseStateMachine()
@@ -44,7 +44,7 @@ public class EnemyArcher: EnemyBase
         __enemyStateMachine.AddTransition(targetState, alertState, new FuncPredicate( ()=> !_inLos ));
         
         __enemyStateMachine.AddTransition(targetState, shootState, new FuncPredicate( () => _targetRoutine == null));
-        __enemyStateMachine.AddTransition(shootState, targetState, new FuncPredicate( ()=> _shotRoutine == null));
+        __enemyStateMachine.AddTransition(shootState, alertState, new FuncPredicate( ()=> _shotRoutine == null));
         
         __enemyStateMachine.SetState(idleState);
     }
@@ -84,14 +84,28 @@ public class EnemyArcher: EnemyBase
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(_LOSRef.position, _LOSRef.position + _LOSRef.forward*enemyData.attackRange);
+        
+        Gizmos.DrawLine(_LOSRef.position, _LOSRef.forward*enemyData.attackRange);
     }
 
     public void ToggleLineRenderer(bool enable)
     {
-        targetLineRender.enabled = enable;
+        _targetLineRender.enabled = enable;
     }
 
+    public void ToggleLineRendererColor(Color color)
+    {
+        color.a = 1f;
+        
+        _targetLineRender.startColor = color;
+        _targetLineRender.endColor = color;
+    }
+
+    public void UpdateLineRenderer()
+    {
+        _targetLineRender.SetPosition(1, target.position);
+    }
+    
     public void StartAlertRoutine(float pauseTime, float angle, float speed)
     {
         if (_alertRoutine != null) return;
@@ -101,49 +115,63 @@ public class EnemyArcher: EnemyBase
     
     private IEnumerator AlertRoutine(float pauseTime, float angle, float speed)
     {
-        float initAngle = transform.eulerAngles.y;
+        if (target == null) yield break;
+        
+        var absAngle = Mathf.Abs(angle);
+        var absSpeed = Mathf.Abs(speed);
+        
+        var signAngle = Vector3.SignedAngle(transform.forward, target.position-transform.position, Vector3.up);
+        speed = signAngle < 0 ? -speed : speed;
+        angle = signAngle < 0 ? absAngle : absAngle;
 
-        int rotations = 0;
+        var isFirst = false;
+        var tempRot = 0f;
         
         while (target != null && !_inLos)
         {
-            if (angle >= 360)
+            if (absAngle >= 360)
             {
-                transform.Rotate(transform.up, speed * Time.deltaTime);
-            }
-            else if(angle == 0)
-            {
+                transform.Rotate(transform.up, speed*Time.deltaTime);
                 
+                yield return null;
             }
-            else
+
+            if (angle == 0) yield return null;
+
+            if (!isFirst)
             {
-                if (rotations % 2 != 0)
+                if (tempRot + absSpeed * Time.deltaTime < absAngle)
                 {
-                    if (transform.eulerAngles.y < initAngle + angle)
-                    {
-                        transform.Rotate(transform.up, speed * Time.deltaTime);
-                    }
-                    else
-                    {
-                        rotations++;
-                        yield return TimerRoutine(pauseTime);
-                    }
+                    tempRot += absSpeed * Time.deltaTime;
+                    transform.Rotate(transform.up, speed * Time.deltaTime);
                 }
                 else
                 {
-                    if (transform.eulerAngles.y > initAngle - angle)
-                    {
-                        transform.Rotate(transform.up, -speed * Time.deltaTime);
-                    }
-                    else
-                    {
-                        rotations++;
-                        yield return TimerRoutine(pauseTime);
-                    }
+                    isFirst = true;
+                    tempRot = 0f;
+                    speed = -speed;
+                    
+                    yield return new WaitForSeconds(pauseTime);
+                }
+            }
+            else
+            {
+                if (tempRot + absSpeed * Time.deltaTime < absAngle * 2)
+                {
+                    tempRot += absSpeed * Time.deltaTime;
+                    transform.Rotate(transform.up, speed * Time.deltaTime);
+                }
+                else
+                {
+                    tempRot = 0f;
+                    speed = -speed;
+
+                    yield return new WaitForSeconds(pauseTime);
                 }
             }
 
             yield return null;
+            //TODO ALERT STATE ROTATION
         }
 
         _alertRoutine = null;
@@ -174,13 +202,17 @@ public class EnemyArcher: EnemyBase
     private IEnumerator ShotRoutine(float time)
     {
         if (_timerRoutine != null || target == null) yield break;
-
+        
         var playerController = target.GetComponent<TestPlayer>();
         
         yield return TimerRoutine(time);
         
-        playerController.OnShot(playerController.Weaknesses[0], WeakTypes.PLAYER);
+        CheckLOS(maxLOSRadius, enemyData.attackRange);
+        
+        if(_inLos) playerController.OnShot(playerController.Weaknesses[0], WeakTypes.PLAYER);
 
+        _inLos = false;
+        
         _shotRoutine = null;
     }
     

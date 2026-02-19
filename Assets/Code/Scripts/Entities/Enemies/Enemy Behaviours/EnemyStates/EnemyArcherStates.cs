@@ -13,6 +13,7 @@ public class EnemyArcherTargetState: EnemyBaseState<EnemyArcher>
     public override void OnEnter()
     {
         _archer.ToggleLineRenderer(true);
+        _archer.ToggleLineRendererColor(Color.white);
         _archer.StartTargeting(_archer.targetTime);
         
         Debug.Log("Enter Target State");
@@ -22,6 +23,12 @@ public class EnemyArcherTargetState: EnemyBaseState<EnemyArcher>
     {
         _archer.ToggleLineRenderer(false);
         _archer.StopAllStateRoutines();
+    }
+
+    public override void Update()
+    {
+        //_archer.CheckLOS(_archer.maxLOSRadius, _archer.enemyData.attackRange);
+        _archer.UpdateLineRenderer();
     }
 }
 
@@ -36,6 +43,8 @@ public class EnemyArcherShootState : EnemyBaseState<EnemyArcher>
 
     public override void OnEnter()
     {
+        _archer.ToggleLineRenderer(true);
+        _archer.ToggleLineRendererColor(Color.red);
         _archer.StartShot(_archer.enemyData.attackSpeed);
         
         Debug.Log("Enter Shoot State");
@@ -44,6 +53,7 @@ public class EnemyArcherShootState : EnemyBaseState<EnemyArcher>
     public override void OnExit()
     {
         _archer.StopAllStateRoutines();
+        _archer.ToggleLineRenderer(false);
     }
 }
 
