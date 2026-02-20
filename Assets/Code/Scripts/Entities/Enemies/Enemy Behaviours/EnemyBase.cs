@@ -41,6 +41,8 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     public Vector3 defaultPos;
     public Transform target;
     [Range(0, 1)] public float petalDropChance;
+    
+    [Header("Enemy Sequential Fields")]
     [SerializeField] private bool _sequentialWeaknesses;
     public List<WeakTypes> defaultWeaknessTypes;
     
@@ -87,7 +89,7 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         
         if (Weaknesses.Count > 0)
         {
-            for (int i = 0; i < Weaknesses.Count; ++i)
+            for (int i = 0; i < Weaknesses.Count; i++)
             {
                 defaultWeaknessTypes.Add(Weaknesses[i].WeakType);
 
