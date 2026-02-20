@@ -96,8 +96,13 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         _enemyAreaBounds = GetComponentInParent<Room>() != null ? GetComponentInParent<Room>().Bounds : new Bounds();
 
         var player = GameObject.FindWithTag("Player");
-        
-        if (player != null && _enemyAreaBounds.Contains(player.transform.position)) target = player.transform;
+
+        if (player != null)
+        {
+            var collider = player.GetComponentInChildren<Collider>();
+
+            if (_enemyAreaBounds.Intersects(collider.bounds)) target = player.transform;
+        }
         
         //StateMachine Init
         InitialiseStateMachine();
