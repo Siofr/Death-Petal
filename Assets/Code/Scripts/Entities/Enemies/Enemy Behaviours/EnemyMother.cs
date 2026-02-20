@@ -22,18 +22,6 @@ public class EnemyMother: EnemyBase
     
     protected override void InitialiseStateMachine()
     {
-        if (Weaknesses.Count > 0)
-        {
-            for (int i = 0; i < Weaknesses.Count; ++i)
-            {
-                defaultWeaknessTypes.Add(Weaknesses[i].WeakType);
-
-                if (i == 0) continue;
-                
-                Weaknesses[i].SetWeakType(WeakTypes.PLAYER);
-            }
-        }
-        
         var idleState = new EnemyIdleState<EnemyMother>(this);
         var deathState = new EnemyDeathState<EnemyMother>(this);
         var vulnerableState = new EnemyMotherVulnerableState(this);
@@ -52,7 +40,20 @@ public class EnemyMother: EnemyBase
     public override void InitialiseWeaknesses()
     {
         base.InitialiseWeaknesses();
+        
+        if (Weaknesses.Count > 0)
+        {
+            for (int i = 0; i < Weaknesses.Count; ++i)
+            {
+                defaultWeaknessTypes.Add(Weaknesses[i].WeakType);
 
+                if (i == 0) continue;
+                
+                Weaknesses[i].SetWeakType(WeakTypes.PLAYER);
+                Weaknesses[i].ToggleHitbox(false);
+            }
+        }
+        
         defaultWeaknessTypes.Clear();
         foreach(var weakness in Weaknesses) defaultWeaknessTypes.Add(weakness.WeakType);
     }
@@ -82,6 +83,7 @@ public class EnemyMother: EnemyBase
         if (Weaknesses.Count < weaknessCount && Weaknesses.Count > 0)
         {
             defaultWeaknessTypes.RemoveAt(0);
+            Weaknesses[0].ToggleHitbox(true);
             Weaknesses[0].SetWeakType(defaultWeaknessTypes[0]);
         }
         

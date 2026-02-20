@@ -40,6 +40,11 @@ public class Weakness : MonoBehaviour
         _weaknessType = weakType;
         Initialise();
     }
+
+    public void ToggleHitbox(bool toggle)
+    {
+        _collider.enabled = toggle;
+    }
     
     private void Awake()
     {
