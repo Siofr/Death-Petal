@@ -49,6 +49,14 @@ public class EnemyMother: EnemyBase
         __enemyStateMachine.SetState(idleState);
     }
 
+    public override void InitialiseWeaknesses()
+    {
+        base.InitialiseWeaknesses();
+
+        defaultWeaknessTypes.Clear();
+        foreach(var weakness in Weaknesses) defaultWeaknessTypes.Add(weakness.WeakType);
+    }
+
     protected void OnEnable()
     {
         base.OnEnable();
@@ -76,6 +84,9 @@ public class EnemyMother: EnemyBase
             defaultWeaknessTypes.RemoveAt(0);
             Weaknesses[0].SetWeakType(defaultWeaknessTypes[0]);
         }
+        
+        //TO REMOVE JUST FOR TESTING
+        if(Weaknesses.Count < 1) Destroy(gameObject);
     }
 
     private void CheckFirstEncounter(RoomPlayerEnterEvent context)

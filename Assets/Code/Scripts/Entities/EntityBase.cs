@@ -14,7 +14,7 @@ public abstract class EntityBase : MonoBehaviour, IEntity
         InitialiseWeaknesses();
     }
     
-    public void InitialiseWeaknesses()
+    public virtual void InitialiseWeaknesses()
     {
         if (_weaknesses == null) return;
         
@@ -27,6 +27,7 @@ public abstract class EntityBase : MonoBehaviour, IEntity
         foreach (var weakness in weaknesses)
         {
             _weaknesses.Add(weakness);
+            weakness.Initialise();
         }
     }
 

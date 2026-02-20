@@ -26,7 +26,15 @@ public class EnemyArcher: EnemyBase
         _targetLineRender.enabled = false;
         _targetLineRender.SetPosition(0, _LOSRef.position);
     }
-    
+
+    public override void OnShot(Weakness weakness, WeakTypes damageType)
+    {
+        base.OnShot(weakness, damageType);
+        
+        //TO REMOVE JUST FOR TESTING
+        if(Weaknesses.Count < 1) Destroy(gameObject);
+    }
+
     protected override void InitialiseStateMachine()
     {
         var idleState = new EnemyIdleState<EnemyArcher>(this);
