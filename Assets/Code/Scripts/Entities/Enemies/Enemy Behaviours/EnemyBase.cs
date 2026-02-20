@@ -100,7 +100,9 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         if (player != null)
         {
             var collider = player.GetComponentInChildren<Collider>();
-
+            
+            print(_enemyAreaBounds);
+            
             if (_enemyAreaBounds.Intersects(collider.bounds)) target = player.transform;
         }
         

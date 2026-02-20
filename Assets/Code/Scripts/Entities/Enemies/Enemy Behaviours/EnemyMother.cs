@@ -41,6 +41,8 @@ public class EnemyMother: EnemyBase
     {
         base.InitialiseWeaknesses();
         
+        defaultWeaknessTypes.Clear();
+        
         if (Weaknesses.Count > 0)
         {
             for (int i = 0; i < Weaknesses.Count; ++i)
@@ -53,9 +55,6 @@ public class EnemyMother: EnemyBase
                 Weaknesses[i].ToggleHitbox(false);
             }
         }
-        
-        defaultWeaknessTypes.Clear();
-        foreach(var weakness in Weaknesses) defaultWeaknessTypes.Add(weakness.WeakType);
     }
 
     protected void OnEnable()
