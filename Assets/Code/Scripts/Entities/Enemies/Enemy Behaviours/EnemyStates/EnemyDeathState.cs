@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class EnemyDeathState: EnemyBaseState
+public class EnemyDeathState<T>: EnemyBaseState<T> where T : EnemyBase
 {
-	public EnemyDeathState(EnemyBase enemyController) : base(enemyController) { }
+	public EnemyDeathState(T enemyController) : base(enemyController) { }
 	
 	public override void OnEnter()
     {
