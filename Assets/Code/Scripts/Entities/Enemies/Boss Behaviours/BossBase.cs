@@ -11,6 +11,16 @@ using Random = UnityEngine.Random;
 
 public class BossBase : EnemyBase, ISaveable<EnemySaveData>
 {
+    [Header("Boss Settings")]
+    [SerializeField] [Tooltip("Percent of Weaknesses remaining to enter Phase 2")]
+    private int _phaseTwoThreshold;
+
+    private int _startWeaknessesCount = 0;
+    private int _activePhase = 1;
+    
+    
+    
+    
     protected override void Awake()
     {
         base.Awake();
@@ -42,8 +52,8 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
         _enemyStateMachine.AddTransition(idleState, attack1State, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
         _enemyStateMachine.AddTransition(attack1State, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
         
-        _enemyStateMachine.AddTransition(attack1State, attack2State, new FuncPredicate( InAttackRange));
-        _enemyStateMachine.AddTransition(attack2State, idleState, new FuncPredicate( ()=>!InAttackRange() && attackRoutine == null));
+        _enemyStateMachine.AddTransition(attack1State, attack2State, new FuncPredicate( () => _activePhase == 2));
+        _enemyStateMachine.AddTransition(attack2State, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
         
         _enemyStateMachine.AddAnyTransition(defeatState, new FuncPredicate( ()=>IsDead ) );
         
@@ -55,6 +65,8 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
         
         EventBus<RoomPlayerEnterEvent>.Register(_playerRoomEnterEventListener);
         EventBus<RoomPlayerExitEvent>.Register(_playerRoomExitEventListener);
+
+        _startWeaknessesCount = Weaknesses.Count;
         
         Debug.Log("Enemy Initialised");
     }
@@ -134,6 +146,12 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
             Weaknesses.Remove(weakness);
             Destroy(weakness.transform.parent.gameObject);
             EventBus<CorrectShotEvent>.Raise(new CorrectShotEvent(this));
+        }
+
+        if (Weaknesses.Count / _startWeaknessesCount * 100 <= _phaseTwoThreshold)
+        {
+            // Start phase two
+            _activePhase = 2;
         }
 
         if (Weaknesses.Count == 0)
