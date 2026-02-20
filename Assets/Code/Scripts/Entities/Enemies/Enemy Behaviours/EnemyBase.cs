@@ -41,10 +41,12 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     public Vector3 defaultPos;
     public Transform target;
     [Range(0, 1)] public float petalDropChance;
+    [SerializeField] private bool _sequentialWeaknesses;
+    public List<WeakTypes> defaultWeaknessTypes;
     
     //[Header("EnemyFields")]
     //Non-Serializable Fields
-    private NavMeshAgent _nmAgent;
+    protected NavMeshAgent __nmAgent;
     protected StateMachine __enemyStateMachine;
     private Bounds _enemyAreaBounds;
     
@@ -75,6 +77,28 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         Initialise();
     }
     
+    public override void InitialiseWeaknesses()
+    {
+        base.InitialiseWeaknesses();
+
+        if (!_sequentialWeaknesses) return;
+        
+        defaultWeaknessTypes.Clear();
+        
+        if (Weaknesses.Count > 0)
+        {
+            for (int i = 0; i < Weaknesses.Count; ++i)
+            {
+                defaultWeaknessTypes.Add(Weaknesses[i].WeakType);
+
+                if (i == 0) continue;
+                
+                Weaknesses[i].SetWeakType(WeakTypes.PLAYER);
+                Weaknesses[i].ToggleHitbox(false);
+            }
+        }
+    }
+    
     public void LookAtTarget()
     {
         if (target == null) return;
@@ -88,10 +112,10 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     private void Initialise()
     {
         //Field Init
-        _nmAgent = GetComponent<NavMeshAgent>();
+        __nmAgent = GetComponent<NavMeshAgent>();
         __enemyStateMachine = new StateMachine();
 
-        _nmAgent.speed = enemyData.movementSpeed;
+        __nmAgent.speed = enemyData.movementSpeed;
 
         _enemyAreaBounds = GetComponentInParent<Room>() != null ? GetComponentInParent<Room>().Bounds : new Bounds();
 
@@ -137,7 +161,7 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
 
     }
 
-    protected void OnEnable()
+    protected virtual void OnEnable()
     {
         __playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
         __playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
@@ -170,7 +194,7 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     
     public void ClearPath()
     {
-        _nmAgent.ResetPath();
+        __nmAgent.ResetPath();
     }
     
     public void SetTarget(Transform target)
@@ -178,11 +202,11 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         
         if (target == null)
         {
-            _nmAgent.destination = defaultPos;
+            __nmAgent.destination = defaultPos;
             return;
         }
         
-        _nmAgent.destination = target.position;
+        __nmAgent.destination = target.position;
     }
     
     private void OnPlayerRoomEnter(RoomPlayerEnterEvent context)
@@ -208,6 +232,8 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     
     public override void OnShot( Weakness weakness, WeakTypes damageType)
     {
+        int weaknessCount = Weaknesses.Count;
+        
         if (!Weaknesses.Contains(weakness))
             return;
         
@@ -231,6 +257,15 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
 
             var random = Random.value;
             if (random <= petalDropChance) EventBus<PetalSpawnEvent>.Raise(new PetalSpawnEvent(transform.position));
+        }
+
+        if (!_sequentialWeaknesses) return;
+        
+        if (Weaknesses.Count < weaknessCount && Weaknesses.Count > 0)
+        {
+            defaultWeaknessTypes.RemoveAt(0);
+            Weaknesses[0].ToggleHitbox(true);
+            Weaknesses[0].SetWeakType(defaultWeaknessTypes[0]);
         }
     }
 

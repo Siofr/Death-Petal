@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using State_Machine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EnemyMother: EnemyBase
 {
@@ -11,7 +12,6 @@ public class EnemyMother: EnemyBase
     [SerializeField] private Transform _spawnPointRef;
     public float maxSpawnCount;
     public float spawnTime;
-    public List<WeakTypes> defaultWeaknessTypes;
     
     //Non-Serialized Fields
     private Coroutine _spawnRoutine;
@@ -37,27 +37,7 @@ public class EnemyMother: EnemyBase
         __enemyStateMachine.SetState(idleState);
     }
 
-    public override void InitialiseWeaknesses()
-    {
-        base.InitialiseWeaknesses();
-        
-        defaultWeaknessTypes.Clear();
-        
-        if (Weaknesses.Count > 0)
-        {
-            for (int i = 0; i < Weaknesses.Count; ++i)
-            {
-                defaultWeaknessTypes.Add(Weaknesses[i].WeakType);
-
-                if (i == 0) continue;
-                
-                Weaknesses[i].SetWeakType(WeakTypes.PLAYER);
-                Weaknesses[i].ToggleHitbox(false);
-            }
-        }
-    }
-
-    protected void OnEnable()
+    protected override void OnEnable()
     {
         base.OnEnable();
         
@@ -76,15 +56,7 @@ public class EnemyMother: EnemyBase
     
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
-        int weaknessCount = Weaknesses.Count;
         base.OnShot(weakness, damageType);
-
-        if (Weaknesses.Count < weaknessCount && Weaknesses.Count > 0)
-        {
-            defaultWeaknessTypes.RemoveAt(0);
-            Weaknesses[0].ToggleHitbox(true);
-            Weaknesses[0].SetWeakType(defaultWeaknessTypes[0]);
-        }
         
         //TO REMOVE JUST FOR TESTING
         if(Weaknesses.Count < 1) Destroy(gameObject);
