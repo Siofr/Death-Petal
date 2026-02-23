@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 8011774994662831887}
   - component: {fileID: 1073544426128530289}
   - component: {fileID: 8413402895274341886}
+  - component: {fileID: 6628019922518204071}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -343,6 +344,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestPlayer
   _saveData: {fileID: 0}
+--- !u!114 &6628019922518204071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3997147908757342861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d642aacf84a15d439f69cc428685ede, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TEMP_ReloadTesting
+  manualRotate: 0
 --- !u!1 &6786558166313280823
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +415,6 @@ GameObject:
   - component: {fileID: 5379855324015867488}
   - component: {fileID: 6743637687206976134}
   - component: {fileID: 4433594625596512732}
-  - component: {fileID: 220401485620791551}
   m_Layer: 6
   m_Name: PlayerVFX
   m_TagString: Untagged
@@ -476,21 +489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIHealthPetals
   healthContainer: {fileID: 0}
   maxHealth: 9
-  player: {fileID: 3997147908757342861}
---- !u!114 &220401485620791551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6814331718074213930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d08288a560e9754cbfa1559ffb8b2ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UIHealthPetals
-  healthContainer: {fileID: 0}
-  maxHealth: 9
+  visualHealth: 27
   player: {fileID: 3997147908757342861}
 --- !u!1 &7249666322484350803
 GameObject:
