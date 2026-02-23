@@ -19,6 +19,5 @@ public class EnemyChaseState<T> : EnemyBaseState<T> where T: EnemyBase
     public override void OnExit()
     {
         //enemyController.animator.SetFloat(Animator.StringToHash("Speed"),0f);
-        enemyController.StartCoroutine(LerpBlendState("Speed", 0f, 1f));
     }
 }
