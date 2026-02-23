@@ -832,6 +832,7 @@ GameObject:
   - component: {fileID: 148688879}
   - component: {fileID: 148688881}
   - component: {fileID: 148688880}
+  - component: {fileID: 148688882}
   m_Layer: 0
   m_Name: Room1FullView
   m_TagString: Untagged
@@ -936,6 +937,31 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &148688882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148688878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027792905c564964b7dd68598c20c8ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClearshotCameraElement
+  EventTarget: {fileID: 148688881}
+  CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  CameraDeactivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlendCreatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlendFinishedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &180619530
 GameObject:
   m_ObjectHideFlags: 0
@@ -5448,6 +5474,7 @@ GameObject:
   - component: {fileID: 1123866679}
   - component: {fileID: 1123866681}
   - component: {fileID: 1123866680}
+  - component: {fileID: 1123866682}
   m_Layer: 0
   m_Name: Room1 Doorway Cam
   m_TagString: Untagged
@@ -5552,6 +5579,31 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &1123866682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123866678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027792905c564964b7dd68598c20c8ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClearshotCameraElement
+  EventTarget: {fileID: 1123866681}
+  CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  CameraDeactivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlendCreatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlendFinishedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1131408640
 GameObject:
   m_ObjectHideFlags: 0
@@ -22234,6 +22286,7 @@ GameObject:
   - component: {fileID: 1882362834}
   - component: {fileID: 1882362836}
   - component: {fileID: 1882362835}
+  - component: {fileID: 1882362837}
   m_Layer: 0
   m_Name: Room2 Cam1
   m_TagString: Untagged
@@ -22338,6 +22391,31 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &1882362837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882362833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027792905c564964b7dd68598c20c8ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClearshotCameraElement
+  EventTarget: {fileID: 1882362836}
+  CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  CameraDeactivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlendCreatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlendFinishedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1889454986
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22629,6 +22707,7 @@ GameObject:
   - component: {fileID: 1949053907}
   - component: {fileID: 1949053909}
   - component: {fileID: 1949053908}
+  - component: {fileID: 1949053910}
   m_Layer: 0
   m_Name: Room1DoorwayCam
   m_TagString: Untagged
@@ -22733,6 +22812,31 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &1949053910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949053906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027792905c564964b7dd68598c20c8ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClearshotCameraElement
+  EventTarget: {fileID: 1949053909}
+  CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  CameraDeactivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlendCreatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlendFinishedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1969197689 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2280587373253024334, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
@@ -23379,6 +23483,7 @@ GameObject:
   - component: {fileID: 2143399405}
   - component: {fileID: 2143399407}
   - component: {fileID: 2143399406}
+  - component: {fileID: 2143399408}
   m_Layer: 0
   m_Name: SpawnCam
   m_TagString: Untagged
@@ -23483,6 +23588,31 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &2143399408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143399404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027792905c564964b7dd68598c20c8ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClearshotCameraElement
+  EventTarget: {fileID: 2143399407}
+  CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  CameraDeactivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlendCreatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  BlendFinishedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &6345025481657248731
 PrefabInstance:
   m_ObjectHideFlags: 0
