@@ -36,9 +36,9 @@ public class EnemyLurker : EnemyBase
     
     public void CheckIfTargeted(ActiveTargetEvent context)
     {
-        if(context.activeTarget != null)return; 
+        if(context.activeTarget == null)return; 
         
-        if(Weaknesses.Contains(context.activeTarget.GetComponent<Weakness>()))
+            if(Weaknesses.Contains(context.activeTarget.GetComponent<Weakness>()))
         {
             _isTargeted = false;
             return;
