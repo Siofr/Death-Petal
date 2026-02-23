@@ -193,6 +193,11 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     {
         return Vector3.Distance(transform.position, defaultPos) < 1f;
     }
+
+    public void StopAgent(bool stop)
+    {
+        __nmAgent.isStopped = stop;
+    }
     
     public void ClearPath()
     {

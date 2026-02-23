@@ -27,18 +27,35 @@ public class EnemyLurker : EnemyBase
 
     protected override void InitialiseStateMachine()
     {
-        base.InitialiseStateMachine();
-
+        var idleState = new EnemyIdleState<EnemyBase>(this);
+        var chaseState = new EnemyChaseState<EnemyBase>(this);
+        var attackState = new EnemyAttackState<EnemyBase>(this);
+        var deathState = new EnemyDeathState<EnemyBase>(this);
         var freezeState = new EnemyLurkerFreezeState(this);
         
-        __enemyStateMachine.AddAnyTransition(freezeState, new FuncPredicate(()=> _isTargeted));
+        __enemyStateMachine.AddTransition(idleState, chaseState, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
+        __enemyStateMachine.AddTransition(chaseState, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
+        
+        __enemyStateMachine.AddTransition(chaseState, attackState, new FuncPredicate( ()=>InAttackRange() ));
+        __enemyStateMachine.AddTransition(attackState, idleState, new FuncPredicate( ()=>!InAttackRange() && attackRoutine == null));
+        
+        __enemyStateMachine.AddAnyTransition(deathState, new FuncPredicate( ()=>IsDead ) );
+        
+        __enemyStateMachine.AddTransition(chaseState, freezeState, new FuncPredicate(()=> _isTargeted));
+        __enemyStateMachine.AddTransition(freezeState, chaseState, new FuncPredicate(()=> !_isTargeted));
+        
+        __enemyStateMachine.SetState(idleState);
     }
     
     public void CheckIfTargeted(ActiveTargetEvent context)
     {
-        if(context.activeTarget == null)return; 
+        if (context.activeTarget == null)
+        {
+            _isTargeted = false;
+            return;
+        } 
         
-            if(Weaknesses.Contains(context.activeTarget.GetComponent<Weakness>()))
+        if(!Weaknesses.Contains(context.activeTarget.GetComponent<Weakness>()))
         {
             _isTargeted = false;
             return;
@@ -49,15 +66,15 @@ public class EnemyLurker : EnemyBase
     
     public void ToggleFreeze(bool toggle)
     {
-        __nmAgent.speed = toggle ? enemyData.attackSpeed : 0f;
-        animator.speed = toggle ? 1 : 0f;
+        StopAgent(toggle);
+        animator.speed = toggle ? 0f : 1f;
     }
     
-    public override void OnShot(Weakness weakness, WeakTypes damageType)
-    {
-        base.OnShot(weakness, damageType);
-        
-        //TO REMOVE JUST FOR TESTING
-        if(Weaknesses.Count < 1) Destroy(gameObject);
-    }
+    // public override void OnShot(Weakness weakness, WeakTypes damageType)
+    // {
+    //     base.OnShot(weakness, damageType);
+    //     
+    //     //TO REMOVE JUST FOR TESTING
+    //     if(Weaknesses.Count < 1) Destroy(gameObject);
+    // }
 }
