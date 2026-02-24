@@ -37,34 +37,20 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
         //Field Init
         print("Init Boss!");
         _nmAgent = GetComponent<NavMeshAgent>();
-        _enemyStateMachine = new StateMachine();
+        __enemyStateMachine = new StateMachine();
 
         _nmAgent.speed = enemyData.movementSpeed;
 
         _enemyAreaBounds = GetComponentInParent<Room>() != null ? GetComponentInParent<Room>().Bounds : new Bounds();
         
-        //StateMachine Init
-        var idleState = new BossIdleState(this);
-        var attack1State = new BossAttackStage1State(this);
-        var attack2State = new BossAttackStage2State(this);
-        var defeatState = new BossDefeatState(this);
         
-        _enemyStateMachine.AddTransition(idleState, attack1State, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
-        _enemyStateMachine.AddTransition(attack1State, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
-        
-        _enemyStateMachine.AddTransition(attack1State, attack2State, new FuncPredicate( () => _activePhase == 2));
-        _enemyStateMachine.AddTransition(attack2State, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
-        
-        _enemyStateMachine.AddAnyTransition(defeatState, new FuncPredicate( ()=>IsDead ) );
-        
-        _enemyStateMachine.SetState(idleState);
         
         //Event Init
-        _playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
-        _playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
+        __playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
+        __playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
         
-        EventBus<RoomPlayerEnterEvent>.Register(_playerRoomEnterEventListener);
-        EventBus<RoomPlayerExitEvent>.Register(_playerRoomExitEventListener);
+        EventBus<RoomPlayerEnterEvent>.Register(__playerRoomEnterEventListener);
+        EventBus<RoomPlayerExitEvent>.Register(__playerRoomExitEventListener);
 
         _startWeaknessesCount = Weaknesses.Count;
         
@@ -73,13 +59,33 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
 
     private void OnDisable()
     {
-        EventBus<RoomPlayerEnterEvent>.Unregister(_playerRoomEnterEventListener);
-        EventBus<RoomPlayerExitEvent>.Unregister(_playerRoomExitEventListener);
+        EventBus<RoomPlayerEnterEvent>.Unregister(__playerRoomEnterEventListener);
+        EventBus<RoomPlayerExitEvent>.Unregister(__playerRoomExitEventListener);
+    }
+    
+    protected virtual void InitialiseStateMachine()
+    {
+        //StateMachine Init
+        var idleState = new BossIdleState(this);
+        var attack1State = new BossAttackStage1State(this);
+        var attack2State = new BossAttackStage2State(this);
+        var defeatState = new BossDefeatState(this);
+        
+        __enemyStateMachine.AddTransition(idleState, attack1State, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
+        __enemyStateMachine.AddTransition(attack1State, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
+        
+        __enemyStateMachine.AddTransition(attack1State, attack2State, new FuncPredicate( () => _activePhase == 2));
+        __enemyStateMachine.AddTransition(attack2State, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
+        
+        __enemyStateMachine.AddAnyTransition(defeatState, new FuncPredicate( ()=>IsDead ) );
+        
+        __enemyStateMachine.SetState(idleState);
+
     }
     
     private void Update()
     {
-        _enemyStateMachine.Update();
+        __enemyStateMachine.Update();
     }
     
     public bool InAttackRange()
@@ -167,30 +173,30 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
 
     public SaveData GetSaveData(LevelData levelData)
     {
-        if (_saveData == null)
+        if (__saveData == null)
         {
             var dataInstance = ScriptableObject.CreateInstance<EnemySaveData>();
             #if UNITY_EDITOR
             AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
             #endif
 
-            _saveData = dataInstance;
-            _saveData.Save(transform.position, Weaknesses);
+            __saveData = dataInstance;
+            __saveData.Save(transform.position, Weaknesses);
         }
         
-        return _saveData;
+        return __saveData;
     }
 
     public void LoadSaveData(SaveData levelData)
     {
-        _saveData = (EnemySaveData)levelData;
+        __saveData = (EnemySaveData)levelData;
         
-        _saveData.Load(transform, Weaknesses);
+        __saveData.Load(transform, Weaknesses);
     }
 
     public void SaveData()
     {
-        _saveData.Save(transform.position, Weaknesses);
+        __saveData.Save(transform.position, Weaknesses);
     }
 }
 

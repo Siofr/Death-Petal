@@ -104,18 +104,18 @@ public class ProjectileBase : EnemyBase
         _enemyStateMachine.SetState(idleState);*/
         
         //Event Init
-        _playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
+        __playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
         
-        EventBus<RoomPlayerEnterEvent>.Register(_playerRoomEnterEventListener);
-        EventBus<RoomPlayerExitEvent>.Register(_playerRoomExitEventListener);
+        EventBus<RoomPlayerEnterEvent>.Register(__playerRoomEnterEventListener);
+        EventBus<RoomPlayerExitEvent>.Register(__playerRoomExitEventListener);
         
         Debug.Log("Enemy Initialised");
     }
 
     private void OnDisable()
     {
-        EventBus<RoomPlayerEnterEvent>.Unregister(_playerRoomEnterEventListener);
-        EventBus<RoomPlayerExitEvent>.Unregister(_playerRoomExitEventListener);
+        EventBus<RoomPlayerEnterEvent>.Unregister(__playerRoomEnterEventListener);
+        EventBus<RoomPlayerExitEvent>.Unregister(__playerRoomExitEventListener);
     }
     private void Update()
     {

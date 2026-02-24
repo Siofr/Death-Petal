@@ -44,14 +44,14 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     
     //[Header("EnemyFields")]
     //Non-Serializable Fields
-    private NavMeshAgent _nmAgent;
+    protected NavMeshAgent _nmAgent;
     protected StateMachine __enemyStateMachine;
-    private Bounds _enemyAreaBounds;
+    protected Bounds _enemyAreaBounds;
     
     [NonSerialized]
     public Coroutine attackRoutine = null;
 
-    private bool _isDead;
+    protected bool _isDead;
     
     //Properties
     public EnemySaveData SaveInfo => __saveData;
