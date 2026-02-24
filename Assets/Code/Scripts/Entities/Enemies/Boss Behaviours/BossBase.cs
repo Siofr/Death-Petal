@@ -17,12 +17,17 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
 
     private int _startWeaknessesCount = 0;
     private int _activePhase = 1;
+
+    public Transform debugTarget;
+    public bool isAttackReady = true;
+    public Bishop_AttackPatternSpawner attackPatternSpawner;
     
     
     
     
     protected override void Awake()
     {
+        target = debugTarget;
         base.Awake();
         defaultPos =  transform.position;
     }
@@ -38,12 +43,11 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
         print("Init Boss!");
         _nmAgent = GetComponent<NavMeshAgent>();
         __enemyStateMachine = new StateMachine();
-
-        _nmAgent.speed = enemyData.movementSpeed;
+        attackPatternSpawner = GetComponent<Bishop_AttackPatternSpawner>();
 
         _enemyAreaBounds = GetComponentInParent<Room>() != null ? GetComponentInParent<Room>().Bounds : new Bounds();
-        
-        
+
+        InitialiseStateMachine();
         
         //Event Init
         __playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
@@ -71,8 +75,8 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
         var attack2State = new BossAttackStage2State(this);
         var defeatState = new BossDefeatState(this);
         
-        __enemyStateMachine.AddTransition(idleState, attack1State, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
-        __enemyStateMachine.AddTransition(attack1State, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
+        __enemyStateMachine.AddTransition(idleState, attack1State, new FuncPredicate( ()=> isAttackReady && target != null ));
+        __enemyStateMachine.AddTransition(attack1State, idleState, new FuncPredicate( () => target == null || !isAttackReady ));
         
         __enemyStateMachine.AddTransition(attack1State, attack2State, new FuncPredicate( () => _activePhase == 2));
         __enemyStateMachine.AddTransition(attack2State, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));

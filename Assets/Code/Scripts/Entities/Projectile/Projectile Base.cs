@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using State_Machine;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class ProjectileBase : EnemyBase
@@ -13,6 +14,7 @@ public class ProjectileBase : EnemyBase
     private bool _projectileTarget = false;
     [SerializeField] private List<ParticleSystem> _particleEmitters;
     private EnemyBase _callingEntity;
+    [SerializeField] private GameObject explodeVFX;
     
     
     protected override void Awake()
@@ -40,6 +42,9 @@ public class ProjectileBase : EnemyBase
 
     public void SendProjectile(Vector3 direction, int lifetime, bool isPhysicsObject, EnemyBase callingEntity, Transform targetTransform = null, bool projectileTarget = false)
     {
+        
+        active = true;
+        
         startVector = direction;
         StartCoroutine(KillTimer(lifetime));
         _projectileTarget = projectileTarget;
@@ -61,7 +66,7 @@ public class ProjectileBase : EnemyBase
             _staticDirection = true;
         }
 
-        active = true;
+        
     }
 
     private IEnumerator KillTimer(float lifetime)
@@ -69,17 +74,15 @@ public class ProjectileBase : EnemyBase
         yield return new WaitForSeconds(lifetime);
         if (active)
         {
-            StartCoroutine(Explode());
+            Explode();
         }
         //explode
     }
 
-    private IEnumerator Explode()
+    private void Explode()
     {
         // do damage in radius
-        _particleEmitters.ForEach(x => x.Play());
-        DealDamage(_callingEntity);
-        yield return new WaitForSeconds(0.5f);
+        Instantiate(explodeVFX, transform.position, quaternion.identity);
         Destroy(gameObject);
     }
 
@@ -128,7 +131,7 @@ public class ProjectileBase : EnemyBase
         if (active && InDamageRange())
         {
             active = false;
-            StartCoroutine(Explode());
+            Explode();
             //Explode
         }
     }
@@ -145,7 +148,7 @@ public class ProjectileBase : EnemyBase
         Debug.Log("Is Exiting");
         
         var roomBounds = context.room.Bounds;
-        StartCoroutine(Explode());
+        Explode();
         
         if(_enemyAreaBounds != roomBounds) return;
         
