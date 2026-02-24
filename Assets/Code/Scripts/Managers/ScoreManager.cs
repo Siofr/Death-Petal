@@ -1,0 +1,70 @@
+using System.Collections;
+using UnityEngine;
+
+public struct ChangeScoreEvent : IEvent
+{
+    public float score;
+
+    public ChangeScoreEvent(float score)
+    {
+        this.score = score;
+    }
+}
+
+public struct WipeComboEvent : IEvent
+{
+
+}
+
+public class ScoreManager : MonoBehaviour
+{
+    // Combo Counter Variables
+    private float scoreMultiplier = 1.0f;
+    private float currentScore;
+
+    private float scoreMultiplierThreshold = 500.0f;
+    private float currentScoreThreshold;
+
+    private EventBindings<ChangeScoreEvent> _changeScoreEventListener;
+    private EventBindings<WipeComboEvent> _wipeComboEventListener;
+
+    private void Awake()
+    {
+        _changeScoreEventListener = new EventBindings<ChangeScoreEvent>(OnScoreChange);
+        _wipeComboEventListener = new EventBindings<WipeComboEvent>(OnComboWipe);
+    }
+
+    private void OnEnable()
+    {
+        EventBus<ChangeScoreEvent>.Register(_changeScoreEventListener);
+        EventBus<WipeComboEvent>.Register(_wipeComboEventListener);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<ChangeScoreEvent>.Unregister(_changeScoreEventListener);
+        EventBus<WipeComboEvent>.Register(_wipeComboEventListener);
+    }
+
+    void OnScoreChange(ChangeScoreEvent ctx)
+    {
+        // What to do when score is changed
+        currentScore = currentScore + ctx.score * scoreMultiplier;
+        currentScoreThreshold += ctx.score;
+
+        if (currentScoreThreshold >= scoreMultiplierThreshold)
+        {
+            currentScoreThreshold = 0.0f;
+            scoreMultiplier += 0.5f;
+            EventBus<UpdateComboMultEvent>.Raise(new UpdateComboMultEvent(scoreMultiplier));
+        }
+
+        EventBus<UpdateScoreEvent>.Raise(new UpdateScoreEvent(currentScore));
+    }
+
+    void OnComboWipe()
+    {
+        scoreMultiplier = 1.0f;
+        EventBus<UpdateComboMultEvent>.Raise(new UpdateComboMultEvent(scoreMultiplier));
+    }
+}
