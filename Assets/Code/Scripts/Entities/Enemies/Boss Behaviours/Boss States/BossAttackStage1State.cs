@@ -24,6 +24,7 @@ public class BossAttackStage1State : BossBaseState
     public override void OnEnter()
     {
         Debug.Log("Entering Attack 1 State");
+        //AttackSelector();
 
         bossController.StopAllCoroutines();
     }
