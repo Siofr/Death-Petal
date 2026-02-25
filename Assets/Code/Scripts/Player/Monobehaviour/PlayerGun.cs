@@ -208,9 +208,17 @@ public class PlayerGun : MonoBehaviour
 
     private void OnSetChamber(SetChamberEvent ctx)
     {
-        print(ctx.bulletOrder[0]);
-        
-        bulletArray = ctx.bulletOrder;
-        currentChamber = 0;
+        bulletArray = new BulletSO[6];
+
+        for (int i = 0; i < ctx.bulletOrder.Length; i++)
+        {
+            var tempSlot = currentChamber - i;
+            
+            if(tempSlot < 0) tempSlot = bulletArray.Length-1;
+
+            if (ctx.bulletOrder[i] == null) continue;
+            
+            bulletArray[tempSlot] = ctx.bulletOrder[i];
+        }
     }
 }
