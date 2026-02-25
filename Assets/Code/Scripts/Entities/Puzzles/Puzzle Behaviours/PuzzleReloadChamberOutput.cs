@@ -13,7 +13,7 @@ public class PuzzleReloadChamberOutput: PuzzleOutputBase
     [Header("Circle Reload - Bullet Prefabs")]
     [SerializeField] private BulletSO[] bulletPrefabs;
     
-    [Header("Circle Reload - Bullets Set in Order of Array\nOnly Elements 1 - 5 Valid")] 
+    [Header("Circle Reload - Bullets Set in Shooting Order\nOnly Elements 1 - 5 Valid")] 
     [SerializeField] private WeakTypes[] gunChamberFill;
     
     public override void OnPuzzleSolved(PuzzleSolvedEvent context)

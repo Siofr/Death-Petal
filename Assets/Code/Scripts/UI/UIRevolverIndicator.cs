@@ -181,17 +181,18 @@ public class UIRevolverIndicator : MonoBehaviour
 
     private void OnSetChamber(SetChamberEvent ctx)
     {
-        for (int i = 0; i < bulletSprites.Length; i++)
+        foreach (var img in bulletSprites) img.enabled = false;
+
+        for (int i = 0; i < ctx.bulletOrder.Length; i++)
         {
-            if (ctx.bulletOrder[i] != null)
-            {
-                bulletSprites[i].enabled = true;
-                bulletSprites[i].sprite = ctx.bulletOrder[i].bulletSprite;
-            }
-            else
-            {
-                bulletSprites[i].enabled = false;
-            }
+            var tempSlot = currentBullet - i;
+
+            if (tempSlot < 0) tempSlot = bulletSprites.Length - 1;
+
+            if (ctx.bulletOrder[i] == null) continue;
+            
+            bulletSprites[tempSlot].enabled = true;
+            bulletSprites[tempSlot].sprite = ctx.bulletOrder[i].bulletSprite;
         }
     }
 }
