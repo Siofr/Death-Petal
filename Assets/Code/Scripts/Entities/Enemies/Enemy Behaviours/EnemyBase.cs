@@ -239,8 +239,8 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
             var random = Random.value;
             if (random <= petalDropChance) EventBus<PetalSpawnEvent>.Raise(new PetalSpawnEvent(transform.position));
         }
-
-        if (!_sequentialWeaknesses) return;
+        
+        if (!__sequentialWeaknesses) return;
         
         if (Weaknesses.Count < weaknessCount && Weaknesses.Count > 0)
         {
