@@ -59,13 +59,7 @@ public class EnemyArcher: EnemyBase
 
     public void CheckLOS(float losRadius, float losDist)
     {
-        if (!Physics.SphereCast(_LOSRef.position, losRadius, _LOSRef.forward, out RaycastHit hit, losDist))
-        {
-            _inLos = false;
-            return;
-        }
-
-        if (!hit.collider.CompareTag("Player"))
+        if (!Physics.SphereCast(_LOSRef.position, losRadius, _LOSRef.forward, out RaycastHit hit, losDist, 1 << 6))
         {
             _inLos = false;
             return;

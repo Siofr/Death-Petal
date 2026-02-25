@@ -254,7 +254,7 @@ namespace State_Machine
             RaycastHit hit;
             Weakness weakness;
 
-            if (Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit, 30))
+            if (Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit, 30,1 &~(1 << 6)))
             {
                 if (hit.transform.TryGetComponent<Weakness>(out weakness))
                 {

@@ -12,16 +12,16 @@ public class EnemyAttackState<T> : EnemyBaseState<T> where T : EnemyBase
         
         enemyController.target.TryGetComponent(out playerEntity);
         
-        yield return new WaitForSeconds(attackSpeed);
-        
-        while (playerEntity.Weaknesses.Count > 0)
+        while (playerEntity != null && playerEntity.Weaknesses.Count > 0)
         {
+            yield return new WaitForSeconds(attackSpeed);
+            
+            if (!enemyController.InAttackRange()) break;
+            
             playerEntity.OnShot(playerEntity.Weaknesses[0], WeakTypes.PLAYER);
             Debug.Log("Damage Dealt to Player");
             
-            yield return new WaitForSeconds(attackSpeed);
-
-            if (!enemyController.InAttackRange()) break;
+            yield return new WaitForSeconds(attackSpeed*2);
         }
         
         Debug.Log("Attack Phase Over");
@@ -31,9 +31,13 @@ public class EnemyAttackState<T> : EnemyBaseState<T> where T : EnemyBase
     
     public override void OnEnter()
     {
+        enemyController.StartCoroutine(LerpBlendState("Speed", 0f, 1f));
+        
+        enemyController.StopAgent(true);
+        
         Debug.Log("Entering Attack State");
         //enemyController.SetTarget(null);
-
+        
         RuntimeManager.PlayOneShot(enemyController.onEnemyAttackEventPath, enemyController.transform.position);
 
         enemyController.StopAllCoroutines();
@@ -45,6 +49,7 @@ public class EnemyAttackState<T> : EnemyBaseState<T> where T : EnemyBase
 
     public override void OnExit()
     {
+        enemyController.StopAgent(false);
         enemyController.animator.SetBool(Animator.StringToHash("Attack"), false);
         Debug.Log("Exiting Attack State");
     }
