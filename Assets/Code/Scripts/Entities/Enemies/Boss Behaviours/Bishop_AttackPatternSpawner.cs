@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Bishop_AttackPatternSpawner : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
     [SerializeField] private Vector3 radialspit_shootForce;
     [SerializeField] private float radialspit_degrees;
     [SerializeField] private float radialspit_attackLength;
+    
+    [Header("Spawn Backup Settings")]
+    [SerializeField] private float spawnBackup_Radius;
+    [SerializeField] private int spawnBackup_amount;
+    [SerializeField] private float spawnBackup_attackLength;
+    
 
     private void Start()
     {
@@ -33,6 +40,11 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
     public void StartTargetSpit()
     {
         StartCoroutine(TargetSpit());
+    }
+    
+    public void StartSpawnBackup()
+    {
+        StartCoroutine(SpawnRoutine());
     }
 
     public void StartRadialSpit(bool dual = false)
@@ -58,6 +70,27 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
                 attackVector.z * targetspit_shootForce.z);
             newProjectile.SendProjectile(attackVector, 4, true, _bossController);
             yield return new WaitForSeconds(targetspit_timeBetweenShots);
+        }
+        _bossController.isAttackReady = true;
+    }
+    
+    private IEnumerator SpawnRoutine()
+    {
+        _bossController.isAttackReady = false;
+        float startTime = Time.time;
+
+        while (Time.time - startTime < spawnBackup_attackLength)
+        {
+            for (int i = 0; i <= spawnBackup_amount; i++)
+            {
+                var spawnPoint = Random.insideUnitCircle * spawnBackup_Radius;
+                spawnPoint = new Vector3(
+                    spawnPoint.x,
+                    transform.position.y,
+                    spawnPoint.y);
+                EventBus<SpawnEnemyEvent>.Raise(new SpawnEnemyEvent(spawnPoint, typeof(EnemyBase), transform.parent, gameObject));
+            }
+            yield return new WaitForFixedUpdate();
         }
         _bossController.isAttackReady = true;
     }

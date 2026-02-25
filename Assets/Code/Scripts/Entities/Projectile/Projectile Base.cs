@@ -34,6 +34,7 @@ public class ProjectileBase : EnemyBase
         
         callingEntity.target.TryGetComponent(out playerEntity);
         
+        print("Deal Damage");
         playerEntity.OnShot(playerEntity.Weaknesses[0], WeakTypes.PLAYER);
         Debug.Log("Damage Dealt to Player");
         
@@ -42,17 +43,13 @@ public class ProjectileBase : EnemyBase
 
     public void SendProjectile(Vector3 direction, int lifetime, bool isPhysicsObject, EnemyBase callingEntity, Transform targetTransform = null, bool projectileTarget = false)
     {
-        print("I LIVE");
+        //print("I LIVE");
         active = true;
         
         startVector = direction;
         StartCoroutine(KillTimer(lifetime));
         _projectileTarget = projectileTarget;
         _callingEntity = callingEntity;
-        
-        IEntity playerEntity;
-        
-        callingEntity.target.TryGetComponent(out playerEntity);
 
         if (isPhysicsObject)
         {
@@ -83,13 +80,18 @@ public class ProjectileBase : EnemyBase
     {
         // do damage in radius
         Instantiate(explodeVFX, transform.position, quaternion.identity);
+        if (Vector3.Distance(_callingEntity.transform.position, transform.position) < enemyData.attackRange)
+        {
+            DealDamage(_callingEntity);
+        }
+        
         Destroy(gameObject);
     }
 
     private void Initialise()
     {
         //Field Init
-        print("Init Boss!");
+        //print("Init Boss!");
         /*_enemyStateMachine = new StateMachine();
 
         _nmAgent.speed = enemyData.movementSpeed;
@@ -112,7 +114,7 @@ public class ProjectileBase : EnemyBase
         EventBus<RoomPlayerEnterEvent>.Register(__playerRoomEnterEventListener);
         EventBus<RoomPlayerExitEvent>.Register(__playerRoomExitEventListener);
         
-        Debug.Log("Enemy Initialised");
+        //Debug.Log("Enemy Initialised");
     }
 
     private void OnDisable()

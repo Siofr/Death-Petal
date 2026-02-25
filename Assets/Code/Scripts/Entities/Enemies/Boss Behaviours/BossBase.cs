@@ -22,6 +22,7 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
     public bool isAttackReady = true;
     public Bishop_AttackPatternSpawner attackPatternSpawner;
     [SerializeField] private GameObject[] eyes;
+    public Bishop_Phase1Attacks activeAttack = Bishop_Phase1Attacks.None;
     
     
     
@@ -41,7 +42,7 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
     private void Initialise()
     {
         //Field Init
-        print("Init Boss!");
+        //print("Init Boss!");
         __nmAgent = GetComponent<NavMeshAgent>();
         __enemyStateMachine = new StateMachine();
         attackPatternSpawner = GetComponent<Bishop_AttackPatternSpawner>();
@@ -149,9 +150,12 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
     
     public override void OnShot( Weakness weakness, WeakTypes damageType)
     {
+        int weaknessCount = Weaknesses.Count;
+        
+        print("Weakness before first fail state");
         if (!Weaknesses.Contains(weakness))
             return;
-        
+        print("Weakness past first fail state");
         if(weakness.WeakType.HasFlag(damageType))
             weakness.RemoveWeakType(damageType);
         else
@@ -164,21 +168,32 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
             EventBus<CorrectShotEvent>.Raise(new CorrectShotEvent(this));
         }
 
-        if (Weaknesses.Count / _startWeaknessesCount * 100 <= _phaseTwoThreshold)
-        {
-            // Start phase two
-            _activePhase = 2;
-        }
-
         if (Weaknesses.Count == 0)
         {
             animator.SetTrigger("Death");
             EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));
             _isDead = true;
+            Death();
 
             var random = Random.value;
             if (random <= petalDropChance) EventBus<PetalSpawnEvent>.Raise(new PetalSpawnEvent(transform.position));
         }
+
+        if (!_sequentialWeaknesses) return;
+        
+        if (Weaknesses.Count < weaknessCount && Weaknesses.Count > 0)
+        {
+            print("WEAKNESS SHOT");
+            defaultWeaknessTypes.RemoveAt(0);
+            Weaknesses[0].ToggleHitbox(true);
+            Weaknesses[0].SetWeakType(defaultWeaknessTypes[0]);
+        }
+    }
+
+    // temporary death thing
+    private void Death()
+    {
+        Destroy(gameObject);
     }
 
     public SaveData GetSaveData(LevelData levelData)

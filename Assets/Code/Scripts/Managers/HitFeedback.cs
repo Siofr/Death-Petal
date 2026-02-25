@@ -37,7 +37,7 @@ public class HitFeedback : MonoBehaviour
     
     public void OnEnemyHit()
     {
-        print(_hitEffect);
+        //print(_hitEffect);
 
         if (_hitEffect == null)
             _hitEffect = StartCoroutine(HitEffect());

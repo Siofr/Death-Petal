@@ -43,7 +43,7 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     [Range(0, 1)] public float petalDropChance;
     
     [Header("Enemy Sequential Fields")]
-    [SerializeField] private bool _sequentialWeaknesses;
+    [SerializeField] protected bool _sequentialWeaknesses;
     public List<WeakTypes> defaultWeaknessTypes;
     
     //[Header("EnemyFields")]
@@ -127,7 +127,7 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         {
             var collider = player.GetComponentInChildren<Collider>();
             
-            print(_enemyAreaBounds);
+            //print(_enemyAreaBounds);
             
             if (_enemyAreaBounds.Intersects(collider.bounds)) target = player.transform;
         }
@@ -241,9 +241,10 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     {
         int weaknessCount = Weaknesses.Count;
         
+        print("Weakness before first fail state");
         if (!Weaknesses.Contains(weakness))
             return;
-        
+        print("Weakness past first fail state");
         if(weakness.WeakType.HasFlag(damageType))
             weakness.RemoveWeakType(damageType);
         else
@@ -270,6 +271,7 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         
         if (Weaknesses.Count < weaknessCount && Weaknesses.Count > 0)
         {
+            print("WEAKNESS SHOT");
             defaultWeaknessTypes.RemoveAt(0);
             Weaknesses[0].ToggleHitbox(true);
             Weaknesses[0].SetWeakType(defaultWeaknessTypes[0]);

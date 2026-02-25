@@ -65,7 +65,7 @@ public class EnemyArcher: EnemyBase
             return;
         }
         
-        print("inLos");
+        //print("inLos");
 
         /*var hitDist = Vector3.Distance(hit.point, _LOSRef.position);
         var radiusRatio = hitDist / maxLOSDist;

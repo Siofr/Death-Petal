@@ -8,15 +8,13 @@ public enum Bishop_Phase1Attacks
 {
     TargetSpit,
     RadialSpit,
-    SummonBackup
+    SummonBackup,
+    DualRadialSpit,
+    None
 }
 
 public class BossAttackStage1State<T> : BossBaseState<T> where T : BossBase
 {
-    
-
-    private Bishop_Phase1Attacks _activeAttack;
-
     private int _previousAttackValue = -1;
 
     public BossAttackStage1State(T bossController) : base(bossController) { }
@@ -32,25 +30,30 @@ public class BossAttackStage1State<T> : BossBaseState<T> where T : BossBase
 
     public void AttackSelector()
     {
-        int randSelection = Random.Range(0, 2);
-        if(randSelection == _previousAttackValue) randSelection = Random.Range(0, 2);
+        int randSelection = Random.Range(0, 3);
+        if(randSelection == _previousAttackValue) randSelection = Random.Range(0, 3);
 
         _previousAttackValue = randSelection;
 
         switch (randSelection)
         {
             case 0:
-                _activeAttack = Bishop_Phase1Attacks.TargetSpit;
+                bossController.activeAttack = Bishop_Phase1Attacks.TargetSpit;
                 bossController.attackPatternSpawner.StartTargetSpit();
                 break;
             case 1:
-                _activeAttack = Bishop_Phase1Attacks.RadialSpit;
+                bossController.activeAttack = Bishop_Phase1Attacks.RadialSpit;
                 bossController.attackPatternSpawner.StartRadialSpit();
                 break;
             case 2:
-                _activeAttack = Bishop_Phase1Attacks.SummonBackup;
+                bossController.activeAttack = Bishop_Phase1Attacks.DualRadialSpit;
                 // Temporarily use dual spit for this
                 bossController.attackPatternSpawner.StartRadialSpit(true);
+                break;
+            case 3:
+                bossController.activeAttack = Bishop_Phase1Attacks.SummonBackup;
+                // Temporarily use dual spit for this
+                bossController.attackPatternSpawner.StartSpawnBackup();
                 break;
         }
     }

@@ -52,6 +52,8 @@ MonoBehaviour:
   defaultPos: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   petalDropChance: 0
+  _sequentialWeaknesses: 1
+  defaultWeaknessTypes: 
   onEnemyAttackEventPath:
     Guid:
       Data1: 0
@@ -62,7 +64,12 @@ MonoBehaviour:
   _phaseTwoThreshold: 0
   debugTarget: {fileID: 0}
   isAttackReady: 1
-  attackPatternSpawner: {fileID: 0}
+  attackPatternSpawner: {fileID: 3599788893299146472}
+  eyes:
+  - {fileID: 1495704589346673447}
+  - {fileID: 5914879155667046142}
+  - {fileID: 2943527882735578820}
+  - {fileID: 7686214713453535555}
 --- !u!195 &8949886832524989101
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -105,6 +112,9 @@ MonoBehaviour:
   radialspit_shootForce: {x: 1.5, y: 25, z: 1.5}
   radialspit_degrees: 10
   radialspit_attackLength: 0
+  spawnBackup_Radius: 0
+  spawnBackup_amount: 0
+  spawnBackup_attackLength: 0
 --- !u!1 &1495704589346673447
 GameObject:
   m_ObjectHideFlags: 0
