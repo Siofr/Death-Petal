@@ -185,9 +185,9 @@ public class UIRevolverIndicator : MonoBehaviour
 
         for (int i = 0; i < ctx.bulletOrder.Length; i++)
         {
-            var tempSlot = currentBullet - i;
+            var tempSlot = currentBullet + i;
 
-            if (tempSlot < 0) tempSlot = bulletSprites.Length - 1;
+            if (tempSlot > 5) tempSlot = 0;
 
             if (ctx.bulletOrder[i] == null) continue;
             
