@@ -208,6 +208,8 @@ public class PlayerGun : MonoBehaviour
 
     private void OnSetChamber(SetChamberEvent ctx)
     {
+        print(ctx.bulletOrder[0]);
+        
         bulletArray = ctx.bulletOrder;
         currentChamber = 0;
     }

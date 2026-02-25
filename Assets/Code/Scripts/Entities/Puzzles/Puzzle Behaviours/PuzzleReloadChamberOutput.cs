@@ -3,9 +3,9 @@ using UnityEngine;
 
 public struct SetChamberEvent : IEvent
 {
-    [ItemCanBeNull] public BulletSO[] bulletOrder;
+    public BulletSO[] bulletOrder;
 
-    public SetChamberEvent([ItemCanBeNull] BulletSO[] bullets) =>  bulletOrder = bullets;
+    public SetChamberEvent(BulletSO[] bullets) =>  bulletOrder = bullets;
 }
 
 public class PuzzleReloadChamberOutput: PuzzleOutputBase
@@ -13,7 +13,7 @@ public class PuzzleReloadChamberOutput: PuzzleOutputBase
     [Header("Circle Reload - Bullet Prefabs")]
     [SerializeField] private BulletSO[] bulletPrefabs;
     
-    [Header("Circle Reload - Bullets Set in Order of Array")] 
+    [Header("Circle Reload - Bullets Set in Order of Array\nOnly Elements 1 - 5 Valid")] 
     [SerializeField] private WeakTypes[] gunChamberFill;
     
     public override void OnPuzzleSolved(PuzzleSolvedEvent context)
@@ -22,7 +22,7 @@ public class PuzzleReloadChamberOutput: PuzzleOutputBase
         base.OnPuzzleSolved(context);
     }
 
-    private BulletSO?[] SetChamber()
+    private BulletSO[] SetChamber()
     {
         BulletSO[] result = new BulletSO[6];
 

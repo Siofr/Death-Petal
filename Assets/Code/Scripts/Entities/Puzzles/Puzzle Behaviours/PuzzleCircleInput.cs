@@ -12,4 +12,15 @@ public class PuzzleCircleInput: PuzzleInputBase
             }
         }
     }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            foreach (var output in PuzzleOutputs)
+            {
+                CompletionCondition(false, output);
+            }
+        }
+    }
 }
