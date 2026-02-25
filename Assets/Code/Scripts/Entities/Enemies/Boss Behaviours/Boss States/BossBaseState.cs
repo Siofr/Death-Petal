@@ -4,13 +4,13 @@ using System.Collections;
 using State_Machine;
 using UnityEngine;
 
-public class BossBaseState : IState
+public class BossBaseState<T> : IState where T : BossBase
 {
     protected readonly BossBase bossController;
     
     protected BossBaseState() {  }
     
-    protected BossBaseState(BossBase BossController) => this.bossController = bossController;
+    protected BossBaseState(T bossController) => this.bossController = bossController;
     
     public virtual void OnEnter()
     {

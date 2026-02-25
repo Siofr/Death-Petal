@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class BossDefeatState : BossBaseState
+public class BossDefeatState<T> : BossBaseState<T> where T : BossBase
 {
-    public BossDefeatState(BossBase bossController) : base(bossController) { }
+    public BossDefeatState(T bossController) : base(bossController) { }
 	
     public override void OnEnter()
     {

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Bishop_EyeLookAt : MonoBehaviour
 {
 
-    [SerializeField] private Transform lookAtTarget;
+    [SerializeField] public Transform lookAtTarget;
     [SerializeField] private int adjustment;
 
     // Update is called once per frame

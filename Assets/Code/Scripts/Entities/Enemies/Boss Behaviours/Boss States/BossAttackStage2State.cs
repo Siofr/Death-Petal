@@ -2,9 +2,9 @@ using System.Collections;
 using FMODUnity;
 using UnityEngine;
 
-public class BossAttackStage2State : BossBaseState
+public class BossAttackStage2State<T> : BossBaseState<T> where T : BossBase
 {
-    public BossAttackStage2State(BossBase bossController) : base(bossController) { }
+    public BossAttackStage2State(T bossController) : base(bossController) { }
     
     private IEnumerator DealDamage(float attackSpeed)
     {

@@ -42,7 +42,7 @@ public class ProjectileBase : EnemyBase
 
     public void SendProjectile(Vector3 direction, int lifetime, bool isPhysicsObject, EnemyBase callingEntity, Transform targetTransform = null, bool projectileTarget = false)
     {
-        
+        print("I LIVE");
         active = true;
         
         startVector = direction;

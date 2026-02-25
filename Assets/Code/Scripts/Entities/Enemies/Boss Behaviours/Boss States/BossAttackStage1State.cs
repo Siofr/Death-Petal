@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Drawing.Printing;
 using FMODUnity;
+using State_Machine;
 using UnityEngine;
 
 public enum Bishop_Phase1Attacks
@@ -10,7 +11,7 @@ public enum Bishop_Phase1Attacks
     SummonBackup
 }
 
-public class BossAttackStage1State : BossBaseState
+public class BossAttackStage1State<T> : BossBaseState<T> where T : BossBase
 {
     
 
@@ -18,13 +19,13 @@ public class BossAttackStage1State : BossBaseState
 
     private int _previousAttackValue = -1;
 
-    public BossAttackStage1State(BossBase bossController) : base(bossController) { }
+    public BossAttackStage1State(T bossController) : base(bossController) { }
     
     
     public override void OnEnter()
     {
         Debug.Log("Entering Attack 1 State");
-        //AttackSelector();
+        AttackSelector();
 
         bossController.StopAllCoroutines();
     }

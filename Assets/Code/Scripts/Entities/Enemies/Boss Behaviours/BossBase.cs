@@ -21,6 +21,7 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
     public Transform debugTarget;
     public bool isAttackReady = true;
     public Bishop_AttackPatternSpawner attackPatternSpawner;
+    [SerializeField] private GameObject[] eyes;
     
     
     
@@ -70,10 +71,10 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
     protected virtual void InitialiseStateMachine()
     {
         //StateMachine Init
-        var idleState = new BossIdleState(this);
-        var attack1State = new BossAttackStage1State(this);
-        var attack2State = new BossAttackStage2State(this);
-        var defeatState = new BossDefeatState(this);
+        var idleState = new BossIdleState<BossBase>(this);
+        var attack1State = new BossAttackStage1State<BossBase>(this);
+        var attack2State = new BossAttackStage2State<BossBase>(this);
+        var defeatState = new BossDefeatState<BossBase>(this);
         
         __enemyStateMachine.AddTransition(idleState, attack1State, new FuncPredicate( ()=> isAttackReady && target != null ));
         __enemyStateMachine.AddTransition(attack1State, idleState, new FuncPredicate( () => target == null || !isAttackReady ));
@@ -125,6 +126,11 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
         var playerTransform =  context.playerTransform;
 
         if (context.room.Bounds != _enemyAreaBounds) return;
+        
+        foreach (GameObject eye in eyes)
+        {
+            eye.GetComponent<Bishop_EyeLookAt>().lookAtTarget = playerTransform;
+        }
         
         Debug.Log("Is Entering");
         target = playerTransform;
