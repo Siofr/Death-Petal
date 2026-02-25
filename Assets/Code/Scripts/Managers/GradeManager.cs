@@ -105,6 +105,9 @@ public class GradeManager : MonoBehaviour
         // Find how many petals remain in level
         petalsRemaining = GameObject.FindGameObjectsWithTag("Petal").Length;
 
+        // Find how many "urns" are remaining
+        urnsRemaining = GameObject.FindGameObjectsWithTag("Urn").Length;
+
         // Damage Grade
         for (int i = 0; i < gradeObjects.Length; i++)
         {
