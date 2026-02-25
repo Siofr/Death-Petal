@@ -80,42 +80,47 @@ public class PlayerGun : MonoBehaviour
             _shootEvent.setParameterByID(_bulletsLeft, 0);
             EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.5f, 0.15f));
             EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
-            return;
         }
-
-        EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
-
-        EventBus<SpawnTrail>.Raise(new SpawnTrail(bulletArray[currentChamber].bulletColor));
-        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.25f));
-
-        // Now remove it
-        if (ctx.weakness)
+        else
         {
-            ctx.weakness.ParentEntity.OnShot(ctx.weakness, bulletArray[currentChamber].weakness);
+            EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
+
+            EventBus<SpawnTrail>.Raise(new SpawnTrail(bulletArray[currentChamber].bulletColor));
+            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.25f));
+
+            // Now remove it
+            if (ctx.weakness)
+            {
+                ctx.weakness.ParentEntity.OnShot(ctx.weakness, bulletArray[currentChamber].weakness);
+            }
+
+            bulletArray[currentChamber] = null;
         }
 
-        bulletArray[currentChamber] = null;
-        RotateBarrel(-1);
+        RotateBarrel(1);
         GetNextBullet();
     }
 
     public void AddBullet(AddBulletEvent ctx)
     {
-        if (bulletArray[currentChamber] != null) return;
+        int trapdoorChamber = currentChamber - 1;
+        if (trapdoorChamber < 0) trapdoorChamber = bulletArray.Length - 1;
+
+        if (bulletArray[trapdoorChamber] != null) return;
 
         _addRemoveEvent.setParameterByID(_addRemove, 1);
         EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.05f, 0.15f));
         EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_addRemoveEvent, this.gameObject));
 
-        bulletArray[currentChamber] = ctx.bulletType;
-        GetNextBullet();
+        bulletArray[trapdoorChamber] = ctx.bulletType;
 
         if (TEMP_ReloadTesting.Instance.manualRotate)
         {
             return;
         }
 
-        RotateBarrel(1);
+        RotateBarrel(-1);
+        GetNextBullet();
     }
 
     public void RemoveBullet()
@@ -135,7 +140,7 @@ public class PlayerGun : MonoBehaviour
             return;
         }
 
-        RotateBarrel(-1);
+        RotateBarrel(1);
     }
 
     public void OnRotateBarrel(RotateBarrelEvent ctx)

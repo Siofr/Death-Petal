@@ -107,30 +107,31 @@ public class UIRevolverIndicator : MonoBehaviour
 
     public void ShootBullet()
     {
-        if (bulletSprites[currentBullet].enabled == false) return;
-
-        bulletSprites[currentBullet].enabled = false;
+        if (bulletSprites[currentBullet].enabled != false) bulletSprites[currentBullet].enabled = false;
 
         shootIndex++;
         // Now Reorder it
         // bulletSprites = ReorderArray(bulletSprites);
 
-        StartCoroutine(Rotate(-1, 30, 0.05f));
+        StartCoroutine(Rotate(1, 30, 0.05f));
     }
 
     public void AddBullet(AddBulletEvent ctx)
     {
-        if (bulletSprites[currentBullet].enabled) return;
+        int trapdoorChamber = currentBullet - 1;
 
-        bulletSprites[currentBullet].sprite = ctx.bulletType.bulletSprite;
-        bulletSprites[currentBullet].enabled = true;
+        if (trapdoorChamber < 0) trapdoorChamber = bulletSprites.Length - 1;
+        if (bulletSprites[trapdoorChamber].enabled) return;
+
+        bulletSprites[trapdoorChamber].sprite = ctx.bulletType.bulletSprite;
+        bulletSprites[trapdoorChamber].enabled = true;
 
         if (TEMP_ReloadTesting.Instance.manualRotate)
         {
             return;
         }
 
-        StartCoroutine(Rotate(1, 30, 0.05f));
+        StartCoroutine(Rotate(-1, 30, 0.05f));
     }
 
     public void RemoveBullet()
@@ -144,7 +145,7 @@ public class UIRevolverIndicator : MonoBehaviour
             return;
         }
 
-        StartCoroutine(Rotate(-1, 30, 0.05f));
+        StartCoroutine(Rotate(1, 30, 0.05f));
     }
 
     private Image[] CopyArray(Image[] arr)
