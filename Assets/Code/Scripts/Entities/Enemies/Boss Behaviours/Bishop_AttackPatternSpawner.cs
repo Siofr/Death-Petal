@@ -77,21 +77,18 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
     private IEnumerator SpawnRoutine()
     {
         _bossController.isAttackReady = false;
-        float startTime = Time.time;
 
-        while (Time.time - startTime < spawnBackup_attackLength)
+        for (int i = 0; i <= spawnBackup_amount; i++)
         {
-            for (int i = 0; i <= spawnBackup_amount; i++)
-            {
-                var spawnPoint = Random.insideUnitCircle * spawnBackup_Radius;
-                spawnPoint = new Vector3(
-                    spawnPoint.x,
-                    transform.position.y,
-                    spawnPoint.y);
-                EventBus<SpawnEnemyEvent>.Raise(new SpawnEnemyEvent(spawnPoint, typeof(EnemyBase), transform.parent, gameObject));
-            }
-            yield return new WaitForFixedUpdate();
+            Vector3 spawnPoint = (Random.insideUnitCircle * spawnBackup_Radius);
+            spawnPoint = new Vector3(
+                spawnPoint.x,
+                transform.position.y + 2f,
+                spawnPoint.y);
+            EventBus<SpawnEnemyEvent>.Raise(new SpawnEnemyEvent(transform.position + spawnPoint, typeof(EnemyBase), transform.parent, gameObject));
         }
+        yield return new WaitForSeconds(spawnBackup_attackLength);
+        
         _bossController.isAttackReady = true;
     }
 
