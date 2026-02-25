@@ -42,7 +42,7 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
     {
         //Field Init
         print("Init Boss!");
-        _nmAgent = GetComponent<NavMeshAgent>();
+        __nmAgent = GetComponent<NavMeshAgent>();
         __enemyStateMachine = new StateMachine();
         attackPatternSpawner = GetComponent<Bishop_AttackPatternSpawner>();
 
@@ -106,7 +106,7 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
     
     public void ClearPath()
     {
-        _nmAgent.ResetPath();
+        __nmAgent.ResetPath();
     }
     
     public void SetTarget(Transform target)
@@ -114,11 +114,11 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
         
         if (target == null)
         {
-            _nmAgent.destination = defaultPos;
+            __nmAgent.destination = defaultPos;
             return;
         }
         
-        _nmAgent.destination = target.position;
+        __nmAgent.destination = target.position;
     }
     
     private void OnPlayerRoomEnter(RoomPlayerEnterEvent context)
