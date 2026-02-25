@@ -42,10 +42,6 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     public Transform target;
     [Range(0, 1)] public float petalDropChance;
     
-    [Header("Enemy Sequential Fields")]
-    [SerializeField] private bool _sequentialWeaknesses;
-    public List<WeakTypes> defaultWeaknessTypes;
-    
     //[Header("EnemyFields")]
     //Non-Serializable Fields
     protected NavMeshAgent __nmAgent;
@@ -77,28 +73,6 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     private void Start()
     {
         Initialise();
-    }
-    
-    public override void InitialiseWeaknesses()
-    {
-        base.InitialiseWeaknesses();
-
-        if (!_sequentialWeaknesses) return;
-        
-        defaultWeaknessTypes.Clear();
-        
-        if (Weaknesses.Count > 0)
-        {
-            for (int i = 0; i < Weaknesses.Count; i++)
-            {
-                defaultWeaknessTypes.Add(Weaknesses[i].WeakType);
-
-                if (i == 0) continue;
-                
-                Weaknesses[i].SetWeakType(WeakTypes.PLAYER);
-                Weaknesses[i].ToggleHitbox(false);
-            }
-        }
     }
     
     public void LookAtTarget()
