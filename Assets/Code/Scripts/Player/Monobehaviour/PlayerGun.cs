@@ -32,12 +32,15 @@ public class PlayerGun : MonoBehaviour
     private EventBindings<RemoveBulletEvent> _removeEventListener;
     private EventBindings<RotateBarrelEvent> _rotateBarrelEventListener;
 
+    private EventBindings<SetChamberEvent>  _setChamberEventListener;
+    
     public void Awake()
     {
         _shootEventListener = new EventBindings<ShootEvent>(ShootBullet);
         _addBulletEventListener = new EventBindings<AddBulletEvent>(AddBullet);
         _removeEventListener = new EventBindings<RemoveBulletEvent>(RemoveBullet);
         _rotateBarrelEventListener = new EventBindings<RotateBarrelEvent>(OnRotateBarrel);
+        _setChamberEventListener = new EventBindings<SetChamberEvent>(OnSetChamber);
     }
 
     private void OnEnable()
@@ -46,6 +49,7 @@ public class PlayerGun : MonoBehaviour
         EventBus<AddBulletEvent>.Register(_addBulletEventListener);
         EventBus<RemoveBulletEvent>.Register(_removeEventListener);
         EventBus<RotateBarrelEvent>.Register(_rotateBarrelEventListener);
+        EventBus<SetChamberEvent>.Register(_setChamberEventListener);
     }
 
     private void OnDisable()
@@ -54,6 +58,7 @@ public class PlayerGun : MonoBehaviour
         EventBus<AddBulletEvent>.Unregister(_addBulletEventListener);
         EventBus<RemoveBulletEvent>.Unregister(_removeEventListener);
         EventBus<RotateBarrelEvent>.Unregister(_rotateBarrelEventListener);
+        EventBus<SetChamberEvent>.Unregister(_setChamberEventListener);
     }
 
     private void Start()
@@ -194,10 +199,16 @@ public class PlayerGun : MonoBehaviour
 
         return newArr;
     }
-
+    
     private void GetNextBullet()
     {
         BulletSO nextBullet = bulletArray[currentChamber];
         EventBus<NextBulletEvent>.Raise(new NextBulletEvent(nextBullet));
+    }
+
+    private void OnSetChamber(SetChamberEvent ctx)
+    {
+        bulletArray = ctx.bulletOrder;
+        currentChamber = 0;
     }
 }
