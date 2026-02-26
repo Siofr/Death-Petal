@@ -14,6 +14,7 @@ public class UIRevolverIndicator : MonoBehaviour
     private bool _isRotating;
 
     Tween animationTween;
+    public Transform barrel;
 
     private EventBindings<ShootEvent> _shootEventListener;
     private EventBindings<RemoveBulletEvent> _removeBulletEventListener;
@@ -71,7 +72,7 @@ public class UIRevolverIndicator : MonoBehaviour
         if (currentBullet < 0) { currentBullet = bulletSprites.Length - 1; }
         if (currentBullet > bulletSprites.Length - 1) { currentBullet = 0; }
 
-        if (_isRotating) yield return animationTween.WaitForCompletion();
+        //if (_isRotating) yield return animationTween.WaitForCompletion();
 
         _isRotating = true;
 
@@ -84,6 +85,7 @@ public class UIRevolverIndicator : MonoBehaviour
 
         Vector3 rot = new Vector3(0, 0, zRot);
         animationTween = transform.DORotate(rot, speed, RotateMode.FastBeyond360);
+        barrel.Rotate(new Vector3(0,0,1), zRot);
         yield return animationTween.WaitForCompletion();
 
         _isRotating = false;
