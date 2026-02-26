@@ -25,7 +25,7 @@ public class WeightPuzzle : PuzzleInputBase
     
     //Non-Serializable Fields   
     private Dictionary<Collider, Weight> _weightColliders = new Dictionary<Collider, Weight>();
-    private Collider[] _puzzleColliders;
+    public Collider[] puzzleColliders;
     
     //Properties
     public List<Weight> Weights => _weights;
@@ -37,7 +37,7 @@ public class WeightPuzzle : PuzzleInputBase
     {
         base.Awake();
         InitializeWeights();
-        _puzzleColliders = GetComponentsInChildren<Collider>();
+        //puzzleColliders = GetComponentsInChildren<Collider>();
     }
 
     private void OnEnable()
@@ -101,9 +101,9 @@ public class WeightPuzzle : PuzzleInputBase
 
     private void OnWeightShot(WeightShotEvent context)
     {
-        if (_puzzleColliders.Length < 1 || _weightColliders == null) return;
+        if (puzzleColliders.Length < 1 || _weightColliders == null) return;
 
-        foreach (var pCollider in _puzzleColliders)
+        foreach (var pCollider in puzzleColliders)
         {
             if (pCollider.bounds.Intersects(context.collider.bounds))
             {

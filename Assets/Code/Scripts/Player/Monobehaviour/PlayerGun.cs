@@ -32,12 +32,15 @@ public class PlayerGun : MonoBehaviour
     private EventBindings<RemoveBulletEvent> _removeEventListener;
     private EventBindings<RotateBarrelEvent> _rotateBarrelEventListener;
 
+    private EventBindings<SetChamberEvent>  _setChamberEventListener;
+    
     public void Awake()
     {
         _shootEventListener = new EventBindings<ShootEvent>(ShootBullet);
         _addBulletEventListener = new EventBindings<AddBulletEvent>(AddBullet);
         _removeEventListener = new EventBindings<RemoveBulletEvent>(RemoveBullet);
         _rotateBarrelEventListener = new EventBindings<RotateBarrelEvent>(OnRotateBarrel);
+        _setChamberEventListener = new EventBindings<SetChamberEvent>(OnSetChamber);
     }
 
     private void OnEnable()
@@ -46,6 +49,7 @@ public class PlayerGun : MonoBehaviour
         EventBus<AddBulletEvent>.Register(_addBulletEventListener);
         EventBus<RemoveBulletEvent>.Register(_removeEventListener);
         EventBus<RotateBarrelEvent>.Register(_rotateBarrelEventListener);
+        EventBus<SetChamberEvent>.Register(_setChamberEventListener);
     }
 
     private void OnDisable()
@@ -54,6 +58,7 @@ public class PlayerGun : MonoBehaviour
         EventBus<AddBulletEvent>.Unregister(_addBulletEventListener);
         EventBus<RemoveBulletEvent>.Unregister(_removeEventListener);
         EventBus<RotateBarrelEvent>.Unregister(_rotateBarrelEventListener);
+        EventBus<SetChamberEvent>.Unregister(_setChamberEventListener);
     }
 
     private void Start()
@@ -80,42 +85,47 @@ public class PlayerGun : MonoBehaviour
             _shootEvent.setParameterByID(_bulletsLeft, 0);
             EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.5f, 0.15f));
             EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
-            return;
         }
-
-        EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
-
-        EventBus<SpawnTrail>.Raise(new SpawnTrail(bulletArray[currentChamber].bulletColor));
-        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.25f));
-
-        // Now remove it
-        if (ctx.weakness)
+        else
         {
-            ctx.weakness.ParentEntity.OnShot(ctx.weakness, bulletArray[currentChamber].weakness);
+            EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
+
+            EventBus<SpawnTrail>.Raise(new SpawnTrail(bulletArray[currentChamber].bulletColor));
+            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.25f));
+
+            // Now remove it
+            if (ctx.weakness)
+            {
+                ctx.weakness.ParentEntity.OnShot(ctx.weakness, bulletArray[currentChamber].weakness);
+            }
+
+            bulletArray[currentChamber] = null;
         }
 
-        bulletArray[currentChamber] = null;
-        RotateBarrel(-1);
+        RotateBarrel(1);
         GetNextBullet();
     }
 
     public void AddBullet(AddBulletEvent ctx)
     {
-        if (bulletArray[currentChamber] != null) return;
+        int trapdoorChamber = currentChamber + 1;
+        if (trapdoorChamber > 5) trapdoorChamber = 0;
+
+        if (bulletArray[trapdoorChamber] != null) return;
 
         _addRemoveEvent.setParameterByID(_addRemove, 1);
         EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.05f, 0.15f));
         EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_addRemoveEvent, this.gameObject));
 
-        bulletArray[currentChamber] = ctx.bulletType;
-        GetNextBullet();
+        bulletArray[trapdoorChamber] = ctx.bulletType;
 
         if (TEMP_ReloadTesting.Instance.manualRotate)
         {
             return;
         }
 
-        RotateBarrel(1);
+        RotateBarrel(-1);
+        GetNextBullet();
     }
 
     public void RemoveBullet()
@@ -135,7 +145,7 @@ public class PlayerGun : MonoBehaviour
             return;
         }
 
-        RotateBarrel(-1);
+        RotateBarrel(1);
     }
 
     public void OnRotateBarrel(RotateBarrelEvent ctx)
@@ -154,6 +164,7 @@ public class PlayerGun : MonoBehaviour
 
     public void RotateBarrel(int direction)
     {
+        EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent(100));
         currentChamber += direction;
 
         if (currentChamber > bulletArray.Length - 1) currentChamber = 0;
@@ -194,10 +205,26 @@ public class PlayerGun : MonoBehaviour
 
         return newArr;
     }
-
+    
     private void GetNextBullet()
     {
         BulletSO nextBullet = bulletArray[currentChamber];
         EventBus<NextBulletEvent>.Raise(new NextBulletEvent(nextBullet));
+    }
+
+    private void OnSetChamber(SetChamberEvent ctx)
+    {
+        bulletArray = new BulletSO[6];
+
+        for (int i = 0; i < ctx.bulletOrder.Length; i++)
+        {
+            var tempSlot = currentChamber - i;
+            
+            if(tempSlot < 0) tempSlot = bulletArray.Length-1;
+
+            if (ctx.bulletOrder[i] == null) continue;
+            
+            bulletArray[tempSlot] = ctx.bulletOrder[i];
+        }
     }
 }
