@@ -1,10 +1,16 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Text;
 
 public struct OnLevelEndEvent : IEvent
 {
+    public Stage stageInfo;
 
+    public OnLevelEndEvent(Stage stageInfo)
+    {
+        this.stageInfo = stageInfo;
+    }
 }
 
 public struct OnLevelStartEvent : IEvent
@@ -18,9 +24,9 @@ public class GradeManager : MonoBehaviour
     EventBindings<OnLevelStartEvent> _levelStartEventListener;
 
     public GradeSO[] gradeObjects;
+    private Stage currentStage;
 
     // Time Variables
-    private float bestTime;
     private float currentTime;
     private float finalTime;
     private string timeGrade;
@@ -31,16 +37,19 @@ public class GradeManager : MonoBehaviour
     private string damageGrade;
 
     // Enemy Variables
-    private int enemiesRemaining;
+    private int enemiesKilled;
     private string enemyGrade;
 
     // Soul Urns Variables
-    private int urnsRemaining;
+    private int urnsDestroyed;
     private string urnGrade;
 
     // Petal Variables
     private int petalsRemaining;
     private string petalGrade;
+
+    // Puzzle Variables
+    private int puzzlesCompleted;
 
     // Bullets Reflected
     EventBindings<WrongShotEvent> _wrongShotEventListener;
@@ -91,22 +100,21 @@ public class GradeManager : MonoBehaviour
 
     private void OnLevelStart()
     {
+        // Reset Values for next stage
+
         currentTime = 0;
+        bulletReflections = 0;
+        damageTaken = 0;
+
+        if (!currentStage.nextStage) return;
+
+        currentStage = currentStage.nextStage;
     }
 
-    private void OnLevelEnd()
+    private void OnLevelEnd(OnLevelEndEvent ctx)
     {
         // Get Final Time
         finalTime = currentTime;
-
-        // Find how many enemies remain in level
-        enemiesRemaining = GameObject.FindGameObjectsWithTag("Enemy").Length;
-
-        // Find how many petals remain in level
-        petalsRemaining = GameObject.FindGameObjectsWithTag("Petal").Length;
-
-        // Find how many "urns" are remaining
-        urnsRemaining = GameObject.FindGameObjectsWithTag("Urn").Length;
 
         // Damage Grade
         for (int i = 0; i < gradeObjects.Length; i++)
@@ -131,6 +139,8 @@ public class GradeManager : MonoBehaviour
         }
 
         // Time Grade
+        float bestTime = ctx.stageInfo.bestTime;
+
         for (int i = 0; i < gradeObjects.Length; i++)
         {
             if (finalTime <= bestTime + gradeObjects[i].timeTaken * 60)
@@ -142,6 +152,8 @@ public class GradeManager : MonoBehaviour
         }
 
         // Enemies Remaining Grade
+        int enemiesRemaining = CheckStageBounds(LayerMask.GetMask("Enemy"));
+
         for (int i = 0; i < gradeObjects.Length; i++)
         {
             if (enemiesRemaining <= gradeObjects[i].enemiesKilled)
@@ -164,6 +176,8 @@ public class GradeManager : MonoBehaviour
         }
 
         // Urn Grade
+        int urnsRemaining = CheckStageBounds(LayerMask.GetMask("Urn"));
+
         for (int i = 0; i < gradeObjects.Length; i++)
         {
             if (urnsRemaining <= gradeObjects[i].urnsBroken)
@@ -177,6 +191,21 @@ public class GradeManager : MonoBehaviour
         int totalGrade = gradeValue[petalGrade] + gradeValue[urnGrade] + gradeValue[enemyGrade] + gradeValue[damageGrade] + gradeValue[reflectionGrade] + gradeValue[timeGrade];
         int finalGrade = Mathf.FloorToInt(totalGrade / 6);
         Debug.Log(finalGrade);
+
+        // Event to display ranking
+    }
+
+    private int CheckStageBounds(LayerMask objectLayer)
+    {
+        Bounds bounds = currentStage.stageBoundary;
+
+        Collider[] overlappingObjects = Physics.OverlapBox(bounds.center, bounds.extents, currentStage.transform.rotation, objectLayer);
+        return overlappingObjects.Length;
+    }
+
+    private void OnPuzzleCompleted()
+    {
+        puzzlesCompleted++;
     }
 
     private void OnDamageTaken()
