@@ -5,7 +5,6 @@ public class Stage : MonoBehaviour
     public float bestTime;
     public int puzzleCount;
     public Bounds stageBoundary;
-    public Stage nextStage;
 
     private void Awake()
     {
@@ -17,7 +16,7 @@ public class Stage : MonoBehaviour
         // Draw wire box around area collider
         Gizmos.color = new Color(0f, 1f, 0f, 0.5f); // Green
 
-        Gizmos.DrawWireCube(transform.position, stageBoundary.extents);
+        Gizmos.DrawWireCube(transform.position, stageBoundary.size);
 
         // Draw Line from collider position to camera position
 
