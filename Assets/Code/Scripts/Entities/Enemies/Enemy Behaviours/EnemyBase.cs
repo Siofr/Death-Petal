@@ -79,28 +79,6 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         Initialise();
     }
     
-    public override void InitialiseWeaknesses()
-    {
-        base.InitialiseWeaknesses();
-
-        if (!_sequentialWeaknesses) return;
-        
-        defaultWeaknessTypes.Clear();
-        
-        if (Weaknesses.Count > 0)
-        {
-            for (int i = 0; i < Weaknesses.Count; i++)
-            {
-                defaultWeaknessTypes.Add(Weaknesses[i].WeakType);
-
-                if (i == 0) continue;
-                
-                Weaknesses[i].SetWeakType(WeakTypes.PLAYER);
-                Weaknesses[i].ToggleHitbox(false);
-            }
-        }
-    }
-    
     public void LookAtTarget()
     {
         if (target == null) return;
@@ -266,8 +244,8 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
             var random = Random.value;
             if (random <= petalDropChance) EventBus<PetalSpawnEvent>.Raise(new PetalSpawnEvent(transform.position));
         }
-
-        if (!_sequentialWeaknesses) return;
+        
+        if (!__sequentialWeaknesses) return;
         
         if (Weaknesses.Count < weaknessCount && Weaknesses.Count > 0)
         {

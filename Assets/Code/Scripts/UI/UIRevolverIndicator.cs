@@ -19,13 +19,15 @@ public class UIRevolverIndicator : MonoBehaviour
     private EventBindings<RemoveBulletEvent> _removeBulletEventListener;
     private EventBindings<AddBulletEvent> _addBulletEventListener;
     private EventBindings<RotateBarrelEvent> _rotateBarrelListener;
-
+    private EventBindings<SetChamberEvent> _setChamberEventListener;
+    
     private void Awake()
     {
         _shootEventListener = new EventBindings<ShootEvent>(ShootBullet);
         _removeBulletEventListener = new EventBindings<RemoveBulletEvent>(RemoveBullet);
         _addBulletEventListener = new EventBindings<AddBulletEvent>(AddBullet);
         _rotateBarrelListener = new EventBindings<RotateBarrelEvent>(RotateBarrel);
+        _setChamberEventListener = new EventBindings<SetChamberEvent>(OnSetChamber);
     }
 
     private void OnEnable()
@@ -34,6 +36,7 @@ public class UIRevolverIndicator : MonoBehaviour
         EventBus<RemoveBulletEvent>.Register(_removeBulletEventListener);
         EventBus<AddBulletEvent>.Register(_addBulletEventListener);
         EventBus<RotateBarrelEvent>.Register(_rotateBarrelListener);
+        EventBus<SetChamberEvent>.Register(_setChamberEventListener);
     }
 
     private void OnDisable()
@@ -42,6 +45,7 @@ public class UIRevolverIndicator : MonoBehaviour
         EventBus<RemoveBulletEvent>.Unregister(_removeBulletEventListener);
         EventBus<AddBulletEvent>.Unregister(_addBulletEventListener);
         EventBus<RotateBarrelEvent>.Unregister(_rotateBarrelListener);
+        EventBus<SetChamberEvent>.Unregister(_setChamberEventListener);
     }
 
     private void Start()
@@ -107,30 +111,31 @@ public class UIRevolverIndicator : MonoBehaviour
 
     public void ShootBullet()
     {
-        if (bulletSprites[currentBullet].enabled == false) return;
-
-        bulletSprites[currentBullet].enabled = false;
+        if (bulletSprites[currentBullet].enabled != false) bulletSprites[currentBullet].enabled = false;
 
         shootIndex++;
         // Now Reorder it
         // bulletSprites = ReorderArray(bulletSprites);
 
-        StartCoroutine(Rotate(-1, 30, 0.05f));
+        StartCoroutine(Rotate(1, 30, 0.05f));
     }
 
     public void AddBullet(AddBulletEvent ctx)
     {
-        if (bulletSprites[currentBullet].enabled) return;
+        int trapdoorChamber = currentBullet - 1;
 
-        bulletSprites[currentBullet].sprite = ctx.bulletType.bulletSprite;
-        bulletSprites[currentBullet].enabled = true;
+        if (trapdoorChamber < 0) trapdoorChamber = bulletSprites.Length - 1;
+        if (bulletSprites[trapdoorChamber].enabled) return;
+
+        bulletSprites[trapdoorChamber].sprite = ctx.bulletType.bulletSprite;
+        bulletSprites[trapdoorChamber].enabled = true;
 
         if (TEMP_ReloadTesting.Instance.manualRotate)
         {
             return;
         }
 
-        StartCoroutine(Rotate(1, 30, 0.05f));
+        StartCoroutine(Rotate(-1, 30, 0.05f));
     }
 
     public void RemoveBullet()
@@ -144,7 +149,7 @@ public class UIRevolverIndicator : MonoBehaviour
             return;
         }
 
-        StartCoroutine(Rotate(-1, 30, 0.05f));
+        StartCoroutine(Rotate(1, 30, 0.05f));
     }
 
     private Image[] CopyArray(Image[] arr)
@@ -172,5 +177,22 @@ public class UIRevolverIndicator : MonoBehaviour
 
         newArr[arr.Length - 1] = arr[0];
         return newArr;
+    }
+
+    private void OnSetChamber(SetChamberEvent ctx)
+    {
+        foreach (var img in bulletSprites) img.enabled = false;
+
+        for (int i = 0; i < ctx.bulletOrder.Length; i++)
+        {
+            var tempSlot = currentBullet + i;
+
+            if (tempSlot > 5) tempSlot = 0;
+
+            if (ctx.bulletOrder[i] == null) continue;
+            
+            bulletSprites[tempSlot].enabled = true;
+            bulletSprites[tempSlot].sprite = ctx.bulletOrder[i].bulletSprite;
+        }
     }
 }

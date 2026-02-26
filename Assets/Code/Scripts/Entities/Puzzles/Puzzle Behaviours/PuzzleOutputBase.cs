@@ -6,7 +6,6 @@ using UnityEngine;
 using FMOD.Studio;
 using FMODUnity;
 
-[RequireComponent(typeof(Animator))]
 public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable<PuzzleOutputData>
 {
     //Base Fields
@@ -32,10 +31,18 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         set => _isSolved = value;
     }
 
-    public virtual void Awake()
+    protected virtual void Awake()
     {
         _puzzleSolvedEventListener = new EventBindings<PuzzleSolvedEvent>(OnPuzzleSolved);
         _puzzleResetEventListener = new EventBindings<PuzzleResetEvent>(OnPuzzleReset);
+    }
+
+    private void Start()
+    {
+        if (_isSolved)
+        {
+            EventBus<PuzzleSolvedEvent>.Raise(new PuzzleSolvedEvent(this));
+        }
     }
 
     public void OnEnable()

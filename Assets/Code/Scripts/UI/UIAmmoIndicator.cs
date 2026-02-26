@@ -40,6 +40,9 @@ public class UIAmmoIndicator : MonoBehaviour
 
     public void AddBullet(AddBulletEvent ctx) 
     {
+        int trapdoorChamber = _currentCylinder - 1;
+        if (trapdoorChamber < 0) _currentCylinder = _cylinders.Length - 1;
+
         if (_currentCylinder >= _cylinders.Length) return;
 
         Image cylinderImage = _cylinders[_currentCylinder].GetComponent<Image>();
