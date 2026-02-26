@@ -30,8 +30,8 @@ public class BossAttackStage1State<T> : BossBaseState<T> where T : BossBase
 
     public void AttackSelector()
     {
-        int randSelection = Random.Range(0, 3);
-        if(randSelection == _previousAttackValue) randSelection = Random.Range(0, 3);
+        int randSelection = Random.Range(0, 4);
+        while(randSelection == _previousAttackValue) randSelection = Random.Range(0, 4);
 
         _previousAttackValue = randSelection;
 

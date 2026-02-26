@@ -62,7 +62,7 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
         {
             _playerPosition = _bossController.target.transform.position;
             print("shoot");
-            var newProjectile = Instantiate(projectilePrefab, transform.position, quaternion.identity, transform).GetComponent<ProjectileBase>();
+            var newProjectile = Instantiate(projectilePrefab, transform.position, quaternion.identity).GetComponent<ProjectileBase>();
             var attackVector = (_playerPosition - transform.position).normalized;
             attackVector = new Vector3(
                 attackVector.x * targetspit_shootForce.x,
@@ -78,12 +78,12 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
     {
         _bossController.isAttackReady = false;
 
-        for (int i = 0; i <= spawnBackup_amount; i++)
+        for (int i = 0; i < spawnBackup_amount; i++)
         {
             Vector3 spawnPoint = (Random.insideUnitCircle * spawnBackup_Radius);
             spawnPoint = new Vector3(
                 spawnPoint.x,
-                transform.position.y + 2f,
+                -1f,
                 spawnPoint.y);
             EventBus<SpawnEnemyEvent>.Raise(new SpawnEnemyEvent(transform.position + spawnPoint, typeof(EnemyBase), transform.parent, gameObject));
         }
@@ -121,12 +121,10 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
 
             if (dual)
             {
-                var newProjectileB = Instantiate(projectilePrefab, transform.position, quaternion.identity)
+                var newProjectileB = Instantiate(projectilePrefab, transform.position + new Vector3(0, 2.5f, 0), quaternion.identity)
                     .GetComponent<ProjectileBase>();
                 attackVector.x *= -1;
                 attackVector.z *= -1;
-                // cheap man's way to prevent the projectiles from colliding
-                attackVector.y += 3.5f;
                 
                 newProjectileB.SendProjectile(attackVector, 4, true, _bossController);
             }
