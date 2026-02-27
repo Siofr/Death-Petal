@@ -7,11 +7,13 @@ using UnityEngine.UI;
 
 public class UIRevolverIndicator : MonoBehaviour
 {
-    public Image[] bulletSprites = new Image[6];
+    public SpriteRenderer[] bulletSprites = new SpriteRenderer[6];
     private int currentBullet = 0;
     private int shootIndex;
 
     private bool _isRotating;
+    private Vector3 _startRot;
+    [SerializeField] private Canvas parentCanvas;
 
     Tween animationTween;
     public Transform barrel;
@@ -21,9 +23,11 @@ public class UIRevolverIndicator : MonoBehaviour
     private EventBindings<AddBulletEvent> _addBulletEventListener;
     private EventBindings<RotateBarrelEvent> _rotateBarrelListener;
     private EventBindings<SetChamberEvent> _setChamberEventListener;
+    //private EventBindings<CameraChangeEvent> _cameraChangeEventListener;
     
     private void Awake()
     {
+        //_cameraChangeEventListener = new EventBindings<CameraChangeEvent>(OnChangeCamera);
         _shootEventListener = new EventBindings<ShootEvent>(ShootBullet);
         _removeBulletEventListener = new EventBindings<RemoveBulletEvent>(RemoveBullet);
         _addBulletEventListener = new EventBindings<AddBulletEvent>(AddBullet);
@@ -33,6 +37,7 @@ public class UIRevolverIndicator : MonoBehaviour
 
     private void OnEnable()
     {
+        //EventBus<CameraChangeEvent>.Register(_cameraChangeEventListener);
         EventBus<ShootEvent>.Register(_shootEventListener);
         EventBus<RemoveBulletEvent>.Register(_removeBulletEventListener);
         EventBus<AddBulletEvent>.Register(_addBulletEventListener);
@@ -42,6 +47,7 @@ public class UIRevolverIndicator : MonoBehaviour
 
     private void OnDisable()
     {
+        //EventBus<CameraChangeEvent>.Unregister(_cameraChangeEventListener);
         EventBus<ShootEvent>.Unregister(_shootEventListener);
         EventBus<RemoveBulletEvent>.Unregister(_removeBulletEventListener);
         EventBus<AddBulletEvent>.Unregister(_addBulletEventListener);
@@ -51,11 +57,14 @@ public class UIRevolverIndicator : MonoBehaviour
 
     private void Start()
     {
+        
         for (int i = 0; i < transform.childCount;  i++)
         {
-            bulletSprites[i] = transform.GetChild(i).GetComponent<Image>();
+            bulletSprites[i] = transform.GetChild(i).GetComponentInChildren<SpriteRenderer>();
+            bulletSprites[i].transform.parent.GetComponent<MeshRenderer>().enabled = false;
         }
 
+        _startRot = transform.eulerAngles;
         DOTween.Init();
     }
 
@@ -87,12 +96,19 @@ public class UIRevolverIndicator : MonoBehaviour
         if ((zRot + 30) / 30 % 2 == 0) {  zRot = zRot + angle * direction; }
         else { zRot = zRot + (angle * 2) * direction; }
 
-        Vector3 rot = new Vector3(0, 0, zRot);
+        Vector3 rot = new Vector3(_startRot.x, _startRot.y, zRot);
         animationTween = transform.DORotate(rot, speed, RotateMode.FastBeyond360);
-        barrel.Rotate(new Vector3(0,0,1), zRot);
+        
         yield return animationTween.WaitForCompletion();
 
         _isRotating = false;
+    }
+    
+    private void OnChangeCamera(CameraChangeEvent ctx)
+    {
+        parentCanvas.transform.SetParent(ctx.transform);
+        parentCanvas.transform.localPosition = Vector3.zero;
+        parentCanvas.transform.localEulerAngles = Vector3.zero;
     }
 
     public void EndReload()
@@ -113,7 +129,10 @@ public class UIRevolverIndicator : MonoBehaviour
 
     public void ShootBullet()
     {
-        if (bulletSprites[currentBullet].enabled != false) bulletSprites[currentBullet].enabled = false;
+        if (bulletSprites[currentBullet].enabled != false) { 
+            bulletSprites[currentBullet].enabled = false;
+            bulletSprites[currentBullet].transform.parent.GetComponent<MeshRenderer>().enabled = false;
+        }
 
         shootIndex++;
         // Now Reorder it
@@ -131,6 +150,7 @@ public class UIRevolverIndicator : MonoBehaviour
 
         bulletSprites[trapdoorChamber].sprite = ctx.bulletType.bulletSprite;
         bulletSprites[trapdoorChamber].enabled = true;
+        bulletSprites[trapdoorChamber].transform.parent.GetComponent<MeshRenderer>().enabled = true;
 
         if (TEMP_ReloadTesting.Instance.manualRotate)
         {
@@ -145,6 +165,7 @@ public class UIRevolverIndicator : MonoBehaviour
         if (!bulletSprites[currentBullet].enabled) return;
 
         bulletSprites[currentBullet].enabled = false;
+        bulletSprites[currentBullet].transform.parent.GetComponent<MeshRenderer>().enabled = false;
 
         if (TEMP_ReloadTesting.Instance.manualRotate)
         {
