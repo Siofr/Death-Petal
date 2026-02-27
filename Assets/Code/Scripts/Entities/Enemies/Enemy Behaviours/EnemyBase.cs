@@ -42,10 +42,6 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     public Transform target;
     [Range(0, 1)] public float petalDropChance;
     
-    [Header("Enemy Sequential Fields")]
-    [SerializeField] protected bool _sequentialWeaknesses;
-    public List<WeakTypes> defaultWeaknessTypes;
-    
     //[Header("EnemyFields")]
     //Non-Serializable Fields
     protected NavMeshAgent __nmAgent;
