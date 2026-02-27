@@ -4,13 +4,13 @@ using State_Machine;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
-public class EnemyBaseState : IState
+public class EnemyBaseState<T> : IState where T: EnemyBase
 {
-    protected readonly EnemyBase enemyController;
+    protected readonly T enemyController;
     
     protected EnemyBaseState() {  }
     
-    protected EnemyBaseState(EnemyBase enemyController) => this.enemyController = enemyController;
+    protected EnemyBaseState(T enemyController) => this.enemyController = enemyController;
     
     public virtual void OnEnter()
     {

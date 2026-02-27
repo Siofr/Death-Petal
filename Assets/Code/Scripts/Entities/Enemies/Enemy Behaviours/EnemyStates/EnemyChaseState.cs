@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class EnemyChaseState : EnemyBaseState
+public class EnemyChaseState<T> : EnemyBaseState<T> where T: EnemyBase
 {
-    public EnemyChaseState(EnemyBase enemyController) : base(enemyController) { }
+    public EnemyChaseState(T enemyController) : base(enemyController) { }
     
     public override void Update()
     {
@@ -19,6 +19,5 @@ public class EnemyChaseState : EnemyBaseState
     public override void OnExit()
     {
         //enemyController.animator.SetFloat(Animator.StringToHash("Speed"),0f);
-        enemyController.StartCoroutine(LerpBlendState("Speed", 0f, 1f));
     }
 }

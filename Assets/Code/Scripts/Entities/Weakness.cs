@@ -16,6 +16,8 @@ public class Weakness : MonoBehaviour
     [SerializeField] WeakTypes _weaknessType;
     [SerializeField] private SphereCollider _collider;
     [SerializeField] private Transform _weaknessIconTransform;
+
+    [SerializeField] private Texture2D[] _weaknessTextures;
     
     //Non-Serializable
     private MeshRenderer _renderer;
@@ -31,6 +33,17 @@ public class Weakness : MonoBehaviour
     public void RemoveWeakType(WeakTypes weakType)
     {
         _weaknessType &= ~weakType;
+    }
+
+    public void SetWeakType(WeakTypes weakType)
+    {
+        _weaknessType = weakType;
+        Initialise();
+    }
+
+    public void ToggleHitbox(bool toggle)
+    {
+        _collider.enabled = toggle;
     }
     
     private void Awake()
@@ -69,8 +82,20 @@ public class Weakness : MonoBehaviour
             WeakTypes.RED | WeakTypes.GREEN => Color.yellow,
             WeakTypes.BLUE | WeakTypes.GREEN => Color.cyan,
             WeakTypes.RED | WeakTypes.BLUE | WeakTypes.GREEN => Color.white,
-            _ => Color.clear
+            WeakTypes.PLAYER => Color.clear
         };
+
+        _renderer.material.mainTexture = _weaknessType switch
+        {
+            WeakTypes.RED => _weaknessTextures[0],
+            WeakTypes.BLUE => _weaknessTextures[1],
+            WeakTypes.GREEN => _weaknessTextures[2],
+            _ => _renderer.material.GetTexture("_Texture2D")
+        };
+        
+        
+        if(WeakType == WeakTypes.PLAYER) _renderer.material.SetFloat("_Opacity", 1f);
+        else _renderer.material.SetFloat("_Opacity", .12f);
     }
     
     private void Update()

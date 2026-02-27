@@ -39,7 +39,7 @@ public class BoxDestructible : EntityBase
 
         _hasBeenShot = true;
         StartCoroutine(DisposeBox());
-
+        
         var petalSpawnChance = Random.value;
 
         if (petalSpawnChance <= _petalDropChance) EventBus<PetalSpawnEvent>.Raise(new PetalSpawnEvent(transform.position));

@@ -232,7 +232,12 @@ namespace State_Machine
 
             _ySpeed -= 9.8f * Time.deltaTime;
 
-            transform.LookAt(transform.position + lookDir.normalized);
+            var lookForward = transform.position + lookDir.normalized;
+            lookForward.y = transform.position.y;
+
+            //transform.rotation = Quaternion.Euler(lookRotation);
+
+            transform.LookAt(lookForward);
 
             dir.y = _ySpeed;
             _cc.Move(dir * currentSpeed * Time.deltaTime);
@@ -246,7 +251,10 @@ namespace State_Machine
             Vector3 dir = camForward * _aim.y + camRight * _aim.x;
             lookDir = dir;
 
-            transform.LookAt(transform.position + lookDir.normalized);
+            var lookForward = transform.position + lookDir.normalized;
+            lookForward.y = transform.position.y;
+
+            transform.LookAt(lookForward);
         }
 
         public void HandleAim()
@@ -254,7 +262,7 @@ namespace State_Machine
             RaycastHit hit;
             Weakness weakness;
 
-            if (Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit, 30))
+            if (Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit, 30,1 &~(1 << 6)))
             {
                 if (hit.transform.TryGetComponent<Weakness>(out weakness))
                 {

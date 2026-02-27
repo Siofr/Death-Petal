@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using FMODUnity;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 struct EnemyDeathEvent: IEvent
@@ -34,35 +35,39 @@ struct CorrectShotEvent : IEvent
 public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
 {
     [Header("Enemy Configuration")]
-    [SerializeField] private EnemySaveData _saveData;
+    protected EnemySaveData __saveData;
     public Animator animator;
     public EnemyConfig_SO enemyData;
     public Vector3 defaultPos;
     public Transform target;
     [Range(0, 1)] public float petalDropChance;
     
+    [Header("Enemy Sequential Fields")]
+    [SerializeField] protected bool _sequentialWeaknesses;
+    public List<WeakTypes> defaultWeaknessTypes;
+    
     //[Header("EnemyFields")]
     //Non-Serializable Fields
-    private NavMeshAgent _nmAgent;
-    private StateMachine _enemyStateMachine;
-    private Bounds _enemyAreaBounds;
+    protected NavMeshAgent __nmAgent;
+    protected StateMachine __enemyStateMachine;
+    protected Bounds _enemyAreaBounds;
     
     [NonSerialized]
     public Coroutine attackRoutine = null;
 
-    private bool _isDead;
+    protected bool _isDead;
     
     //Properties
-    public EnemySaveData SaveInfo => _saveData;
+    public EnemySaveData SaveInfo => __saveData;
     public bool IsDead => _isDead;
     
     //Events
-    private EventBindings<RoomPlayerEnterEvent> _playerRoomEnterEventListener;
-    private EventBindings<RoomPlayerExitEvent> _playerRoomExitEventListener;
+    protected EventBindings<RoomPlayerEnterEvent> __playerRoomEnterEventListener;
+    protected EventBindings<RoomPlayerExitEvent> __playerRoomExitEventListener;
 
     [Header("Audio Paths")]
     public EventReference onEnemyAttackEventPath;
-
+    
     protected override void Awake()
     {
         base.Awake();
@@ -73,52 +78,87 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     {
         Initialise();
     }
+    
+    public void LookAtTarget()
+    {
+        if (target == null) return;
+
+        var targetPos = target.position;
+        targetPos.y = transform.position.y;
+        
+        transform.LookAt(targetPos);
+    }
 
     private void Initialise()
     {
         //Field Init
-        _nmAgent = GetComponent<NavMeshAgent>();
-        _enemyStateMachine = new StateMachine();
+        __nmAgent = GetComponent<NavMeshAgent>();
+        __enemyStateMachine = new StateMachine();
 
-        _nmAgent.speed = enemyData.movementSpeed;
+        __nmAgent.speed = enemyData.movementSpeed;
 
         _enemyAreaBounds = GetComponentInParent<Room>() != null ? GetComponentInParent<Room>().Bounds : new Bounds();
+
+        var player = GameObject.FindWithTag("Player");
+
+        if (player != null)
+        {
+            var collider = player.GetComponentInChildren<Collider>();
+            
+            //print(_enemyAreaBounds);
+            
+            if (_enemyAreaBounds.Intersects(collider.bounds)) target = player.transform;
+        }
         
         //StateMachine Init
-        var idleState = new EnemyIdleState(this);
-        var chaseState = new EnemyChaseState(this);
-        var attackState = new EnemyAttackState(this);
-        var deathState = new EnemyDeathState(this);
-        
-        _enemyStateMachine.AddTransition(idleState, chaseState, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
-        _enemyStateMachine.AddTransition(chaseState, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
-        
-        _enemyStateMachine.AddTransition(chaseState, attackState, new FuncPredicate( ()=>InAttackRange() ));
-        _enemyStateMachine.AddTransition(attackState, idleState, new FuncPredicate( ()=>!InAttackRange() && attackRoutine == null));
-        
-        _enemyStateMachine.AddAnyTransition(deathState, new FuncPredicate( ()=>IsDead ) );
-        
-        _enemyStateMachine.SetState(idleState);
-        
-        //Event Init
-        _playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
-        _playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
-        
-        EventBus<RoomPlayerEnterEvent>.Register(_playerRoomEnterEventListener);
-        EventBus<RoomPlayerExitEvent>.Register(_playerRoomExitEventListener);
+        InitialiseStateMachine();
         
         Debug.Log("Enemy Initialised");
     }
 
-    private void OnDisable()
+    public void Initialise(EnemyConfig_SO config)
     {
-        EventBus<RoomPlayerEnterEvent>.Unregister(_playerRoomEnterEventListener);
-        EventBus<RoomPlayerExitEvent>.Unregister(_playerRoomExitEventListener);
+        enemyData = config;
+        Initialise();
+    }
+    
+    protected virtual void InitialiseStateMachine()
+    {
+        var idleState = new EnemyIdleState<EnemyBase>(this);
+        var chaseState = new EnemyChaseState<EnemyBase>(this);
+        var attackState = new EnemyAttackState<EnemyBase>(this);
+        var deathState = new EnemyDeathState<EnemyBase>(this);
+        
+        __enemyStateMachine.AddTransition(idleState, chaseState, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
+        __enemyStateMachine.AddTransition(chaseState, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
+        
+        __enemyStateMachine.AddTransition(chaseState, attackState, new FuncPredicate( ()=>InAttackRange() ));
+        __enemyStateMachine.AddTransition(attackState, idleState, new FuncPredicate( ()=>!InAttackRange() && attackRoutine == null));
+        
+        __enemyStateMachine.AddAnyTransition(deathState, new FuncPredicate( ()=>IsDead ) );
+        
+        __enemyStateMachine.SetState(idleState);
+
+    }
+
+    protected virtual void OnEnable()
+    {
+        __playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
+        __playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
+        
+        EventBus<RoomPlayerEnterEvent>.Register(__playerRoomEnterEventListener);
+        EventBus<RoomPlayerExitEvent>.Register(__playerRoomExitEventListener);
+    }
+
+    protected virtual void OnDisable()
+    {
+        EventBus<RoomPlayerEnterEvent>.Unregister(__playerRoomEnterEventListener);
+        EventBus<RoomPlayerExitEvent>.Unregister(__playerRoomExitEventListener);
     }
     
     private void Update()
     {
-        _enemyStateMachine.Update();
+        __enemyStateMachine.Update();
     }
     
     public bool InAttackRange()
@@ -131,10 +171,15 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     {
         return Vector3.Distance(transform.position, defaultPos) < 1f;
     }
+
+    public void StopAgent(bool stop)
+    {
+        __nmAgent.isStopped = stop;
+    }
     
     public void ClearPath()
     {
-        _nmAgent.ResetPath();
+        __nmAgent.ResetPath();
     }
     
     public void SetTarget(Transform target)
@@ -142,11 +187,11 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         
         if (target == null)
         {
-            _nmAgent.destination = defaultPos;
+            __nmAgent.destination = defaultPos;
             return;
         }
         
-        _nmAgent.destination = target.position;
+        __nmAgent.destination = target.position;
     }
     
     private void OnPlayerRoomEnter(RoomPlayerEnterEvent context)
@@ -172,9 +217,12 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     
     public override void OnShot( Weakness weakness, WeakTypes damageType)
     {
+        int weaknessCount = Weaknesses.Count;
+        
+        print("Weakness before first fail state");
         if (!Weaknesses.Contains(weakness))
             return;
-        
+        print("Weakness past first fail state");
         if(weakness.WeakType.HasFlag(damageType))
             weakness.RemoveWeakType(damageType);
         else
@@ -196,33 +244,48 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
             var random = Random.value;
             if (random <= petalDropChance) EventBus<PetalSpawnEvent>.Raise(new PetalSpawnEvent(transform.position));
         }
+        
+        if (!__sequentialWeaknesses) return;
+        
+        if (Weaknesses.Count < weaknessCount && Weaknesses.Count > 0)
+        {
+            print("WEAKNESS SHOT");
+            defaultWeaknessTypes.RemoveAt(0);
+            Weaknesses[0].ToggleHitbox(true);
+            Weaknesses[0].SetWeakType(defaultWeaknessTypes[0]);
+        }
     }
 
     public SaveData GetSaveData(LevelData levelData)
     {
-        if (_saveData == null)
+        if (__saveData == null)
         {
             var dataInstance = ScriptableObject.CreateInstance<EnemySaveData>();
             #if UNITY_EDITOR
             AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
             #endif
 
-            _saveData = dataInstance;
-            _saveData.Save(transform.position, Weaknesses);
+            __saveData = dataInstance;
+            __saveData.Save(transform.position, Weaknesses);
         }
         
-        return _saveData;
+        return __saveData;
     }
 
     public void LoadSaveData(SaveData levelData)
     {
-        _saveData = (EnemySaveData)levelData;
+        __saveData = (EnemySaveData)levelData;
         
-        _saveData.Load(transform, Weaknesses);
+        __saveData.Load(transform, Weaknesses);
     }
 
     public void SaveData()
     {
-        _saveData.Save(transform.position, Weaknesses);
+        __saveData.Save(transform.position, Weaknesses);
+    }
+
+    public virtual void StopAllStateRoutines()
+    {
+        StopAllCoroutines();
     }
 }

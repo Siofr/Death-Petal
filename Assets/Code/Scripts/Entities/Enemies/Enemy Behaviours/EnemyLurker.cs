@@ -1,0 +1,80 @@
+using State_Machine;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class EnemyLurker : EnemyBase
+{
+    //Non-Serialized Fields
+    private bool _isTargeted;
+    
+    //Event Fields
+    private EventBindings<ActiveTargetEvent> _onTargetedListener;
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+        _onTargetedListener = new EventBindings<ActiveTargetEvent>(CheckIfTargeted);
+        EventBus<ActiveTargetEvent>.Register(_onTargetedListener);
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        
+        EventBus<ActiveTargetEvent>.Unregister(_onTargetedListener);
+    }
+
+    protected override void InitialiseStateMachine()
+    {
+        var idleState = new EnemyIdleState<EnemyBase>(this);
+        var chaseState = new EnemyChaseState<EnemyBase>(this);
+        var attackState = new EnemyAttackState<EnemyBase>(this);
+        var deathState = new EnemyDeathState<EnemyBase>(this);
+        var freezeState = new EnemyLurkerFreezeState(this);
+        
+        __enemyStateMachine.AddTransition(idleState, chaseState, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
+        __enemyStateMachine.AddTransition(chaseState, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
+        
+        __enemyStateMachine.AddTransition(chaseState, attackState, new FuncPredicate( ()=>InAttackRange() ));
+        __enemyStateMachine.AddTransition(attackState, idleState, new FuncPredicate( ()=>!InAttackRange() && attackRoutine == null));
+        
+        __enemyStateMachine.AddAnyTransition(deathState, new FuncPredicate( ()=>IsDead ) );
+        
+        __enemyStateMachine.AddTransition(chaseState, freezeState, new FuncPredicate(()=> _isTargeted));
+        __enemyStateMachine.AddTransition(freezeState, chaseState, new FuncPredicate(()=> !_isTargeted));
+        
+        __enemyStateMachine.SetState(idleState);
+    }
+    
+    public void CheckIfTargeted(ActiveTargetEvent context)
+    {
+        if (context.activeTarget == null)
+        {
+            _isTargeted = false;
+            return;
+        } 
+        
+        if(!Weaknesses.Contains(context.activeTarget.GetComponent<Weakness>()))
+        {
+            _isTargeted = false;
+            return;
+        }
+
+        _isTargeted = true;
+    }
+    
+    public void ToggleFreeze(bool toggle)
+    {
+        StopAgent(toggle);
+        animator.speed = toggle ? 0f : 1f;
+    }
+    
+    // public override void OnShot(Weakness weakness, WeakTypes damageType)
+    // {
+    //     base.OnShot(weakness, damageType);
+    //     
+    //     //TO REMOVE JUST FOR TESTING
+    //     if(Weaknesses.Count < 1) Destroy(gameObject);
+    // }
+}
