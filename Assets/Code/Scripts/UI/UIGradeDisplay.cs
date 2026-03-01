@@ -5,9 +5,6 @@ public class UIGradeDisplay : MonoBehaviour
 {
     public TMP_Text finalGrade;
     public TMP_Text enemyGrade;
-    public TMP_Text puzzleGrade;
-    public TMP_Text urnGrade;
-    public TMP_Text petalGrade;
     public TMP_Text timeGrade;
 
     EventBindings<DisplayEndUI> displayEndUIEventListener;
@@ -31,9 +28,6 @@ public class UIGradeDisplay : MonoBehaviour
     {
         EditText(finalGrade, ctx.finalGrade);
         EditText(enemyGrade, ctx.enemyGrade);
-        EditText(puzzleGrade, ctx.puzzleGrade);
-        EditText(urnGrade, ctx.urnGrade);
-        EditText(petalGrade, ctx.petalGrade);
         EditText(timeGrade, ctx.timeGrade);
     }
 

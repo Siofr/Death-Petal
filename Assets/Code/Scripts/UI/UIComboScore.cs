@@ -34,29 +34,25 @@ public class UIComboScore : MonoBehaviour
     public TMP_Text scoreText;
     public TMP_Text multiplierText;
 
-    public Transform scrollContainer;
-    private int currentScoreChangeIndex = 1;
-    private int currentTransformChangeIndex;
-    private float lastPosition;
-    private List<TMP_Text> scoreTextList = new List<TMP_Text>();
-    private List<Transform> transformList = new List<Transform>();
+    public Transform scoreContainer;
+    public Transform animationTarget;
 
-    private Tween animationTween;
-    private Sequence sequence;
-    private float animMoveDistance;
+    private Sequence animationSequence;
     private bool isMoving;
+    private Transform scoreTransform;
+    private Vector3 startPosition;
+    private TMP_Text tmpText;
+    private Queue<IEnumerator> scoreQueue = new Queue<IEnumerator>();
 
     void Start()
     {
-        foreach(Transform item in scrollContainer)
-        {
-            scoreTextList.Add(item.GetComponentInChildren<TMP_Text>());
-            transformList.Add(item);
-        }
+        scoreTransform = scoreContainer.transform;
+        tmpText = scoreContainer.GetComponentInChildren<TMP_Text>();
+        startPosition = scoreTransform.position;
 
-        currentScoreChangeIndex = scoreTextList.Count - 1;
-        lastPosition = (scrollContainer.GetComponent<RectTransform>().sizeDelta.y - 25) * -1;
         DOTween.Init();
+
+        StartCoroutine(CoroutineQueue());
     }
 
     void Awake()
@@ -82,9 +78,7 @@ public class UIComboScore : MonoBehaviour
 
     void OnScoreChange(ChangeScoreEvent ctx)
     {
-        scoreTextList[currentScoreChangeIndex].text = string.Format("{0:0}", ctx.score);
-
-        TransformAnimation();
+        scoreQueue.Enqueue(ScoreTween(ctx.score));
     }
 
     void OnScoreUpdate(UpdateScoreEvent ctx)
@@ -99,58 +93,38 @@ public class UIComboScore : MonoBehaviour
 
     void TransformAnimation()
     {
-        StartCoroutine(NewTransform());
     }
 
-    IEnumerator TransformOperation()
+    IEnumerator CoroutineQueue()
     {
-        if (isMoving) yield return animationTween.WaitForCompletion();
-
-        // sequence = DOTween.Sequence();
-
-        animationTween = scrollContainer.DOMoveY(scrollContainer.transform.position.y + 50, 0.05f);
-
-        yield return animationTween.WaitForCompletion();
-
-        currentScoreChangeIndex--;
-        if (currentScoreChangeIndex < 0) currentScoreChangeIndex = scoreTextList.Count - 1;
-
-        // RectTransform currentTransform = scrollContainer.GetChild(currentTransformChangeIndex).GetComponent<RectTransform>();
-        // currentTransform.localPosition = new Vector3(currentTransform.localPosition.x, lastPosition, currentTransform.localPosition.z);
-
-        currentTransformChangeIndex++;
-        if (currentTransformChangeIndex > scoreTextList.Count - 1) currentTransformChangeIndex = 0;
-
-        isMoving = false;
-    }
-
-    IEnumerator NewTransform()
-    {
-        if (isMoving) yield return animationTween.WaitForCompletion();
-
-        // sequence = DOTween.Sequence();
-
-        // animationTween = scrollContainer.DOMoveY(scrollContainer.transform.position.y + 50, 0.05f);
-
-        sequence = DOTween.Sequence();
-
-        yield return sequence.WaitForCompletion();
-
-        currentScoreChangeIndex--;
-        if (currentScoreChangeIndex < 0) currentScoreChangeIndex = scoreTextList.Count - 1;
-
-        RectTransform currentTransform = scrollContainer.GetChild(currentTransformChangeIndex).GetComponent<RectTransform>();
-        currentTransform.localPosition = new Vector3(currentTransform.localPosition.x, lastPosition, currentTransform.localPosition.z);
-
-        for (int i = 0; i < transformList.Count; i++)
+        while (true)
         {
-            sequence.Join(transformList[i].DOMoveY(transformList[i].position.y + 50, 0.05f));
+            while (scoreQueue.Count > 0)
+            {
+                yield return StartCoroutine(scoreQueue.Dequeue());
+            }
+
+            yield return null;
         }
+    }
 
-        sequence.Play();
+    IEnumerator ScoreTween(float score)
+    {
+        if (isMoving) yield return animationSequence.WaitForCompletion();
 
-        currentTransformChangeIndex++;
-        if (currentTransformChangeIndex > scoreTextList.Count - 1) currentTransformChangeIndex = 0;
+        isMoving = true;
+
+        tmpText.text = string.Format("{0:0}", score);
+
+        animationSequence = DOTween.Sequence();
+
+        animationSequence
+            .Append(scoreTransform.DOMoveX(animationTarget.position.x, 0.25f))
+            .Append(scoreTransform.DOMoveY(scoreTransform.position.y + 100, 0.25f));
+
+        yield return animationSequence.WaitForCompletion();
+
+        scoreTransform.position = startPosition;
 
         isMoving = false;
     }

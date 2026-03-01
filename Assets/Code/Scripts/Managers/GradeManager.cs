@@ -22,22 +22,12 @@ public struct DisplayEndUI : IEvent
 {
     public string finalGrade;
     public string enemyGrade;
-    public string urnGrade;
-    public string puzzleGrade;
-    public string petalGrade;
-    public string reflectionGrade;
-    public string damageGrade;
     public string timeGrade;
 
-    public DisplayEndUI(string finalGrade, string enemyGrade, string urnGrade, string puzzleGrade, string petalGrade, string reflectionGrade, string damageGrade, string timeGrade)
+    public DisplayEndUI(string finalGrade, string enemyGrade, string timeGrade)
     {
         this.finalGrade = finalGrade;
         this.enemyGrade = enemyGrade;
-        this.urnGrade = urnGrade;
-        this.puzzleGrade = puzzleGrade;
-        this.petalGrade = petalGrade;
-        this.reflectionGrade = reflectionGrade;
-        this.damageGrade = damageGrade;
         this.timeGrade = timeGrade;
     }
 }
@@ -55,32 +45,9 @@ public class GradeManager : MonoBehaviour
     private float finalTime;
     private string timeGrade;
 
-    // Damage Variables
-    EventBindings<PlayerDamagedEvent> _playerDamagedEventListener;
-    private int damageTaken;
-    private string damageGrade;
-
     // Enemy Variables
     private int enemyCount;
     private string enemyGrade;
-
-    // Soul Urns Variables
-    private int urnCount;
-    private string urnGrade;
-
-    // Petal Variables
-    private int petalsRemaining;
-    private string petalGrade;
-
-    // Puzzle Variables
-    private int puzzlesCompleted;
-    private int puzzleCount;
-    private string puzzleGrade;
-
-    // Bullets Reflected
-    EventBindings<WrongShotEvent> _wrongShotEventListener;
-    private int bulletReflections;
-    private string reflectionGrade;
 
     private List<string> grades = new List<string>();
     private string totalLetterGrade;
@@ -108,24 +75,18 @@ public class GradeManager : MonoBehaviour
 
     private void Awake()
     {
-        _playerDamagedEventListener = new EventBindings<PlayerDamagedEvent>(OnDamageTaken);
-        _wrongShotEventListener = new EventBindings<WrongShotEvent>(OnReflection);
         _levelEndEventListener = new EventBindings<OnLevelEndEvent>(OnLevelEnd);
         _levelStartEventListener = new EventBindings<OnLevelStartEvent>(OnLevelStart);
     }
 
     private void OnEnable()
     {
-        EventBus<PlayerDamagedEvent>.Register(_playerDamagedEventListener);
-        EventBus<WrongShotEvent>.Register(_wrongShotEventListener);
         EventBus<OnLevelEndEvent>.Register(_levelEndEventListener);
         EventBus<OnLevelStartEvent>.Register(_levelStartEventListener);
     }
 
     private void OnDisable()
     {
-        EventBus<PlayerDamagedEvent>.Unregister(_playerDamagedEventListener);
-        EventBus<WrongShotEvent>.Unregister(_wrongShotEventListener);
         EventBus<OnLevelEndEvent>.Unregister(_levelEndEventListener);
         EventBus<OnLevelStartEvent>.Unregister(_levelStartEventListener);
     }
@@ -140,47 +101,17 @@ public class GradeManager : MonoBehaviour
         // Reset Values for next stage
 
         currentTime = 0;
-        bulletReflections = 0;
-        damageTaken = 0;
         grades.Clear();
 
         currentStage = ctx.stage;
 
         enemyCount = CheckStageBounds(LayerMask.GetMask("Enemy"));
-        urnCount = CheckStageBounds(LayerMask.GetMask("Urn"));
-        puzzleCount = currentStage.puzzleCount;
     }
 
     private void OnLevelEnd(OnLevelEndEvent ctx)
     {
         // Get Final Time
         finalTime = currentTime;
-
-        // Damage Grade
-        for (int i = 0; i < gradeObjects.Length; i++)
-        {
-            if (damageTaken <= gradeObjects[i].damageTaken)
-            {
-                damageGrade = gradeObjects[i].letterGrade;
-                break;
-            }
-            damageGrade = "D";
-        }
-
-        grades.Add(damageGrade);
-
-        // Bullets Reflected Grade
-        for (int i = 0; i < gradeObjects.Length; i++)
-        {
-            if (bulletReflections <= gradeObjects[i].bulletsReflected)
-            {
-                reflectionGrade = gradeObjects[i].letterGrade;
-                break;
-            }
-            reflectionGrade = "D";
-        }
-
-        grades.Add(reflectionGrade);
 
         // Time Grade
         float bestTime = currentStage.bestTime;
@@ -211,58 +142,12 @@ public class GradeManager : MonoBehaviour
 
         grades.Add(enemyGrade);
 
-        // Petals Remaining Grade
-        int petalsRemaining = CheckStageBounds(LayerMask.GetMask("Petal"));
-
-        for (int i = 0; i < gradeObjects.Length; i++)
-        {
-            if (petalsRemaining <= gradeObjects[i].petalsRemaining)
-            {
-                petalGrade = gradeObjects[i].letterGrade;
-                break;
-            }
-            petalGrade = "D";
-        }
-
-        grades.Add(petalGrade);
-
-        // Puzzle Grade
-        if (puzzleCount <= 0)
-        {
-            puzzleGrade = "N/A";
-        }
-        else
-        {
-            GetPuzzleGrade();
-        }
-
-        grades.Add(puzzleGrade);
-
-        // Urn Grade
-        int urnsRemaining = CheckStageBounds(LayerMask.GetMask("Urn"));
-
-        if (urnCount <= 0)
-        {
-            urnGrade = "N/A";
-        }
-        else
-        {
-            urnGrade = GetUrnGrade(urnsRemaining);
-        }
-
-        grades.Add(urnGrade);
-
         totalLetterGrade = GetGradeAverage();
 
         // Event to display ranking
         EventBus<DisplayEndUI>.Raise(new DisplayEndUI(
             totalLetterGrade,
             enemyGrade,
-            urnGrade,
-            puzzleGrade,
-            petalGrade,
-            reflectionGrade,
-            damageGrade,
             timeGrade
             ));
     }
@@ -305,45 +190,5 @@ public class GradeManager : MonoBehaviour
         }
 
         return "D";
-    }
-
-    private string GetPuzzleGrade()
-    {
-        for (int i = 0; i < gradeObjects.Length; i++)
-        {
-            if (puzzleCount - puzzlesCompleted <= gradeObjects[i].petalsRemaining)
-            {
-                return gradeObjects[i].letterGrade;
-            }
-        }
-
-        return "D";
-    }
-
-    private string GetUrnGrade(int urnsRemaining)
-    {
-        for (int i = 0; i < gradeObjects.Length; i++)
-        {
-            if (urnsRemaining <= gradeObjects[i].urnsBroken)
-            {
-                return gradeObjects[i].letterGrade;
-            }
-        }
-        return "D";
-    }
-
-    private void OnPuzzleCompleted()
-    {
-        puzzlesCompleted++;
-    }
-
-    private void OnDamageTaken()
-    {
-        damageTaken++;
-    }
-
-    private void OnReflection()
-    {
-        bulletReflections++;
     }
 }

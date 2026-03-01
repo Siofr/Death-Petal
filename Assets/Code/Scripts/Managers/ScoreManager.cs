@@ -65,6 +65,7 @@ public class ScoreManager : MonoBehaviour
     void OnComboWipe()
     {
         scoreMultiplier = 1.0f;
+        currentScoreThreshold = 0;
         EventBus<UpdateComboMultEvent>.Raise(new UpdateComboMultEvent(scoreMultiplier));
     }
 }
