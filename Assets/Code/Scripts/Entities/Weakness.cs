@@ -45,6 +45,14 @@ public class Weakness : MonoBehaviour
     {
         _collider.enabled = toggle;
     }
+
+    public void ToggleIcon(bool toggle)
+    {
+        if (_renderer == null) return;
+        
+        var value = toggle ? .12f : 1f;
+        _renderer.material.SetFloat("_Opacity", value);
+    }
     
     private void Awake()
     {
