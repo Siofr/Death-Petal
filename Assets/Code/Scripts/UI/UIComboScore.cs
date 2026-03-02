@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Collections;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.SocialPlatforms.Impl;
+using System.Linq;
 
 struct UpdateComboMultEvent : IEvent
 {
@@ -38,21 +40,27 @@ public class UIComboScore : MonoBehaviour
     public Transform animationTarget;
 
     private Sequence animationSequence;
-    private bool isMoving;
-    private Transform scoreTransform;
-    private Vector3 startPosition;
-    private TMP_Text tmpText;
-    private Queue<IEnumerator> scoreQueue = new Queue<IEnumerator>();
+
+    // New Animation Variables
+    public Transform scoreContainers;
+    private int currentIndex;
+    private Dictionary<Transform, TMP_Text> dict = new Dictionary<Transform, TMP_Text>();
+    public CanvasGroup canvasGroup;
+    private float fadeMultiplier;
+    private Vector3 startPos;
 
     void Start()
     {
-        scoreTransform = scoreContainer.transform;
-        tmpText = scoreContainer.GetComponentInChildren<TMP_Text>();
-        startPosition = scoreTransform.position;
-
         DOTween.Init();
 
-        StartCoroutine(CoroutineQueue());
+        canvasGroup.alpha = 0f;
+
+        foreach (Transform item in scoreContainers)
+        {
+            dict.Add(item, item.GetComponentInChildren<TMP_Text>());
+        }
+
+        startPos = scoreContainer.GetChild(0).position;
     }
 
     void Awake()
@@ -76,9 +84,20 @@ public class UIComboScore : MonoBehaviour
         EventBus<ChangeScoreEvent>.Unregister(_changeScoreEventListener);
     }
 
+    private void Update()
+    {
+        fadeMultiplier += Time.deltaTime / 60;
+        canvasGroup.alpha = canvasGroup.alpha - 0.05f * fadeMultiplier;
+    }
+
     void OnScoreChange(ChangeScoreEvent ctx)
     {
-        scoreQueue.Enqueue(ScoreTween(ctx.score));
+        if (canvasGroup.alpha <= 0) ResetPosition();
+
+        canvasGroup.alpha = 1.0f;
+        fadeMultiplier = 0;
+        StartCoroutine(NewAnimation(currentIndex, ctx.text));
+        currentIndex = Mathf.Clamp(currentIndex + 1, 0, dict.Count - 1);
     }
 
     void OnScoreUpdate(UpdateScoreEvent ctx)
@@ -91,41 +110,34 @@ public class UIComboScore : MonoBehaviour
         multiplierText.text = string.Format("{0:0.0}", ctx.multiplier);
     }
 
-    void TransformAnimation()
+    IEnumerator NewAnimation(int currentIndex, string text)
     {
-    }
+        Transform newTransform = dict.ElementAt(currentIndex).Key;
 
-    IEnumerator CoroutineQueue()
-    {
-        while (true)
+        if (currentIndex != dict.Count - 1)
         {
-            while (scoreQueue.Count > 0)
-            {
-                yield return StartCoroutine(scoreQueue.Dequeue());
-            }
-
-            yield return null;
+            dict[newTransform].text = string.Format("<allcaps>{0}</allcaps>", text);
         }
-    }
-
-    IEnumerator ScoreTween(float score)
-    {
-        if (isMoving) yield return animationSequence.WaitForCompletion();
-
-        isMoving = true;
-
-        tmpText.text = string.Format("{0:0}", score);
 
         animationSequence = DOTween.Sequence();
 
         animationSequence
-            .Append(scoreTransform.DOMoveX(animationTarget.position.x, 0.25f))
-            .Append(scoreTransform.DOMoveY(scoreTransform.position.y + 100, 0.25f));
+            .Append(newTransform.DOMoveX(animationTarget.position.x, 0.25f));
 
-        yield return animationSequence.WaitForCompletion();
+        yield return null;
+    }
 
-        scoreTransform.position = startPosition;
+    private void ResetPosition()
+    {
+        currentIndex = 0;
 
-        isMoving = false;
+        foreach(var item in dict)
+        {
+            item.Key.position = new Vector3(
+                startPos.x,
+                item.Key.position.y,
+                item.Key.position.z
+                );
+        }
     }
 }

@@ -3,11 +3,13 @@ using UnityEngine;
 
 public struct ChangeScoreEvent : IEvent
 {
+    public string text;
     public float score;
 
-    public ChangeScoreEvent(float score)
+    public ChangeScoreEvent(string text, float score)
     {
         this.score = score;
+        this.text = text;
     }
 }
 
