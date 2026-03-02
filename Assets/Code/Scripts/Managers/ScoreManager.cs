@@ -3,11 +3,13 @@ using UnityEngine;
 
 public struct ChangeScoreEvent : IEvent
 {
+    public string text;
     public float score;
 
-    public ChangeScoreEvent(float score)
+    public ChangeScoreEvent(string text, float score)
     {
         this.score = score;
+        this.text = text;
     }
 }
 
@@ -65,6 +67,7 @@ public class ScoreManager : MonoBehaviour
     void OnComboWipe()
     {
         scoreMultiplier = 1.0f;
+        currentScoreThreshold = 0;
         EventBus<UpdateComboMultEvent>.Raise(new UpdateComboMultEvent(scoreMultiplier));
     }
 }

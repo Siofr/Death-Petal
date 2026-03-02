@@ -164,7 +164,7 @@ public class PlayerGun : MonoBehaviour
 
     public void RotateBarrel(int direction)
     {
-        EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent(100));
+        EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Rotate", 100));
         currentChamber += direction;
 
         if (currentChamber > bulletArray.Length - 1) currentChamber = 0;

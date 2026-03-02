@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Text;
 
 public struct OnLevelEndEvent : IEvent
 {
@@ -9,7 +10,26 @@ public struct OnLevelEndEvent : IEvent
 
 public struct OnLevelStartEvent : IEvent
 {
+    public Stage stage;
 
+    public OnLevelStartEvent(Stage stage)
+    {
+        this.stage = stage;
+    }
+}
+
+public struct DisplayEndUI : IEvent
+{
+    public string finalGrade;
+    public string enemyGrade;
+    public string timeGrade;
+
+    public DisplayEndUI(string finalGrade, string enemyGrade, string timeGrade)
+    {
+        this.finalGrade = finalGrade;
+        this.enemyGrade = enemyGrade;
+        this.timeGrade = timeGrade;
+    }
 }
 
 public class GradeManager : MonoBehaviour
@@ -18,35 +38,18 @@ public class GradeManager : MonoBehaviour
     EventBindings<OnLevelStartEvent> _levelStartEventListener;
 
     public GradeSO[] gradeObjects;
+    private Stage currentStage;
 
     // Time Variables
-    private float bestTime;
     private float currentTime;
     private float finalTime;
     private string timeGrade;
 
-    // Damage Variables
-    EventBindings<PlayerDamagedEvent> _playerDamagedEventListener;
-    private int damageTaken;
-    private string damageGrade;
-
     // Enemy Variables
-    private int enemiesRemaining;
+    private int enemyCount;
     private string enemyGrade;
 
-    // Soul Urns Variables
-    private int urnsRemaining;
-    private string urnGrade;
-
-    // Petal Variables
-    private int petalsRemaining;
-    private string petalGrade;
-
-    // Bullets Reflected
-    EventBindings<WrongShotEvent> _wrongShotEventListener;
-    private int bulletReflections;
-    private string reflectionGrade;
-
+    private List<string> grades = new List<string>();
     private string totalLetterGrade;
 
     // Grade Numerical Value
@@ -60,26 +63,30 @@ public class GradeManager : MonoBehaviour
         {"N/A", 0 },
     };
 
+    private Dictionary<int, string> gradeReturn = new Dictionary<int, string>
+    {
+        {1, "S" },
+        {2, "A"},
+        {3, "B"},
+        {4, "C"},
+        {5, "D"},
+        {0, "N/A"},
+    };
+
     private void Awake()
     {
-        _playerDamagedEventListener = new EventBindings<PlayerDamagedEvent>(OnDamageTaken);
-        _wrongShotEventListener = new EventBindings<WrongShotEvent>(OnReflection);
         _levelEndEventListener = new EventBindings<OnLevelEndEvent>(OnLevelEnd);
         _levelStartEventListener = new EventBindings<OnLevelStartEvent>(OnLevelStart);
     }
 
     private void OnEnable()
     {
-        EventBus<PlayerDamagedEvent>.Register(_playerDamagedEventListener);
-        EventBus<WrongShotEvent>.Register(_wrongShotEventListener);
         EventBus<OnLevelEndEvent>.Register(_levelEndEventListener);
         EventBus<OnLevelStartEvent>.Register(_levelStartEventListener);
     }
 
     private void OnDisable()
     {
-        EventBus<PlayerDamagedEvent>.Unregister(_playerDamagedEventListener);
-        EventBus<WrongShotEvent>.Unregister(_wrongShotEventListener);
         EventBus<OnLevelEndEvent>.Unregister(_levelEndEventListener);
         EventBus<OnLevelStartEvent>.Unregister(_levelStartEventListener);
     }
@@ -89,48 +96,26 @@ public class GradeManager : MonoBehaviour
         currentTime += Time.deltaTime;
     }
 
-    private void OnLevelStart()
+    private void OnLevelStart(OnLevelStartEvent ctx)
     {
+        // Reset Values for next stage
+
         currentTime = 0;
+        grades.Clear();
+
+        currentStage = ctx.stage;
+
+        enemyCount = CheckStageBounds(LayerMask.GetMask("Enemy"));
     }
 
-    private void OnLevelEnd()
+    private void OnLevelEnd(OnLevelEndEvent ctx)
     {
         // Get Final Time
         finalTime = currentTime;
 
-        // Find how many enemies remain in level
-        enemiesRemaining = GameObject.FindGameObjectsWithTag("Enemy").Length;
-
-        // Find how many petals remain in level
-        petalsRemaining = GameObject.FindGameObjectsWithTag("Petal").Length;
-
-        // Find how many "urns" are remaining
-        urnsRemaining = GameObject.FindGameObjectsWithTag("Urn").Length;
-
-        // Damage Grade
-        for (int i = 0; i < gradeObjects.Length; i++)
-        {
-            if (damageTaken <= gradeObjects[i].damageTaken)
-            {
-                damageGrade = gradeObjects[i].letterGrade;
-                break;
-            }
-            damageGrade = "D";
-        }
-
-        // Bullets Reflected Grade
-        for (int i = 0; i < gradeObjects.Length; i++)
-        {
-            if (bulletReflections <= gradeObjects[i].bulletsReflected)
-            {
-                reflectionGrade = gradeObjects[i].letterGrade;
-                break;
-            }
-            reflectionGrade = "D";
-        }
-
         // Time Grade
+        float bestTime = currentStage.bestTime;
+
         for (int i = 0; i < gradeObjects.Length; i++)
         {
             if (finalTime <= bestTime + gradeObjects[i].timeTaken * 60)
@@ -141,51 +126,69 @@ public class GradeManager : MonoBehaviour
             timeGrade = "D";
         }
 
+        grades.Add(timeGrade);
+
         // Enemies Remaining Grade
+        int enemiesRemaining = CheckStageBounds(LayerMask.GetMask("Enemy"));
+
+        if (enemyCount <= 0)
+        {
+            enemyGrade = "N/A";
+        }
+        else
+        {
+            enemyGrade = GetEnemyGrade(enemiesRemaining);
+        }
+
+        grades.Add(enemyGrade);
+
+        totalLetterGrade = GetGradeAverage();
+
+        // Event to display ranking
+        EventBus<DisplayEndUI>.Raise(new DisplayEndUI(
+            totalLetterGrade,
+            enemyGrade,
+            timeGrade
+            ));
+    }
+
+    private int CheckStageBounds(LayerMask objectLayer)
+    {
+        Bounds bounds = currentStage.stageBoundary;
+
+        Collider[] overlappingObjects = Physics.OverlapBox(bounds.center, bounds.size, currentStage.transform.rotation, objectLayer);
+        return overlappingObjects.Length;
+    }
+
+    private string GetGradeAverage()
+    {
+        int gradeSum = 0;
+        int gradeCount = 0;
+
+        for (int i = 0; i < grades.Count - 1; i++)
+        {
+            if (gradeValue[grades[i]] != 0)
+            {
+                gradeSum += gradeValue[grades[i]];
+                gradeCount++;
+            }
+        }
+
+        int finalGrade = Mathf.FloorToInt(gradeSum / gradeCount);
+
+        return gradeReturn[finalGrade];
+    }
+
+    private string GetEnemyGrade(int enemiesRemaining)
+    {
         for (int i = 0; i < gradeObjects.Length; i++)
         {
             if (enemiesRemaining <= gradeObjects[i].enemiesKilled)
             {
-                enemyGrade = gradeObjects[i].letterGrade;
-                break;
+                return gradeObjects[i].letterGrade;
             }
-            enemyGrade = "D";
         }
 
-        // Petals Remaining Grade
-        for (int i = 0; i < gradeObjects.Length; i++)
-        {
-            if (petalsRemaining <= gradeObjects[i].petalsRemaining)
-            {
-                petalGrade = gradeObjects[i].letterGrade;
-                break;
-            }
-            petalGrade = "D";
-        }
-
-        // Urn Grade
-        for (int i = 0; i < gradeObjects.Length; i++)
-        {
-            if (urnsRemaining <= gradeObjects[i].urnsBroken)
-            {
-                urnGrade = gradeObjects[i].letterGrade;
-                break;
-            }
-            urnGrade = "D";
-        }
-
-        int totalGrade = gradeValue[petalGrade] + gradeValue[urnGrade] + gradeValue[enemyGrade] + gradeValue[damageGrade] + gradeValue[reflectionGrade] + gradeValue[timeGrade];
-        int finalGrade = Mathf.FloorToInt(totalGrade / 6);
-        Debug.Log(finalGrade);
-    }
-
-    private void OnDamageTaken()
-    {
-        damageTaken++;
-    }
-
-    private void OnReflection()
-    {
-        bulletReflections++;
+        return "D";
     }
 }

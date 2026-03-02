@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Collections;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.SocialPlatforms.Impl;
+using System.Linq;
 
 struct UpdateComboMultEvent : IEvent
 {
@@ -34,29 +36,31 @@ public class UIComboScore : MonoBehaviour
     public TMP_Text scoreText;
     public TMP_Text multiplierText;
 
-    public Transform scrollContainer;
-    private int currentScoreChangeIndex = 1;
-    private int currentTransformChangeIndex;
-    private float lastPosition;
-    private List<TMP_Text> scoreTextList = new List<TMP_Text>();
-    private List<Transform> transformList = new List<Transform>();
+    public Transform scoreContainer;
+    public Transform animationTarget;
 
-    private Tween animationTween;
-    private Sequence sequence;
-    private float animMoveDistance;
-    private bool isMoving;
+    private Sequence animationSequence;
+
+    // New Animation Variables
+    public Transform scoreContainers;
+    private int currentIndex;
+    private Dictionary<Transform, TMP_Text> dict = new Dictionary<Transform, TMP_Text>();
+    public CanvasGroup canvasGroup;
+    private float fadeMultiplier;
+    private Vector3 startPos;
 
     void Start()
     {
-        foreach(Transform item in scrollContainer)
+        DOTween.Init();
+
+        canvasGroup.alpha = 0f;
+
+        foreach (Transform item in scoreContainers)
         {
-            scoreTextList.Add(item.GetComponentInChildren<TMP_Text>());
-            transformList.Add(item);
+            dict.Add(item, item.GetComponentInChildren<TMP_Text>());
         }
 
-        currentScoreChangeIndex = scoreTextList.Count - 1;
-        lastPosition = (scrollContainer.GetComponent<RectTransform>().sizeDelta.y - 25) * -1;
-        DOTween.Init();
+        startPos = scoreContainer.GetChild(0).position;
     }
 
     void Awake()
@@ -80,11 +84,20 @@ public class UIComboScore : MonoBehaviour
         EventBus<ChangeScoreEvent>.Unregister(_changeScoreEventListener);
     }
 
+    private void Update()
+    {
+        fadeMultiplier += Time.deltaTime / 60;
+        canvasGroup.alpha = canvasGroup.alpha - 0.05f * fadeMultiplier;
+    }
+
     void OnScoreChange(ChangeScoreEvent ctx)
     {
-        scoreTextList[currentScoreChangeIndex].text = string.Format("{0:0}", ctx.score);
+        if (canvasGroup.alpha <= 0) ResetPosition();
 
-        TransformAnimation();
+        canvasGroup.alpha = 1.0f;
+        fadeMultiplier = 0;
+        StartCoroutine(NewAnimation(currentIndex, ctx.text));
+        currentIndex = Mathf.Clamp(currentIndex + 1, 0, dict.Count - 1);
     }
 
     void OnScoreUpdate(UpdateScoreEvent ctx)
@@ -97,61 +110,34 @@ public class UIComboScore : MonoBehaviour
         multiplierText.text = string.Format("{0:0.0}", ctx.multiplier);
     }
 
-    void TransformAnimation()
+    IEnumerator NewAnimation(int currentIndex, string text)
     {
-        StartCoroutine(NewTransform());
-    }
+        Transform newTransform = dict.ElementAt(currentIndex).Key;
 
-    IEnumerator TransformOperation()
-    {
-        if (isMoving) yield return animationTween.WaitForCompletion();
-
-        // sequence = DOTween.Sequence();
-
-        animationTween = scrollContainer.DOMoveY(scrollContainer.transform.position.y + 50, 0.05f);
-
-        yield return animationTween.WaitForCompletion();
-
-        currentScoreChangeIndex--;
-        if (currentScoreChangeIndex < 0) currentScoreChangeIndex = scoreTextList.Count - 1;
-
-        // RectTransform currentTransform = scrollContainer.GetChild(currentTransformChangeIndex).GetComponent<RectTransform>();
-        // currentTransform.localPosition = new Vector3(currentTransform.localPosition.x, lastPosition, currentTransform.localPosition.z);
-
-        currentTransformChangeIndex++;
-        if (currentTransformChangeIndex > scoreTextList.Count - 1) currentTransformChangeIndex = 0;
-
-        isMoving = false;
-    }
-
-    IEnumerator NewTransform()
-    {
-        if (isMoving) yield return animationTween.WaitForCompletion();
-
-        // sequence = DOTween.Sequence();
-
-        // animationTween = scrollContainer.DOMoveY(scrollContainer.transform.position.y + 50, 0.05f);
-
-        sequence = DOTween.Sequence();
-
-        yield return sequence.WaitForCompletion();
-
-        currentScoreChangeIndex--;
-        if (currentScoreChangeIndex < 0) currentScoreChangeIndex = scoreTextList.Count - 1;
-
-        RectTransform currentTransform = scrollContainer.GetChild(currentTransformChangeIndex).GetComponent<RectTransform>();
-        currentTransform.localPosition = new Vector3(currentTransform.localPosition.x, lastPosition, currentTransform.localPosition.z);
-
-        for (int i = 0; i < transformList.Count; i++)
+        if (currentIndex != dict.Count - 1)
         {
-            sequence.Join(transformList[i].DOMoveY(transformList[i].position.y + 50, 0.05f));
+            dict[newTransform].text = string.Format("<allcaps>{0}</allcaps>", text);
         }
 
-        sequence.Play();
+        animationSequence = DOTween.Sequence();
 
-        currentTransformChangeIndex++;
-        if (currentTransformChangeIndex > scoreTextList.Count - 1) currentTransformChangeIndex = 0;
+        animationSequence
+            .Append(newTransform.DOMoveX(animationTarget.position.x, 0.25f));
 
-        isMoving = false;
+        yield return null;
+    }
+
+    private void ResetPosition()
+    {
+        currentIndex = 0;
+
+        foreach(var item in dict)
+        {
+            item.Key.position = new Vector3(
+                startPos.x,
+                item.Key.position.y,
+                item.Key.position.z
+                );
+        }
     }
 }
