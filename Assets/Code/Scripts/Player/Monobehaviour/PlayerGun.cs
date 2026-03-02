@@ -218,9 +218,10 @@ public class PlayerGun : MonoBehaviour
 
         for (int i = 0; i < ctx.bulletOrder.Length; i++)
         {
-            var tempSlot = currentChamber - i;
+            var tempSlot = currentChamber + i;
             
             if(tempSlot < 0) tempSlot = bulletArray.Length-1;
+            if(tempSlot >= bulletArray.Length) tempSlot = 0;
 
             if (ctx.bulletOrder[i] == null) continue;
             
