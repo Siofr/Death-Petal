@@ -7,20 +7,36 @@ public struct WallPiece
 {
     public Weakness weakness;
     public GameObject wall;
+
+    public WallPiece(Weakness weakness, GameObject wall)
+    {
+        this.weakness = weakness;
+        this.wall = wall;
+    }
 }
 
 public class WallDestructable: EntityBase
 {
     [Header("Wall Fields")]
     [SerializeField] private bool _isHidden;
-    [SerializeField] private List<WallPiece> _wallPieces;
+
+    [SerializeField] private GameObject[] _wallPiecesObjects;
     
+    //Serialized Fields
+    private List<WallPiece> _wallPieces = new List<WallPiece>();
+    
+    //Events
     private EventBindings<ActiveTargetEvent> _onTargetListener;
 
     protected override void Awake()
     {
         base.Awake();
 
+        foreach (var wall in _wallPiecesObjects)
+        {
+            _wallPieces.Add(new WallPiece(wall.GetComponentInChildren<Weakness>(), wall));
+        }
+        
         if (_isHidden)
         {
             _onTargetListener = new EventBindings<ActiveTargetEvent>(OnTargeted);
