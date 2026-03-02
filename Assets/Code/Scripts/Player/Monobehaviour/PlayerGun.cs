@@ -108,8 +108,8 @@ public class PlayerGun : MonoBehaviour
 
     public void AddBullet(AddBulletEvent ctx)
     {
-        int trapdoorChamber = currentChamber + 1;
-        if (trapdoorChamber > 5) trapdoorChamber = 0;
+        int trapdoorChamber = currentChamber - 1;
+        if (trapdoorChamber < 0) trapdoorChamber = bulletArray.Length - 1;
 
         if (bulletArray[trapdoorChamber] != null) return;
 
