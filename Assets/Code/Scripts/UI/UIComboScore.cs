@@ -32,14 +32,17 @@ public class UIComboScore : MonoBehaviour
     private EventBindings<UpdateScoreEvent> _updateScoreEventListener;
     private EventBindings<UpdateComboMultEvent> _updateComboMultEventListener;
     private EventBindings<ChangeScoreEvent> _changeScoreEventListener;
+    private EventBindings<WipeComboEvent> _wipeComboEventListener;
 
     public TMP_Text scoreText;
     public TMP_Text multiplierText;
+    private float currentMultiplier;
 
     public Transform scoreContainer;
     public Transform animationTarget;
 
     private Sequence animationSequence;
+    private Sequence resetComboSequence;
 
     // New Animation Variables
     public Transform scoreContainers;
@@ -68,6 +71,7 @@ public class UIComboScore : MonoBehaviour
         _updateComboMultEventListener = new EventBindings<UpdateComboMultEvent>(OnMultiplierUpdate);
         _updateScoreEventListener = new EventBindings<UpdateScoreEvent>(OnScoreUpdate);
         _changeScoreEventListener = new EventBindings<ChangeScoreEvent>(OnScoreChange);
+        _wipeComboEventListener = new EventBindings<WipeComboEvent>(OnComboWipe);
     }
 
     private void OnEnable()
@@ -75,6 +79,7 @@ public class UIComboScore : MonoBehaviour
         EventBus<UpdateComboMultEvent>.Register(_updateComboMultEventListener);
         EventBus<UpdateScoreEvent>.Register(_updateScoreEventListener);
         EventBus<ChangeScoreEvent>.Register(_changeScoreEventListener);
+        EventBus<WipeComboEvent>.Register(_wipeComboEventListener);
     }
 
     private void OnDisable()
@@ -82,6 +87,7 @@ public class UIComboScore : MonoBehaviour
         EventBus<UpdateComboMultEvent>.Unregister(_updateComboMultEventListener);
         EventBus<UpdateScoreEvent>.Unregister(_updateScoreEventListener);
         EventBus<ChangeScoreEvent>.Unregister(_changeScoreEventListener);
+        EventBus<WipeComboEvent>.Unregister(_wipeComboEventListener);
     }
 
     private void Update()
@@ -96,7 +102,7 @@ public class UIComboScore : MonoBehaviour
 
         canvasGroup.alpha = 1.0f;
         fadeMultiplier = 0;
-        StartCoroutine(NewAnimation(currentIndex, ctx.text));
+        SlideAnimation(currentIndex, ctx.text);
         currentIndex = Mathf.Clamp(currentIndex + 1, 0, dict.Count - 1);
     }
 
@@ -110,7 +116,22 @@ public class UIComboScore : MonoBehaviour
         multiplierText.text = string.Format("{0:0.0}", ctx.multiplier);
     }
 
-    IEnumerator NewAnimation(int currentIndex, string text)
+    void OnComboWipe()
+    {
+        ResetComboAnimation();
+        ClearScoreText();
+    }
+
+    void ResetComboAnimation()
+    {
+        if (resetComboSequence.IsActive()) return;
+
+        resetComboSequence = DOTween.Sequence();
+        resetComboSequence.
+            Append(multiplierText.DOColor(Color.red, 0.7f).SetEase(Ease.Flash, 16, 1));
+    }
+
+    private void SlideAnimation(int currentIndex, string text)
     {
         Transform newTransform = dict.ElementAt(currentIndex).Key;
 
@@ -120,11 +141,14 @@ public class UIComboScore : MonoBehaviour
         }
 
         animationSequence = DOTween.Sequence();
-
         animationSequence
-            .Append(newTransform.DOMoveX(animationTarget.position.x, 0.25f));
+            .Append(newTransform.DOMoveX(animationTarget.position.x, 0.15f))
+            .SetEase(Ease.InSine);
+    }
 
-        yield return null;
+    private void ClearScoreText()
+    {
+        canvasGroup.DOFade(0.0f, 0.1f);
     }
 
     private void ResetPosition()

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
+    public string stageName;
     public float bestTime;
     public Bounds stageBoundary;
 

@@ -83,20 +83,25 @@ public class PlayerGun : MonoBehaviour
         if (bulletArray[currentChamber] == null)
         {
             _shootEvent.setParameterByID(_bulletsLeft, 0);
+            EventBus<WipeComboEvent>.Raise(new WipeComboEvent());
             EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.5f, 0.15f));
             EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
         }
         else
         {
             EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
-
             EventBus<SpawnTrail>.Raise(new SpawnTrail(bulletArray[currentChamber].bulletColor));
             EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.25f));
 
             // Now remove it
             if (ctx.weakness)
             {
+                EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Hit", 50));
                 ctx.weakness.ParentEntity.OnShot(ctx.weakness, bulletArray[currentChamber].weakness);
+            }
+            else
+            {
+                EventBus<WipeComboEvent>.Raise(new WipeComboEvent());
             }
 
             bulletArray[currentChamber] = null;
@@ -119,11 +124,6 @@ public class PlayerGun : MonoBehaviour
 
         bulletArray[trapdoorChamber] = ctx.bulletType;
 
-        if (TEMP_ReloadTesting.Instance.manualRotate)
-        {
-            return;
-        }
-
         RotateBarrel(-1);
         GetNextBullet();
     }
@@ -139,11 +139,6 @@ public class PlayerGun : MonoBehaviour
 
         bulletArray[currentChamber] = null;
         GetNextBullet();
-
-        if (TEMP_ReloadTesting.Instance.manualRotate)
-        {
-            return;
-        }
 
         RotateBarrel(1);
     }
@@ -164,7 +159,6 @@ public class PlayerGun : MonoBehaviour
 
     public void RotateBarrel(int direction)
     {
-        EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Rotate", 100));
         currentChamber += direction;
 
         if (currentChamber > bulletArray.Length - 1) currentChamber = 0;

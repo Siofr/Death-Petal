@@ -20,15 +20,13 @@ public struct OnLevelStartEvent : IEvent
 
 public struct DisplayEndUI : IEvent
 {
+    public Dictionary<float, string> grades;
     public string finalGrade;
-    public string enemyGrade;
-    public string timeGrade;
 
-    public DisplayEndUI(string finalGrade, string enemyGrade, string timeGrade)
+    public DisplayEndUI(Dictionary<float, string> grades, string finalGrade)
     {
+        this.grades = grades;
         this.finalGrade = finalGrade;
-        this.enemyGrade = enemyGrade;
-        this.timeGrade = timeGrade;
     }
 }
 
@@ -36,6 +34,7 @@ public class GradeManager : MonoBehaviour
 {
     EventBindings<OnLevelEndEvent> _levelEndEventListener;
     EventBindings<OnLevelStartEvent> _levelStartEventListener;
+    EventBindings<UpdateScoreEvent> _updateScoreEventListener;
 
     public GradeSO[] gradeObjects;
     private Stage currentStage;
@@ -51,6 +50,8 @@ public class GradeManager : MonoBehaviour
 
     private List<string> grades = new List<string>();
     private string totalLetterGrade;
+
+    private float currentScore;
 
     // Grade Numerical Value
     private Dictionary<string, int> gradeValue = new Dictionary<string, int>
@@ -77,18 +78,21 @@ public class GradeManager : MonoBehaviour
     {
         _levelEndEventListener = new EventBindings<OnLevelEndEvent>(OnLevelEnd);
         _levelStartEventListener = new EventBindings<OnLevelStartEvent>(OnLevelStart);
+        _updateScoreEventListener = new EventBindings<UpdateScoreEvent>(OnScoreUpdate);
     }
 
     private void OnEnable()
     {
         EventBus<OnLevelEndEvent>.Register(_levelEndEventListener);
         EventBus<OnLevelStartEvent>.Register(_levelStartEventListener);
+        EventBus<UpdateScoreEvent>.Register(_updateScoreEventListener);
     }
 
     private void OnDisable()
     {
         EventBus<OnLevelEndEvent>.Unregister(_levelEndEventListener);
         EventBus<OnLevelStartEvent>.Unregister(_levelStartEventListener);
+        EventBus<UpdateScoreEvent>.Unregister(_updateScoreEventListener);
     }
 
     private void Update()
@@ -110,6 +114,8 @@ public class GradeManager : MonoBehaviour
 
     private void OnLevelEnd(OnLevelEndEvent ctx)
     {
+        Dictionary<float, string> finalGrades = new Dictionary<float, string>();
+
         // Get Final Time
         finalTime = currentTime;
 
@@ -126,7 +132,9 @@ public class GradeManager : MonoBehaviour
             timeGrade = "D";
         }
 
-        grades.Add(timeGrade);
+        finalGrades.Add(finalTime, timeGrade);
+
+        finalGrades.Add(currentScore, "S");
 
         // Enemies Remaining Grade
         int enemiesRemaining = CheckStageBounds(LayerMask.GetMask("Enemy"));
@@ -140,15 +148,13 @@ public class GradeManager : MonoBehaviour
             enemyGrade = GetEnemyGrade(enemiesRemaining);
         }
 
-        grades.Add(enemyGrade);
-
-        totalLetterGrade = GetGradeAverage();
+        finalGrades.Add(enemiesRemaining, enemyGrade);
+        totalLetterGrade = GetGradeAverage(finalGrades);
 
         // Event to display ranking
         EventBus<DisplayEndUI>.Raise(new DisplayEndUI(
-            totalLetterGrade,
-            enemyGrade,
-            timeGrade
+            finalGrades,
+            totalLetterGrade
             ));
     }
 
@@ -160,16 +166,16 @@ public class GradeManager : MonoBehaviour
         return overlappingObjects.Length;
     }
 
-    private string GetGradeAverage()
+    private string GetGradeAverage(Dictionary<float, string> finalGrades)
     {
         int gradeSum = 0;
         int gradeCount = 0;
 
-        for (int i = 0; i < grades.Count - 1; i++)
+        foreach (var entry in  finalGrades)
         {
-            if (gradeValue[grades[i]] != 0)
+            if (gradeValue[entry.Value] != 0)
             {
-                gradeSum += gradeValue[grades[i]];
+                gradeSum += gradeValue[entry.Value];
                 gradeCount++;
             }
         }
@@ -190,5 +196,10 @@ public class GradeManager : MonoBehaviour
         }
 
         return "D";
+    }
+
+    private void OnScoreUpdate(UpdateScoreEvent ctx)
+    {
+        currentScore = ctx.score;
     }
 }
