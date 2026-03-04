@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
 using Unity.Cinemachine;
+using State_Machine;
 
 public class UIGradeDisplay : MonoBehaviour
 {
@@ -15,7 +16,6 @@ public class UIGradeDisplay : MonoBehaviour
         public TMP_Text gradeText;
     }
 
-    public CinemachineCamera cam;
     public TMP_Text finalGrade;
     [SerializeField] public text[] gradeTexts;
     public Transform container;
@@ -55,7 +55,8 @@ public class UIGradeDisplay : MonoBehaviour
 
     private void OnDisplayUI(DisplayEndUI ctx)
     {
-        cam.transform.gameObject.SetActive(true);
+        EventBus<ChangeCameraState>.Raise(new ChangeCameraState(true));
+        EventBus<TriggerDialogueEvent>.Raise(new TriggerDialogueEvent());
 
         continueButton.position.Set(
             continueStartPos.x,
@@ -106,7 +107,8 @@ public class UIGradeDisplay : MonoBehaviour
 
     public void ResetUI()
     {
-        cam.transform.gameObject.SetActive(false);
+        EventBus<ExitDialogueEvent>.Raise(new ExitDialogueEvent());
+        EventBus<ChangeCameraState>.Raise(new ChangeCameraState(false));
         background.gameObject.SetActive(false);
     }
 }
