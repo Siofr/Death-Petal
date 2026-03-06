@@ -4,8 +4,6 @@ using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
-using Unity.Cinemachine;
-using State_Machine;
 
 public class UIGradeDisplay : MonoBehaviour
 {
@@ -40,7 +38,10 @@ public class UIGradeDisplay : MonoBehaviour
             canvasGroups.Add(transform.GetComponent<CanvasGroup>());
         }
 
-        continueStartPos = continueButton.position;
+        continueStartPos = continueButton.localPosition;
+
+        Debug.Log(continueStartPos);
+        Debug.Log(_startPos);
     }
 
     private void OnEnable()
@@ -57,18 +58,6 @@ public class UIGradeDisplay : MonoBehaviour
     {
         EventBus<ChangeCameraState>.Raise(new ChangeCameraState(true));
         EventBus<TriggerDialogueEvent>.Raise(new TriggerDialogueEvent());
-
-        continueButton.position.Set(
-            continueStartPos.x,
-            continueStartPos.y,
-            continueStartPos.z
-            );
-
-        background.position.Set(
-            _startPos.x,
-            _startPos.y,
-            _startPos.z
-            );
 
         background.gameObject.SetActive(true);
 
@@ -107,6 +96,24 @@ public class UIGradeDisplay : MonoBehaviour
 
     public void ResetUI()
     {
+        continueButton.localPosition = new Vector3(
+            continueStartPos.x,
+            continueStartPos.y,
+            continueStartPos.z
+        );
+
+        background.position = new Vector3(
+            _startPos.x,
+            _startPos.y,
+            _startPos.z
+        );
+
+        Debug.Log(continueStartPos);
+        Debug.Log(continueButton.position);
+
+        Debug.Log(_startPos);
+        Debug.Log(background.position);
+
         EventBus<ExitDialogueEvent>.Raise(new ExitDialogueEvent());
         EventBus<ChangeCameraState>.Raise(new ChangeCameraState(false));
         background.gameObject.SetActive(false);

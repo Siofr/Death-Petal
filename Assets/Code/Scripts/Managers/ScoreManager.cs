@@ -24,7 +24,7 @@ public class ScoreManager : MonoBehaviour
     private float scoreMultiplier = 1.0f;
     private float currentScore;
 
-    private float scoreMultiplierThreshold = 500.0f;
+    private float scoreMultiplierThreshold = 1.0f;
     private float currentScoreThreshold;
 
     private EventBindings<ChangeScoreEvent> _changeScoreEventListener;
@@ -57,7 +57,7 @@ public class ScoreManager : MonoBehaviour
         if (currentScoreThreshold >= scoreMultiplierThreshold)
         {
             currentScoreThreshold = 0.0f;
-            scoreMultiplier += 0.5f;
+            scoreMultiplier = Mathf.Clamp(scoreMultiplier + 0.5f, 1.0f, 3.0f);
             EventBus<UpdateComboMultEvent>.Raise(new UpdateComboMultEvent(scoreMultiplier));
         }
 

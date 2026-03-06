@@ -60,11 +60,11 @@ public class UIStageTitle : MonoBehaviour
 
     private void ResetPosition()
     {
-        _titleTransform.position.Set(_startPosition.x,
+        _titleTransform.position = new Vector3(_startPosition.x,
             _titleTransform.position.y,
             _titleTransform.position.z);
 
-        _titleTransform.position.Set(_startPosition.x,
+        _nameTransform.position = new Vector3(_startPosition.x,
             _nameTransform.position.y,
             _nameTransform.position.z);
     }
