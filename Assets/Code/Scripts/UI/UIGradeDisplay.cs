@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 public class UIGradeDisplay : MonoBehaviour
 {
+    public TMP_Text stageName;
+
+    [SerializeField] public text[] gradeTexts;
+
     [System.Serializable]
     public struct text
     {
@@ -15,23 +19,27 @@ public class UIGradeDisplay : MonoBehaviour
     }
 
     public TMP_Text finalGrade;
-    [SerializeField] public text[] gradeTexts;
-    public Transform container;
     private List<CanvasGroup> canvasGroups = new List<CanvasGroup>();
+
+    public Transform container;
     public Transform background;
     public Transform continueButton;
     public Transform continueTarget;
-    private Vector3 continueStartPos;
     public Transform _backgroundXTarget;
+
+    private Vector3 continueStartPos;
     private Vector3 _startPos;
+
     private Sequence _animationSequence;
 
     EventBindings<DisplayEndUI> displayEndUIEventListener;
+    EventBindings<OnLevelEndEvent> levelEndEventListener;
 
     private void Awake()
     {
         _startPos = background.position;
         displayEndUIEventListener = new EventBindings<DisplayEndUI>(OnDisplayUI);
+        levelEndEventListener = new EventBindings<OnLevelEndEvent>(ChangeStageTitle);
 
         foreach(Transform transform in container)
         {
@@ -39,19 +47,18 @@ public class UIGradeDisplay : MonoBehaviour
         }
 
         continueStartPos = continueButton.localPosition;
-
-        Debug.Log(continueStartPos);
-        Debug.Log(_startPos);
     }
 
     private void OnEnable()
     {
         EventBus<DisplayEndUI>.Register(displayEndUIEventListener);
+        EventBus<OnLevelEndEvent>.Register(levelEndEventListener);
     }
 
     private void OnDisable()
     {
         EventBus<DisplayEndUI>.Unregister(displayEndUIEventListener);
+        EventBus<OnLevelEndEvent>.Unregister(levelEndEventListener);
     }
 
     private void OnDisplayUI(DisplayEndUI ctx)
@@ -94,6 +101,11 @@ public class UIGradeDisplay : MonoBehaviour
             .Play();
     }
 
+    void ChangeStageTitle(OnLevelEndEvent ctx)
+    {
+        stageName.text = ctx.stage.stageName;
+    }
+
     public void ResetUI()
     {
         continueButton.localPosition = new Vector3(
@@ -107,12 +119,6 @@ public class UIGradeDisplay : MonoBehaviour
             _startPos.y,
             _startPos.z
         );
-
-        Debug.Log(continueStartPos);
-        Debug.Log(continueButton.position);
-
-        Debug.Log(_startPos);
-        Debug.Log(background.position);
 
         EventBus<ExitDialogueEvent>.Raise(new ExitDialogueEvent());
         EventBus<ChangeCameraState>.Raise(new ChangeCameraState(false));

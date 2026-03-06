@@ -5,7 +5,12 @@ using System.Drawing.Text;
 
 public struct OnLevelEndEvent : IEvent
 {
+    public Stage stage;
 
+    public OnLevelEndEvent(Stage stage)
+    {
+        this.stage = stage;
+    }
 }
 
 public struct OnLevelStartEvent : IEvent

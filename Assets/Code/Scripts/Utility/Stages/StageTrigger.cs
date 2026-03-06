@@ -23,7 +23,7 @@ public class StageTrigger : MonoBehaviour
                 break;
 
             case TriggerType.STAGE_END:
-                EventBus<OnLevelEndEvent>.Raise(new OnLevelEndEvent());
+                EventBus<OnLevelEndEvent>.Raise(new OnLevelEndEvent(stage));
                 break;
         }
     }
