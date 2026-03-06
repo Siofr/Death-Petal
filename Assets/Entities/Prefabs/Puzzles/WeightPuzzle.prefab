@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dddc3f4015f49008b0aab33457b4be4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeightPuzzle
+  __sequentialWeaknesses: 0
+  defaultWeaknessTypes: 
   _outputObjects:
   - {fileID: 8538815681016189117}
   - {fileID: 1656794420380192575}
@@ -55,8 +57,9 @@ MonoBehaviour:
   - {fileID: 257969440237805861}
   - {fileID: 2351886100444649160}
   _weightSteps: 3
-  _weightSpeed: 1
+  _weightSpeed: 0.25
   _weightDist: 0.6
+  puzzleColliders: []
 --- !u!65 &7627802711256295862
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -370,10 +373,6 @@ PrefabInstance:
     - target: {fileID: 1467890806153230580, guid: 2f453abb87582334dbdc3809617e013a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2820771108067465800, guid: 2f453abb87582334dbdc3809617e013a, type: 3}
-      propertyPath: openSpeed
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3998817843985396614, guid: 2f453abb87582334dbdc3809617e013a, type: 3}
       propertyPath: m_Name
