@@ -19,6 +19,8 @@ public class PlayerGun : MonoBehaviour
     private int lastBulletIndex;
     private int currentChamber = 0;
 
+    
+
     private void PrintContents(BulletSO[] arr)
     {
         for (int i = 0; i < arr.Length; i++)

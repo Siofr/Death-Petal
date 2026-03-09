@@ -24,6 +24,7 @@ public class UIPlayerReticle : MonoBehaviour
     private Image _reticleImage;
     private Transform _activeTarget;
     private Camera _cam;
+    [SerializeField] private Material[] ammoIndicatorMaterials;
 
     public EventBindings<ActiveTargetEvent> activeTargetEventListener;
     public EventBindings<NextBulletEvent> nextBulletEventListener;
@@ -82,10 +83,22 @@ public class UIPlayerReticle : MonoBehaviour
         {
             ReticleSprite = _defaultReticle;
             _reticleImage.color = Color.black;
+            
+            foreach (Material ammoIndicatorMaterial in ammoIndicatorMaterials)
+            {
+                ammoIndicatorMaterial.SetColor("_Colour", Color.white);
+            }
+            
             return;
         }
 
         ReticleSprite = ctx.bulletType.bulletReticle;
+        print("TRYING TO SET THE COLOUR");
+        print(ctx.bulletType.bulletColor);
+        foreach (Material ammoIndicatorMaterial in ammoIndicatorMaterials)
+        {
+            ammoIndicatorMaterial.SetColor("_Colour", ctx.bulletType.bulletColor);
+        }
         _reticleImage.color = ctx.bulletType.bulletColor;
     }
 }
