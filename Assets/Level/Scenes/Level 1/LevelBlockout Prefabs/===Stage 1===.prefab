@@ -5622,7 +5622,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3633
+  m_VersionIndex: 3642
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -11955,7 +11955,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3106
+  m_VersionIndex: 3115
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -13970,6 +13970,7 @@ Transform:
   - {fileID: 7065353501588020456}
   - {fileID: 1913189293715551454}
   - {fileID: 7768665369560890845}
+  - {fileID: 3716652480205518872}
   m_Father: {fileID: 5578176330653512819}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4585003908828090852
@@ -15606,6 +15607,59 @@ Transform:
   - {fileID: 5090836051821377312}
   m_Father: {fileID: 6029926085287144868}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5832357152223837512
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3716652480205518872}
+  - component: {fileID: 6995172878168310076}
+  m_Layer: 10
+  m_Name: Boss Corridor  Entry (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: dfc295ca83220a2459bc369c3c0dc9b6, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3716652480205518872
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5832357152223837512}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -18.78, y: -1.56, z: 15.397}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6543220808177846946}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6995172878168310076
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5832357152223837512}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 1025
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1023
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 9.304581, y: 16.178883, z: 0.09780687}
+  m_Center: {x: -3.417942, y: 1.368118, z: -0.13694671}
 --- !u!1 &6017601060864468805
 GameObject:
   m_ObjectHideFlags: 0
@@ -17034,8 +17088,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7279317285427008222}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.004650049, y: -0.70708394, z: 0.004650148, w: 0.707099}
-  m_LocalPosition: {x: -30.887455, y: -5.099261, z: 13.852288}
+  m_LocalRotation: {x: -0.0043489453, y: -0.7070695, z: 0.0043492387, w: 0.7071173}
+  m_LocalPosition: {x: -31.796711, y: -5.099249, z: 13.853183}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17162,7 +17216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineSplineDolly
   m_SplineSettings:
     Spline: {fileID: 7013031278248621324}
-    Position: -0.05
+    Position: 0.036796454
     Units: 1
   SplineOffset: {x: 0, y: 0.92, z: -1.5}
   CameraRotation: 1
@@ -21755,7 +21809,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3106
+  m_VersionIndex: 3115
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -23967,10 +24021,10 @@ MonoBehaviour:
     DampingWhenOccluded: 0.2
   ShotQualityEvaluation:
     Enabled: 1
-    OptimalDistance: 3
+    OptimalDistance: 1
     NearLimit: 0.5
-    FarLimit: 5
-    MaxQualityBoost: 0.2
+    FarLimit: 15
+    MaxQualityBoost: 0.3
 --- !u!114 &8998082777349970123
 MonoBehaviour:
   m_ObjectHideFlags: 0
