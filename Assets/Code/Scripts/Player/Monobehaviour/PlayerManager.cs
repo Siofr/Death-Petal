@@ -23,7 +23,7 @@ namespace State_Machine
         public Vector3 lookDir;
 
         private bool _isAiming;
-        private bool _isSprinting;
+        public bool _isSprinting;
         private bool _isReloading;
         public Transform activeTarget;
 
@@ -112,7 +112,7 @@ namespace State_Machine
             At(moveState, _reloadState, new FuncPredicate(() => _isReloading));
 
             At(sprintState, moveState, new FuncPredicate(() => !_isSprinting));
-            At(sprintState, _idleState, new FuncPredicate(() => _movement == Vector3.zero));
+            // At(sprintState, _idleState, new FuncPredicate(() => !_isSprinting));
             At(sprintState, _aimState, new FuncPredicate(() => _aim != Vector2.zero));
             At(sprintState, _reloadState, new FuncPredicate(() => _isReloading));
 

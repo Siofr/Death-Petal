@@ -120,7 +120,14 @@ public class InputHandler : Singleton<InputHandler>
 
     private void OnSprint(InputAction.CallbackContext ctx)
     {
-        SprintEvent?.Invoke();
+        if (ctx.phase == InputActionPhase.Performed)
+        {
+            SprintEvent?.Invoke();
+        }
+        if (ctx.phase == InputActionPhase.Canceled)
+        {
+            SprintEvent?.Invoke();
+        }
     }
 
     private void OnAim(InputAction.CallbackContext ctx)
