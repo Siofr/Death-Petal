@@ -50,14 +50,23 @@ public class ScoreManager : MonoBehaviour
 
     void OnScoreChange(ChangeScoreEvent ctx)
     {
+        UpdateScore(ctx.score);
+    }
+
+    void UpdateScore(float score)
+    {
         // What to do when score is changed
-        currentScore = currentScore + ctx.score * scoreMultiplier;
-        currentScoreThreshold += ctx.score;
+        currentScore = currentScore + score * scoreMultiplier;
+        currentScoreThreshold += score;
+
+        int multiplierSteps = Mathf.RoundToInt(
+            Mathf.Clamp(currentScoreThreshold / scoreMultiplierThreshold, 1.0f, 3.0f / 0.5f)
+            );
 
         if (currentScoreThreshold >= scoreMultiplierThreshold)
         {
             currentScoreThreshold = 0.0f;
-            scoreMultiplier += 0.5f;
+            scoreMultiplier = Mathf.Clamp(scoreMultiplier + 0.5f * multiplierSteps, 1.0f, 3.0f);
             EventBus<UpdateComboMultEvent>.Raise(new UpdateComboMultEvent(scoreMultiplier));
         }
 

@@ -46,6 +46,8 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public void OnDialogueTrigger(TriggerDialogueEvent ctx)
     {
+        if (ctx.yarnNodeName == null) return;
+
         dialogueRunner.StartDialogue(ctx.yarnNodeName);
     }
 
