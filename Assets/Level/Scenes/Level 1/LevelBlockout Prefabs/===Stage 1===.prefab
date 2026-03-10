@@ -773,59 +773,6 @@ MonoBehaviour:
   BlendFinishedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &971586694065957569
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6188864273411143554}
-  - component: {fileID: 1173749921286378943}
-  m_Layer: 10
-  m_Name: Room4 Doorway (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: dfc295ca83220a2459bc369c3c0dc9b6, type: 3}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6188864273411143554
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 971586694065957569}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.89, y: 3.79, z: 10.81}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6543220808177846946}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1173749921286378943
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 971586694065957569}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 1025
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 1023
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 5.170006, y: 6.8331223, z: 0.13231176}
-  m_Center: {x: 2.2597904, y: 2.1912336, z: -0.35968512}
 --- !u!1 &1004729053556020798
 GameObject:
   m_ObjectHideFlags: 0
@@ -5728,7 +5675,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3672
+  m_VersionIndex: 3675
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -7404,7 +7351,7 @@ GameObject:
   - component: {fileID: 2119218730302573840}
   - component: {fileID: 3180703298845418855}
   m_Layer: 10
-  m_Name: Main Puzzle Room Corner Occluder
+  m_Name: Left Hand Room Corner Occluder
   m_TagString: Untagged
   m_Icon: {fileID: 2800000, guid: dfc295ca83220a2459bc369c3c0dc9b6, type: 3}
   m_NavMeshLayer: 0
@@ -12061,7 +12008,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3145
+  m_VersionIndex: 3148
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -12910,8 +12857,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3297484891956269342}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.47402942, y: -0.42353278, z: 0.2788288, w: 0.71984065}
-  m_LocalPosition: {x: -32.540737, y: 12.755437, z: 0.92100525}
+  m_LocalRotation: {x: 0.3173688, y: -0.28498912, z: 0.10028298, w: 0.89888906}
+  m_LocalPosition: {x: -33.28211, y: 8.29726, z: -3.670579}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13376,6 +13323,59 @@ Transform:
   - {fileID: 2066681900180618010}
   m_Father: {fileID: 8776676908317834209}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3488837657037742453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5300556138865854478}
+  - component: {fileID: 8046655242122220742}
+  m_Layer: 10
+  m_Name: ' Left Hand Side Back Room Occluder'
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: dfc295ca83220a2459bc369c3c0dc9b6, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5300556138865854478
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3488837657037742453}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -26.23, y: 1.43, z: 9.39}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6543220808177846946}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &8046655242122220742
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3488837657037742453}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 1025
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1023
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 11.987256, y: 8.274213, z: 0.13231179}
+  m_Center: {x: 4.040086, y: 2.9117785, z: -0.35968512}
 --- !u!1 &3548009501493616432
 GameObject:
   m_ObjectHideFlags: 0
@@ -13387,7 +13387,7 @@ GameObject:
   - component: {fileID: 2312004338179375833}
   - component: {fileID: 7584889371410393077}
   m_Layer: 10
-  m_Name: Room4 Doorway (5)
+  m_Name: Back room Corner Occluder
   m_TagString: Untagged
   m_Icon: {fileID: 2800000, guid: dfc295ca83220a2459bc369c3c0dc9b6, type: 3}
   m_NavMeshLayer: 0
@@ -14058,7 +14058,8 @@ Transform:
   - {fileID: 6550136228388645599}
   - {fileID: 2119218730302573840}
   - {fileID: 1578552476463080537}
-  - {fileID: 6188864273411143554}
+  - {fileID: 5300556138865854478}
+  - {fileID: 3084581928021286800}
   - {fileID: 2312004338179375833}
   - {fileID: 3701409202780416859}
   - {fileID: 1345181457349640465}
@@ -15084,7 +15085,7 @@ GameObject:
   - component: {fileID: 7768665369560890845}
   - component: {fileID: 5080626369782191146}
   m_Layer: 10
-  m_Name: Boss Corridor  Entry (1)
+  m_Name: Boss Corridor Occluder
   m_TagString: Untagged
   m_Icon: {fileID: 2800000, guid: dfc295ca83220a2459bc369c3c0dc9b6, type: 3}
   m_NavMeshLayer: 0
@@ -15478,7 +15479,7 @@ GameObject:
   - component: {fileID: 3716652480205518872}
   - component: {fileID: 6995172878168310076}
   m_Layer: 10
-  m_Name: Boss Corridor  Entry (2)
+  m_Name: Boss Corridor  Occluder
   m_TagString: Untagged
   m_Icon: {fileID: 2800000, guid: dfc295ca83220a2459bc369c3c0dc9b6, type: 3}
   m_NavMeshLayer: 0
@@ -15847,7 +15848,7 @@ MonoBehaviour:
     Enabled: 1
     OptimalDistance: 1
     NearLimit: 0.5
-    FarLimit: 10
+    FarLimit: 12
     MaxQualityBoost: 0.2
 --- !u!114 &1006684149782887297
 MonoBehaviour:
@@ -16098,7 +16099,7 @@ GameObject:
   - component: {fileID: 6550136228388645599}
   - component: {fileID: 2870103899623833094}
   m_Layer: 10
-  m_Name: Main Puzzle Room Staircase Occluder
+  m_Name: Left Hand Staircase Occluder
   m_TagString: Untagged
   m_Icon: {fileID: 2800000, guid: dfc295ca83220a2459bc369c3c0dc9b6, type: 3}
   m_NavMeshLayer: 0
@@ -21572,7 +21573,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3145
+  m_VersionIndex: 3148
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -22163,7 +22164,7 @@ GameObject:
   - component: {fileID: 7065353501588020456}
   - component: {fileID: 6234074538703925493}
   m_Layer: 10
-  m_Name: Boss Room Entry
+  m_Name: Boss Room Doorway Occluder
   m_TagString: Untagged
   m_Icon: {fileID: 2800000, guid: dfc295ca83220a2459bc369c3c0dc9b6, type: 3}
   m_NavMeshLayer: 0
@@ -22265,7 +22266,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7818740264469707851
 Transform:
   m_ObjectHideFlags: 0
@@ -22855,7 +22856,7 @@ GameObject:
   - component: {fileID: 1913189293715551454}
   - component: {fileID: 7110047270298264574}
   m_Layer: 10
-  m_Name: Boss Corridor  Entry
+  m_Name: Boss Corridor  Entry Occluder
   m_TagString: Untagged
   m_Icon: {fileID: 2800000, guid: dfc295ca83220a2459bc369c3c0dc9b6, type: 3}
   m_NavMeshLayer: 0
@@ -23411,6 +23412,59 @@ Transform:
   - {fileID: 4048984236352630205}
   m_Father: {fileID: 6029926085287144868}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8888730156565505638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3084581928021286800}
+  - component: {fileID: 1716769922572412204}
+  m_Layer: 10
+  m_Name: ' Left Hand Side Back Room Occluder'
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: dfc295ca83220a2459bc369c3c0dc9b6, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3084581928021286800
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888730156565505638}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -33.16, y: 1.43, z: 11.04}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6543220808177846946}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1716769922572412204
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888730156565505638}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 1025
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 1023
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 12.575863, y: 9.678398, z: 0.13231182}
+  m_Center: {x: 0.2947979, y: 4.847419, z: -0.35968512}
 --- !u!1 &8926584027942528678
 GameObject:
   m_ObjectHideFlags: 0
@@ -23422,7 +23476,7 @@ GameObject:
   - component: {fileID: 1578552476463080537}
   - component: {fileID: 6139706454060242923}
   m_Layer: 10
-  m_Name: Main Puzzle Room Corner Occluder
+  m_Name: Right Hand side Room Corner Occluder
   m_TagString: Untagged
   m_Icon: {fileID: 2800000, guid: dfc295ca83220a2459bc369c3c0dc9b6, type: 3}
   m_NavMeshLayer: 0
