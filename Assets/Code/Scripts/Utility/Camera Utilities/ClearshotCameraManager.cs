@@ -16,8 +16,8 @@ public class ClearshotCameraManager: Singleton<ClearshotCameraManager>
 
         foreach (var cam in _cameras)
         {
-            if (!targetCameras.Contains(cam)) cam.enabled = false;
-            else cam.enabled = true;
+            if (!targetCamList.Contains(cam)) cam.gameObject.SetActive(false);
+            else cam.gameObject.SetActive(true);
         }
     }
 }
