@@ -19,6 +19,6 @@ public class ClearshotCameraElement: CinemachineCameraEvents
         
         EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(transform, _cam));
         
-        ClearshotCameraManager.Instance.UseCameras(_targetCameras);
+        //ClearshotCameraManager.Instance.UseCameras(_targetCameras);
     }
 }
