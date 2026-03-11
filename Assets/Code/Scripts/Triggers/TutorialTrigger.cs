@@ -2,32 +2,65 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
+public struct TutorialTriggerEvent : IEvent
+{
+    public List<string> tutorialSteps;
+
+    public TutorialTriggerEvent(List<string> tutorialSteps)
+    {
+        this.tutorialSteps = tutorialSteps;
+    }
+}
+
+public struct AdvanceTutorialEvent : IEvent
+{
+    public string actionName;
+
+    public AdvanceTutorialEvent(string actionName)
+    {
+        this.actionName = actionName;
+    }
+}
+
 public class TutorialTrigger : MonoBehaviour
 {
 
     [System.Serializable]
     public struct TutorialInfo
     {
-        public List<string> tutorialText;
+        public string tutorialText;
+        public InputActionReference actionRef;
     }
 
     public List<TutorialInfo> tutorialSteps = new List<TutorialInfo>();
-    private int _currentTutorialStep;
-    private int _currentStep;
+    private List<string> _tutorialText = new List<string>();
 
-    void AdvanceTutorial()
+    private void Start()
     {
-        // Step
+        foreach(var tutorialStep in tutorialSteps)
+        {
+            // tutorialStep.action.
+            _tutorialText.Add(tutorialStep.tutorialText);
+            tutorialStep.actionRef.action.performed += AdvanceTutorial;
+        }
+    }
+
+    void AdvanceTutorial(InputAction.CallbackContext ctx)
+    {
+        EventBus<AdvanceTutorialEvent>.Raise(new AdvanceTutorialEvent(ctx.action.name));
     }
 
     void TriggerTutorial()
     {
-        TriggerNextStep(0);
+        EventBus<TutorialTriggerEvent>.Raise(new TutorialTriggerEvent(_tutorialText));
     }
 
-    void TriggerNextStep(int step)
+    void EndTutorial()
     {
-
+        foreach(var tutorialStep in tutorialSteps)
+        {
+            tutorialStep.actionRef.action.performed -= AdvanceTutorial;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
