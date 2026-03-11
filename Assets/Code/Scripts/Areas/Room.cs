@@ -28,8 +28,6 @@ public struct RoomPlayerExitEvent : IEvent
 [RequireComponent(typeof(BoxCollider))]
 public class Room : MonoBehaviour
 {
-    [SerializeField] private CinemachineCamera[] targetCameras;
-    
     private BoxCollider _collider;
     
     public Bounds Bounds => _collider.bounds;
@@ -44,8 +42,6 @@ public class Room : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             EventBus<RoomPlayerEnterEvent>.Raise(new RoomPlayerEnterEvent(other.transform, this));
-            
-            ClearshotCameraManager.Instance.UseCameras(targetCameras);
         }
     }
 
