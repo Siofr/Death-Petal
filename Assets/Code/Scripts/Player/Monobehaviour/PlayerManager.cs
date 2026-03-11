@@ -62,7 +62,7 @@ namespace State_Machine
             EventBus<ExitDialogueEvent>.Register(_exitDialogueEventListener);
             EventBus<PlayerDamagedEvent>.Register(_playerDamageEventListener);
 
-            InputHandler.AimEvent += OnAim;
+            // InputHandler.AimEvent += OnAim;
             InputHandler.SprintEvent += OnSprint;
             InputHandler.LongReloadEvent += OnReloadStart;
             InputHandler.LongReloadCancelledEvent += OnReloadCancel;
@@ -78,7 +78,7 @@ namespace State_Machine
             EventBus<ExitDialogueEvent>.Unregister(_exitDialogueEventListener);
             EventBus<PlayerDamagedEvent>.Unregister(_playerDamageEventListener);
 
-            InputHandler.AimEvent -= OnAim;
+            // InputHandler.AimEvent -= OnAim;
             InputHandler.SprintEvent -= OnSprint;
             InputHandler.LongReloadEvent -= OnReloadStart;
             InputHandler.LongReloadCancelledEvent -= OnReloadCancel;
@@ -162,7 +162,7 @@ namespace State_Machine
             stateMachine.FixedUpdate();
         }
 
-        void OnAim()
+/*        void OnAim()
         {
             if (!_isAiming)
             {
@@ -170,7 +170,7 @@ namespace State_Machine
                 return;
             }
             _isAiming = false;
-        }
+        }*/
 
         void OnReloadStart()
         {
