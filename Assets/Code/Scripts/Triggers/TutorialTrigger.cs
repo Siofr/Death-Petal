@@ -4,9 +4,9 @@ using UnityEngine.InputSystem;
 
 public struct TutorialTriggerEvent : IEvent
 {
-    public List<string> tutorialSteps;
+    public Dictionary<string, string> tutorialSteps;
 
-    public TutorialTriggerEvent(List<string> tutorialSteps)
+    public TutorialTriggerEvent(Dictionary<string, string> tutorialSteps)
     {
         this.tutorialSteps = tutorialSteps;
     }
@@ -22,6 +22,11 @@ public struct AdvanceTutorialEvent : IEvent
     }
 }
 
+public struct EndTutorialEvent : IEvent
+{
+
+}
+
 public class TutorialTrigger : MonoBehaviour
 {
 
@@ -33,15 +38,19 @@ public class TutorialTrigger : MonoBehaviour
     }
 
     public List<TutorialInfo> tutorialSteps = new List<TutorialInfo>();
+
     private List<string> _tutorialText = new List<string>();
+    private Dictionary<string, string> _stepsDict = new Dictionary<string, string>();
 
     private void Start()
     {
         foreach(var tutorialStep in tutorialSteps)
         {
-            // tutorialStep.action.
             _tutorialText.Add(tutorialStep.tutorialText);
             tutorialStep.actionRef.action.performed += AdvanceTutorial;
+            string inputName = tutorialStep.actionRef.name;
+            string output = inputName.Substring(inputName.IndexOf('/') + 1);
+            _stepsDict.Add(tutorialStep.tutorialText, output);
         }
     }
 
@@ -52,7 +61,7 @@ public class TutorialTrigger : MonoBehaviour
 
     void TriggerTutorial()
     {
-        EventBus<TutorialTriggerEvent>.Raise(new TutorialTriggerEvent(_tutorialText));
+        EventBus<TutorialTriggerEvent>.Raise(new TutorialTriggerEvent(_stepsDict));
     }
 
     void EndTutorial()
@@ -61,6 +70,8 @@ public class TutorialTrigger : MonoBehaviour
         {
             tutorialStep.actionRef.action.performed -= AdvanceTutorial;
         }
+
+        EventBus<EndTutorialEvent>.Raise(new EndTutorialEvent());
     }
 
     private void OnTriggerEnter(Collider other)
