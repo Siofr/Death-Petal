@@ -4,7 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(CinemachineCamera))]
 public class ClearshotCameraElement: CinemachineCameraEvents
 {
-    [SerializeField] private CinemachineCamera[] _targetCameras;
     //Non-Serialized Fields
     private CinemachineCamera _cam;
     private void Awake()
