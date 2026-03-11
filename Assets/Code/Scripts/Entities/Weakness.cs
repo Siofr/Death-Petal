@@ -53,6 +53,12 @@ public class Weakness : MonoBehaviour
         var value = toggle ? .12f : 1f;
         _renderer.material.SetFloat("_Opacity", value);
     }
+
+    public void Toggle(bool toggle)
+    {
+        ToggleHitbox(toggle);
+        ToggleIcon(toggle);
+    }
     
     private void Awake()
     {

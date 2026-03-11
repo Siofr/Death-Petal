@@ -56,10 +56,15 @@ public class EnemyMother: EnemyBase
     
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
+        //TO REMOVE JUST FOR TESTING
+        if (Weaknesses.Count == 1 && Weaknesses[0].WeakType == damageType)
+        {
+            Destroy(gameObject);
+        }
+        
         base.OnShot(weakness, damageType);
         
-        //TO REMOVE JUST FOR TESTING
-        if(Weaknesses.Count < 1) Destroy(gameObject);
+        print("Mother Enemy Shot");
     }
 
     private void CheckFirstEncounter(RoomPlayerEnterEvent context)
@@ -87,7 +92,7 @@ public class EnemyMother: EnemyBase
     {
         for (int i = _spawnedEnemies.Count - 1; i >= 0; i--)
         {
-            if(_spawnedEnemies[i] == null) _spawnedEnemies.RemoveAt(i);
+            if(_spawnedEnemies[i] == null || _spawnedEnemies[i].IsDead) _spawnedEnemies.RemoveAt(i);
         }
 
         if (_spawnedEnemies.Count < maxSpawnCount)
