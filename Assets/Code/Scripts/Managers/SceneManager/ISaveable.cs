@@ -44,4 +44,9 @@ public class ISaveableHelper
         _existingIDs.Remove(id);
         id = 0;
     }
+
+    public static void RemoveAllID()
+    {
+        _existingIDs.Clear();
+    }
 }
