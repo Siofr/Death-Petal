@@ -2,6 +2,7 @@
 tags:
 position: -245,71
 ---
+<<actor ActorScreen 1 false>>
 VoiceOfGod: Are you gonna listen to anything I say?
 -> Sure
     <<jump ListenToDebug>>
@@ -12,17 +13,22 @@ VoiceOfGod: Are you gonna listen to anything I say?
 title: ListenToDebug
 position: 129,195
 ---
+<<actor ActorScreen 0>>
 Harmony: ERM YES PLEASEEE
 VoiceOfGod: Hello im debug.
 Harmony: Eva is just seeing how this plays out!
 VoiceOfGod: Can she figure out Portaits? That would be cool.
 Harmony: Doubt it.
+<<hideAll ActorScreen>>
 ===
 
 title: SkipDubug
 position: 130,-10
 ---
 VoiceOfGod: You are no fun.
+<<actor ActorScreen 0>>
 Harmony: I tend to be.
+
+<<hideAll ActorScreen>>
 ===
 
