@@ -1,5 +1,6 @@
 using System;
 using JetBrains.Annotations;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public struct RoomPlayerEnterEvent: IEvent
@@ -27,6 +28,8 @@ public struct RoomPlayerExitEvent : IEvent
 [RequireComponent(typeof(BoxCollider))]
 public class Room : MonoBehaviour
 {
+    [SerializeField] private CinemachineCamera[] targetCameras;
+    
     private BoxCollider _collider;
     
     public Bounds Bounds => _collider.bounds;
@@ -41,6 +44,8 @@ public class Room : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             EventBus<RoomPlayerEnterEvent>.Raise(new RoomPlayerEnterEvent(other.transform, this));
+            
+            ClearshotCameraManager.Instance.UseCameras(targetCameras);
         }
     }
 
@@ -51,4 +56,5 @@ public class Room : MonoBehaviour
             EventBus<RoomPlayerExitEvent>.Raise(new RoomPlayerExitEvent(this));
         }
     }
-} 
+}
+
