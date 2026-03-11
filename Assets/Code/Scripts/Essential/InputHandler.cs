@@ -63,10 +63,10 @@ public class InputHandler : Singleton<InputHandler>
         ATTACK.Enable();
         ATTACK.performed += OnAttackPerformed;
 
-        AIM = _inputActions.Player.Aim;
+/*        AIM = _inputActions.Player.Aim;
         AIM.Enable();
         AIM.performed += OnAim;
-        AIM.canceled += OnAim;
+        AIM.canceled += OnAim;*/
 
         RELOAD = _inputActions.Player.Reload;
         RELOAD.Enable();
@@ -75,7 +75,6 @@ public class InputHandler : Singleton<InputHandler>
         SPRINT = _inputActions.Player.Sprint;
         SPRINT.Enable();
         SPRINT.performed += OnSprint;
-        SPRINT.canceled += OnSprint;
 
         HOTKEY = _inputActions.Player.Hotkey;
         HOTKEY.Enable();
@@ -120,14 +119,7 @@ public class InputHandler : Singleton<InputHandler>
 
     private void OnSprint(InputAction.CallbackContext ctx)
     {
-        if (ctx.phase == InputActionPhase.Performed)
-        {
-            SprintEvent?.Invoke();
-        }
-        if (ctx.phase == InputActionPhase.Canceled)
-        {
-            SprintEvent?.Invoke();
-        }
+        SprintEvent?.Invoke();
     }
 
     private void OnAim(InputAction.CallbackContext ctx)
