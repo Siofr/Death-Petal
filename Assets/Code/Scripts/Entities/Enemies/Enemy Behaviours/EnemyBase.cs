@@ -250,6 +250,8 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
             Weaknesses[0].ToggleHitbox(true);
             Weaknesses[0].SetWeakType(defaultWeaknessTypes[0]);
         }
+
+        print("Enemy Base Shot");
     }
 
     public SaveData GetSaveData(LevelData levelData)
