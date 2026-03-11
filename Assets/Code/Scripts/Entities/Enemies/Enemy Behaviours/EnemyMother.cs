@@ -92,7 +92,7 @@ public class EnemyMother: EnemyBase
     {
         for (int i = _spawnedEnemies.Count - 1; i >= 0; i--)
         {
-            if(_spawnedEnemies[i] == null) _spawnedEnemies.RemoveAt(i);
+            if(_spawnedEnemies[i] == null || _spawnedEnemies[i].IsDead) _spawnedEnemies.RemoveAt(i);
         }
 
         if (_spawnedEnemies.Count < maxSpawnCount)
