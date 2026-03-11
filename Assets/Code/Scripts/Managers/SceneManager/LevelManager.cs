@@ -11,40 +11,43 @@ public class LevelManager : Singleton<LevelManager>
     
     public void SaveLevelData(bool isBaking = false)
     {
-        if (saveables.Count < 1)
-        {
-            var tempSaveables = FindSaveables();
-            
-            if (tempSaveables.Count < 1) return;
-            
-            saveables = tempSaveables;
-            var tempIDs = new List<int>();
-            
-            foreach (var saveable in saveables)
-            {
-                tempIDs.Add(saveable.SaveID);
-            }
+        var temp = new LevelSaveData(name);
+        
+        var tempSaveables = FindSaveables();
 
-            levelSaveData.saveableID = tempIDs;
+        if (tempSaveables.Count < 1)
+        {
+            Debug.Log("No Saveable Objects in Level");
+            return;
         }
+            
+        saveables = tempSaveables;
+        var tempIDs = new List<int>();
         
         foreach (var saveable in saveables)
         {
-            saveable.HandleSaveData(ref levelSaveData);
+            tempIDs.Add(saveable.SaveID);
+            saveable.HandleSaveData(ref temp);
         }
+
+        temp.saveableID = tempIDs;
+        
+        foreach (var saveable in saveables)
+        {
+            saveable.HandleSaveData(ref temp);
+        }
+
+        levelSaveData = temp;
         
         if (isBaking)
         {
-            var defaultSave = new LevelSaveData(transform.name + "Default", levelSaveData);
-            
+            var defaultSave = new LevelSaveData(temp.levelName = transform.name + "Default", temp);
             SaveSystem.SaveLevelData(defaultSave);
             Debug.Log("Baked Level Data");
             return;
         }
-
-        levelSaveData.levelName = transform.name;
         
-        SaveSystem.SaveLevelData(levelSaveData);
+        SaveSystem.SaveLevelData(temp);
         
         Debug.Log("Saved Level Data");
     }

@@ -72,8 +72,8 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     
     //Saving Stuff
     
-    [HideInInspector] private PuzzleOutputSaveData _saveData;
-    [HideInInspector] private int _saveID; 
+    private PuzzleOutputSaveData _saveData;
+    private int _saveID; 
         
     public PuzzleOutputSaveData SaveInfo => _saveData;
     public int SaveID => _saveID;
