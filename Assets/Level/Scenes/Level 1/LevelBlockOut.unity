@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!65 &248514171 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 6010790062682451662, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+  m_PrefabInstance: {fileID: 921996811203851228}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &272796117
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -940,6 +945,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+--- !u!65 &559428599 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 1052755936723235122, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+  m_PrefabInstance: {fileID: 921996811203851228}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1011050125
 GameObject:
   m_ObjectHideFlags: 0
@@ -1133,7 +1143,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1159,8 +1169,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215802007}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13855039, y: -0.22342888, z: 0.03256574, w: 0.9642733}
-  m_LocalPosition: {x: 2.5668197, y: 1.24595, z: 12.54553}
+  m_LocalRotation: {x: -0.13779743, y: 0.6144166, z: -0.11010551, w: -0.769013}
+  m_LocalPosition: {x: 3.0986633, y: 1.6027057, z: 6.637269}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1629,6 +1639,21 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!65 &1658124193 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 4261178482317063758, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+  m_PrefabInstance: {fileID: 921996811203851228}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1686130399 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 4067783705609707416, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+  m_PrefabInstance: {fileID: 921996811203851228}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1949220098 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 3932734724942173694, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+  m_PrefabInstance: {fileID: 921996811203851228}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1969197689 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2280587373253024334, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
@@ -1824,6 +1849,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1382797927}
+    - target: {fileID: 1052755936723235122, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1077562634972555926, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -1832,10 +1861,26 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 1522795732920671748, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1659497605422165411, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1952079236361004583, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 2042909993500914175, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: _isSolved
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2261538417258744407, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2305119745827571860, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -1852,6 +1897,14 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 3101551145963447331, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: spawnTime
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3101551145963447331, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: maxSpawnCount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3257634380107671128, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -1864,6 +1917,10 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 3810958433746623921, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3851072536744474519, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -1876,13 +1933,33 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 3151
       objectReference: {fileID: 0}
+    - target: {fileID: 3932734724942173694, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4038639408208615926, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: 'puzzleColliders.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1658124193}
+    - target: {fileID: 4067783705609707416, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4258365931592002204, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 4261178482317063758, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4451764238314776223, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
       propertyPath: ShotQualityEvaluation.FarLimit
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4519725187117369769, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4693920590544802812, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
       propertyPath: ShotQualityEvaluation.FarLimit
@@ -1900,6 +1977,10 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 5212297097889554491, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5300556138865854478, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -26.14
@@ -1948,10 +2029,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5783752026433405302, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: 'puzzleColliders.Array.data[0]'
+      value: 
+      objectReference: {fileID: 248514171}
+    - target: {fileID: 5783752026433405302, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: 'puzzleColliders.Array.data[1]'
+      value: 
+      objectReference: {fileID: 559428599}
+    - target: {fileID: 5783752026433405302, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: 'puzzleColliders.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1949220098}
     - target: {fileID: 5946709497610237714, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1493722916}
+    - target: {fileID: 6010790062682451662, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6019876444152422210, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -1960,6 +2057,10 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 6145534418831764099, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6437432347719786187, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -2024,6 +2125,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ===Stage 1===
       objectReference: {fileID: 0}
+    - target: {fileID: 8714985408008649059, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8925931506496542427, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
+      propertyPath: 'puzzleColliders.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1686130399}
     - target: {fileID: 8950624636522405293, guid: fe8133a746630e44b9a3a3d78d5a67bb, type: 3}
       propertyPath: Target.TrackingTarget
       value: 

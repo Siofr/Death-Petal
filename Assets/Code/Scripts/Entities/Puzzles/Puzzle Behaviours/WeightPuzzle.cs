@@ -24,7 +24,7 @@ public class WeightPuzzle : PuzzleInputBase
     [SerializeField] private float _weightDist;
     
     //Non-Serializable Fields   
-    private Dictionary<Collider, Weight> _weightColliders = new Dictionary<Collider, Weight>();
+    private Dictionary<Weight, Collider> _weightColliders = new Dictionary<Weight, Collider>();
     public Collider[] puzzleColliders;
     
     //Properties
@@ -87,7 +87,7 @@ public class WeightPuzzle : PuzzleInputBase
         
         foreach(var weight in _weights)
         {
-            conditionIndex = CompletionCondition(_weightColliders.ContainsValue(weight), weight.LinkedOutput) ? conditionIndex+1 : conditionIndex;
+            conditionIndex = CompletionCondition(_weightColliders.ContainsKey(weight), weight.LinkedOutput) ? conditionIndex+1 : conditionIndex;
         }
 
         var overallCondition = conditionIndex >= _weights.Count;
@@ -103,20 +103,20 @@ public class WeightPuzzle : PuzzleInputBase
     {
         if (puzzleColliders.Length < 1 || _weightColliders == null) return;
 
+        var isWeightCompleted = false;
+        
         foreach (var pCollider in puzzleColliders)
         {
-            if (pCollider.bounds.Intersects(context.collider.bounds))
+            if (!pCollider.bounds.Intersects(context.collider.bounds)) continue;
+
+            if (!_weightColliders.ContainsKey(context.weight))
             {
-                if (!_weightColliders.ContainsKey(context.collider))
-                {
-                    _weightColliders.Add(context.collider, context.weight);       
-                }
-            }
-            else
-            {
-                _weightColliders.Remove(context.collider);
+                _weightColliders.Add(context.weight, context.collider);
+                break;
             }
         }
+
+        if (isWeightCompleted) _weightColliders.Remove(context.weight);
         
         CheckCompletionConditions();
     }
