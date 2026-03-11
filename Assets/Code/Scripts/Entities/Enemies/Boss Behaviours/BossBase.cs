@@ -9,7 +9,7 @@ using UnityEngine.AI;
 using FMODUnity;
 using Random = UnityEngine.Random;
 
-public class BossBase : EnemyBase, ISaveable<EnemySaveData>
+public class BossBase : EnemyBase
 {
     [Header("Boss Settings")]
     [SerializeField] [Tooltip("Percent of Weaknesses remaining to enter Phase 2")]
@@ -194,34 +194,6 @@ public class BossBase : EnemyBase, ISaveable<EnemySaveData>
     private void Death()
     {
         Destroy(gameObject);
-    }
-
-    public SaveData GetSaveData(LevelData levelData)
-    {
-        if (__saveData == null)
-        {
-            var dataInstance = ScriptableObject.CreateInstance<EnemySaveData>();
-            #if UNITY_EDITOR
-            AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
-            #endif
-
-            __saveData = dataInstance;
-            __saveData.Save(transform.position, Weaknesses);
-        }
-        
-        return __saveData;
-    }
-
-    public void LoadSaveData(SaveData levelData)
-    {
-        __saveData = (EnemySaveData)levelData;
-        
-        __saveData.Load(transform, Weaknesses);
-    }
-
-    public void SaveData()
-    {
-        __saveData.Save(transform.position, Weaknesses);
     }
 }
 

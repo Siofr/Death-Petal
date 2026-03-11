@@ -1,57 +1,117 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 using UnityEngine;
-
-public struct SaveEvent: IEvent { }
-
-public struct LoadEvent : IEvent
-{
-    public bool isDefault;
-    
-    public LoadEvent(bool value) => isDefault = value;
-}
 
 public class LevelManager : Singleton<LevelManager>
 {
-    [SerializeField] private LevelData _levelData;
-    
-    //Events
-    private EventBindings<SaveEvent> _saveEventListener;
-    private EventBindings<LoadEvent> _loadEventListener;
-    
-    private void OnEnable()
-    {
-        _saveEventListener = new EventBindings<SaveEvent>(OnSave);
-        _loadEventListener = new EventBindings<LoadEvent>(OnLoad);
-        
-        EventBus<SaveEvent>.Register(_saveEventListener);
-        EventBus<LoadEvent>.Register(_loadEventListener);
-    }
+    [Header("LevelManager Fields, Attach Component to Level Prefab")]
+    public LevelSaveData levelSaveData;
 
-    private void OnDisable()
-    {
-        EventBus<SaveEvent>.Unregister(_saveEventListener);
-        EventBus<LoadEvent>.Unregister(_loadEventListener);
-    }
+    public List<ISaveable> saveables = new List<ISaveable>();
     
-    private void OnSave()
+    public void SaveLevelData(bool isBaking = false)
     {
-        _levelData.LoadLevelData(_levelData.saveables);
-    }
-
-    private void OnLoad(LoadEvent context)
-    {
-        if (!context.isDefault)
+        if (saveables.Count < 1)
         {
-            _levelData.LoadLevelData( _levelData.saveables);
+            var tempSaveables = FindSaveables();
+            
+            if (tempSaveables.Count < 1) return;
+            
+            saveables = tempSaveables;
+            var tempIDs = new List<int>();
+            
+            foreach (var saveable in saveables)
+            {
+                tempIDs.Add(saveable.SaveID);
+            }
+
+            levelSaveData.saveableID = tempIDs;
+        }
+        
+        foreach (var saveable in saveables)
+        {
+            saveable.HandleSaveData(ref levelSaveData);
+        }
+        
+        if (isBaking)
+        {
+            var defaultSave = new LevelSaveData(transform.name + "Default", levelSaveData);
+            
+            SaveSystem.SaveLevelData(defaultSave);
+            Debug.Log("Baked Level Data");
+            return;
+        }
+
+        levelSaveData.levelName = transform.name;
+        
+        SaveSystem.SaveLevelData(levelSaveData);
+        
+        Debug.Log("Saved Level Data");
+    }
+
+    public void LoadLevelData(bool isDefault = false)
+    {
+        var tempName = transform.name;
+        if(isDefault) tempName = transform.name + "Default";
+        
+        var temp = SaveSystem.GetLevelData(tempName);
+        
+        if (temp.levelName != transform.name && temp.levelName != transform.name + "Default") return;
+
+        levelSaveData = temp;
+        
+        foreach (var saveable in saveables)
+        {
+            saveable.HandleLoadData(ref levelSaveData);
+        }
+
+        if (tempName == transform.name+"Default")
+        {
+            Debug.Log("Loaded Default Level Data");
             return;
         }
         
-        _levelData.LoadLevelData( _levelData.defaultSaveables);
+        Debug.Log("Loaded Level Data");
+    }
+    
+    public List<ISaveable> FindSaveables()
+    {
+        var sceneObjects = FindObjectsByType<GameObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        
+        var tempSaveables = new List<ISaveable>();
+        
+        foreach (var gameObj in sceneObjects)
+        {
+            if (!gameObj.TryGetComponent(out ISaveable saveable)) continue;
+            
+            if(saveable.SaveID == 0) saveable.CreateSaveInstance();
+            
+            tempSaveables.Add(saveable);
+        }
+        
+        if(tempSaveables.Count < 1) Debug.Log("No Saveable Objects in Level");
+        
+        return tempSaveables;
     }
 
-    private void Start()
+    public void ClearData()
     {
-        _levelData.LoadLevelData(_levelData.defaultSaveables);
+        foreach (var saveable in saveables)
+        {
+            saveable.DeleteSaveInstance();
+        }
+        
+        levelSaveData =  new LevelSaveData(transform.name);
+        saveables.Clear();
+        
+        Debug.Log("Cleared Saveable Objects");
+        
+        SaveSystem.RemoveLevelData(transform.name);
+    }
+
+    public void Start()
+    {
+        if(saveables.Count < 1) saveables = FindSaveables();
+        LoadLevelData();
     }
 }

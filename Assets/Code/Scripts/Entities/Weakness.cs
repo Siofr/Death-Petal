@@ -111,6 +111,15 @@ public class Weakness : MonoBehaviour
         if(WeakType == WeakTypes.PLAYER) _renderer.material.SetFloat("_Opacity", 1f);
         else _renderer.material.SetFloat("_Opacity", .12f);
     }
+
+    public void RemoveWeakness()
+    {
+        if (ParentEntity == null) return;
+
+        ParentEntity.Weaknesses.Remove(this);
+        
+        Destroy(gameObject);
+    }
     
     private void Update()
     {

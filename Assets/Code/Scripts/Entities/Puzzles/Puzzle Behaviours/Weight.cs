@@ -19,10 +19,9 @@ public struct CorrectShotPuzzleEvent : IEvent
     public CorrectShotPuzzleEvent(Weight weightReference) => weight = weightReference;
 }
 
-public class Weight: EntityBase, ISaveable<PuzzleElementData>
+public class Weight: EntityBase
 {
     [Header("Weight Fields")] 
-    [SerializeField] private PuzzleElementData _saveData;
     [SerializeField] private GameObject _linkedOutputObject;
     [SerializeField] private Animator _weightModelAnimator;
     
@@ -45,7 +44,6 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
     
     //Properties
     public IPuzzleOutput LinkedOutput => _output;
-    public PuzzleElementData SaveInfo => _saveData;
     
     private IEnumerator MoveWeightRoutine(bool reset)
     {
@@ -113,34 +111,5 @@ public class Weight: EntityBase, ISaveable<PuzzleElementData>
     {
         base.Awake();
         if(_linkedOutputObject != null) _linkedOutputObject.TryGetComponent(out _output);
-    }
-
-    public SaveData GetSaveData(LevelData levelData)
-    {
-        if (_saveData == null)
-        {
-            var dataInstance = ScriptableObject.CreateInstance<PuzzleElementData>();
-
-            # if UNITY_EDITOR
-                AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
-            #endif
-
-            _saveData = dataInstance;
-            _saveData.Save(transform.position);
-        }
-        
-        return _saveData;
-    }
-
-    public void LoadSaveData(SaveData levelData)
-    {
-        _saveData = (PuzzleElementData)levelData;
-        
-        _saveData.Load(transform);
-    }
-
-    public void SaveData()
-    {
-        _saveData.Save(transform.position);
     }
 }

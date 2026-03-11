@@ -32,10 +32,9 @@ struct CorrectShotEvent : IEvent
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
+public class EnemyBase : EntityBase, IEntity
 {
     [Header("Enemy Configuration")]
-    protected EnemySaveData __saveData;
     public Animator animator;
     public EnemyConfig_SO enemyData;
     public Vector3 defaultPos;
@@ -54,7 +53,6 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
     protected bool _isDead;
     
     //Properties
-    public EnemySaveData SaveInfo => __saveData;
     public bool IsDead => _isDead;
     
     //Events
@@ -252,34 +250,6 @@ public class EnemyBase : EntityBase, IEntity, ISaveable<EnemySaveData>
         }
 
         print("Enemy Base Shot");
-    }
-
-    public SaveData GetSaveData(LevelData levelData)
-    {
-        if (__saveData == null)
-        {
-            var dataInstance = ScriptableObject.CreateInstance<EnemySaveData>();
-            #if UNITY_EDITOR
-            AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
-            #endif
-
-            __saveData = dataInstance;
-            __saveData.Save(transform.position, Weaknesses);
-        }
-        
-        return __saveData;
-    }
-
-    public void LoadSaveData(SaveData levelData)
-    {
-        __saveData = (EnemySaveData)levelData;
-        
-        __saveData.Load(transform, Weaknesses);
-    }
-
-    public void SaveData()
-    {
-        __saveData.Save(transform.position, Weaknesses);
     }
 
     public virtual void StopAllStateRoutines()
