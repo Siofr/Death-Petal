@@ -1,16 +1,37 @@
+using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class LevelDownInput : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private EventSystem eventSystem;
+    private EventTrigger eventTrigger;
+
+    private void Awake()
     {
-        
+        eventSystem = FindAnyObjectByType<EventSystem>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public Selectable exitPoint;
+
+    public void BackOutOfMenu()
     {
-        
+        eventSystem.SetSelectedGameObject(exitPoint.gameObject);        
     }
+
+    private bool IsSelectedChild()
+    {
+        Transform[] childComponents = GetComponentsInChildren<Transform>();
+        foreach (var selectable in childComponents)
+        {
+            if (selectable.GetComponent<Selectable>() != null && eventSystem.currentSelectedGameObject == selectable.gameObject)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
 }

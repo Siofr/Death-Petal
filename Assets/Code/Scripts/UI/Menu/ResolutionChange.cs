@@ -1,5 +1,4 @@
 using TMPro;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,5 +45,12 @@ public class ResolutionChange : MonoBehaviour
         }
         
         SetResolution(resolution.x, resolution.y);
+    }
+
+    public void ToggleFullScreen()
+    {
+        isFullScreen = !isFullScreen;
+        
+        Screen.fullScreen = isFullScreen;
     }
 }
