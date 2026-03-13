@@ -12,10 +12,14 @@ public class UITutorial : MonoBehaviour
     // Events
     private EventBindings<TutorialTriggerEvent> _tutorialTriggerListener;
     private EventBindings<AdvanceTutorialEvent> _advanceTutorialEvent;
+    private EventBindings<EndTutorialEvent> _endTutorialEvent;
 
     private void Awake()
     {
         _tutorialTriggerListener = new EventBindings<TutorialTriggerEvent>(ShowTutorial);
+        _advanceTutorialEvent = new EventBindings<AdvanceTutorialEvent>(AdvanceTutorial);
+        _endTutorialEvent = new EventBindings<EndTutorialEvent>(EndTutorial);
+
         _tutorialContainer = transform.GetChild(0);
 
         foreach(Transform item in _tutorialContainer)
@@ -28,17 +32,19 @@ public class UITutorial : MonoBehaviour
     {
         EventBus<TutorialTriggerEvent>.Register(_tutorialTriggerListener);
         EventBus<AdvanceTutorialEvent>.Register(_advanceTutorialEvent);
+        EventBus<EndTutorialEvent>.Register(_endTutorialEvent);
     }
 
     private void OnDisable()
     {
         EventBus<TutorialTriggerEvent>.Unregister(_tutorialTriggerListener);
         EventBus<AdvanceTutorialEvent>.Unregister(_advanceTutorialEvent);
+        EventBus<EndTutorialEvent>.Unregister(_endTutorialEvent);
     }
 
     private void AdvanceTutorial(AdvanceTutorialEvent ctx)
     {
-        
+        _tutorialReferences[ctx.actionName].SetActive(false);
     }
 
     private void ShowTutorial(TutorialTriggerEvent ctx)
@@ -46,7 +52,13 @@ public class UITutorial : MonoBehaviour
         for(int i = 0; i < ctx.tutorialSteps.Count;  i++)
         {
             _tutorialPopups.ElementAt(i).Key.SetActive(true);
-            _tutorialPopups.ElementAt(i).Value.text = ctx.tutorialSteps[i];
+            _tutorialPopups.ElementAt(i).Value.text = ctx.tutorialSteps.ElementAt(i).Key;
+            _tutorialReferences.Add(ctx.tutorialSteps.ElementAt(i).Value, _tutorialPopups.ElementAt(i).Key);
         }
+    }
+
+    private void EndTutorial()
+    {
+        _tutorialReferences.Clear();
     }
 }

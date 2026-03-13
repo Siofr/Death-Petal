@@ -90,7 +90,7 @@ public class InputHandler : Singleton<InputHandler>
         MOVE.Disable();
         INTERACT.Disable();
         LOOK.Disable();
-        AIM.Disable();
+        // AIM.Disable();
         ATTACK.Disable();
         RELOAD.Disable();
         SPRINT.Disable();
