@@ -27,7 +27,7 @@ public class LevelManager : Singleton<LevelManager>
         foreach (var saveable in saveables)
         {
             tempIDs.Add(saveable.SaveID);
-            saveable.HandleSaveData(ref temp);
+            //saveable.HandleSaveData(ref temp);
         }
 
         temp.saveableID = tempIDs;

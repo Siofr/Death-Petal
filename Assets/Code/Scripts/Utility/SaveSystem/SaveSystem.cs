@@ -192,6 +192,11 @@ public struct PuzzleOutputSaveData
     {
         puzzleOutput.IsSolved = isSolved;
     }
+
+    public int GetID()
+    {
+        return id;
+    }
 }
 
 #endregion
