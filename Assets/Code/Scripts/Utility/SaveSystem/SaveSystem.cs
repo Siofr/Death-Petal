@@ -46,7 +46,7 @@ public static class SaveSystem
     {
         LoadGameData();
         
-        var defaultDataName = levelName + "Default";
+        var defaultDataName = levelName + " Default";
         var defaultDataTemp = new LevelSaveData();
         
         for (int i = 0; i < gameSaveData.levelSaveData.Count; i++)
@@ -73,7 +73,7 @@ public static class SaveSystem
         for (var i = gameSaveData.levelSaveData.Count - 1; i >= 0; i--)
         {
             if (gameSaveData.levelSaveData[i].levelName != levelName &&
-                gameSaveData.levelSaveData[i].levelName != levelName + "Default") continue;
+                gameSaveData.levelSaveData[i].levelName != levelName + " Default") continue;
             
             gameSaveData.levelSaveData.RemoveAt(i);
             count++;

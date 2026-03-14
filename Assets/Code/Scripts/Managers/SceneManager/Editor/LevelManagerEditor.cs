@@ -6,6 +6,8 @@ public class LevelManagerEditor: Editor
 {
     public override void OnInspectorGUI()
     {
+        base.OnInspectorGUI();
+        
         var manager = (LevelManager)target;
 
         if (GUILayout.Button("Bake Level Data"))
