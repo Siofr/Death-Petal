@@ -49,6 +49,8 @@ public class UITutorial : MonoBehaviour
 
     private void ShowTutorial(TutorialTriggerEvent ctx)
     {
+        _tutorialReferences.Clear();
+
         for(int i = 0; i < ctx.tutorialSteps.Count;  i++)
         {
             _tutorialPopups.ElementAt(i).Key.SetActive(true);

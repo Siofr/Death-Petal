@@ -37,39 +37,65 @@ public class TutorialTrigger : MonoBehaviour
         public InputActionReference actionRef;
     }
 
-    public List<TutorialInfo> tutorialSteps = new List<TutorialInfo>();
+    [System.Serializable]
+    public struct TutorialStep
+    {
+        public List<TutorialInfo> tutorialInfo;
+    }
+
+    public List<TutorialStep> tutorialSteps = new List<TutorialStep>();
 
     private int _tutorialIndex;
+    private int _stepIndex;
     private List<string> _tutorialText = new List<string>();
     private Dictionary<string, string> _stepsDict = new Dictionary<string, string>();
 
-    private void Start()
+    void AdvanceTutorial(InputAction.CallbackContext ctx)
     {
-        foreach(var tutorialStep in tutorialSteps)
+        ctx.action.performed -= AdvanceTutorial;
+        _stepIndex++;
+        EventBus<AdvanceTutorialEvent>.Raise(new AdvanceTutorialEvent(ctx.action.name));
+
+        if (_stepIndex >= tutorialSteps[_tutorialIndex].tutorialInfo.Count)
         {
-            // _tutorialText.Add(tutorialStep.tutorialText);
-            tutorialStep.actionRef.action.performed += AdvanceTutorial;
-            string inputName = tutorialStep.actionRef.name;
-            string output = inputName.Substring(inputName.IndexOf('/') + 1);
-            _stepsDict.Add(tutorialStep.tutorialText, output);
+            EndStep();
         }
     }
 
-    void AdvanceTutorial(InputAction.CallbackContext ctx)
+    public void TriggerTutorial(int tutorialIndex)
     {
-        EventBus<AdvanceTutorialEvent>.Raise(new AdvanceTutorialEvent(ctx.action.name));
-    }
+        foreach (var tutorialStep in tutorialSteps[tutorialIndex].tutorialInfo)
+        {
+            tutorialStep.actionRef.action.performed += AdvanceTutorial;
+            string inputName = tutorialStep.actionRef.name;
+            string output = inputName.Substring(inputName.IndexOf('/') + 1);
+            string binds = tutorialStep.actionRef.action.GetBindingDisplayString();
+            _stepsDict.Add(binds + " - " + tutorialStep.tutorialText, output);
+        }
 
-    void TriggerTutorial()
-    {
         EventBus<TutorialTriggerEvent>.Raise(new TutorialTriggerEvent(_stepsDict));
     }
 
     void EndStep()
     {
-        foreach(var tutorialStep in tutorialSteps)
+        foreach(var tutorialStep in tutorialSteps[_tutorialIndex].tutorialInfo)
         {
             tutorialStep.actionRef.action.performed -= AdvanceTutorial;
+        }
+
+        _stepIndex = 0;
+        _tutorialIndex++;
+        _stepsDict.Clear();
+
+        // EventBus<AdvanceTutorialEvent>.Raise(new AdvanceTutorialEvent());
+
+        if (_tutorialIndex < tutorialSteps.Count)
+        {
+            TriggerTutorial(_tutorialIndex);
+        }
+        else
+        {
+            EndTutorial();
         }
     }
 
@@ -82,7 +108,15 @@ public class TutorialTrigger : MonoBehaviour
     {
         if (other.transform.tag == "Player")
         {
-            TriggerTutorial();
+            TriggerTutorial(_tutorialIndex);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.tag == "Player")
+        {
+            EndTutorial();
         }
     }
 }
