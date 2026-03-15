@@ -37,11 +37,11 @@ public class RebindKeyUI : MonoBehaviour
 
     void SetButtonNameToBinding()
     {
-        //int bindingIndex = inputActionRef.action.GetBindingIndexForControl(inputActionRef.action.controls[0]);
+        int bindingIndex = inputActionRef.action.GetBindingIndexForControl(inputActionRef.action.controls[0]);
 
         //buttonTextTMP.text = InputControlPath.ToHumanReadableString(inputActionRef.action.bindings[bindingIndex].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
 
-        var bindingIndex = inputActionRef.action.GetBindingIndex(InputBinding.MaskByGroups("Gamepad"));
+        //var bindingIndex = inputActionRef.action.GetBindingIndex(InputBinding.MaskByGroups("XInputControllerWindows"));
     
         buttonTextTMP.text = inputActionRef.action.GetBindingDisplayString(bindingIndex);
     }
