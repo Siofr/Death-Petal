@@ -101,6 +101,9 @@ public class TutorialTrigger : MonoBehaviour
 
     void EndTutorial()
     {
+        _tutorialIndex = 0;
+        _stepIndex = 0;
+        _stepsDict.Clear();
         EventBus<EndTutorialEvent>.Raise(new EndTutorialEvent());
     }
 

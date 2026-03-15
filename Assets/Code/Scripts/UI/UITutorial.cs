@@ -61,6 +61,11 @@ public class UITutorial : MonoBehaviour
 
     private void EndTutorial()
     {
+        for (int i = 0; i < _tutorialPopups.Count; i++)
+        {
+            _tutorialPopups.ElementAt(i).Key.SetActive(false);
+        }
+
         _tutorialReferences.Clear();
     }
 }
