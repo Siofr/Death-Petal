@@ -27,11 +27,6 @@ public struct EndTutorialEvent : IEvent
 
 }
 
-public class TutorialInfo
-{
-    public List<TutorialInfo> tutorials;
-}
-
 public class TutorialTrigger : MonoBehaviour
 {
 
@@ -50,7 +45,7 @@ public class TutorialTrigger : MonoBehaviour
 
     private void Start()
     {
-        foreach(var tutorialStep in tutorialSteps[_tutori])
+        foreach(var tutorialStep in tutorialSteps)
         {
             // _tutorialText.Add(tutorialStep.tutorialText);
             tutorialStep.actionRef.action.performed += AdvanceTutorial;
@@ -72,7 +67,7 @@ public class TutorialTrigger : MonoBehaviour
 
     void EndStep()
     {
-        foreach(var tutorialStep in tutorialSteps[_tutorialIndex])
+        foreach(var tutorialStep in tutorialSteps)
         {
             tutorialStep.actionRef.action.performed -= AdvanceTutorial;
         }
