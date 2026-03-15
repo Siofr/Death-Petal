@@ -17,7 +17,7 @@ public class UITutorial : MonoBehaviour
     private void Awake()
     {
         _tutorialTriggerListener = new EventBindings<TutorialTriggerEvent>(ShowTutorial);
-        _advanceTutorialEvent = new EventBindings<AdvanceTutorialEvent>(AdvanceTutorial);
+        _advanceTutorialEvent = new EventBindings<AdvanceTutorialEvent>(AdvanceStep);
         _endTutorialEvent = new EventBindings<EndTutorialEvent>(EndTutorial);
 
         _tutorialContainer = transform.GetChild(0);
@@ -42,7 +42,7 @@ public class UITutorial : MonoBehaviour
         EventBus<EndTutorialEvent>.Unregister(_endTutorialEvent);
     }
 
-    private void AdvanceTutorial(AdvanceTutorialEvent ctx)
+    private void AdvanceStep(AdvanceTutorialEvent ctx)
     {
         _tutorialReferences[ctx.actionName].SetActive(false);
     }
@@ -55,6 +55,11 @@ public class UITutorial : MonoBehaviour
             _tutorialPopups.ElementAt(i).Value.text = ctx.tutorialSteps.ElementAt(i).Key;
             _tutorialReferences.Add(ctx.tutorialSteps.ElementAt(i).Value, _tutorialPopups.ElementAt(i).Key);
         }
+    }
+
+    private void NextStep()
+    {
+        _tutorialReferences.Clear();
     }
 
     private void EndTutorial()

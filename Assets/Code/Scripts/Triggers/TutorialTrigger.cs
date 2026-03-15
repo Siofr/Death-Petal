@@ -27,6 +27,11 @@ public struct EndTutorialEvent : IEvent
 
 }
 
+public class TutorialInfo
+{
+    public List<TutorialInfo> tutorials;
+}
+
 public class TutorialTrigger : MonoBehaviour
 {
 
@@ -39,14 +44,15 @@ public class TutorialTrigger : MonoBehaviour
 
     public List<TutorialInfo> tutorialSteps = new List<TutorialInfo>();
 
+    private int _tutorialIndex;
     private List<string> _tutorialText = new List<string>();
     private Dictionary<string, string> _stepsDict = new Dictionary<string, string>();
 
     private void Start()
     {
-        foreach(var tutorialStep in tutorialSteps)
+        foreach(var tutorialStep in tutorialSteps[_tutori])
         {
-            _tutorialText.Add(tutorialStep.tutorialText);
+            // _tutorialText.Add(tutorialStep.tutorialText);
             tutorialStep.actionRef.action.performed += AdvanceTutorial;
             string inputName = tutorialStep.actionRef.name;
             string output = inputName.Substring(inputName.IndexOf('/') + 1);
@@ -64,13 +70,16 @@ public class TutorialTrigger : MonoBehaviour
         EventBus<TutorialTriggerEvent>.Raise(new TutorialTriggerEvent(_stepsDict));
     }
 
-    void EndTutorial()
+    void EndStep()
     {
-        foreach(var tutorialStep in tutorialSteps)
+        foreach(var tutorialStep in tutorialSteps[_tutorialIndex])
         {
             tutorialStep.actionRef.action.performed -= AdvanceTutorial;
         }
+    }
 
+    void EndTutorial()
+    {
         EventBus<EndTutorialEvent>.Raise(new EndTutorialEvent());
     }
 
