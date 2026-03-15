@@ -19,6 +19,12 @@ public class InputHandler : Singleton<InputHandler>
     public static InputAction SPRINT;
     public static InputAction RESTART;
 
+    // Face Buttons
+    public static InputAction NORTH;
+    public static InputAction WEST;
+    public static InputAction EAST;
+    public static InputAction SOUTH;
+
     public static event Action<Vector2> MoveEvent;
     public static event Action InteractEvent;
     public static event Action<Vector2> LookEvent;
@@ -33,7 +39,8 @@ public class InputHandler : Singleton<InputHandler>
     public static event Action AimEvent;
     public static event Action AimCancelledEvent;
 
-    public static event Action<Vector2> HotkeyEvent;
+    public static event Action<int> HotkeyEvent;
+    public static event Action RemoveBulletEvent;
 
     public static event Action SprintEvent;
     public static event Action SprintCancelledEvent;
@@ -63,11 +70,6 @@ public class InputHandler : Singleton<InputHandler>
         ATTACK.Enable();
         ATTACK.performed += OnAttackPerformed;
 
-/*        AIM = _inputActions.Player.Aim;
-        AIM.Enable();
-        AIM.performed += OnAim;
-        AIM.canceled += OnAim;*/
-
         RELOAD = _inputActions.Player.Reload;
         RELOAD.Enable();
         RELOAD.performed += OnReload;
@@ -76,9 +78,21 @@ public class InputHandler : Singleton<InputHandler>
         SPRINT.Enable();
         SPRINT.performed += OnSprint;
 
-        HOTKEY = _inputActions.Player.Hotkey;
-        HOTKEY.Enable();
-        HOTKEY.performed += OnHotkeyPerformed;
+        NORTH = _inputActions.Player.North;
+        NORTH.Enable();
+        NORTH.performed += OnNorthPerformed;
+
+        WEST = _inputActions.Player.West;
+        WEST.Enable();
+        WEST.performed += OnWestPerformed;
+
+        EAST = _inputActions.Player.East;
+        EAST.Enable();
+        EAST.performed += OnEastPerformed;
+
+        SOUTH = _inputActions.Player.South;
+        SOUTH.Enable();
+        SOUTH.performed += OnSouthPerformed;
 
         RESTART = _inputActions.Player.Restart;
         RESTART.Enable();
@@ -90,11 +104,13 @@ public class InputHandler : Singleton<InputHandler>
         MOVE.Disable();
         INTERACT.Disable();
         LOOK.Disable();
-        // AIM.Disable();
         ATTACK.Disable();
         RELOAD.Disable();
         SPRINT.Disable();
-        HOTKEY.Disable();
+        NORTH.Disable();
+        WEST.Disable();
+        EAST.Disable();
+        SOUTH.Disable();
     }
 
     private void OnMovePerformed(InputAction.CallbackContext ctx)
@@ -122,18 +138,6 @@ public class InputHandler : Singleton<InputHandler>
         SprintEvent?.Invoke();
     }
 
-    private void OnAim(InputAction.CallbackContext ctx)
-    {
-        if (ctx.phase == InputActionPhase.Performed)
-        {
-            AimEvent?.Invoke();
-        }
-        if (ctx.phase == InputActionPhase.Canceled)
-        {
-            AimCancelledEvent?.Invoke();
-        }
-    }
-
     private void OnReload(InputAction.CallbackContext ctx)
     {
         Debug.Log(ctx.ReadValue<float>());
@@ -146,9 +150,25 @@ public class InputHandler : Singleton<InputHandler>
         RotateBarrelEvent.Invoke(-1);
     }
 
-    private void OnHotkeyPerformed(InputAction.CallbackContext ctx)
+    private void OnNorthPerformed(InputAction.CallbackContext ctx)
     {
-        HotkeyEvent?.Invoke(ctx.ReadValue<Vector2>());
+        HotkeyEvent.Invoke(2);
+    }
+
+    private void OnEastPerformed(InputAction.CallbackContext ctx)
+    {
+        HotkeyEvent.Invoke(1);
+    }
+
+    private void OnWestPerformed(InputAction.CallbackContext ctx)
+    {
+        HotkeyEvent.Invoke(0);
+    }
+
+    private void OnSouthPerformed(InputAction.CallbackContext ctx)
+    {
+        RemoveBulletEvent?.Invoke();
+        // HotkeyEvent?.Invoke();
     }
 
     private void OnRestartPerformed(InputAction.CallbackContext ctx)

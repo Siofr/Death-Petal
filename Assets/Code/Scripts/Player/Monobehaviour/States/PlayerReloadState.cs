@@ -9,7 +9,7 @@ namespace State_Machine
 
         public override void OnEnter()
         {
-            InputHandler.HotkeyEvent += AddBullet;
+            // InputHandler.HotkeyEvent += AddBullet;
             EventBus<StartLongReload>.Raise(new StartLongReload());
         }
 
@@ -20,11 +20,11 @@ namespace State_Machine
 
         public override void OnExit()
         {
-            InputHandler.HotkeyEvent -= AddBullet;
+            // InputHandler.HotkeyEvent -= AddBullet;
             EventBus<EndLongReload>.Raise(new EndLongReload());
         }
 
-        public void AddBullet(Vector2 axis)
+/*        public void AddBullet(int index)
         {
             if (axis.x < 0)
             {
@@ -43,6 +43,6 @@ namespace State_Machine
             {
                 EventBus<RemoveBulletEvent>.Raise(new RemoveBulletEvent(-1, -1));
             }
-        }
+        }*/
     }
 }
