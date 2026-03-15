@@ -68,6 +68,7 @@ namespace State_Machine
             InputHandler.LongReloadCancelledEvent += OnReloadCancel;
             InputHandler.QuickReloadEvent += OnQuickReload;
             InputHandler.HotkeyEvent += AddBullet;
+            InputHandler.RemoveBulletEvent += RemoveBullet;
             InputHandler.RotateBarrelEvent += OnRotateBarrel;
         }
 
@@ -82,7 +83,9 @@ namespace State_Machine
             InputHandler.SprintEvent -= OnSprint;
             InputHandler.LongReloadEvent -= OnReloadStart;
             InputHandler.LongReloadCancelledEvent -= OnReloadCancel;
-            InputHandler.HotkeyEvent -= _reloadState.AddBullet;
+            // InputHandler.HotkeyEvent -= _reloadState.AddBullet;
+            InputHandler.RemoveBulletEvent -= RemoveBullet;
+            InputHandler.HotkeyEvent -= AddBullet;
             InputHandler.AttackEvent -= _aimState.HandleShoot;
             InputHandler.QuickReloadEvent -= OnQuickReload;
             InputHandler.RotateBarrelEvent -= OnRotateBarrel;
@@ -161,16 +164,6 @@ namespace State_Machine
         {
             stateMachine.FixedUpdate();
         }
-
-/*        void OnAim()
-        {
-            if (!_isAiming)
-            {
-                _isAiming = true;
-                return;
-            }
-            _isAiming = false;
-        }*/
 
         void OnReloadStart()
         {
@@ -280,25 +273,15 @@ namespace State_Machine
             EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
         }
 
-        public void AddBullet(Vector2 axis)
+        public void AddBullet(int index)
         {
-            if (axis.x < 0)
-            {
-                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(bulletTypes[0]));
-            }
-            if (axis.x > 0)
-            {
-                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(bulletTypes[1]));
-            }
+            EventBus<AddBulletEvent>.Raise(new AddBulletEvent(bulletTypes[index]));
+            // EventBus<AddBulletEvent>.Raise(new AddBulletEvent(bulletTypes[index]));
+        }
 
-            if (axis.y > 0)
-            {
-                EventBus<AddBulletEvent>.Raise(new AddBulletEvent(bulletTypes[2]));
-            }
-            if (axis.y < 0)
-            {
-                EventBus<RemoveBulletEvent>.Raise(new RemoveBulletEvent(-1, -1));
-            }
+        public void RemoveBullet()
+        {
+            EventBus<RemoveBulletEvent>.Raise(new RemoveBulletEvent(-1, -1));
         }
 
         private void OnChangeCamera(CameraChangeEvent ctx)
