@@ -38,7 +38,7 @@ public class RebindKeyUI : MonoBehaviour
         SaveUserRebinds();
     }
 
-    void SetButtonNameToBinding()
+    public void SetButtonNameToBinding()
     {
         int bindingIndex = inputActionRef.action.GetBindingIndexForControl(inputActionRef.action.controls[0]);
 
@@ -61,6 +61,8 @@ public class RebindKeyUI : MonoBehaviour
         //inputAsset.Enable();
 
         SetButtonNameToBinding();
+
+        SaveUserRebinds();
     }
 
 

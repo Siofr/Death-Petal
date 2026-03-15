@@ -8,6 +8,12 @@ public class ResolutionChange : MonoBehaviour
     public bool isFullScreen = false;
     
     public TMP_Dropdown resolutionDropdown;
+    public Toggle fullscreenToggle;
+
+    void OnEnable()
+    {
+        FixSettings();
+    }
 
     public void SetResolution(int width, int height)
     {
@@ -45,6 +51,35 @@ public class ResolutionChange : MonoBehaviour
         }
         
         SetResolution(resolution.x, resolution.y);
+    }
+
+    private int GetResolutionIndex()
+    {
+        int[] currentRes = {Screen.width, Screen.height};
+        switch (currentRes[1])
+        {
+            case 2160:
+                return 0;
+                break;
+            case 1440:
+                return 1;
+            case 1080:
+                return 2;
+            case 720:
+                return 3;
+            case 480:
+                return 4;
+            case 240:
+                return 5;
+        }
+        return 5;
+    }
+
+    private void FixSettings()
+    {
+        fullscreenToggle.isOn = Screen.fullScreen;
+
+        resolutionDropdown.value = GetResolutionIndex();
     }
 
     public void ToggleFullScreen()
