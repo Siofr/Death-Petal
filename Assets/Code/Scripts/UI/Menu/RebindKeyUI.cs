@@ -46,7 +46,17 @@ public class RebindKeyUI : MonoBehaviour
 
         //var bindingIndex = inputActionRef.action.GetBindingIndex(InputBinding.MaskByGroups("XInputControllerWindows"));
     
-        buttonTextTMP.text = inputActionRef.action.GetBindingDisplayString(bindingIndex);
+        string rawName = inputActionRef.action.GetBindingDisplayString(bindingIndex);
+
+        if (InputTextToTMPIcon.TryConvertToXboxIcon(out string o, rawName))
+        {
+            buttonTextTMP.text = o;
+        } 
+        else
+        {
+            buttonTextTMP.text = rawName;
+        }
+
     }
 
     public void resetBinding()
