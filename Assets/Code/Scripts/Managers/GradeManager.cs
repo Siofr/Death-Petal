@@ -48,6 +48,7 @@ public class GradeManager : MonoBehaviour
     private float currentTime;
     private float finalTime;
     private string timeGrade;
+    private string scoreGrade;
 
     // Enemy Variables
     private int enemyCount;
@@ -139,7 +140,19 @@ public class GradeManager : MonoBehaviour
 
         finalGrades.Add(finalTime, timeGrade);
 
-        finalGrades.Add(currentScore, "S");
+        int bestScore = currentStage.bestScore;
+
+        for(int i = 0; i < gradeObjects.Length; i++)
+        {
+            if (currentScore >= bestScore * gradeObjects[i].percentage)
+            {
+                scoreGrade = gradeObjects[i].letterGrade;
+                break;
+            }
+            scoreGrade = "D";
+        }
+
+        finalGrades.Add(currentScore, scoreGrade);
 
         // Enemies Remaining Grade
         int enemiesRemaining = CheckStageBounds(LayerMask.GetMask("Enemy"));

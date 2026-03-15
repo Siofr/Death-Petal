@@ -59,11 +59,6 @@ public class UITutorial : MonoBehaviour
         }
     }
 
-    private void NextStep()
-    {
-        _tutorialReferences.Clear();
-    }
-
     private void EndTutorial()
     {
         _tutorialReferences.Clear();

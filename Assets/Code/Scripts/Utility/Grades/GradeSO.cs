@@ -11,4 +11,5 @@ public class GradeSO : ScriptableObject
     public int urnsBroken;
     public int petalsRemaining;
     public int bulletsReflected;
+    public float percentage;
 }

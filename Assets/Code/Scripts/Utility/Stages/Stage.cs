@@ -4,6 +4,7 @@ public class Stage : MonoBehaviour
 {
     public string stageName;
     public float bestTime;
+    public int bestScore;
     public Bounds stageBoundary;
 
     private void Awake()
