@@ -14,16 +14,21 @@ public class InputHandler : Singleton<InputHandler>
     public static InputAction LOOK;
     public static InputAction AIM;
     public static InputAction ATTACK;
-    public static InputAction RELOAD;
-    public static InputAction HOTKEY;
+    public static InputAction RELOAD; //depricated
+    public static InputAction HOTKEY; //depricated
     public static InputAction SPRINT;
-    public static InputAction RESTART;
+    public static InputAction RESTART; //debug
 
     // Face Buttons
     public static InputAction NORTH;
     public static InputAction WEST;
     public static InputAction EAST;
     public static InputAction SOUTH;
+
+    // Barrel Turning
+
+    public static InputAction BARLEFT;
+    public static InputAction BARRIGHT;
 
     public static event Action<Vector2> MoveEvent;
     public static event Action InteractEvent;
@@ -55,6 +60,7 @@ public class InputHandler : Singleton<InputHandler>
     void OnEnable()
     {
         LoadUserRebinds();
+
         MOVE = _inputActions.Player.Move;
         MOVE.Enable();
         MOVE.performed += OnMovePerformed;
@@ -71,9 +77,9 @@ public class InputHandler : Singleton<InputHandler>
         ATTACK.Enable();
         ATTACK.performed += OnAttackPerformed;
 
-        RELOAD = _inputActions.Player.Reload;
-        RELOAD.Enable();
-        RELOAD.performed += OnReload;
+        // RELOAD = _inputActions.Player.Reload;
+        // RELOAD.Enable();
+        // RELOAD.performed += OnReload;
 
         SPRINT = _inputActions.Player.Sprint;
         SPRINT.Enable();
@@ -95,9 +101,19 @@ public class InputHandler : Singleton<InputHandler>
         SOUTH.Enable();
         SOUTH.performed += OnSouthPerformed;
 
+        BARLEFT = _inputActions.Player.BarrelLeft;
+        BARLEFT.Enable();
+        BARLEFT.performed += OnBarrelLeft;
+        
+        BARRIGHT = _inputActions.Player.BarrelRight;
+        BARRIGHT.Enable();
+        BARRIGHT.performed += OnBarrelRight;
+
         RESTART = _inputActions.Player.Restart;
         RESTART.Enable();
         RESTART.performed += OnRestartPerformed;
+
+
     }
 
     private void OnDisable()
@@ -106,12 +122,16 @@ public class InputHandler : Singleton<InputHandler>
         INTERACT.Disable();
         LOOK.Disable();
         ATTACK.Disable();
-        RELOAD.Disable();
+        //RELOAD.Disable();
         SPRINT.Disable();
+
         NORTH.Disable();
         WEST.Disable();
         EAST.Disable();
         SOUTH.Disable();
+
+        BARLEFT.Disable();
+        BARLEFT.Disable();
     }
 
     private void OnMovePerformed(InputAction.CallbackContext ctx)
@@ -139,6 +159,7 @@ public class InputHandler : Singleton<InputHandler>
         SprintEvent?.Invoke();
     }
 
+    //depricated
     private void OnReload(InputAction.CallbackContext ctx)
     {
         Debug.Log(ctx.ReadValue<float>());
@@ -149,6 +170,15 @@ public class InputHandler : Singleton<InputHandler>
         }
 
         RotateBarrelEvent.Invoke(-1);
+    }
+    // new here
+    private void OnBarrelLeft(InputAction.CallbackContext ctx)
+    {
+        RotateBarrelEvent.Invoke(-1);
+    }
+    private void OnBarrelRight(InputAction.CallbackContext ctx)
+    {
+        RotateBarrelEvent.Invoke(1);
     }
 
     private void OnNorthPerformed(InputAction.CallbackContext ctx)

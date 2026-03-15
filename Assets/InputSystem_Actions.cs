@@ -208,6 +208,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BarrelRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""ea7f8c33-a8b1-4367-b23d-7432527a7be4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BarrelLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""a274ed55-9813-4192-a104-6af8c1583b1b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -626,6 +644,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""South"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c499ad08-d1d7-464a-a60a-f46557471f44"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BarrelRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""753a0dc9-b598-4296-afba-b9f8f61f0006"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BarrelLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1226,6 +1266,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_East = m_Player.FindAction("East", throwIfNotFound: true);
         m_Player_North = m_Player.FindAction("North", throwIfNotFound: true);
         m_Player_South = m_Player.FindAction("South", throwIfNotFound: true);
+        m_Player_BarrelRight = m_Player.FindAction("BarrelRight", throwIfNotFound: true);
+        m_Player_BarrelLeft = m_Player.FindAction("BarrelLeft", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1332,6 +1374,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_East;
     private readonly InputAction m_Player_North;
     private readonly InputAction m_Player_South;
+    private readonly InputAction m_Player_BarrelRight;
+    private readonly InputAction m_Player_BarrelLeft;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1395,6 +1439,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/South".
         /// </summary>
         public InputAction @South => m_Wrapper.m_Player_South;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/BarrelRight".
+        /// </summary>
+        public InputAction @BarrelRight => m_Wrapper.m_Player_BarrelRight;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/BarrelLeft".
+        /// </summary>
+        public InputAction @BarrelLeft => m_Wrapper.m_Player_BarrelLeft;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1460,6 +1512,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @South.started += instance.OnSouth;
             @South.performed += instance.OnSouth;
             @South.canceled += instance.OnSouth;
+            @BarrelRight.started += instance.OnBarrelRight;
+            @BarrelRight.performed += instance.OnBarrelRight;
+            @BarrelRight.canceled += instance.OnBarrelRight;
+            @BarrelLeft.started += instance.OnBarrelLeft;
+            @BarrelLeft.performed += instance.OnBarrelLeft;
+            @BarrelLeft.canceled += instance.OnBarrelLeft;
         }
 
         /// <summary>
@@ -1510,6 +1568,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @South.started -= instance.OnSouth;
             @South.performed -= instance.OnSouth;
             @South.canceled -= instance.OnSouth;
+            @BarrelRight.started -= instance.OnBarrelRight;
+            @BarrelRight.performed -= instance.OnBarrelRight;
+            @BarrelRight.canceled -= instance.OnBarrelRight;
+            @BarrelLeft.started -= instance.OnBarrelLeft;
+            @BarrelLeft.performed -= instance.OnBarrelLeft;
+            @BarrelLeft.canceled -= instance.OnBarrelLeft;
         }
 
         /// <summary>
@@ -1901,6 +1965,20 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSouth(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "BarrelRight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnBarrelRight(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "BarrelLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnBarrelLeft(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
