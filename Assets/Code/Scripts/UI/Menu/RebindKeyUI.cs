@@ -14,6 +14,7 @@ public class RebindKeyUI : MonoBehaviour
     void OnEnable()
     {
         SetButtonNameToBinding();
+        LoadUserRebinds();
     }
 
     public void RebindKeyStart()
@@ -33,6 +34,8 @@ public class RebindKeyUI : MonoBehaviour
         inputAsset.Enable();
 
         SetButtonNameToBinding();
+
+        SaveUserRebinds();
     }
 
     void SetButtonNameToBinding()
@@ -44,5 +47,32 @@ public class RebindKeyUI : MonoBehaviour
         //var bindingIndex = inputActionRef.action.GetBindingIndex(InputBinding.MaskByGroups("XInputControllerWindows"));
     
         buttonTextTMP.text = inputActionRef.action.GetBindingDisplayString(bindingIndex);
+    }
+
+    public void resetBinding()
+    {
+        //inputAsset.Disable();
+        //buttonTextTMP.text = waitText;
+
+        int bindingIndex = inputActionRef.action.GetBindingIndexForControl(inputActionRef.action.controls[0]);
+
+        inputActionRef.action.RemoveBindingOverride(bindingIndex);
+
+        //inputAsset.Enable();
+
+        SetButtonNameToBinding();
+    }
+
+
+    void SaveUserRebinds()
+    {
+        var rebinds = inputAsset.SaveBindingOverridesAsJson();
+        PlayerPrefs.SetString("rebinds", rebinds);
+    }
+
+    void LoadUserRebinds()
+    {
+        var rebinds = PlayerPrefs.GetString("rebinds");
+        inputAsset.LoadBindingOverridesFromJson(rebinds);
     }
 }

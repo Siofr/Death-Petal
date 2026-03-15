@@ -54,6 +54,7 @@ public class InputHandler : Singleton<InputHandler>
 
     void OnEnable()
     {
+        LoadUserRebinds();
         MOVE = _inputActions.Player.Move;
         MOVE.Enable();
         MOVE.performed += OnMovePerformed;
@@ -174,5 +175,11 @@ public class InputHandler : Singleton<InputHandler>
     private void OnRestartPerformed(InputAction.CallbackContext ctx)
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void LoadUserRebinds()
+    {
+        var rebinds = PlayerPrefs.GetString("rebinds");
+        _inputActions.LoadBindingOverridesFromJson(rebinds);
     }
 }

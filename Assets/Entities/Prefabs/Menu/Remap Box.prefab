@@ -256,7 +256,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5158647957236118801}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5728716364744408295}
+        m_TargetAssemblyTypeName: RebindKeyUI, Assembly-CSharp
+        m_MethodName: resetBinding
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &729057296054336996
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,23 +644,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f45cdc3d7bf93d4e97de0d02b5b8a4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RebindKeyUI
-  inputAction:
-    m_Name: Input
-    m_Type: 1
-    m_ExpectedControlType: Button
-    m_Id: 85368afe-67c4-4507-8a60-92e238c9337a
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 2df07843-a83b-4188-aeb5-3c77f2304e30
-      m_Path: 
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input
-      m_Flags: 0
-    m_Flags: 0
+  inputActionRef: {fileID: 0}
+  inputAsset: {fileID: 0}
+  buttonTextTMP: {fileID: 0}
+  waitText: 
 --- !u!1 &6943895488126562240
 GameObject:
   m_ObjectHideFlags: 0
