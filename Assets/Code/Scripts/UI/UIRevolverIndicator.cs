@@ -150,6 +150,7 @@ public class UIRevolverIndicator : MonoBehaviour
 
         bulletSprites[trapdoorChamber].sprite = ctx.bulletType.bulletSprite;
         bulletSprites[trapdoorChamber].enabled = true;
+        bulletSprites[trapdoorChamber].color = ctx.bulletType.bulletColor;
         bulletSprites[trapdoorChamber].transform.parent.GetComponent<MeshRenderer>().enabled = true;
 
         if (TEMP_ReloadTesting.Instance.manualRotate)

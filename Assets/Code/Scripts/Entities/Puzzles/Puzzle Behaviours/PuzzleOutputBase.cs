@@ -6,11 +6,10 @@ using UnityEngine;
 using FMOD.Studio;
 using FMODUnity;
 
-public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable<PuzzleOutputData>
+public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable<PuzzleOutputSaveData>
 {
     //Base Fields
     [Header("Base Fields")]
-    [SerializeField] private PuzzleOutputData _saveData;
     [SerializeField] private bool _isSolved;
     public Animator animator;
     
@@ -21,9 +20,6 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     // SFX
     [Header("Audio Paths")]
     public EventReference onCompletionEventPath;
-
-    //Properties
-    public PuzzleOutputData SaveInfo => _saveData;
     
     public bool IsSolved
     {
@@ -73,33 +69,65 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         animator.SetBool(Animator.StringToHash("IsSolved"), false);
         IsSolved = false;
     }
+    
+    //Saving Stuff
+    
+    private PuzzleOutputSaveData _saveData;
+    private int _saveID; 
+        
+    public PuzzleOutputSaveData SaveInfo => _saveData;
+    public int SaveID => _saveID;
 
-    public SaveData GetSaveData(LevelData levelData)
+    public void CreateSaveInstance()
     {
-        if (_saveData == null)
+        _saveID = ISaveableHelper.GenerateISaveableID();
+        
+        _saveData = new PuzzleOutputSaveData(_saveID, _isSolved);
+    }
+
+    public void DeleteSaveInstance()
+    {
+        if (SaveID == 0) return;
+        ISaveableHelper.RemoveExistingID(ref _saveID);
+
+        _saveData = new PuzzleOutputSaveData();
+    }
+
+    public void HandleSaveData(ref LevelSaveData refData)
+    {
+        if (!refData.saveableID.Contains(SaveID)) return;
+        
+        _saveData.Save(IsSolved);
+        
+        for (var i = 0; i < refData.puzzleOutputSaveData.Count; i++)
         {
-            var dataInstance = ScriptableObject.CreateInstance<PuzzleOutputData>();
-
-            # if UNITY_EDITOR
-                AssetDatabase.CreateAsset(dataInstance, levelData.AssetSavePath + $"/{gameObject.name}SaveData.asset");
-            #endif
-
-            _saveData = dataInstance;
-            _saveData.Save(transform.position, _isSolved);
+            if (refData.puzzleOutputSaveData[i].id != SaveID) continue;
+            
+            refData.puzzleOutputSaveData[i] = _saveData;
+            return;
         }
         
-        return _saveData;
+        refData.puzzleOutputSaveData.Add(_saveData);
     }
 
-    public void LoadSaveData(SaveData levelData)
+    public void HandleLoadData(ref LevelSaveData refData)
     {
-        _saveData = (PuzzleOutputData)levelData;
+        if (!refData.saveableID.Contains(SaveID))
+        {
+            Debug.Log("No Puzzle ID in Saveables");
+            return;
+        }
+        
+        foreach (var data in refData.puzzleOutputSaveData)
+        {
+            if (data.id != SaveID) continue;
 
-        _saveData.Load(transform, IsSolved);
-    }
-
-    public void SaveData()
-    {
-        _saveData.Save(transform.position, IsSolved);
+            _saveData = data;
+            
+            var output = GetComponent<IPuzzleOutput>();
+            
+            _saveData.Load(ref output);
+            return;
+        }
     }
 }

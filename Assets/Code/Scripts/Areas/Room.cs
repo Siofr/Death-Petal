@@ -1,5 +1,6 @@
 using System;
 using JetBrains.Annotations;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public struct RoomPlayerEnterEvent: IEvent
@@ -51,4 +52,5 @@ public class Room : MonoBehaviour
             EventBus<RoomPlayerExitEvent>.Raise(new RoomPlayerExitEvent(this));
         }
     }
-} 
+}
+
