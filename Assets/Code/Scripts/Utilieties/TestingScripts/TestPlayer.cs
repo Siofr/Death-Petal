@@ -27,9 +27,38 @@ public struct PlayerDeathEvent : IEvent { }
 
 public class TestPlayer : EntityBase, IEntity
 {
+    private EventBindings<PetalPickpEvent> _petalPickupEventListener;
+
+    private int _maxHealth = 3;
+    private int _currentPetalCharge;
+    private int _goalPetalCharge = 3;
+
     public void Awake()
     {
         base.Awake();
+
+        _petalPickupEventListener = new EventBindings<PetalPickpEvent>(OnPetalCollected);
+    }
+
+    private void OnEnable()
+    {
+        EventBus<PetalPickpEvent>.Register(_petalPickupEventListener);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<PetalPickpEvent>.Unregister(_petalPickupEventListener);
+    }
+
+    private void OnPetalCollected()
+    {
+        _currentPetalCharge++;
+
+        if (_currentPetalCharge >= _goalPetalCharge && Weaknesses.Count < _maxHealth)
+        {
+            Weaknesses.Add(new Weakness());
+            _currentPetalCharge = 0;
+        }
     }
 
     public override void OnShot(Weakness weakness, WeakTypes damageType)

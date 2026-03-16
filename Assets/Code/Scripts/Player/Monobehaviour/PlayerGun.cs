@@ -140,9 +140,9 @@ public class PlayerGun : MonoBehaviour
         EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_addRemoveEvent, this.gameObject));
 
         bulletArray[currentChamber] = null;
-        GetNextBullet();
 
         RotateBarrel(1);
+        GetNextBullet();
     }
 
     public void OnRotateBarrel(RotateBarrelEvent ctx)

@@ -49,6 +49,8 @@ public class UITutorial : MonoBehaviour
 
     private void ShowTutorial(TutorialTriggerEvent ctx)
     {
+        _tutorialReferences.Clear();
+
         for(int i = 0; i < ctx.tutorialSteps.Count;  i++)
         {
             _tutorialPopups.ElementAt(i).Key.SetActive(true);
@@ -57,13 +59,13 @@ public class UITutorial : MonoBehaviour
         }
     }
 
-    private void NextStep()
-    {
-        _tutorialReferences.Clear();
-    }
-
     private void EndTutorial()
     {
+        for (int i = 0; i < _tutorialPopups.Count; i++)
+        {
+            _tutorialPopups.ElementAt(i).Key.SetActive(false);
+        }
+
         _tutorialReferences.Clear();
     }
 }

@@ -25,10 +25,10 @@ public struct OnLevelStartEvent : IEvent
 
 public struct DisplayEndUI : IEvent
 {
-    public Dictionary<float, string> grades;
+    public Dictionary<string, string> grades;
     public string finalGrade;
 
-    public DisplayEndUI(Dictionary<float, string> grades, string finalGrade)
+    public DisplayEndUI(Dictionary<string, string> grades, string finalGrade)
     {
         this.grades = grades;
         this.finalGrade = finalGrade;
@@ -48,6 +48,7 @@ public class GradeManager : MonoBehaviour
     private float currentTime;
     private float finalTime;
     private string timeGrade;
+    private string scoreGrade;
 
     // Enemy Variables
     private int enemyCount;
@@ -119,7 +120,7 @@ public class GradeManager : MonoBehaviour
 
     private void OnLevelEnd(OnLevelEndEvent ctx)
     {
-        Dictionary<float, string> finalGrades = new Dictionary<float, string>();
+        Dictionary<string, string> finalGrades = new Dictionary<string, string>();
 
         // Get Final Time
         finalTime = currentTime;
@@ -137,9 +138,21 @@ public class GradeManager : MonoBehaviour
             timeGrade = "D";
         }
 
-        finalGrades.Add(finalTime, timeGrade);
+        finalGrades.Add(ConvertToTime(finalTime), timeGrade);
 
-        finalGrades.Add(currentScore, "S");
+        int bestScore = currentStage.bestScore;
+
+        for(int i = 0; i < gradeObjects.Length; i++)
+        {
+            if (currentScore >= bestScore * gradeObjects[i].percentage)
+            {
+                scoreGrade = gradeObjects[i].letterGrade;
+                break;
+            }
+            scoreGrade = "D";
+        }
+
+        finalGrades.Add(currentScore.ToString(), scoreGrade);
 
         // Enemies Remaining Grade
         int enemiesRemaining = CheckStageBounds(LayerMask.GetMask("Enemy"));
@@ -153,7 +166,7 @@ public class GradeManager : MonoBehaviour
             enemyGrade = GetEnemyGrade(enemiesRemaining);
         }
 
-        finalGrades.Add(enemiesRemaining, enemyGrade);
+        finalGrades.Add(enemiesRemaining.ToString(), enemyGrade);
         totalLetterGrade = GetGradeAverage(finalGrades);
 
         // Event to display ranking
@@ -161,6 +174,17 @@ public class GradeManager : MonoBehaviour
             finalGrades,
             totalLetterGrade
             ));
+    }
+
+    private string ConvertToTime(float time)
+    {
+        float t = time;
+
+        // float hours = Mathf.Floor(t);
+        float minutes = Mathf.Floor(t / 60);
+        float seconds = Mathf.Floor(t - minutes * 60);
+
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     private int CheckStageBounds(LayerMask objectLayer)
@@ -171,7 +195,7 @@ public class GradeManager : MonoBehaviour
         return overlappingObjects.Length;
     }
 
-    private string GetGradeAverage(Dictionary<float, string> finalGrades)
+    private string GetGradeAverage(Dictionary<string, string> finalGrades)
     {
         int gradeSum = 0;
         int gradeCount = 0;
