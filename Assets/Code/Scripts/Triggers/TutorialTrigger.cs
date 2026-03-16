@@ -49,6 +49,12 @@ public class TutorialTrigger : MonoBehaviour
     private int _stepIndex;
     private List<string> _tutorialText = new List<string>();
     private Dictionary<string, string> _stepsDict = new Dictionary<string, string>();
+    private BoxCollider _collider;
+
+    private void Awake()
+    {
+        _collider = GetComponent<BoxCollider>();
+    }
 
     void AdvanceTutorial(InputAction.CallbackContext ctx)
     {
@@ -112,14 +118,7 @@ public class TutorialTrigger : MonoBehaviour
         if (other.transform.tag == "Player")
         {
             TriggerTutorial(_tutorialIndex);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.transform.tag == "Player")
-        {
-            EndTutorial();
+            _collider.enabled = false;
         }
     }
 }
