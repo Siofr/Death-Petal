@@ -11,6 +11,12 @@ public class StageTrigger : MonoBehaviour
 
     public TriggerType triggerType;
     public Stage stage;
+    private BoxCollider _collider;
+
+    private void Awake()
+    {
+        _collider = GetComponent<BoxCollider>();
+    }
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -26,5 +32,7 @@ public class StageTrigger : MonoBehaviour
                 EventBus<OnLevelEndEvent>.Raise(new OnLevelEndEvent(stage));
                 break;
         }
+
+        _collider.enabled = false;
     }
 }
