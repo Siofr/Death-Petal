@@ -24,7 +24,7 @@ public class ScoreManager : MonoBehaviour
     private float scoreMultiplier = 1.0f;
     private float currentScore;
 
-    private float scoreMultiplierThreshold = 500.0f;
+    private float scoreMultiplierThreshold = 1500.0f;
     private float currentScoreThreshold;
 
     private EventBindings<ChangeScoreEvent> _changeScoreEventListener;

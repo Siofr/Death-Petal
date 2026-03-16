@@ -39,6 +39,7 @@ public class EnemyBase : EntityBase, IEntity
     public EnemyConfig_SO enemyData;
     public Vector3 defaultPos;
     public Transform target;
+    public float enemyScoreValue;
     [Range(0, 1)] public float petalDropChance;
     
     //[Header("EnemyFields")]
@@ -220,12 +221,17 @@ public class EnemyBase : EntityBase, IEntity
         if(weakness.WeakType.HasFlag(damageType))
             weakness.RemoveWeakType(damageType);
         else
+        {
             EventBus<WrongShotEvent>.Raise(new WrongShotEvent(this));
+            EventBus<WipeComboEvent>.Raise(new WipeComboEvent());
+        }
+
 
         if(weakness.WeakType == WeakTypes.NONE)
         {
             Weaknesses.Remove(weakness);
             Destroy(weakness.transform.parent.gameObject);
+            EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Hit", 50f));
             EventBus<CorrectShotEvent>.Raise(new CorrectShotEvent(this));
         }
 
@@ -233,6 +239,7 @@ public class EnemyBase : EntityBase, IEntity
         {
             animator.SetTrigger("Death");
             EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));
+            EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Kill", enemyScoreValue));
             _isDead = true;
 
             var random = Random.value;

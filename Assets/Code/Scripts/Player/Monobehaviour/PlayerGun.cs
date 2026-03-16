@@ -98,7 +98,6 @@ public class PlayerGun : MonoBehaviour
             // Now remove it
             if (ctx.weakness)
             {
-                EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Hit", 50));
                 ctx.weakness.ParentEntity.OnShot(ctx.weakness, bulletArray[currentChamber].weakness);
             }
             else

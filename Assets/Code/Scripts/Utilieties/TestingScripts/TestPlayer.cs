@@ -54,11 +54,15 @@ public class TestPlayer : EntityBase, IEntity
     {
         _currentPetalCharge++;
 
-        if (_currentPetalCharge >= _goalPetalCharge && Weaknesses.Count < _maxHealth)
+        if (_currentPetalCharge >= _goalPetalCharge)
         {
-            Weaknesses.Add(new Weakness());
+            EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Full Petal", 100));
             _currentPetalCharge = 0;
+            if (Weaknesses.Count < _maxHealth) Weaknesses.Add(new Weakness());
+            return;
         }
+
+        EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Petal", 10));
     }
 
     public override void OnShot(Weakness weakness, WeakTypes damageType)
@@ -69,6 +73,7 @@ public class TestPlayer : EntityBase, IEntity
         {
             print("player damaged");
             EventBus<PlayerDamageEvent>.Raise(new PlayerDamageEvent(this));
+            EventBus<WipeComboEvent>.Raise(new WipeComboEvent());
             Weaknesses.Remove(weakness);
 
             Destroy(weakness.transform.parent.gameObject);   
