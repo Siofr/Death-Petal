@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : Singleton<LevelManager>
+public class LevelManager : MonoBehaviour
 {
     [Header("LevelManager Fields, Attach Component to Level Prefab")]
     public LevelSaveableData_SO saveableData;
@@ -66,7 +66,9 @@ public class LevelManager : Singleton<LevelManager>
 
         levelSaveData = temp;
         
-        foreach (var saveable in saveables)
+        var tempSaveables = FindSaveables();
+        
+        foreach (var saveable in tempSaveables)
         {
             saveable.HandleLoadData(ref levelSaveData);
         }
@@ -95,7 +97,7 @@ public class LevelManager : Singleton<LevelManager>
         {
             if (!gameObj.TryGetComponent(out ISaveable saveable)) continue;
             
-            if(saveable.SaveSO == null) saveable.CreateSaveInstance(saveableData);
+            if(saveable.SaveSO == null || saveable.SaveSO.saveID == 0) saveable.CreateSaveInstance(saveableData);
             
             tempSaveables.Add(saveable);
         }

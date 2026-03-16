@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.IO.Hashing;
+using System.Runtime.Serialization;
 using UnityEditor;
 using Random = UnityEngine.Random;
 
@@ -25,16 +26,16 @@ public interface ISaveable
 
 public class ISaveableHelper
 {
-    public static int GenerateISaveableID(LevelSaveableData_SO levelSaveableData, ISaveable saveable)
+    public static int GenerateISaveableID(LevelSaveableData_SO levelSaveableData)
     {
         var tempID = Random.Range(0, int.MaxValue);
 
-        while (levelSaveableData.saveableIDs.ContainsValue(tempID))
+        while (levelSaveableData.saveableIDs.Contains(tempID))
         {
             tempID = Random.Range(0, int.MaxValue);
         }
         
-        levelSaveableData.saveableIDs.Add(saveable, tempID);
+        levelSaveableData.saveableIDs.Add(tempID);
         
         Debug.Log(levelSaveableData.saveableIDs.Count);
         Debug.Log("Existing ID Count: " + levelSaveableData.saveableIDs.Count);
@@ -44,7 +45,7 @@ public class ISaveableHelper
 
     public static void RemoveExistingID(LevelSaveableData_SO levelSaveableData, ISaveable saveable)
     {
-        levelSaveableData.saveableIDs.Remove(saveable);
+        levelSaveableData.saveableIDs.Remove(saveable.SaveID);
     }
     
     public static void RemoveAllIDs(LevelSaveableData_SO levelSaveableData)

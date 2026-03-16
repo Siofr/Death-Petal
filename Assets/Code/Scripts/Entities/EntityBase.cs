@@ -68,8 +68,8 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
     public abstract void OnShot(Weakness weakness, WeakTypes damageType);
     
     //Saving
-    private EntitySaveData _saveData;
-    private SaveID_SO _saveSO;
+    [SerializeField] private EntitySaveData _saveData;
+    [SerializeField] private SaveID_SO _saveSO;
     
     
     public string SaveableName => name;
@@ -85,19 +85,21 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
 
             var levelPath = "Assets/LevelSaves/";
             
-            _saveSO.SetDirty();
-            
             AssetDatabase.CreateAsset(_saveSO, levelPath + name + "_ID.asset");
-            AssetDatabase.SaveAssets();
+            EditorUtility.SetDirty(_saveSO);
         }
         
-        _saveSO.saveID = ISaveableHelper.GenerateISaveableID(levelSaveableData, this);
+        _saveSO.saveID = ISaveableHelper.GenerateISaveableID(levelSaveableData);
         InitialiseWeaknesses();
         
         var health = new List<int>();
         Weaknesses.ForEach(x=>health.Add((int)x.WeakType));
         
         _saveData = new EntitySaveData(SaveID, transform.position, health);
+
+        EditorUtility.SetDirty(_saveSO);
+        EditorUtility.SetDirty(this);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
     }
 
     public void DeleteSaveInstance(LevelSaveableData_SO levelSaveableData)

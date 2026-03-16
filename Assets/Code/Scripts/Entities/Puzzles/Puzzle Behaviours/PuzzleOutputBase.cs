@@ -90,15 +90,21 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
 
             var levelPath = "Assets/LevelSaves/";
             
-            _saveSO.SetDirty();
-            
             AssetDatabase.CreateAsset(_saveSO, levelPath + name + "_ID.asset");
             AssetDatabase.SaveAssets();
+            
+            //EditorUtility.SetDirty(_saveSO);
         }
         
-        _saveSO.saveID = ISaveableHelper.GenerateISaveableID(levelSaveableData, this);
+        _saveSO.saveID = ISaveableHelper.GenerateISaveableID(levelSaveableData);
         
         _saveData = new PuzzleOutputSaveData(SaveID, _isSolved);
+        
+        EditorUtility.SetDirty(_saveSO);
+        EditorUtility.SetDirty(this);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+        
+        Debug.Log($"Created Save Instance for {name}");
     }
 
     public void DeleteSaveInstance(LevelSaveableData_SO levelSaveableData)
