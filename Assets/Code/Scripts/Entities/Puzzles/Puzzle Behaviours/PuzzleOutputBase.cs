@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using FMOD.Studio;
 using FMODUnity;
+using UnityEngine.SceneManagement;
 
 public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable<PuzzleOutputSaveData>
 {
@@ -73,23 +74,44 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     //Saving Stuff
     
     private PuzzleOutputSaveData _saveData;
-    private int _saveID; 
-        
+    private SaveID_SO _saveSO;
+    
+    public string SaveableName => name;
     public PuzzleOutputSaveData SaveInfo => _saveData;
-    public int SaveID => _saveID;
+    
+    public SaveID_SO SaveSO => _saveSO;
+    public int SaveID => _saveSO.saveID;
 
-    public void CreateSaveInstance()
+    public void CreateSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
-        _saveID = ISaveableHelper.GenerateISaveableID();
+        if (_saveSO == null)
+        {
+            _saveSO = ScriptableObject.CreateInstance<SaveID_SO>();
+
+            var levelPath = "Assets/LevelSaves/";
+            
+            AssetDatabase.CreateAsset(_saveSO, levelPath + name + "_ID.asset");
+            AssetDatabase.SaveAssets();
+            
+            //EditorUtility.SetDirty(_saveSO);
+        }
         
-        _saveData = new PuzzleOutputSaveData(_saveID, _isSolved);
+        _saveSO.saveID = ISaveableHelper.GenerateISaveableID(levelSaveableData);
+        
+        _saveData = new PuzzleOutputSaveData(SaveID, _isSolved);
+        
+        EditorUtility.SetDirty(_saveSO);
+        EditorUtility.SetDirty(this);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+        
+        Debug.Log($"Created Save Instance for {name}");
     }
 
-    public void DeleteSaveInstance()
+    public void DeleteSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
-        if (SaveID == 0) return;
-        ISaveableHelper.RemoveExistingID(ref _saveID);
-
+        ISaveableHelper.RemoveExistingID(levelSaveableData, this);
+        
+        _saveSO.saveID = 0;
         _saveData = new PuzzleOutputSaveData();
     }
 

@@ -2,6 +2,18 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
+public struct CreatePlayerWeaknessEvent: IEvent
+{
+    public Transform target;
+    public WeakTypes weakType;
+
+    public CreatePlayerWeaknessEvent(Transform target, WeakTypes weakType)
+    {
+        this.target = target;
+        this.weakType = weakType;
+    }
+}
+
 public class WeaknessFactory : Singleton<WeaknessFactory>
 {
     [SerializeField] GameObject _weaknessPrefab;
@@ -9,6 +21,7 @@ public class WeaknessFactory : Singleton<WeaknessFactory>
     
     //Events
     private EventBindings<PetalPickpEvent> _petalPickupListener;
+    private EventBindings<CreatePlayerWeaknessEvent> _createPlayerWeaknessListener;
     
     //Properties
     public GameObject ProductPrefab => _weaknessPrefab;
@@ -40,11 +53,15 @@ public class WeaknessFactory : Singleton<WeaknessFactory>
     private void OnEnable()
     {
         _petalPickupListener = new EventBindings<PetalPickpEvent>(CreatePlayerWeakness);
+        _createPlayerWeaknessListener = new EventBindings<CreatePlayerWeaknessEvent>(CreatePlayerWeakness);
+        
+        EventBus<CreatePlayerWeaknessEvent>.Register(_createPlayerWeaknessListener);
         EventBus<PetalPickpEvent>.Register(_petalPickupListener);
     }
 
     private void OnDisable()
     {
         EventBus<PetalPickpEvent>.Unregister(_petalPickupListener);
+        EventBus<CreatePlayerWeaknessEvent>.Unregister(_createPlayerWeaknessListener);
     }
 }

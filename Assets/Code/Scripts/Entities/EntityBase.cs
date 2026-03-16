@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveData>
@@ -66,28 +68,45 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
     public abstract void OnShot(Weakness weakness, WeakTypes damageType);
     
     //Saving
-    private EntitySaveData _saveData;
-    private int _saveID;
+    [SerializeField] private EntitySaveData _saveData;
+    [SerializeField] private SaveID_SO _saveSO;
     
+    
+    public string SaveableName => name;
     public EntitySaveData SaveInfo =>  _saveData;
-    public int SaveID => _saveID;
-
-    public void CreateSaveInstance()
+    public SaveID_SO SaveSO => _saveSO;
+    public int SaveID => _saveSO.saveID;
+    
+    public void CreateSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
-        _saveID = ISaveableHelper.GenerateISaveableID();
+        if (_saveSO == null)
+        {
+            _saveSO = ScriptableObject.CreateInstance<SaveID_SO>();
+
+            var levelPath = "Assets/LevelSaves/";
+            
+            AssetDatabase.CreateAsset(_saveSO, levelPath + name + "_ID.asset");
+            EditorUtility.SetDirty(_saveSO);
+        }
+        
+        _saveSO.saveID = ISaveableHelper.GenerateISaveableID(levelSaveableData);
         InitialiseWeaknesses();
         
         var health = new List<int>();
         Weaknesses.ForEach(x=>health.Add((int)x.WeakType));
         
-        _saveData = new EntitySaveData(_saveID, transform.position, health);
+        _saveData = new EntitySaveData(SaveID, transform.position, health);
+
+        EditorUtility.SetDirty(_saveSO);
+        EditorUtility.SetDirty(this);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
     }
 
-    public void DeleteSaveInstance()
+    public void DeleteSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
-        if (SaveID == 0) return;
-        ISaveableHelper.RemoveExistingID(ref _saveID);
-        
+        ISaveableHelper.RemoveExistingID(levelSaveableData, this);
+
+        _saveSO.saveID = 0;
         _saveData = new EntitySaveData();
     }
     

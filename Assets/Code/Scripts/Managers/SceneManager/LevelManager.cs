@@ -1,17 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class LevelManager : Singleton<LevelManager>
+public class LevelManager : MonoBehaviour
 {
     [Header("LevelManager Fields, Attach Component to Level Prefab")]
+    public LevelSaveableData_SO saveableData;
     public LevelSaveData levelSaveData;
 
     public List<ISaveable> saveables = new List<ISaveable>();
     
     public void SaveLevelData(bool isBaking = false)
     {
-        var temp = new LevelSaveData(name);
+        var temp = new LevelSaveData(SceneManager.GetActiveScene().name);
         
         var tempSaveables = FindSaveables();
 
@@ -27,7 +30,7 @@ public class LevelManager : Singleton<LevelManager>
         foreach (var saveable in saveables)
         {
             tempIDs.Add(saveable.SaveID);
-            saveable.HandleSaveData(ref temp);
+            //saveable.HandleSaveData(ref temp);
         }
 
         temp.saveableID = tempIDs;
@@ -41,7 +44,7 @@ public class LevelManager : Singleton<LevelManager>
         
         if (isBaking)
         {
-            var defaultSave = new LevelSaveData(temp.levelName = transform.name + "Default", temp);
+            var defaultSave = new LevelSaveData(temp.levelName += " Default", temp);
             SaveSystem.SaveLevelData(defaultSave);
             Debug.Log("Baked Level Data");
             return;
@@ -54,21 +57,23 @@ public class LevelManager : Singleton<LevelManager>
 
     public void LoadLevelData(bool isDefault = false)
     {
-        var tempName = transform.name;
-        if(isDefault) tempName = transform.name + "Default";
+        var tempName = SceneManager.GetActiveScene().name;
+        if(isDefault) tempName += " Default";
         
         var temp = SaveSystem.GetLevelData(tempName);
         
-        if (temp.levelName != transform.name && temp.levelName != transform.name + "Default") return;
+        if (temp.levelName != SceneManager.GetActiveScene().name && temp.levelName != SceneManager.GetActiveScene().name + " Default") return;
 
         levelSaveData = temp;
         
-        foreach (var saveable in saveables)
+        var tempSaveables = FindSaveables();
+        
+        foreach (var saveable in tempSaveables)
         {
             saveable.HandleLoadData(ref levelSaveData);
         }
 
-        if (tempName == transform.name+"Default")
+        if (tempName == SceneManager.GetActiveScene().name+" Default")
         {
             Debug.Log("Loaded Default Level Data");
             return;
@@ -79,6 +84,11 @@ public class LevelManager : Singleton<LevelManager>
     
     public List<ISaveable> FindSaveables()
     {
+        if (saveableData == null)
+        {
+            Debug.Log("Please Create a Level Saveable Data Sciptable Object Asset And Attach To Component");
+        }
+        
         var sceneObjects = FindObjectsByType<GameObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         
         var tempSaveables = new List<ISaveable>();
@@ -87,7 +97,7 @@ public class LevelManager : Singleton<LevelManager>
         {
             if (!gameObj.TryGetComponent(out ISaveable saveable)) continue;
             
-            if(saveable.SaveID == 0) saveable.CreateSaveInstance();
+            if(saveable.SaveSO == null || saveable.SaveSO.saveID == 0) saveable.CreateSaveInstance(saveableData);
             
             tempSaveables.Add(saveable);
         }
@@ -101,20 +111,22 @@ public class LevelManager : Singleton<LevelManager>
     {
         foreach (var saveable in saveables)
         {
-            saveable.DeleteSaveInstance();
+            saveable.DeleteSaveInstance(saveableData);
         }
         
-        levelSaveData =  new LevelSaveData(transform.name);
+        levelSaveData =  new LevelSaveData(SceneManager.GetActiveScene().name);
         saveables.Clear();
         
         Debug.Log("Cleared Saveable Objects");
         
-        SaveSystem.RemoveLevelData(transform.name);
+        SaveSystem.RemoveLevelData(SceneManager.GetActiveScene().name);
+        
+        ISaveableHelper.RemoveAllIDs(saveableData);
     }
 
     public void Start()
     {
-        if(saveables.Count < 1) saveables = FindSaveables();
-        LoadLevelData();
+        //if(saveables.Count < 1) saveables = FindSaveables();
+        //LoadLevelData();
     }
 }

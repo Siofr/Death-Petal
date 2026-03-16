@@ -3,6 +3,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.IO.Hashing;
+using System.Runtime.Serialization;
+using UnityEditor;
 using Random = UnityEngine.Random;
 
 
@@ -13,40 +15,41 @@ public interface ISaveable<T>: ISaveable where T : struct
 
 public interface ISaveable
 {
+    public string SaveableName { get; }
+    public SaveID_SO SaveSO { get; }
     public int SaveID { get; }
-    public void CreateSaveInstance();
-    public void DeleteSaveInstance();
+    public void CreateSaveInstance(LevelSaveableData_SO levelSaveableData);
+    public void DeleteSaveInstance(LevelSaveableData_SO levelSaveableData);
     public void HandleSaveData(ref LevelSaveData refData);
     public void HandleLoadData(ref LevelSaveData refData);
 }
 
 public class ISaveableHelper
 {
-    private static HashSet<int> _existingIDs = new HashSet<int>();
-    
-    public static int GenerateISaveableID()
+    public static int GenerateISaveableID(LevelSaveableData_SO levelSaveableData)
     {
         var tempID = Random.Range(0, int.MaxValue);
 
-        while (!_existingIDs.Contains(tempID))
+        while (levelSaveableData.saveableIDs.Contains(tempID))
         {
             tempID = Random.Range(0, int.MaxValue);
-            _existingIDs.Add(tempID);
         }
         
-        Debug.Log("Existing ID Count: " + _existingIDs.Count);
+        levelSaveableData.saveableIDs.Add(tempID);
+        
+        Debug.Log(levelSaveableData.saveableIDs.Count);
+        Debug.Log("Existing ID Count: " + levelSaveableData.saveableIDs.Count);
         
         return tempID;
     }
-    
-    public static void RemoveExistingID(ref int id)
-    {
-        _existingIDs.Remove(id);
-        id = 0;
-    }
 
-    public static void RemoveAllID()
+    public static void RemoveExistingID(LevelSaveableData_SO levelSaveableData, ISaveable saveable)
     {
-        _existingIDs.Clear();
+        levelSaveableData.saveableIDs.Remove(saveable.SaveID);
+    }
+    
+    public static void RemoveAllIDs(LevelSaveableData_SO levelSaveableData)
+    {
+        levelSaveableData.saveableIDs.Clear();
     }
 }
