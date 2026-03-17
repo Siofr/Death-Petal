@@ -23,7 +23,7 @@ public class UITutorial : MonoBehaviour
 
     private void Awake()
     {
-        _tutorialTriggerListener = new EventBindings<TutorialTriggerEvent>(OnTutorialTrigger);
+        _tutorialTriggerListener = new EventBindings<TutorialTriggerEvent>(ResetPosition);
         _advanceTutorialEvent = new EventBindings<AdvanceTutorialEvent>(AdvanceStep);
         _endTutorialEvent = new EventBindings<EndTutorialEvent>(EndTutorial);
 
@@ -55,8 +55,8 @@ public class UITutorial : MonoBehaviour
     {
         _animationSequence = DOTween.Sequence();
         AnimateOut(_tutorialReferences[ctx.actionName]);
-        _fadeOutObject = _tutorialReferences[ctx.actionName];
-        _animationSequence.OnComplete(ResetPosition);
+        // _fadeOutObject = _tutorialReferences[ctx.actionName];
+        // _animationSequence.OnComplete(ResetPosition);
     }
 
     private void ShowTutorial()
@@ -79,8 +79,16 @@ public class UITutorial : MonoBehaviour
     {
         _savedDict = ctx.tutorialSteps;
 
-        if (_animationSequence.IsActive()) _animationSequence.OnComplete(ShowTutorial);
-        else ShowTutorial();
+        if (_animationSequence.IsActive())
+        {
+            _animationSequence.OnComplete(ShowTutorial);
+            Debug.Log("Animating");
+        }
+        else
+        {
+            ShowTutorial();
+            Debug.Log("Not animating");
+        }
     }
 
     private void EndTutorial()
@@ -108,18 +116,30 @@ public class UITutorial : MonoBehaviour
             go.GetComponent<CanvasGroup>()
             .DOFade(0, 0.15f))
             .Play();
+        _fadeOutObject = go;
     }
 
-    private void ResetPosition()
+    private void ResetPosition(TutorialTriggerEvent ctx)
     {
-        _fadeOutObject.transform.position = new Vector3(
-            _xStartPos,
-            _fadeOutObject.transform.position.y,
-            _fadeOutObject.transform.position.z);
-    }
+        foreach(var item in _tutorialPopups)
+        {
+            item.Key.transform.position = new Vector3(
+                _xStartPos,
+                item.Key.transform.position.y,
+                item.Key.transform.position.z);
+        }
 
-    private void TestMethod()
-    {
+        _savedDict = ctx.tutorialSteps;
 
+        if (_animationSequence.IsActive())
+        {
+            _animationSequence.OnComplete(ShowTutorial);
+            Debug.Log("Animating");
+        }
+        else
+        {
+            ShowTutorial();
+            Debug.Log("Not animating");
+        }
     }
 }
