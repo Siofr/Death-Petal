@@ -75,7 +75,8 @@ public class TutorialTrigger : MonoBehaviour
             tutorialStep.actionRef.action.performed += AdvanceTutorial;
             string inputName = tutorialStep.actionRef.name;
             string output = inputName.Substring(inputName.IndexOf('/') + 1);
-            string binds = tutorialStep.actionRef.action.GetBindingDisplayString();
+            string binds = SetButtonNameToBinding(tutorialStep.actionRef);
+            Debug.Log(binds);
             _stepsDict.Add(binds + " - " + tutorialStep.tutorialText, output);
         }
 
@@ -120,5 +121,22 @@ public class TutorialTrigger : MonoBehaviour
             TriggerTutorial(_tutorialIndex);
             _collider.enabled = false;
         }
+    }
+
+    public string SetButtonNameToBinding(InputActionReference inputActionRef)
+    {
+        int bindingIndex = inputActionRef.action.GetBindingIndexForControl(inputActionRef.action.controls[0]);
+
+        string rawName = inputActionRef.action.GetBindingDisplayString(bindingIndex);
+
+        if (InputTextToTMPIcon.TryConvertToXboxIcon(out string o, rawName))
+        {
+            return o;
+        }
+        else
+        {
+            return rawName;
+        }
+
     }
 }
