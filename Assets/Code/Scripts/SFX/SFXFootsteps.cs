@@ -22,9 +22,9 @@ public class SFXFootsteps : MonoBehaviour
     private PARAMETER_ID _terrainParam;
     private PARAMETER_ID _walkParam;
 
-    private LayerMask ground;
+    private LayerMask _ground;
 
-    private Animator anim;
+    private Animator _anim;
     private float _lastFootstep;
 
     private void Start()
@@ -39,17 +39,17 @@ public class SFXFootsteps : MonoBehaviour
 
         eventInstance = SFXUtilities.CreateEventInstance(eventPath, this.gameObject);
 
-        ground = LayerMask.GetMask("Ground");
+        _ground = LayerMask.GetMask("Ground");
     }
 
     private void OnValidate()
     {
-        if (!anim) anim = GetComponent<Animator>();
+        if (!_anim) _anim = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        var footstep = anim.GetFloat("Footstep");
+        var footstep = _anim.GetFloat("Footstep");
         if (Mathf.Abs(footstep) < 0.0001f) footstep = 0f;
 
         if (_lastFootstep > 0 && footstep < 0 || _lastFootstep < 0 && footstep > 0) PlayWalkSFX();
@@ -59,10 +59,7 @@ public class SFXFootsteps : MonoBehaviour
 
     public void PlayWalkSFX()
     {
-        Debug.Log("Play Footstep");
-
         eventInstance.setParameterByID(_terrainParam, GetFloorID());
-
         // EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(eventInstance, this.gameObject));
     }
 
@@ -73,7 +70,7 @@ public class SFXFootsteps : MonoBehaviour
         RaycastHit hit;
         PhysicsMaterial mat = null;
 
-        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1.5f, ground))
+        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1.5f, _ground))
         {
             mat = hit.collider.sharedMaterial;
         }
@@ -84,7 +81,6 @@ public class SFXFootsteps : MonoBehaviour
 
         if (terrainDict.ContainsKey(mat))
         {
-            Debug.Log("Success");
             output = terrainDict[mat];
         }
 
