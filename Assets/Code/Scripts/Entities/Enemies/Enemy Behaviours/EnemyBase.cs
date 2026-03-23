@@ -170,6 +170,12 @@ public class EnemyBase : EntityBase, IEntity
     {
         __nmAgent.isStopped = stop;
     }
+
+    public void FreezeEnemy(bool freeze)
+    {
+        StopAgent(freeze);
+        animator.speed = freeze ? 0 : 1;
+    }
     
     public void ClearPath()
     {

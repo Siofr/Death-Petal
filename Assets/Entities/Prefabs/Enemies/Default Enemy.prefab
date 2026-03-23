@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 9101354743606666588}
   - component: {fileID: 3960965377929797854}
   - component: {fileID: 7308204237626846204}
-  m_Layer: 0
+  - component: {fileID: 4174688513546654052}
+  m_Layer: 2
   m_Name: Default Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +71,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5adc4c43befde449e25ee5e220d1c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBase
-  _saveData: {fileID: 0}
+  __sequentialWeaknesses: 0
+  defaultWeaknessTypes: 
+  _saveData:
+    id: 0
+    position: {x: 0, y: 0, z: 0}
+    health: 
+  _saveSO: {fileID: 0}
   animator: {fileID: 8523146786591781133}
   enemyData: {fileID: 11400000, guid: 3eec9ccb8468afa42879340caeb93e69, type: 2}
   defaultPos: {x: 0, y: 0, z: 0}
@@ -83,6 +90,29 @@ MonoBehaviour:
       Data3: 1121615513
       Data4: -463641041
     Path: event:/Characters/Enemies/enemySwipe
+--- !u!136 &4174688513546654052
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3545056797248692941}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &7973400897225854533
 GameObject:
   m_ObjectHideFlags: 0

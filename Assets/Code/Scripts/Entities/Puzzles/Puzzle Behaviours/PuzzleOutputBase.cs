@@ -59,7 +59,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         if ((PuzzleOutputBase)context.puzzleOutput != this) return;
 
         RuntimeManager.PlayOneShot(onCompletionEventPath, transform.position);
-        animator.SetBool(Animator.StringToHash("IsSolved"), true);
+        if(animator != null) animator.SetBool(Animator.StringToHash("IsSolved"), true);
         IsSolved = true;
     }
 
@@ -67,7 +67,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     {
         if ((PuzzleOutputBase)context.puzzleOutput != this) return;
         
-        animator.SetBool(Animator.StringToHash("IsSolved"), false);
+        if(animator != null) animator.SetBool(Animator.StringToHash("IsSolved"), false);
         IsSolved = false;
     }
     
