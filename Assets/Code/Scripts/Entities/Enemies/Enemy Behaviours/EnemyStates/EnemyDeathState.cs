@@ -8,6 +8,7 @@ public class EnemyDeathState<T>: EnemyBaseState<T> where T : EnemyBase
     {
 	    enemyController.StopAllCoroutines();
 	    enemyController.animator.SetFloat(Animator.StringToHash("Blend"),0f);
+	    enemyController.animator.SetTrigger("Death");
         enemyController.ClearPath();
     }
 }
