@@ -215,7 +215,7 @@ namespace State_Machine
             Vector3 camForward = Vector3.ProjectOnPlane(activeCam.transform.forward, GetPlaneNormal());
             Vector3 camRight = Vector3.ProjectOnPlane(activeCam.transform.right, GetPlaneNormal());
 
-            Vector3 dir = (camForward * _movement.z + camRight * _movement.x).normalized;
+            Vector3 dir = (camForward.normalized * _movement.z + camRight.normalized * _movement.x).normalized;
             lookDir = dir;
 
             if (_cc.isGrounded) _ySpeed = 0;
