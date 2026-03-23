@@ -126,6 +126,7 @@ public class EnemyArcher: EnemyBase
         speed = signAngle < 0 ? -speed : speed;
         angle = signAngle < 0 ? absAngle : absAngle;
 
+        var firstActivation = true;
         var isFirst = false;
         var tempRot = 0f;
         
@@ -133,6 +134,13 @@ public class EnemyArcher: EnemyBase
         
         while (target != null && !_inLos)
         {
+
+            if (firstActivation)
+            {
+                animator.SetTrigger("Spawn");
+                firstActivation = false;
+            }
+
             if (absAngle >= 360)
             {
                 //transform.Rotate(transform.up, speed*Time.deltaTime);
@@ -144,6 +152,8 @@ public class EnemyArcher: EnemyBase
 
             if (!isFirst)
             {
+                
+                
                 if (tempRot + absSpeed * Time.deltaTime < absAngle)
                 {
                     tempRot += absSpeed * Time.deltaTime;
@@ -160,6 +170,7 @@ public class EnemyArcher: EnemyBase
             }
             else
             {
+                
                 if (tempRot + absSpeed * Time.deltaTime < absAngle * 2)
                 {
                     tempRot += absSpeed * Time.deltaTime;
