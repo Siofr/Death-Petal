@@ -2,7 +2,22 @@
 tags:
 position: -245,71
 ---
+<<actor ActorScreen 1 "none" false>>
 VoiceOfGod: Are you gonna listen to anything I say?
+<<actor ActorScreen 0 "none">>
+Haarmony: I'm Chill!
+<<actor ActorScreen 0 "happy">>
+Haarmony: I'm Happy!
+<<actor ActorScreen 0 "sad">>
+Haarmony: I'm Sad!
+<<actor ActorScreen 0 "confused">>
+Haarmony: I'm confused!
+<<actor ActorScreen 0 "forlorn">>
+Haarmony: I'm forlorn!
+<<actor ActorScreen 0 "terror">>
+Haarmony: I'm terror!
+<<actor ActorScreen 0 "none">>
+Haarmony: I'm normal now!
 -> Sure
     <<jump ListenToDebug>>
 -> No
@@ -12,17 +27,24 @@ VoiceOfGod: Are you gonna listen to anything I say?
 title: ListenToDebug
 position: 129,195
 ---
+<<actor ActorScreen 1 "happy" false>>
+<<actor ActorScreen 0 "happy">>
 Harmony: ERM YES PLEASEEE
+<<actor ActorScreen 0 "sad">>
 VoiceOfGod: Hello im debug.
 Harmony: Eva is just seeing how this plays out!
 VoiceOfGod: Can she figure out Portaits? That would be cool.
 Harmony: Doubt it.
+<<hideAll ActorScreen>>
 ===
 
 title: SkipDubug
 position: 130,-10
 ---
 VoiceOfGod: You are no fun.
+<<actor ActorScreen 0 "happy">>
 Harmony: I tend to be.
+
+<<hideAll ActorScreen>>
 ===
 
