@@ -5,15 +5,22 @@ using FMOD.Studio;
 
 public class SFXOcclusion : MonoBehaviour
 {
+    public float occlusionModifier;
     public float maxDistance;
     public EventReference eventPath;
     private EventInstance eventInstance;
+
+    private PARAMETER_ID _occlusionParam;
+
+    private float _occlusionWeighting = 0.7f;
+    private float _distanceWeighting = 0.3f;
 
     private EventBindings<CameraChangeEvent> _cameraChangeEventListener;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _occlusionParam = SFXUtilities.AssignParamID("Occlusion", eventPath);
         eventInstance = SFXUtilities.CreateEventInstance(eventPath, this.gameObject);
     }
 
@@ -31,11 +38,20 @@ public class SFXOcclusion : MonoBehaviour
     {
         if (!CheckDistanceToListener(ctx.transform.position))
         {
-            // Stop playing the audio and return
+            eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             return;
         }
 
-        if(!CheckOcclusion(ctx.transform.position));
+        if(CheckOcclusion(ctx.transform.position))
+        {
+            ChangeAmbientValues(Vector3.Distance(ctx.transform.position, transform.position));
+        }
+        else
+        {
+            eventInstance.setParameterByID(_occlusionParam, 0);
+        }
+
+        eventInstance.start();
     }
 
     bool CheckDistanceToListener(Vector3 listenerPos)
@@ -51,8 +67,13 @@ public class SFXOcclusion : MonoBehaviour
         return hit.collider;
     }
 
-    void ChangeAmbientValues()
+    void ChangeAmbientValues(float distance)
     {
+        float difference = maxDistance - distance;
+        float distanceMult = _distanceWeighting * (difference / maxDistance);
 
+        float param = _occlusionWeighting + distanceMult;
+
+        eventInstance.setParameterByID(_occlusionParam, param);
     }
 }
