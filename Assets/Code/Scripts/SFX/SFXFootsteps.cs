@@ -13,12 +13,16 @@ public class TerrainParam
 
 public class SFXFootsteps : MonoBehaviour
 {
+    public int character;
+    public int texture;
     public List<TerrainParam> terrainParams;
     private Dictionary<PhysicsMaterial, int> terrainDict = new Dictionary<PhysicsMaterial, int>();
 
     public EventReference eventPath;
     private EventInstance eventInstance;
 
+    private PARAMETER_ID _characterParam;
+    private PARAMETER_ID _textureParam;
     private PARAMETER_ID _terrainParam;
     private PARAMETER_ID _walkParam;
 
@@ -34,10 +38,14 @@ public class SFXFootsteps : MonoBehaviour
             terrainDict.Add(item.physicsMaterial, item.sfxParam);
         }
 
+        _characterParam = SFXUtilities.AssignParamID("Character", eventPath);
+        _textureParam = SFXUtilities.AssignParamID("Texture", eventPath);
         _walkParam = SFXUtilities.AssignParamID("WalkRun", eventPath);
         _terrainParam = SFXUtilities.AssignParamID("Terrain", eventPath);
 
         eventInstance = SFXUtilities.CreateEventInstance(eventPath, this.gameObject);
+        eventInstance.setParameterByID(_textureParam, texture);
+        eventInstance.setParameterByID(_characterParam, character);
 
         ground = LayerMask.GetMask("Ground");
     }
@@ -63,28 +71,27 @@ public class SFXFootsteps : MonoBehaviour
 
         eventInstance.setParameterByID(_terrainParam, GetFloorID());
 
-        // EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(eventInstance, this.gameObject));
+        EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(eventInstance, this.gameObject));
     }
 
     private int GetFloorID()
     {
-        if (terrainParams.Count <= 1) return 0;
+        int output = 0;
+
+        if (terrainParams.Count <= 1) return output;
 
         RaycastHit hit;
         PhysicsMaterial mat = null;
 
-        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1.5f, ground))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1.5f, ground))
         {
             mat = hit.collider.sharedMaterial;
         }
-
-        int output = 0;
 
         if (!mat) return output;
 
         if (terrainDict.ContainsKey(mat))
         {
-            Debug.Log("Success");
             output = terrainDict[mat];
         }
 
