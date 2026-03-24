@@ -15,6 +15,7 @@ public class SFXOcclusion : MonoBehaviour
     private float _occlusionWeighting = 0.7f;
     private float _distanceWeighting = 0.3f;
 
+    private bool _isPlaying = false;
     private EventBindings<CameraChangeEvent> _cameraChangeEventListener;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -39,6 +40,7 @@ public class SFXOcclusion : MonoBehaviour
         if (!CheckDistanceToListener(ctx.transform.position))
         {
             eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            _isPlaying = false;
             return;
         }
 
@@ -51,7 +53,11 @@ public class SFXOcclusion : MonoBehaviour
             eventInstance.setParameterByID(_occlusionParam, 0);
         }
 
-        eventInstance.start();
+        if (!_isPlaying)
+        {
+            eventInstance.start();
+            _isPlaying = true;
+        }
     }
 
     bool CheckDistanceToListener(Vector3 listenerPos)
