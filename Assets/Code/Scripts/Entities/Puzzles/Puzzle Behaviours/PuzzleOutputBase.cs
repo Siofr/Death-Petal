@@ -81,8 +81,8 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     
     public SaveID_SO SaveSO => _saveSO;
     public int SaveID => _saveSO.saveID;
-
-#if UNITY_EDITOR
+    
+    
     public void CreateSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
         if (_saveSO == null)
@@ -111,7 +111,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         
         Debug.Log($"Created Save Instance for {name}");
     }
-#endif
+    
     public void DeleteSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
         ISaveableHelper.RemoveExistingID(levelSaveableData, this);

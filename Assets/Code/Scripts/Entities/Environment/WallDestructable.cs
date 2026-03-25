@@ -43,8 +43,10 @@ public class WallDestructable: EntityBase
         }
     }
 
-    private void Start()
+    protected virtual void Start()
     {
+        base.Start();
+        
         CheckWallPieces();
     }
 

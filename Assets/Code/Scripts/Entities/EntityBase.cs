@@ -19,6 +19,11 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
     
     protected virtual void Awake()
     {
+        //InitialiseWeaknesses();
+    }
+
+    protected virtual void Start()
+    {
         InitialiseWeaknesses();
     }
     
