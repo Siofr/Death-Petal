@@ -55,7 +55,7 @@ public abstract class AOEEffect: MonoBehaviour
     {
         if (_aoeSphereEffect == null) return;
         
-        StopAllCoroutines();
+        //StopAllCoroutines();
         StartCoroutine(PlaceHolderVFX(toggle));
     }
 

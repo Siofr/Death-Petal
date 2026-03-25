@@ -69,5 +69,7 @@ public class AOEBurn : AOEEffect
                 }
             }
         }
+
+        print("Checked Targets");
     }
 }
