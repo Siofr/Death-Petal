@@ -18,6 +18,8 @@ public class AOEBurn : AOEEffect
 
     public override void EndEffect()
     {
+        print("ending effect");
+        
         __isActive = false;
         StopAllCoroutines();
 
@@ -32,7 +34,7 @@ public class AOEBurn : AOEEffect
     {
         if (_damageTimer != null) return;
 
-        StartCoroutine(DamageTimer(_damageTime));
+        _damageTimer = StartCoroutine(DamageTimer(_damageTime));
     }
     
     private IEnumerator DamageTimer(float time)
@@ -40,15 +42,24 @@ public class AOEBurn : AOEEffect
         yield return DamageRoutine(time);
 
         if (__isActive) yield return DamageRoutine(time);
+
+        _damageTimer = null;
     }
 
     private IEnumerator DamageRoutine(float time)
     {
+        print("Starting damage timer");
+        print(time);
+        
         yield return new WaitForSeconds(time);
-
+            
+        print("Starting to Check Targets");
+        
         for (int i = __targets.Count - 1; i >= 0; i--)
         {
-            if (__targets[i].Weaknesses[0].WeakType == __aoeTargetType || (int)__aoeTargetType == -1)
+            print("Check Targets");
+            
+            if ((int)__aoeTargetType == -1 || __targets[i].Weaknesses[0].WeakType == __aoeTargetType)
             {
                 __targets[i].OnShot(__targets[i].Weaknesses[0], __targets[i].Weaknesses[0].WeakType);
 

@@ -24,7 +24,7 @@ public abstract class AOEEffect: MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out EnemyBase enemy))
+        if (other.transform.parent.TryGetComponent(out EnemyBase enemy))
         {
             if(!__targets.Contains(enemy))
             {
@@ -35,7 +35,7 @@ public abstract class AOEEffect: MonoBehaviour
     
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out EnemyBase enemy))
+        if (other.transform.parent.TryGetComponent(out EnemyBase enemy))
         {
             if (__targets.Contains(enemy))
             {
