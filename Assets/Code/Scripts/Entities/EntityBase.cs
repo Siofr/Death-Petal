@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveData>
@@ -81,12 +81,14 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
     {
         if (_saveSO == null)
         {
+             #if UNITY_EDITOR
             _saveSO = ScriptableObject.CreateInstance<SaveID_SO>();
 
             var levelPath = "Assets/LevelSaves/";
             
             AssetDatabase.CreateAsset(_saveSO, levelPath + name + "_ID.asset");
             EditorUtility.SetDirty(_saveSO);
+             #endif
         }
         
         _saveSO.saveID = ISaveableHelper.GenerateISaveableID(levelSaveableData);
@@ -97,9 +99,11 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
         
         _saveData = new EntitySaveData(SaveID, transform.position, health);
 
-        EditorUtility.SetDirty(_saveSO);
-        EditorUtility.SetDirty(this);
-        PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+ #if UNITY_EDITOR
+            EditorUtility.SetDirty(_saveSO);
+            EditorUtility.SetDirty(this);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+#endif
     }
 
     public void DeleteSaveInstance(LevelSaveableData_SO levelSaveableData)

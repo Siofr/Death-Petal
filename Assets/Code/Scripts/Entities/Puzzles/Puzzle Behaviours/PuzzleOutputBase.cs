@@ -82,16 +82,19 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     public SaveID_SO SaveSO => _saveSO;
     public int SaveID => _saveSO.saveID;
 
+#if UNITY_EDITOR
     public void CreateSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
         if (_saveSO == null)
         {
+                    #if UNITY_EDITOR
             _saveSO = ScriptableObject.CreateInstance<SaveID_SO>();
 
             var levelPath = "Assets/LevelSaves/";
             
             AssetDatabase.CreateAsset(_saveSO, levelPath + name + "_ID.asset");
             AssetDatabase.SaveAssets();
+            #endif
             
             //EditorUtility.SetDirty(_saveSO);
         }
@@ -100,13 +103,15 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         
         _saveData = new PuzzleOutputSaveData(SaveID, _isSolved);
         
+        #if UNITY_EDITOR
         EditorUtility.SetDirty(_saveSO);
         EditorUtility.SetDirty(this);
         PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+        #endif
         
         Debug.Log($"Created Save Instance for {name}");
     }
-
+#endif
     public void DeleteSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
         ISaveableHelper.RemoveExistingID(levelSaveableData, this);

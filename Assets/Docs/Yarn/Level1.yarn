@@ -12,9 +12,9 @@ Abaddon: This is not how this works...
 <<actor ActorScreen 0 "sad">>
 Harmony: I just need to find a path out of this place and I'll be back home!
 Abaddon: Do you care to know in how much trouble you are, little flower?
--> Sure...
-    <<jump L1SpawnLore>>
--> Nope! I just want to shoot! 
+//-> Sure...
+    //<<jump L1SpawnLore>>
+//-> Nope! I just want to shoot! 
     <<jump L1SpawnQuick>>
 ===
 
@@ -42,7 +42,9 @@ title: L1SpawnQuick
 position: 73,-240
 color: red
 ---
+<<actor ActorScreen 0 "happy">>
 Harmony: I'm just goin' Home, hon! Can't be chit-chatting got business to take care of!
+<<actor ActorScreen 1 "forlorn" false>>
 Abaddon: H-Halt.. Wait you cannot simply leave-
 Harmony: Byeee!
 <<hideAll ActorScreen>>
