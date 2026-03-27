@@ -86,7 +86,7 @@ public class EnemyBase : EntityBase, IEntity
         transform.LookAt(targetPos);
     }
 
-    private void Initialise()
+    protected virtual void Initialise()
     {
         //Field Init
         __nmAgent = GetComponent<NavMeshAgent>();

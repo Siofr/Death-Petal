@@ -34,12 +34,12 @@ public class BossBase : EnemyBase
         defaultPos =  transform.position;
     }
     
-    private void Start()
+    protected override void Start()
     {
-        Initialise();
+        base.Awake();
     }
 
-    private void Initialise()
+    protected override void Initialise()
     {
         //Field Init
         //print("Init Boss!");
