@@ -447,7 +447,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfeac05673444b4b5bb9a5c931845e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Room
-  targetCameras: []
 --- !u!1 &235017324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1328,7 +1327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfeac05673444b4b5bb9a5c931845e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Room
-  targetCameras: []
 --- !u!65 &866456749
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1424,6 +1422,7 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 3eec9ccb8468afa42879340caeb93e69, type: 2}
   defaultPos: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
+  enemyScoreValue: 0
   petalDropChance: 0
   onEnemyAttackEventPath:
     Guid:
@@ -1494,6 +1493,71 @@ Transform:
   - {fileID: 755331820}
   m_Father: {fileID: 179129721}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1145797957
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2050961033182207166, guid: 0a8182d2e747c1d4d96ee6fa4394909f, type: 3}
+      propertyPath: __aoeTargetType
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532046675323184982, guid: 0a8182d2e747c1d4d96ee6fa4394909f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.50098
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532046675323184982, guid: 0a8182d2e747c1d4d96ee6fa4394909f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532046675323184982, guid: 0a8182d2e747c1d4d96ee6fa4394909f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.63087
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532046675323184982, guid: 0a8182d2e747c1d4d96ee6fa4394909f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532046675323184982, guid: 0a8182d2e747c1d4d96ee6fa4394909f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532046675323184982, guid: 0a8182d2e747c1d4d96ee6fa4394909f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532046675323184982, guid: 0a8182d2e747c1d4d96ee6fa4394909f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532046675323184982, guid: 0a8182d2e747c1d4d96ee6fa4394909f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532046675323184982, guid: 0a8182d2e747c1d4d96ee6fa4394909f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532046675323184982, guid: 0a8182d2e747c1d4d96ee6fa4394909f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5107389519932562248, guid: 0a8182d2e747c1d4d96ee6fa4394909f, type: 3}
+      propertyPath: m_Name
+      value: Freeze AOE
+      objectReference: {fileID: 0}
+    - target: {fileID: 5107389519932562248, guid: 0a8182d2e747c1d4d96ee6fa4394909f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0a8182d2e747c1d4d96ee6fa4394909f, type: 3}
 --- !u!1001 &1480249500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1502,6 +1566,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 866456747}
     m_Modifications:
+    - target: {fileID: 3379433054966992198, guid: 9d345369afbaede4580b9143cdb61fbf, type: 3}
+      propertyPath: _weaknessType
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3545056797248692941, guid: 9d345369afbaede4580b9143cdb61fbf, type: 3}
       propertyPath: m_Name
       value: Default Enemy
@@ -3359,3 +3427,4 @@ SceneRoots:
   - {fileID: 747240534}
   - {fileID: 1536594001}
   - {fileID: 3109949124689841615}
+  - {fileID: 1145797957}

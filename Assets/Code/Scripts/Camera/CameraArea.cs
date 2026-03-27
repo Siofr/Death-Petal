@@ -1,25 +1,38 @@
-using Unity.Cinemachine;
+    using Unity.Cinemachine;
 using UnityEngine;
 
 [RequireComponent (typeof(BoxCollider))]
 public class CameraArea : MonoBehaviour
 {
-    public Transform cameraPosition;
-    private CinemachineCamera cam;
+    [SerializeField] private CinemachineCamera _cam;
+    
+    private EventBindings<CameraChangeEvent> _onCameraChange;
 
-    private void Awake()
+    private void OnEnable()
     {
-        cam = GetComponentInChildren<CinemachineCamera>();
-        cameraPosition = cam.transform;
-        cam.Priority = 0;
+        _onCameraChange = new EventBindings<CameraChangeEvent>(OnCameraChange);
+        EventBus<CameraChangeEvent>.Register(_onCameraChange);
     }
 
+    private void OnDisable()
+    {
+        EventBus<CameraChangeEvent>.Unregister(_onCameraChange);
+    }
+
+    private void OnCameraChange(CameraChangeEvent ctx)
+    {
+        if (ctx.cam != _cam) _cam.gameObject.SetActive(false);
+        else _cam.gameObject.SetActive(true);
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
+        print($"PlayerEntered {name}");
+        
         if (other.transform.CompareTag("Player"))
         {
             // Trigger Event
-            EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(cameraPosition, cam));
+            EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(_cam.transform, _cam));
         }
     }
 
@@ -37,6 +50,5 @@ public class CameraArea : MonoBehaviour
         // Draw Line from collider position to camera position
 
         Gizmos.color = new Color(0f, 0f, 1f, 0.5f); // Blue
-        Gizmos.DrawLine(boxPosition, cameraPosition.position);
     }
 }

@@ -1026,6 +1026,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 500
+--- !u!114 &-3931074055868519636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/footsteps/Texture
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Texture
+  StudioPath: 
+  Min: 0
+  Max: 5
+  Default: 0
+  ID:
+    data1: 3392414367
+    data2: 2102481318
+  Type: 1
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &-3881462654763797652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1095,11 +1119,39 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639099706080000000
+  lastModified: 639102285607721525
   FileSizes:
   - Name: Desktop
-    Value: 506784
+    Value: 533696
   Exists: 1
+--- !u!114 &-3668409382146288146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambience/Stage 1/Ambient
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Ambience/Stage 1/Ambient
+  Guid:
+    Data1: -280427880
+    Data2: 1218403328
+    Data3: -316225345
+    Data4: 446767286
+  Banks:
+  - {fileID: -3747984595115796839}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 40009297353553673}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3500
 --- !u!114 &-3600674145014004009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1674,10 +1726,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639099706080000000
+  lastModified: 639102285607731542
   FileSizes:
   - Name: Desktop
-    Value: 1884
+    Value: 1942
   Exists: 1
 --- !u!114 &-503631398975347495
 MonoBehaviour:
@@ -1826,65 +1878,89 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EventCache
   EditorBanks:
-  - {fileID: -5800979414303557797}
-  - {fileID: -7199237270939088591}
+  - {fileID: -829887763728483246}
+  - {fileID: -3747984595115796839}
   EditorEvents:
-  - {fileID: 2269277554801041632}
-  - {fileID: -3174446469337288121}
-  - {fileID: -8844665167763321581}
-  - {fileID: -5122554357342834189}
-  - {fileID: -7612803833253743594}
-  - {fileID: -1503784679284844424}
-  - {fileID: -1853153235603777130}
-  - {fileID: -78615398860332666}
-  - {fileID: 9040257079648545961}
-  - {fileID: -5303590040218980533}
-  - {fileID: -6692137175161721149}
-  - {fileID: -503631398975347495}
-  - {fileID: 5586010387683631333}
-  - {fileID: 123554008256200755}
-  - {fileID: -461923915599834013}
-  - {fileID: 2605418546721736713}
+  - {fileID: -3761189710231247303}
+  - {fileID: 79272933940728059}
+  - {fileID: 4186359501504983323}
+  - {fileID: 3434785173484880374}
+  - {fileID: -6212814334411912630}
+  - {fileID: -5992862680925871138}
+  - {fileID: 3678410499089215010}
+  - {fileID: 3141143650237806081}
+  - {fileID: 5541816601100417278}
+  - {fileID: -8759157009586843720}
+  - {fileID: -6033241914140438137}
+  - {fileID: 8854027442004202068}
+  - {fileID: -3048418251880799740}
+  - {fileID: -3881462654763797652}
+  - {fileID: 5489980785381345984}
+  - {fileID: -3668409382146288146}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -7199237270939088591}
+  - {fileID: -3747984595115796839}
   StringsBanks:
-  - {fileID: -5800979414303557797}
+  - {fileID: -829887763728483246}
   cacheVersion: 131849
-  cacheTime: 639102141584019520
+  cacheTime: 639102285607731542
   SerializableEventsDict:
-  - key: event:/Characters/Player Character/Placeholder/death
-    index: 0
   - key: event:/Interactables/Puzzles/weightPuzzle
-    index: 1
+    index: 0
   - key: event:/Weapons/Placeholder/shoot
-    index: 2
+    index: 1
   - key: event:/Interactables/Puzzles/doorOpen
+    index: 2
+  - key: event:/Characters/Player Character/Placeholder/death
     index: 3
-  - key: event:/Interactables/Puzzles/torchOn
-    index: 4
   - key: event:/Weapons/Placeholder/bulletImpact
-    index: 5
+    index: 4
   - key: snapshot:/Reverb Room/Reverb Room
-    index: 6
-  - key: event:/Ambience/Stage 1/Ambient
-    index: 7
-  - key: event:/UI/menuMove
-    index: 8
+    index: 5
   - key: event:/Characters/Player Character/Placeholder/footsteps
-    index: 9
+    index: 6
   - key: event:/Test/Click Test
-    index: 10
+    index: 7
   - key: event:/Weapons/Placeholder/addRemoveBullet
-    index: 11
+    index: 8
   - key: event:/Weapons/Placeholder/bulletRicochet
-    index: 12
-  - key: event:/Characters/Player Character/Placeholder/damageReceived
-    index: 13
+    index: 9
   - key: event:/Interactables/Destructable/woodBoxDestruction
-    index: 14
+    index: 10
+  - key: event:/Characters/Player Character/Placeholder/damageReceived
+    index: 11
   - key: event:/Characters/Enemies/enemySwipe
+    index: 12
+  - key: event:/Interactables/Puzzles/torchOn
+    index: 13
+  - key: event:/UI/menuMove
+    index: 14
+  - key: event:/Ambience/Stage 1/Ambient
     index: 15
+--- !u!114 &40009297353553673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Ambient/Occlusion
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Occlusion
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 511493257
+    data2: 1988419984
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &79272933940728059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2570,8 +2646,8 @@ MonoBehaviour:
   Parameters:
   - {fileID: -2902728522589969418}
   - {fileID: -7263834418187651990}
-  - {fileID: 4776855086133052826}
-  - {fileID: 3164498140166337739}
+  - {fileID: 6096528975223818629}
+  - {fileID: -3931074055868519636}
   MinDistance: 1
   MaxDistance: 20
   Length: 0
@@ -3122,6 +3198,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 500
+--- !u!114 &6096528975223818629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/footsteps/Character
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Character
+  StudioPath: 
+  Min: 0
+  Max: 5
+  Default: 0
+  ID:
+    data1: 2980387711
+    data2: 2648869464
+  Type: 1
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &6480002849763659018
 MonoBehaviour:
   m_ObjectHideFlags: 0
