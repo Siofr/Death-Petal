@@ -241,7 +241,7 @@ namespace State_Machine
             Vector3 camForward = Vector3.ProjectOnPlane(_mainCam.transform.forward, GetPlaneNormal());
             Vector3 camRight = Vector3.ProjectOnPlane(_mainCam.transform.right, GetPlaneNormal());
 
-            Vector3 dir = camForward * _aim.y + camRight * _aim.x;
+            Vector3 dir = (camForward.normalized * _aim.y + camRight.normalized * _aim.x).normalized;
             lookDir = dir;
 
             var lookForward = transform.position + lookDir.normalized;
