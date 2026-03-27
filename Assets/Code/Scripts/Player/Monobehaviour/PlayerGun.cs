@@ -93,7 +93,7 @@ public class PlayerGun : MonoBehaviour
         {
             EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
             EventBus<SpawnTrail>.Raise(new SpawnTrail(bulletArray[currentChamber].bulletColor));
-            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.25f));
+            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(1.0f, 1.0f, 0.25f));
 
             // Now remove it
             if (ctx.weakness)
@@ -120,7 +120,7 @@ public class PlayerGun : MonoBehaviour
         if (bulletArray[trapdoorChamber] != null) return;
 
         _addRemoveEvent.setParameterByID(_addRemove, 1);
-        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.05f, 0.15f));
+        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.5f, 0.15f));
         EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_addRemoveEvent, this.gameObject));
 
         bulletArray[trapdoorChamber] = ctx.bulletType;
@@ -135,7 +135,7 @@ public class PlayerGun : MonoBehaviour
         if (bulletArray[currentChamber] == null) return;
 
         _addRemoveEvent.setParameterByID(_addRemove, 0);
-        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.05f, 0.0f, 0.15f));
+        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.15f));
         EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_addRemoveEvent, this.gameObject));
 
         bulletArray[currentChamber] = null;
@@ -151,11 +151,11 @@ public class PlayerGun : MonoBehaviour
 
         if (ctx.direction < 0)
         {
-            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.05f, 0.0f, 0.1f));
+            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.1f));
             return;
         }
 
-        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.05f, 0.1f));
+        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.5f, 0.1f));
     }
 
     public void RotateBarrel(int direction)

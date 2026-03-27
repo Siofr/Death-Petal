@@ -59,6 +59,14 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
             }
         }
     }
+
+    public void ToggleAllWeaknesses(bool toggle)
+    {
+        foreach (var weakness in _weaknesses)
+        {
+            weakness.Toggle(toggle);
+        }
+    }
     
     public void ToggleAllWeaknessIcons(bool toggle)
     {
@@ -133,6 +141,10 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
             _saveData.Load(transform, ref _weaknesses);
             
             if(data.health.Count > 0) InitialiseWeaknesses();
+            else
+            {
+                gameObject.SetActive(false);
+            }
             return;
         }
     }

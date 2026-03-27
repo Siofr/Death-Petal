@@ -86,7 +86,7 @@ public class EnemyBase : EntityBase, IEntity
         transform.LookAt(targetPos);
     }
 
-    private void Initialise()
+    protected virtual void Initialise()
     {
         //Field Init
         __nmAgent = GetComponent<NavMeshAgent>();
@@ -172,6 +172,12 @@ public class EnemyBase : EntityBase, IEntity
     public void StopAgent(bool stop)
     {
         __nmAgent.isStopped = stop;
+    }
+
+    public void FreezeEnemy(bool freeze)
+    {
+        StopAgent(freeze);
+        animator.speed = freeze ? 0 : 1;
     }
     
     public void ClearPath()
