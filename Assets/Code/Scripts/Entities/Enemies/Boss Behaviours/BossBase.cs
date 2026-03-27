@@ -24,9 +24,6 @@ public class BossBase : EnemyBase
     [SerializeField] private GameObject[] eyes;
     public Bishop_Phase1Attacks activeAttack = Bishop_Phase1Attacks.None;
     
-    
-    
-    
     protected override void Awake()
     {
         target = debugTarget;
@@ -37,6 +34,7 @@ public class BossBase : EnemyBase
     protected override void Start()
     {
         base.Awake();
+        Initialise();
     }
 
     protected override void Initialise()
