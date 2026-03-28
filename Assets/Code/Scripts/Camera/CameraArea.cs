@@ -38,14 +38,22 @@ public class CameraArea : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        foreach (var col in GetComponents<BoxCollider>())
+        {
         // Draw wire box around area collider
-        Gizmos.color = new Color(0f, 1f, 0f, 0.5f); // Green
+        Gizmos.color = new Color(0.2f, 0f, 1f, 0.5f); // Purple
 
-        BoxCollider boxCollider = GetComponent<BoxCollider>();
+        //BoxCollider boxCollider = GetComponent<BoxCollider>();
+        BoxCollider boxCollider = col;
         Vector3 boxSize = new Vector3(boxCollider.size.x, boxCollider.size.y, boxCollider.size.z);
         Vector3 boxPosition = new Vector3(boxCollider.bounds.center.x, boxCollider.bounds.center.y, boxCollider.bounds.center.z);
 
         Gizmos.DrawWireCube(boxPosition, boxSize);
+
+        Gizmos.color = new Color(0.2f, 0f, 1f, 0.2f); // More transparent Purple
+
+        Gizmos.DrawCube(boxPosition, boxSize);
+        }
 
         // Draw Line from collider position to camera position
 
