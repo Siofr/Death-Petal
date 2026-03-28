@@ -1,4 +1,5 @@
     using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent (typeof(BoxCollider))]
@@ -7,6 +8,8 @@ public class CameraArea : MonoBehaviour
     [SerializeField] private CinemachineCamera _cam;
     
     private EventBindings<CameraChangeEvent> _onCameraChange;
+
+    public bool isActiveArea;
 
     private void OnEnable()
     {
@@ -25,16 +28,29 @@ public class CameraArea : MonoBehaviour
         else _cam.gameObject.SetActive(true);
     }
     
-    private void OnTriggerEnter(Collider other)
+    /* private void OnTriggerEnter(Collider other)
     {
         print($"PlayerEntered {name}");
+
+        isActiveArea = true;
         
         if (other.transform.CompareTag("Player"))
         {
             // Trigger Event
             EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(_cam.transform, _cam));
         }
+    } */
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.transform.CompareTag("Player"))
+        {
+            // Trigger Event
+            EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(_cam.transform, _cam));
+        }
     }
+
+
 
     private void OnDrawGizmos()
     {
