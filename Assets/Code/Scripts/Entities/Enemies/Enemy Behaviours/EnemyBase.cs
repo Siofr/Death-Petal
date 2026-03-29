@@ -140,6 +140,8 @@ public class EnemyBase : EntityBase, IEntity
 
     protected virtual void OnEnable()
     {
+        base.OnEnable();
+        
         __playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
         __playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
         
@@ -149,6 +151,9 @@ public class EnemyBase : EntityBase, IEntity
 
     protected virtual void OnDisable()
     {
+        base.OnDisable();
+        base.OnDisable();
+        
         EventBus<RoomPlayerEnterEvent>.Unregister(__playerRoomEnterEventListener);
         EventBus<RoomPlayerExitEvent>.Unregister(__playerRoomExitEventListener);
     }

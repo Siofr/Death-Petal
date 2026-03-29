@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 //using UnityEngine.SceneManagement;
@@ -17,6 +18,9 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
     [SerializeField] protected bool __sequentialWeaknesses;
     public List<WeakTypes> defaultWeaknessTypes;
     
+    //Events
+    private EventBindings<CameraChangeEvent> _onCameraChange;
+    
     protected virtual void Awake()
     {
         //InitialiseWeaknesses();
@@ -25,6 +29,17 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
     protected virtual void Start()
     {
         InitialiseWeaknesses();
+    }
+
+    protected virtual void OnEnable()
+    {
+        _onCameraChange = new EventBindings<CameraChangeEvent>(OnCameraChange);
+        EventBus<CameraChangeEvent>.Register(_onCameraChange);
+    }
+
+    protected virtual void OnDisable()
+    {
+        EventBus<CameraChangeEvent>.Unregister(_onCameraChange);
     }
     
     public virtual void InitialiseWeaknesses()
@@ -83,7 +98,12 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
     //Saving
     [SerializeField] private EntitySaveData _saveData;
     [SerializeField] private SaveID_SO _saveSO;
-    
+
+    private void OnCameraChange(CameraChangeEvent ctx)
+    {
+        if(ctx.entities.Contains(this)) ToggleAllWeaknessIcons(true);
+        else ToggleAllWeaknessIcons(false);
+    }
     
     public string SaveableName => name;
     public EntitySaveData SaveInfo =>  _saveData;

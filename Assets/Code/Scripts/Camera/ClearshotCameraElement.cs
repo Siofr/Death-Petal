@@ -19,6 +19,6 @@ public class ClearshotCameraElement: CinemachineCameraEvents
     {
         if ((ICinemachineCamera)_cam != cam) return;
         
-        EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(transform, _cam));
+        //EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(transform, _cam));
     }
 }

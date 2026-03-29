@@ -1,3 +1,4 @@
+    using System.Collections.Generic;
     using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -46,11 +47,23 @@ public class CameraArea : MonoBehaviour
         if (other.transform.CompareTag("Player"))
         {
             // Trigger Event
-            EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(_cam.transform, _cam));
+            EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(_cam.transform, _cam, CheckEntities()));
         }
     }
 
+    private EntityBase[] CheckEntities()
+    {
+        var col =  GetComponent<BoxCollider>();
+        var tempCol = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation);
+        var tempEntities = new List<EntityBase>();
 
+        foreach (var collider in tempCol)
+        {
+            if(collider.TryGetComponent(out EntityBase entity)) tempEntities.Add(entity);
+        }
+        
+        return tempEntities.ToArray();
+    }
 
     private void OnDrawGizmos()
     {
