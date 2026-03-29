@@ -2,6 +2,8 @@ public class AOEFreeze : AOEEffect
 {
     public override void StartEffect()
     {
+        __targets = CheckTargets();
+        
         ToggleFreeze(true);
         StartPlaceHolderVFX(true);
     }
@@ -10,6 +12,8 @@ public class AOEFreeze : AOEEffect
     {
         ToggleFreeze(false);
         StartPlaceHolderVFX(false);
+
+        __targets.Clear();
     }
     
     public void ToggleFreeze(bool toggle)
