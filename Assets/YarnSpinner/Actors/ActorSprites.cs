@@ -8,9 +8,9 @@ public class ActorSprites : ScriptableObject
     public Sprite characterDefault;
     public Sprite happy;
     public Sprite sad;
-    public Sprite confused;
+    public Sprite surprised;
     public Sprite forlorn;
-    public Sprite terror;
+    public Sprite evil;
     
     public Sprite GetSelectedEmotion(string emotion)
     {
@@ -20,12 +20,12 @@ public class ActorSprites : ScriptableObject
                 return happy;
             case "sad":
                 return sad;
-            case "confused":
-                return confused;
+            case "surprised":
+                return surprised;
             case "forlorn":
                 return forlorn;
-            case "terror":
-                return terror;
+            case "evil":
+                return evil;
             default:
                 return characterDefault;
         }

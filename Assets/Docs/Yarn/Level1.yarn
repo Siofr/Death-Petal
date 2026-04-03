@@ -6,7 +6,7 @@ position: -187,-139
 <<actor ActorScreen 1 "happy" false>>
 Harmony: Hello!
 Abaddon: Greetings, but I must stop you, little flower.
-<<actor ActorScreen 0>>
+<<actor ActorScreen 0 "surprised">>
 Harmony: This is my one chance out of here so, please don't!
 Abaddon: This is not how this works...
 <<actor ActorScreen 0 "sad">>
@@ -32,13 +32,16 @@ Abaddon: Yes, but you awoke, [imp] something, someone[/imp], planted a seed... t
 Abaddon: [imp] The Flower of Hell. [/imp]
 Harmony: Well, thank you very much something! I won't be keeping a tab with them as I won't be staying, sorry..
 Abaddon: An undead vessel, won't be let on the gardens of man, little flower...
+<<actor ActorScreen 0 "sad">>
 Harmony: How do I fix that?
 <<actor ActorScreen 1 "forlorn" false>>
 Abaddon: You can not, little flower.
+<<actor ActorScreen 0 "happy">>
 Harmony: Betchya this handy dandy gun would fix that!
 Abaddon: Do not be foolish now.. And put some respect on [imp] The Flower of Hell. [/imp]
 Harmony: If I'm undead now.. and my gun kills undead things... I bet I could figure something out!
 Abaddon: Erhh... I guess you do have a point...
+<<actor ActorScreen 0 "evil">>
 Harmony: Of course I do! With guns and violence you get the whole world to turn!
 Abaddon: I don't know if that works here...
 <<hideAll ActorScreen>>
@@ -47,7 +50,7 @@ title: L1SpawnQuick
 position: 73,-240
 color: red
 ---
-<<actor ActorScreen 0 "happy">>
+<<actor ActorScreen 0 "surprised">>
 Harmony: I'm just goin' Home, hon! Can't be chit-chatting got business to take care of!
 <<actor ActorScreen 1 "forlorn" false>>
 Abaddon: H-Halt.. Wait you cannot simply leave-
@@ -57,33 +60,38 @@ Harmony: Byeee!
 title: L1Rubble
 position: -189,160
 ---
-<<actor ActorScreen 0 "terror">>
+<<actor ActorScreen 0 "surprised">>
 Harmony: man this place is in shambles.
-<<actor ActorScreen 0 "Sad">>
+<<actor ActorScreen 0 "sad">>
 Harmony: I've been in some real bad dive bars but this one takes the cake!
-<<actor ActorScreen 0 "Forlorn">>
+<<actor ActorScreen 0 "forlorn">>
 Harmony: This thing is going to take for everrrrr.
 <<hideAll ActorScreen>>
 ===
 title: L1Reload
 position: -187,351
 ---
-<<actor ActorScreen 0 "happy">>
+<<actor ActorScreen 0 "surprised">>
 <<actor ActorScreen 1 "happy" false>>
 Harmony: Hey, I never got ya name hon. 
 Abaddon: Abaddon, the devil of Dis, the once feared, old knife of Jerimiah, the undead winter, the-
+<<actor ActorScreen 0 "happy">>
 Harmony: That's a sweet name Abby.
 <<actor ActorScreen 1 "forlorn" false>>
 Abby: I was not done.
+<<actor ActorScreen 0 "sad">>
 Harmony: Abby, this handy dandy revolver, it's a real pain to reload. 
 Abby: I'm not Ab- Ah forget it.
 Abby: You must invoke a heretic ritual to fill your weapon with a hellish emotion. 
+<<actor ActorScreen 0 "happy">>
 Harmony: What if I just-
 <<actor ActorScreen 1 "happy" false>>
 Abby: Don't you DARE DEFILE THE GOD-SLAYING WEAPON, YOU-
+<<actor ActorScreen 0 "surprised">>
 Harmony: Oh the magazine was just a little stuck!
 <<actor ActorScreen 1 "sad" false>>
 Abby: I-I I, li-little flower... if that weapon would have broke, all of hell would-
+<<actor ActorScreen 0 "happy">>
 Harmony: Ah, Abby you worry too much. 
 <<hideAll ActorScreen>>
 ===
@@ -95,13 +103,13 @@ color: yellow
 <<actor ActorScreen 0 "happy">>
 <<actor ActorScreen 1 "happy" false>>
 Abaddon: See that Colosseum, little flower?
-<<actor ActorScreen 0 "forlorn">>
+<<actor ActorScreen 0 "surprised">>
 Harmony: It sure is big..
 Abaddon: If you want to get into the [imp]City of Dis[/imp], you will need to get past the old guardian.
 <<actor ActorScreen 0 "happy">>
 Harmony: Should be easy as pie. 
 Abaddon: Eh. How would that be easy.
-//harmony evil
+<<actor ActorScreen 0 "evil">>
 Harmony: I just kill him. 
 Abaddon: Many would love that. He is a cruel priest, but just, I do not think that is the best move. 
 Abaddon: I suggest you first get- 
@@ -118,6 +126,7 @@ position: -188,541
 Abby: Ahead lies the guardian. 
 Harmony: I got pretty handy with this lil, ol gun now!
 Abby: I feel you are still set on slaying him?
+<<actor ActorScreen 0 "evil">>
 Harmony: Ah I got the taste for fight now..
 Abby: An undead husk like you could, potentially, grow strong enough to come back with a power of him.
 Harmony: You did not need to say more.
@@ -142,7 +151,7 @@ Harmony: You look ancient and all knowing.
 Abby: I simply write down, what happens in the Wastes of Hell. It's what I've always done. 
 Harmony: So you a devil or what, you work for Satan?
 Abby: Hah, him.. Let's just say, I'm just curious.
-Harmony: Shady, you lucky shooting you just makes you talk.
+Harmony: Shady, you sure are lucky shooting you just makes you talk.
 <<hideAll ActorScreen>>
 ===
 title: L1Hidden
@@ -156,6 +165,7 @@ Abby: I was sent to torture you. But that weapon. It intrigued me.
 Harmony: So you breaking rules.
 Abby: I'm a devil, little flower, I do what I want. 
 Abby: I just want to make sure that weapon stays safe.
+<<actor ActorScreen 0 "surprised">>
 Harmony: Didn't know revolvers were a thing in hell. It's real old here. 
 Abby: We are more modern than you think, little flower. And [imp]The Flower of Hell[/imp] changes based on the wielder.
 Harmony: I don't remember guns being my thing.
