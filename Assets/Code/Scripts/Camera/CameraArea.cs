@@ -42,6 +42,7 @@ public class CameraArea : MonoBehaviour
         }
     } */
 
+    //Changing over to stay, as it gets called ultimatly anyway (if it tanks performance you know why) -eva
     private void OnTriggerStay(Collider other)
     {
         if (other.transform.CompareTag("Player"))
