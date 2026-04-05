@@ -99,7 +99,7 @@ public class EnemyBase : EntityBase, IEntity
         return Vector3.Angle(transform.forward, targetPos)*multiplier;
     }
 
-    private void Initialise()
+    protected virtual void Initialise()
     {
         //Field Init
         __nmAgent = GetComponent<NavMeshAgent>();
@@ -153,6 +153,7 @@ public class EnemyBase : EntityBase, IEntity
 
     protected virtual void OnEnable()
     {
+        base.OnEnable();
         __playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
         __playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
         
@@ -162,6 +163,7 @@ public class EnemyBase : EntityBase, IEntity
 
     protected virtual void OnDisable()
     {
+        base.OnDisable();
         EventBus<RoomPlayerEnterEvent>.Unregister(__playerRoomEnterEventListener);
         EventBus<RoomPlayerExitEvent>.Unregister(__playerRoomExitEventListener);
     }
@@ -175,6 +177,12 @@ public class EnemyBase : EntityBase, IEntity
     {
         if(target == null) return false;
         return Vector3.Distance(target.position, transform.position) < enemyData.attackRange;
+    }
+
+    public void FreezeEnemy(bool freeze)
+    {
+        StopAgent(freeze);
+        animator.speed = freeze ? 0 : 1;
     }
 
     public bool InDefaultPosRange()
