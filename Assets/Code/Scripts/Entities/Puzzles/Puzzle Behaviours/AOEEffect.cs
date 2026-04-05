@@ -44,6 +44,19 @@ public abstract class AOEEffect: MonoBehaviour
         }
     }
 
+    public List<EnemyBase> CheckTargets()
+    {
+        var sphereCast = Physics.OverlapSphere(transform.position, __col.radius, 1 << 11);
+        var temp = new List<EnemyBase>();
+
+        foreach (var col in sphereCast)
+        {
+            if(col.transform.parent.TryGetComponent(out EnemyBase enemy)) temp.Add(enemy);
+        }
+
+        return temp;
+    }
+    
     private void Awake()
     {
         __col = GetComponent<SphereCollider>();

@@ -10,6 +10,8 @@ public class AOEBurn : AOEEffect
     
     public override void StartEffect()
     {
+        __targets = CheckTargets();
+        
         __isActive = true;
         StartDamageTimer();
         

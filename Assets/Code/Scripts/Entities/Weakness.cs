@@ -99,7 +99,7 @@ public class Weakness : MonoBehaviour
             WeakTypes.PLAYER => Color.clear
         };
 
-        _renderer.material.mainTexture = _weaknessType switch
+        var tex = _weaknessType switch
         {
             WeakTypes.RED => _weaknessTextures[0],
             WeakTypes.BLUE => _weaknessTextures[1],
@@ -107,6 +107,7 @@ public class Weakness : MonoBehaviour
             _ => _renderer.material.GetTexture("_Texture2D")
         };
         
+        _renderer.material.SetTexture("_Texture2D", tex);
         
         if(WeakType == WeakTypes.PLAYER) _renderer.material.SetFloat("_Opacity", 1f);
         else _renderer.material.SetFloat("_Opacity", .12f);
