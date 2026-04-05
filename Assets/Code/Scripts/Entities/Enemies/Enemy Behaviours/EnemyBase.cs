@@ -69,10 +69,8 @@ public class EnemyBase : EntityBase, IEntity
         defaultPos =  transform.position;
     }
     
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
-        
         Initialise();
     }
     
@@ -84,6 +82,21 @@ public class EnemyBase : EntityBase, IEntity
         targetPos.y = transform.position.y;
         
         transform.LookAt(targetPos);
+    }
+
+    public float LookAtAngle()
+    {
+        if (target == null) return 0;
+
+        var targetPos = target.position;
+        targetPos.y = transform.position.y;
+        var multiplier = 1f;
+        var forward2D = new Vector2(transform.forward.x, transform.forward.z);
+        var localTargetPos = transform.InverseTransformPoint(targetPos);
+        if (localTargetPos.x < 0) multiplier = -1f;
+
+        print(Vector3.Angle(transform.forward, targetPos) * multiplier);
+        return Vector3.Angle(transform.forward, targetPos)*multiplier;
     }
 
     protected virtual void Initialise()
@@ -141,7 +154,6 @@ public class EnemyBase : EntityBase, IEntity
     protected virtual void OnEnable()
     {
         base.OnEnable();
-        
         __playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
         __playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
         
@@ -152,8 +164,6 @@ public class EnemyBase : EntityBase, IEntity
     protected virtual void OnDisable()
     {
         base.OnDisable();
-        base.OnDisable();
-        
         EventBus<RoomPlayerEnterEvent>.Unregister(__playerRoomEnterEventListener);
         EventBus<RoomPlayerExitEvent>.Unregister(__playerRoomExitEventListener);
     }
@@ -169,6 +179,12 @@ public class EnemyBase : EntityBase, IEntity
         return Vector3.Distance(target.position, transform.position) < enemyData.attackRange;
     }
 
+    public void FreezeEnemy(bool freeze)
+    {
+        StopAgent(freeze);
+        animator.speed = freeze ? 0 : 1;
+    }
+
     public bool InDefaultPosRange()
     {
         return Vector3.Distance(transform.position, defaultPos) < 1f;
@@ -177,12 +193,6 @@ public class EnemyBase : EntityBase, IEntity
     public void StopAgent(bool stop)
     {
         __nmAgent.isStopped = stop;
-    }
-
-    public void FreezeEnemy(bool freeze)
-    {
-        StopAgent(freeze);
-        animator.speed = freeze ? 0 : 1;
     }
     
     public void ClearPath()

@@ -126,14 +126,24 @@ public class EnemyArcher: EnemyBase
         speed = signAngle < 0 ? -speed : speed;
         angle = signAngle < 0 ? absAngle : absAngle;
 
+        var firstActivation = true;
         var isFirst = false;
         var tempRot = 0f;
         
+        animator.SetFloat("Angle", LookAtAngle());
+        
         while (target != null && !_inLos)
         {
+
+            if (firstActivation)
+            {
+                animator.SetTrigger("Spawn");
+                firstActivation = false;
+            }
+
             if (absAngle >= 360)
             {
-                transform.Rotate(transform.up, speed*Time.deltaTime);
+                //transform.Rotate(transform.up, speed*Time.deltaTime);
                 
                 yield return null;
             }
@@ -142,10 +152,12 @@ public class EnemyArcher: EnemyBase
 
             if (!isFirst)
             {
+                
+                
                 if (tempRot + absSpeed * Time.deltaTime < absAngle)
                 {
                     tempRot += absSpeed * Time.deltaTime;
-                    transform.Rotate(transform.up, speed * Time.deltaTime);
+                    //transform.Rotate(transform.up, speed * Time.deltaTime);
                 }
                 else
                 {
@@ -158,10 +170,11 @@ public class EnemyArcher: EnemyBase
             }
             else
             {
+                
                 if (tempRot + absSpeed * Time.deltaTime < absAngle * 2)
                 {
                     tempRot += absSpeed * Time.deltaTime;
-                    transform.Rotate(transform.up, speed * Time.deltaTime);
+                    //transform.Rotate(transform.up, speed * Time.deltaTime);
                 }
                 else
                 {
@@ -187,7 +200,7 @@ public class EnemyArcher: EnemyBase
         
         while (_timerRoutine != null)
         {
-            LookAtTarget();
+            animator.SetFloat("Angle", LookAtAngle());
             yield return null;
         }
 
@@ -206,6 +219,7 @@ public class EnemyArcher: EnemyBase
         if (_timerRoutine != null || target == null) yield break;
         
         var playerController = target.GetComponent<TestPlayer>();
+        animator.SetTrigger("Shoot");
         
         yield return TimerRoutine(time);
         

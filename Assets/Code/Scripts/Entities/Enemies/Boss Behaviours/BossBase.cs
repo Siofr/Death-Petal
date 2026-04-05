@@ -37,7 +37,7 @@ public class BossBase : EnemyBase
         Initialise();
     }
 
-    protected override void Initialise()
+    protected void Initialise()
     {
         //Field Init
         //print("Init Boss!");
