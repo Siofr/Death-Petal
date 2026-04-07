@@ -2,11 +2,13 @@
     using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
+using Cache = Unity.VisualScripting.Cache;
 
 [RequireComponent (typeof(BoxCollider))]
 public class CameraArea : MonoBehaviour
 {
     [SerializeField] private CinemachineCamera _cam;
+    [SerializeField] private CameraArea[] _linkedCameraAreas;
     
     private EventBindings<CameraChangeEvent> _onCameraChange;
 
@@ -23,6 +25,11 @@ public class CameraArea : MonoBehaviour
         EventBus<CameraChangeEvent>.Unregister(_onCameraChange);
     }
 
+    private void Awake()
+    {
+        CheckEntities();
+    }
+    
     private void OnCameraChange(CameraChangeEvent ctx)
     {
         if (ctx.cam != _cam) _cam.gameObject.SetActive(false);
@@ -47,23 +54,45 @@ public class CameraArea : MonoBehaviour
     {
         if (other.transform.CompareTag("Player"))
         {
+            var targets = CheckEntitiesLinkedCameras();
+            
             // Trigger Event
-            EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(_cam.transform, _cam, CheckEntities()));
+            EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(_cam.transform, _cam, targets));
         }
     }
 
-    private EntityBase[] CheckEntities()
+    private List<EntityBase> _entities = new List<EntityBase>();
+
+    private EntityBase[] CheckEntitiesLinkedCameras()
     {
-        var col =  GetComponent<BoxCollider>();
+        var allEntities = new List<EntityBase>();
+
+        allEntities.AddRange(CheckEntities());
+        
+        foreach (var cam in _linkedCameraAreas)
+        {
+            allEntities.AddRange(cam.CheckEntities());
+        }
+        
+        return allEntities.ToArray();
+    }
+    
+    public EntityBase[] CheckEntities(Collider checkCollider = null)
+    {
+        var col = checkCollider ?? GetComponent<BoxCollider>();
         var tempCol = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation);
         var tempEntities = new List<EntityBase>();
 
         foreach (var collider in tempCol)
         {
             if(collider.TryGetComponent(out EntityBase entity)) tempEntities.Add(entity);
+            if(collider.transform.parent.TryGetComponent(out EntityBase parentEntity) && !tempEntities.Contains(parentEntity))
+                tempEntities.Add(parentEntity);
         }
+
+        _entities = tempEntities;
         
-        return tempEntities.ToArray();
+        return _entities.ToArray();
     }
 
     private void OnDrawGizmos()
