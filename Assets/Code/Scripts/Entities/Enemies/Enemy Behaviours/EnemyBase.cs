@@ -69,8 +69,9 @@ public class EnemyBase : EntityBase, IEntity
         defaultPos =  transform.position;
     }
     
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         Initialise();
     }
     
