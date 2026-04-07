@@ -86,8 +86,14 @@ public class CameraArea : MonoBehaviour
         foreach (var collider in tempCol)
         {
             if(collider.TryGetComponent(out EntityBase entity)) tempEntities.Add(entity);
-            if(collider.transform.parent.TryGetComponent(out EntityBase parentEntity) && !tempEntities.Contains(parentEntity))
+            else
+            {
+                EntityBase parentEntity = collider.GetComponentInParent<EntityBase>();
+                
+                if(parentEntity != null && tempEntities.Contains(parentEntity)) continue;
+                
                 tempEntities.Add(parentEntity);
+            }
         }
 
         _entities = tempEntities;

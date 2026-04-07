@@ -14,6 +14,20 @@ public struct CreatePlayerWeaknessEvent: IEvent
     }
 }
 
+public struct CreateWeaknessEvent : IEvent
+{
+    public EntityBase entity;
+    public WeakTypes weakType;
+    public Vector3 iconPosition;
+
+    public CreateWeaknessEvent(EntityBase entity, WeakTypes weakType, Vector3 iconPosition)
+    {
+        this.entity = entity;
+        this.weakType = weakType;
+        this.iconPosition = iconPosition;
+    }
+}
+
 public class WeaknessFactory : Singleton<WeaknessFactory>
 {
     [SerializeField] GameObject _weaknessPrefab;
@@ -22,6 +36,7 @@ public class WeaknessFactory : Singleton<WeaknessFactory>
     //Events
     private EventBindings<PetalPickpEvent> _petalPickupListener;
     private EventBindings<CreatePlayerWeaknessEvent> _createPlayerWeaknessListener;
+    private EventBindings<CreateWeaknessEvent> _createWeaknessListener;
     
     //Properties
     public GameObject ProductPrefab => _weaknessPrefab;
@@ -44,6 +59,11 @@ public class WeaknessFactory : Singleton<WeaknessFactory>
         if (_player == null) return;
         CreateWeakness(_player, WeakTypes.PLAYER, _player.transform.position);
     }
+
+    public void OnWeaknessRequest(CreateWeaknessEvent ctx)
+    {
+        CreateWeakness(ctx.entity, ctx.weakType, ctx.iconPosition);
+    }
     
     private void Awake()
     {
@@ -54,14 +74,17 @@ public class WeaknessFactory : Singleton<WeaknessFactory>
     {
         _petalPickupListener = new EventBindings<PetalPickpEvent>(CreatePlayerWeakness);
         _createPlayerWeaknessListener = new EventBindings<CreatePlayerWeaknessEvent>(CreatePlayerWeakness);
+        _createWeaknessListener = new EventBindings<CreateWeaknessEvent>(OnWeaknessRequest);
         
         EventBus<CreatePlayerWeaknessEvent>.Register(_createPlayerWeaknessListener);
         EventBus<PetalPickpEvent>.Register(_petalPickupListener);
+        EventBus<CreatePlayerWeaknessEvent>.Register(_createPlayerWeaknessListener);
     }
 
     private void OnDisable()
     {
         EventBus<PetalPickpEvent>.Unregister(_petalPickupListener);
         EventBus<CreatePlayerWeaknessEvent>.Unregister(_createPlayerWeaknessListener);
+        EventBus<CreateWeaknessEvent>.Unregister(_createWeaknessListener);
     }
 }

@@ -33,7 +33,7 @@ public struct SpawnedEnemyEvent : IEvent
 
 public interface IEnemyFactory<out T> where T: EnemyBase
 {
-    public IEnemyFactory<T> GetType();
+    public Type GetType();
     public void CreateEnemy(Vector3 position, Transform parentRoom, GameObject requestObj = null);
 }
 
@@ -45,9 +45,9 @@ public class EnemyFactory<T> : MonoBehaviour, IEnemyFactory<T> where T: EnemyBas
     //Event Fields
     private EventBindings<SpawnEnemyEvent> _spawnEnemyEventListener;
     
-    public IEnemyFactory<T> GetType()
+    public Type GetType()
     {
-        return this;
+        return typeof(T);
     }
 
     public void CreateEnemy(Vector3 position, Transform parentRoom, GameObject requestObj = null)
