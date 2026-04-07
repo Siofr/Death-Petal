@@ -44,14 +44,26 @@ public struct SFXEventTrigger : IEvent
     }
 }
 
+public struct SFXStopEvent : IEvent
+{
+    public EventInstance eventInstance;
+
+    public SFXStopEvent(EventInstance eventInstance)
+    {
+        this.eventInstance = eventInstance;
+    }
+}
+
 public class SFXManager : Singleton<SFXManager>
 {
     private EventBindings<SFXEventTrigger> _sfxEventListener;
+    private EventBindings<SFXStopEvent> _sfxStopEventListener;
 
     protected override void Awake()
     {
         base.Awake();
         _sfxEventListener = new EventBindings<SFXEventTrigger>(PlaySFX);
+        _sfxStopEventListener = new EventBindings<SFXStopEvent>(StopSFX);
     }
 
     public void OnEnable()
@@ -69,5 +81,10 @@ public class SFXManager : Singleton<SFXManager>
         RuntimeManager.AttachInstanceToGameObject(ctx.eventInstance, ctx.sourceObject);
         ctx.eventInstance.start();
         // ctx.eventInstance.release();
+    }
+
+    public void StopSFX(SFXStopEvent ctx)
+    {
+        ctx.eventInstance.release();
     }
 }

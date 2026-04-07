@@ -7,8 +7,10 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using FMODUnity;
+using FMOD.Studio;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
+using SFXUtil;
 
 struct EnemyDeathEvent: IEvent
 {
@@ -62,7 +64,12 @@ public class EnemyBase : EntityBase, IEntity
 
     [Header("Audio Paths")]
     public EventReference onEnemyAttackEventPath;
-    
+    public EventReference enemyPassiveIdle;
+
+    public EventInstance enemyPassiveSFXEvent;
+
+    public EventReference exitIdleAlert;
+
     protected override void Awake()
     {
         base.Awake();
@@ -101,6 +108,8 @@ public class EnemyBase : EntityBase, IEntity
 
     protected virtual void Initialise()
     {
+        enemyPassiveSFXEvent = SFXUtilities.CreateEventInstance(enemyPassiveIdle, this.gameObject);
+
         //Field Init
         __nmAgent = GetComponent<NavMeshAgent>();
         __enemyStateMachine = new StateMachine();
