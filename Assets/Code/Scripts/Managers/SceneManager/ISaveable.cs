@@ -28,11 +28,11 @@ public class ISaveableHelper
 {
     public static int GenerateISaveableID(LevelSaveableData_SO levelSaveableData)
     {
-        var tempID = Random.Range(0, int.MaxValue);
+        var tempID = 1;
 
         while (levelSaveableData.saveableIDs.Contains(tempID))
         {
-            tempID = Random.Range(0, int.MaxValue);
+            tempID++;
         }
         
         levelSaveableData.saveableIDs.Add(tempID);
@@ -43,6 +43,8 @@ public class ISaveableHelper
         return tempID;
     }
 
+    public static Dictionary<string, int> existingNames = new Dictionary<string, int>();
+    
     public static void RemoveExistingID(LevelSaveableData_SO levelSaveableData, ISaveable saveable)
     {
         levelSaveableData.saveableIDs.Remove(saveable.SaveID);

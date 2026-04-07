@@ -11,14 +11,6 @@ public class LevelManagerEditor: Editor
         base.OnInspectorGUI();
         
         var manager = (LevelManager)target;
-
-        if (GUILayout.Button("Bake Level Data"))
-        {
-            manager.SaveLevelData(true);
-            EditorUtility.SetDirty(manager);
-            EditorUtility.SetDirty(manager.saveableData);
-            //EditorSceneManager.SaveScene(SceneManager.GetActiveScene());
-        }
         
         if (GUILayout.Button("Save Level Data"))
         {
@@ -31,9 +23,6 @@ public class LevelManagerEditor: Editor
         if (GUILayout.Button("Load Default Level Data"))
         {
             manager.LoadLevelData(true);
-            EditorUtility.SetDirty(manager);
-            EditorUtility.SetDirty(manager.saveableData);
-            //EditorSceneManager.SaveScene(SceneManager.GetActiveScene());
         }
         
         if (GUILayout.Button("Load Level Data"))

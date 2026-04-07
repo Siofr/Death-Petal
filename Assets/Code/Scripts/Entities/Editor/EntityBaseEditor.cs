@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(EntityBase), true)]
+[CustomEditor(typeof(EntityBase), true)][CanEditMultipleObjects]
 public class EntityBaseEditor : Editor
 {
     public override void OnInspectorGUI()

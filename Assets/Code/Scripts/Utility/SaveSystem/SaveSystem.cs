@@ -124,6 +124,19 @@ public struct LevelSaveData
         this.levelName = levelName;
     }
 }
+
+[Serializable]
+public struct WeaknessSaveData
+{
+    public Vector3 iconPosition;
+    public int weakType;
+
+    public WeaknessSaveData(Vector3 iconPosition, int weakType)
+    {
+        this.iconPosition = iconPosition;
+        this.weakType = weakType;
+    }
+}
 #endregion
 
 #region ISaveable Save Data Types
@@ -133,9 +146,9 @@ public struct EntitySaveData
     public int id;
     
     public Vector3 position;
-    public List<int> health;
+    public List<WeaknessSaveData> health;
 
-    public EntitySaveData(int id, Vector3 position,  List<int> health)
+    public EntitySaveData(int id, Vector3 position,  List<WeaknessSaveData> health)
     {
         this.id = id;
         this.position = position;
@@ -146,8 +159,12 @@ public struct EntitySaveData
     {
         position = pos;
 
-        var tempWeaknesses = new List<int>();
-        refWeaknesses.ForEach((x)=> tempWeaknesses.Add((int)x.WeakType));
+        var tempWeaknesses = new List<WeaknessSaveData>();
+        
+        for (int i = 0; i < refWeaknesses.Count; i++)
+        {
+            tempWeaknesses.Add(new WeaknessSaveData(refWeaknesses[i].WeaknessIconTransform.position, (int)refWeaknesses[i].WeakType));
+        }
 
         health = tempWeaknesses;
     }
@@ -159,14 +176,36 @@ public struct EntitySaveData
         if (health.Count < 1)
         {
             refTransform.gameObject.SetActive(false);
-            refWeaknesses.Clear();
-
             return;
         }
 
-        if (health.Count < refWeaknesses.Count)
+        var temp = new List<CreateWeaknessEvent>();
+        var entity = refTransform.GetComponent<EntityBase>();
+        
+        for (int i = 0; i < health.Count; i++)
         {
-            refWeaknesses[refWeaknesses.Count-1].RemoveWeakness();
+            if (i <= refWeaknesses.Count - 1)
+            {
+                if (refWeaknesses[i].WeakType != (WeakTypes)health[i].weakType)
+                    refWeaknesses[i].SetWeakType((WeakTypes)health[i].weakType);
+            }
+            else
+            {
+                temp.Add(new CreateWeaknessEvent(entity, (WeakTypes)health[i].weakType, health[i].iconPosition));
+            }
+        }
+        
+        if (refWeaknesses.Count > health.Count)
+        {
+            for (int i = refWeaknesses.Count - 1; i >= health.Count; i--)
+            {
+                refWeaknesses[i].SetWeakType(WeakTypes.NONE);
+            }
+        }
+        
+        for (int i = 0; i < temp.Count; i++)
+        {
+            EventBus<CreateWeaknessEvent>.Raise(temp[i]);
         }
     }
 }
