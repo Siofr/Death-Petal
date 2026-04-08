@@ -4,6 +4,7 @@ using System.Timers;
 using State_Machine;
 using UnityEngine;
 using UnityEngine.Serialization;
+using FMODUnity;
 
 public class EnemyArcher: EnemyBase
 {
@@ -20,7 +21,11 @@ public class EnemyArcher: EnemyBase
     private Coroutine _shotRoutine;
     private Coroutine _timerRoutine;
     private bool _inLos;
-    
+
+    [Header("Unit Specific Audio Paths")]
+    public EventReference onArrowKnock;
+    public EventReference onArrowRelease;
+
     protected override void Awake()
     {
         _targetLineRender.enabled = false;
