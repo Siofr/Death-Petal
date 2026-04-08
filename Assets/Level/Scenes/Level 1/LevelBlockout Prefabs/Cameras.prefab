@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 350184735455884422}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.01106726, y: 0.594737, z: -0.008188714, w: 0.80380243}
+  m_LocalRotation: {x: 0.17552632, y: -0.7853891, z: 0.2578325, w: 0.5346746}
   m_LocalPosition: {x: -71.39366, y: 2.8688755, z: -42.459282}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 3877386584017965520}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &591239461189451750
 GameObject:
@@ -301,6 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 1861049013714401840}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &758311167317731682
 GameObject:
@@ -370,6 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 3350751075667805025}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &1264890089246748550
 GameObject:
@@ -664,6 +667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 7086320523512334667}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &1572400494794039780
 GameObject:
@@ -733,6 +737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 2342265943312588955}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &1648426124606293331
 GameObject:
@@ -802,6 +807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 3916610291187397254}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &2415027418867668183
 GameObject:
@@ -1021,6 +1027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 715078494955090594}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &2676579667276295041
 GameObject:
@@ -1090,6 +1097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 3594552517887541101}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &2834985059513890653
 GameObject:
@@ -1182,7 +1190,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7947977049415690932
 Transform:
   m_ObjectHideFlags: 0
@@ -1331,6 +1339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 8384591515622383326}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &3448244143400775180
 GameObject:
@@ -1462,7 +1471,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6565051665285282477
 Transform:
   m_ObjectHideFlags: 0
@@ -1589,6 +1598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 131722593262133717}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &3990875216336235986
 GameObject:
@@ -1808,6 +1818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 5689747611941229657}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &4313378446417818253
 GameObject:
@@ -1877,6 +1888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 1657273300398601684}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &4472495285202702322
 GameObject:
@@ -1946,6 +1958,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 7330941421087049748}
+  _linkedCameraAreas:
+  - {fileID: 8038108907872385965}
+  - {fileID: 3129315990353570365}
   isActiveArea: 0
 --- !u!1 &4533180273455481715
 GameObject:
@@ -2015,6 +2030,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 8836537093926376605}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &4608220447010354742
 GameObject:
@@ -2028,13 +2044,14 @@ GameObject:
   - component: {fileID: 5219193420674010174}
   - component: {fileID: 5485484877893098312}
   - component: {fileID: 7325698720186911195}
+  - component: {fileID: 8899101580726792847}
   m_Layer: 0
   m_Name: Boss Corridor Dolly Cam (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4931060505600008832
 Transform:
   m_ObjectHideFlags: 0
@@ -2043,8 +2060,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4608220447010354742}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0005052796, y: 0.9979076, z: 0.064175956, w: -0.007856875}
-  m_LocalPosition: {x: -73.598885, y: -5.1391807, z: 7.0778837}
+  m_LocalRotation: {x: 0.0025131837, y: 0.9966514, z: -0.033624467, w: 0.07449243}
+  m_LocalPosition: {x: -74.94389, y: -4.0591807, z: 6.865053}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2107,13 +2124,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineSplineDolly
   m_SplineSettings:
     Spline: {fileID: 5858902101939201186}
-    Position: 0.7240666
+    Position: 0.72780365
     Units: 1
-  SplineOffset: {x: 0, y: 0.92, z: -1.5}
+  SplineOffset: {x: 0, y: 2, z: -1.15}
   CameraRotation: 0
   Damping:
     Enabled: 1
-    Position: {x: 2.08, y: 0, z: 0}
+    Position: {x: 2, y: 0, z: 0}
     Angular: 0
   AutomaticDolly:
     Enabled: 1
@@ -2144,22 +2161,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineRotationComposer
   Composition:
-    ScreenPosition: {x: 0, y: 0}
+    ScreenPosition: {x: 0.01914144, y: -0.08041236}
     DeadZone:
       Enabled: 0
       Size: {x: 0.2, y: 0.2}
     HardLimits:
       Enabled: 0
-      Size: {x: 0.8, y: 0.8}
-      Offset: {x: 0, y: 0}
+      Size: {x: 0.9645011, y: 0.7752577}
+      Offset: {x: -0.04, y: 0}
   CenterOnActivate: 1
-  TargetOffset: {x: 0, y: 0, z: 0}
+  TargetOffset: {x: 0.67, y: -1.2, z: -0.5}
   Damping: {x: 0.5, y: 0.5}
   Lookahead:
-    Enabled: 0
+    Enabled: 1
     Time: 0
-    Smoothing: 0
+    Smoothing: 29.2
     IgnoreY: 0
+--- !u!114 &8899101580726792847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4608220447010354742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb4843bae7d24943842ea23130dcd55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineGroupFraming
+  FramingMode: 2
+  FramingSize: 0.88
+  CenterOffset: {x: 0, y: 0}
+  Damping: 0
+  SizeAdjustment: 2
+  LateralAdjustment: 0
+  FovRange: {x: 1, y: 100}
+  DollyRange: {x: -100, y: 100}
+  OrthoSizeRange: {x: 1, y: 1000}
 --- !u!1 &4702317751715751196
 GameObject:
   m_ObjectHideFlags: 0
@@ -2228,6 +2266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 3695112184897095449}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &4746590078683809737
 GameObject:
@@ -2297,6 +2336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 5862104654900043930}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &5013095802818194122
 GameObject:
@@ -2366,6 +2406,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 4850351855667829330}
+  _linkedCameraAreas:
+  - {fileID: 8038108907872385965}
+  - {fileID: 1792255507975012511}
   isActiveArea: 0
 --- !u!1 &5193549864980667534
 GameObject:
@@ -2435,6 +2478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 1526258241092982487}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &5243922380876609792
 GameObject:
@@ -2654,6 +2698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 663538898582617813}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &5591945421303862278
 GameObject:
@@ -2798,6 +2843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 6401972522023558804}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &6195132160870243145
 GameObject:
@@ -2942,6 +2988,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 3189016032261113709}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &6282774543830225812
 GameObject:
@@ -3011,6 +3058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 3593114593676011396}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &6334444041199650190
 GameObject:
@@ -3080,6 +3128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 4917578779060818596}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &6359980654878579810
 GameObject:
@@ -3224,6 +3273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 7286305810213375145}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &6444813411643374517
 GameObject:
@@ -3443,6 +3493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 3065200987074983343}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &6784262941441894325
 GameObject:
@@ -3588,6 +3639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 1737672946937049175}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &6916485930771719079
 GameObject:
@@ -4257,6 +4309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 1541477122088413875}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &8550501697217012183
 GameObject:
@@ -4326,6 +4379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 496402994408353822}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &8636526039759202750
 GameObject:
@@ -4508,6 +4562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 5219193420674010174}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &8691772380257974801
 GameObject:
@@ -4577,6 +4632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 249328240963872943}
+  _linkedCameraAreas: []
   isActiveArea: 0
 --- !u!1 &8860382858716500389
 GameObject:
@@ -4666,7 +4722,7 @@ Transform:
   m_GameObject: {fileID: 8919962167977695055}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -61.59261, y: -6.05918, z: 13.4500265}
+  m_LocalPosition: {x: -63.44, y: -6.05918, z: 13.4500265}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5235,4 +5291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraArea
   _cam: {fileID: 1158342728571708589}
+  _linkedCameraAreas:
+  - {fileID: 3129315990353570365}
+  - {fileID: 1792255507975012511}
   isActiveArea: 0
