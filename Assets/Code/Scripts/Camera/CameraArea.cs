@@ -68,31 +68,36 @@ public class CameraArea : MonoBehaviour
         var allEntities = new List<EntityBase>();
 
         allEntities.AddRange(CheckEntities());
-        
-        foreach (var cam in _linkedCameraAreas)
+
+        if (_linkedCameraAreas.Length > 0)
         {
-            allEntities.AddRange(cam.CheckEntities());
+            foreach (var cam in _linkedCameraAreas)
+            {
+                allEntities.AddRange(cam.CheckEntities());
+            }   
         }
         
         return allEntities.ToArray();
     }
+
+    private Collider[] _checkedColliders;
     
     public EntityBase[] CheckEntities(Collider checkCollider = null)
     {
         var col = checkCollider ?? GetComponent<BoxCollider>();
-        var tempCol = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation);
+        var tempCol = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, 1 << 12 | 1 << 6 | 1 << 11);
         var tempEntities = new List<EntityBase>();
 
+        _checkedColliders = tempCol;
+        
         foreach (var collider in tempCol)
         {
-            if(collider.TryGetComponent(out EntityBase entity)) tempEntities.Add(entity);
+            if(collider.TryGetComponent(out EntityBase entity) && !tempEntities.Contains(entity)) tempEntities.Add(entity);
             else
             {
                 EntityBase parentEntity = collider.GetComponentInParent<EntityBase>();
                 
-                if(parentEntity != null && tempEntities.Contains(parentEntity)) continue;
-                
-                tempEntities.Add(parentEntity);
+                if(parentEntity != null && !tempEntities.Contains(parentEntity)) tempEntities.Add(parentEntity);
             }
         }
 
