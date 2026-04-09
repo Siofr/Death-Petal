@@ -1,11 +1,14 @@
 using System;
+using System.Collections;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 using UnityEngine;
 using FMOD.Studio;
 using FMODUnity;
+using Unity.Cinemachine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 [CanEditMultipleObjects]
 public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable<PuzzleOutputSaveData>
@@ -14,6 +17,13 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     [Header("Base Fields")]
     [SerializeField] private bool _isSolved;
     public Animator animator;
+    [FormerlySerializedAs("__camera")]
+    [Space]
+    [SerializeField] protected CinemachineCamera _camera;
+    [SerializeField] protected float _cameraPanTime;
+    
+    //Non-Serialized Fields
+    private Coroutine _cameraPanRoutine;
     
     //Events
     private EventBindings<PuzzleSolvedEvent> _puzzleSolvedEventListener;
@@ -37,6 +47,43 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         _levelLoadedEventListener = new EventBindings<LevelLoadedEvent>(OnLevelLoaded);
     }
 
+    protected void StartPanningCamera(Func<bool> exitCondition)
+    {
+        if (_camera == null || _cameraPanRoutine != null) return;
+
+        _cameraPanRoutine = StartCoroutine(PanCameraRoutine(exitCondition));
+    }
+    
+    protected IEnumerator PanCameraRoutine(Func<bool> exitCondition)
+    {
+        print("ended panning Camera");
+        
+        EventBus<CameraChangeEvent>.DisableEvent();
+        
+        if (_cameraPanRoutine != null || _camera == null) yield break;
+        
+        _camera.gameObject.SetActive(true);
+
+        var isComplete = false;
+
+        while (!isComplete)
+        {
+            isComplete = exitCondition.Invoke();
+            
+            yield return null;
+        }
+        
+        yield return new WaitForSeconds(_cameraPanTime);
+        
+        _camera.gameObject.SetActive(false);
+
+        EventBus<CameraChangeEvent>.EnableEvent();
+        
+        _cameraPanRoutine = null;
+        
+        print("started panning Camera");
+    }
+    
     private void Start()
     {
         if (_isSolved)
@@ -62,7 +109,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     public virtual void OnPuzzleSolved(PuzzleSolvedEvent context)
     {
         if ((PuzzleOutputBase)context.puzzleOutput != this) return;
-
+        
         RuntimeManager.PlayOneShot(onCompletionEventPath, transform.position);
         if(animator != null) animator.SetBool(Animator.StringToHash("IsSolved"), true);
         IsSolved = true;
@@ -70,7 +117,11 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
 
     private void OnLevelLoaded(LevelLoadedEvent levelLoadedEvent)
     {
-        if (_saveData.isSolved) EventBus<PuzzleSolvedEvent>.Raise(new PuzzleSolvedEvent(this));
+        if (_saveData.isSolved)
+        {
+            IsSolved = true;
+            EventBus<PuzzleSolvedEvent>.Raise(new PuzzleSolvedEvent(this));
+        }
     }
 
     public virtual void OnPuzzleReset(PuzzleResetEvent context)
