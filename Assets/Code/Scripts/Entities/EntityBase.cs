@@ -116,6 +116,8 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
 
     private void OnCameraChange(CameraChangeEvent ctx)
     {
+        if (Weaknesses.Count < 1) return;
+        
         if(ctx.entities.Contains(this)) Weaknesses[0].Toggle(true);
         else ToggleAllWeaknessIcons(false);
     }

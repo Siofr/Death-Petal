@@ -107,9 +107,9 @@ public class EnemyBase : EntityBase, IEntity
         return Vector3.Angle(transform.forward, targetPos)*multiplier;
     }
 
-    protected virtual void Initialise()
+    protected void Initialise()
     {
-        enemyPassiveSFXEvent = SFXUtilities.CreateEventInstance(enemyPassiveIdle, this.gameObject);
+        //enemyPassiveSFXEvent = SFXUtilities.CreateEventInstance(enemyPassiveIdle, this.gameObject);
 
         //Field Init
         __nmAgent = GetComponent<NavMeshAgent>();
@@ -159,6 +159,7 @@ public class EnemyBase : EntityBase, IEntity
         
         __enemyStateMachine.SetState(idleState);
 
+        print("StateMachine Initialised");
     }
 
     protected virtual void OnEnable()
