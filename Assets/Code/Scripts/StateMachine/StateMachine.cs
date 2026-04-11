@@ -25,6 +25,11 @@ namespace State_Machine
             current.State?.OnEnter();
         }
 
+        public IState GetActiveState()
+        {
+            return current.State;
+        }
+        
         public void SetState<T>() where T: IState
         {
             current = nodes[typeof(T)];

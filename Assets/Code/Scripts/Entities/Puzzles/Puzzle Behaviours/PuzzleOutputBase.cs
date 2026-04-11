@@ -60,12 +60,17 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         print("ended panning Camera");
         
         EventBus<CameraChangeEvent>.DisableEvent();
+
+        if (InputHandler.Instance != null) InputHandler.Instance.enabled = false;
         
         if (_cameraPanRoutine != null || _camera == null) yield break;
 
         var brain = FindAnyObjectByType<CinemachineBrain>();
-
+        
         if (brain == null) yield break;
+
+        var currentCam = _camera.GetComponent<ICinemachineCamera>();
+        var lastCam = brain.ActiveVirtualCamera;
         
         brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.EaseInOut, panSpeed);
         
@@ -81,12 +86,14 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         }
         
         yield return new WaitForSeconds(_cameraPanTime);
-
-        brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0);
         
         _camera.gameObject.SetActive(false);
 
         EventBus<CameraChangeEvent>.EnableEvent();
+        
+        brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0);
+        
+        if (InputHandler.Instance != null) InputHandler.Instance.enabled = true;
         
         _cameraPanRoutine = null;
         
