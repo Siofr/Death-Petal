@@ -21,6 +21,7 @@ public class EnemyMaterialController : MonoBehaviour
             foreach (var animatedRenderer in animatedRenderers)
             {
                 animatedRenderer.material.SetFloat("_Decintegration", i);
+                animatedRenderer.material.SetFloat("_Alpha", 1-i);
             }
 
             yield return new WaitForFixedUpdate();
