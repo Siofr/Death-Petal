@@ -13,6 +13,15 @@ public class PlayerGun : MonoBehaviour
     private EventInstance _addRemoveEvent;
     private PARAMETER_ID _addRemove;
 
+    public EventReference onAddBulletSFX;
+    private EventInstance _addBulletEvent;
+
+    public EventReference onRemoveBulletSFX;
+    private EventInstance _removeBulletEvent;
+
+    public EventReference onRotateBarrelSFX;
+    private EventInstance rotateBarrelEvent;
+
     private BulletSO[] bulletArray = new BulletSO[6];
     private BulletSO[] lastBulletArray = new BulletSO[6];
     private int bulletIndex = 0;
@@ -70,6 +79,11 @@ public class PlayerGun : MonoBehaviour
 
         _addRemove = SFXUtilities.AssignParamID("AddRemoveBullet", AddRemoveSFXEvent);
         _addRemoveEvent = SFXUtilities.CreateEventInstance(AddRemoveSFXEvent, this.gameObject);
+
+        _addBulletEvent = SFXUtilities.CreateEventInstance(onAddBulletSFX, this.gameObject);
+        _removeBulletEvent = SFXUtilities.CreateEventInstance(onRemoveBulletSFX, this.gameObject);
+        rotateBarrelEvent = SFXUtilities.CreateEventInstance(onRotateBarrelSFX, this.gameObject);
+
     }
 
     public void Initialize(StartLongReload ctx)
@@ -93,7 +107,7 @@ public class PlayerGun : MonoBehaviour
         {
             EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_shootEvent, this.gameObject));
             EventBus<SpawnTrail>.Raise(new SpawnTrail(bulletArray[currentChamber].bulletColor));
-            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.25f));
+            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(1.0f, 1.0f, 0.25f));
 
             // Now remove it
             if (ctx.weakness)
@@ -120,8 +134,8 @@ public class PlayerGun : MonoBehaviour
         if (bulletArray[trapdoorChamber] != null) return;
 
         _addRemoveEvent.setParameterByID(_addRemove, 1);
-        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.05f, 0.15f));
-        EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_addRemoveEvent, this.gameObject));
+        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.5f, 0.15f));
+        RuntimeManager.PlayOneShot(onAddBulletSFX, this.gameObject.transform.position);
 
         bulletArray[trapdoorChamber] = ctx.bulletType;
 
@@ -135,8 +149,8 @@ public class PlayerGun : MonoBehaviour
         if (bulletArray[currentChamber] == null) return;
 
         _addRemoveEvent.setParameterByID(_addRemove, 0);
-        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.05f, 0.0f, 0.15f));
-        EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(_addRemoveEvent, this.gameObject));
+        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.15f));
+        RuntimeManager.PlayOneShot(onRemoveBulletSFX, this.gameObject.transform.position);
 
         bulletArray[currentChamber] = null;
 
@@ -151,15 +165,18 @@ public class PlayerGun : MonoBehaviour
 
         if (ctx.direction < 0)
         {
-            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.05f, 0.0f, 0.1f));
+            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.1f));
             return;
         }
 
-        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.05f, 0.1f));
+        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.0f, 0.5f, 0.1f));
     }
 
     public void RotateBarrel(int direction)
     {
+        // EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(rotateBarrelEvent, this.gameObject));
+        RuntimeManager.PlayOneShot(onRotateBarrelSFX, this.gameObject.transform.position);
+
         currentChamber += direction;
 
         if (currentChamber > bulletArray.Length - 1) currentChamber = 0;

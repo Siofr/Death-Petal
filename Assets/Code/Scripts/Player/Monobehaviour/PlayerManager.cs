@@ -215,7 +215,7 @@ namespace State_Machine
             Vector3 camForward = Vector3.ProjectOnPlane(activeCam.transform.forward, GetPlaneNormal());
             Vector3 camRight = Vector3.ProjectOnPlane(activeCam.transform.right, GetPlaneNormal());
 
-            Vector3 dir = (camForward * _movement.z + camRight * _movement.x).normalized;
+            Vector3 dir = (camForward.normalized * _movement.z + camRight.normalized * _movement.x).normalized;
             lookDir = dir;
 
             if (_cc.isGrounded) _ySpeed = 0;
@@ -241,7 +241,7 @@ namespace State_Machine
             Vector3 camForward = Vector3.ProjectOnPlane(_mainCam.transform.forward, GetPlaneNormal());
             Vector3 camRight = Vector3.ProjectOnPlane(_mainCam.transform.right, GetPlaneNormal());
 
-            Vector3 dir = camForward * _aim.y + camRight * _aim.x;
+            Vector3 dir = (camForward.normalized * _aim.y + camRight.normalized * _aim.x).normalized;
             lookDir = dir;
 
             var lookForward = transform.position + lookDir.normalized;
@@ -255,7 +255,7 @@ namespace State_Machine
             RaycastHit hit;
             Weakness weakness;
 
-            if (Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit, 30,1 &~(1 << 6)))
+            if (Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit, 30,1 &~(1 << 6 | 1 << 12 | 1 << 10)))
             {
                 if (hit.transform.TryGetComponent<Weakness>(out weakness))
                 {

@@ -13,9 +13,10 @@ public class UIRevolverIndicator : MonoBehaviour
 
     private bool _isRotating;
     private Vector3 _startRot;
+    private int _newZRot;
     [SerializeField] private Canvas parentCanvas;
 
-    Tween animationTween;
+    Sequence animationSequence;
     public Transform barrel;
 
     private EventBindings<ShootEvent> _shootEventListener;
@@ -33,6 +34,8 @@ public class UIRevolverIndicator : MonoBehaviour
         _addBulletEventListener = new EventBindings<AddBulletEvent>(AddBullet);
         _rotateBarrelListener = new EventBindings<RotateBarrelEvent>(RotateBarrel);
         _setChamberEventListener = new EventBindings<SetChamberEvent>(OnSetChamber);
+
+        _newZRot = Mathf.RoundToInt(transform.eulerAngles.z);
     }
 
     private void OnEnable()
@@ -81,25 +84,30 @@ public class UIRevolverIndicator : MonoBehaviour
     IEnumerator Rotate(int direction, int angle, float speed)
     {
         currentBullet += direction;
+        Debug.Log(currentBullet);
 
         if (currentBullet < 0) { currentBullet = bulletSprites.Length - 1; }
         if (currentBullet > bulletSprites.Length - 1) { currentBullet = 0; }
 
-        //if (_isRotating) yield return animationTween.WaitForCompletion();
+        if (_isRotating) yield return animationSequence.WaitForCompletion();
 
         _isRotating = true;
 
-        Debug.Log("Rotate");
         // Rotate barrel in specified direction
-        int zRot = Mathf.RoundToInt(transform.eulerAngles.z);
+        Debug.Log(_newZRot);
 
-        if ((zRot + 30) / 30 % 2 == 0) {  zRot = zRot + angle * direction; }
-        else { zRot = zRot + (angle * 2) * direction; }
+        int change;
 
-        Vector3 rot = new Vector3(_startRot.x, _startRot.y, zRot);
-        animationTween = transform.DORotate(rot, speed, RotateMode.FastBeyond360);
+        if ((_newZRot + 30) / 30 % 2 == 0) {  change = angle * direction; }
+        else { change = (angle * 2) * direction; }
+
+        _newZRot += change;
+
+        Vector3 rot = new Vector3(_startRot.x, _startRot.y, _newZRot);
+        animationSequence = DOTween.Sequence();
+            animationSequence.Append(transform.DORotate(rot, speed));
         
-        yield return animationTween.WaitForCompletion();
+        yield return animationSequence.WaitForCompletion();
 
         _isRotating = false;
     }

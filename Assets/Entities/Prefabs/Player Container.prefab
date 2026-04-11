@@ -735,13 +735,47 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9f5f2dc5cb1a96a449cc24e1169cf988, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6310698602293446147}
   m_SourcePrefab: {fileID: 100100000, guid: 9f5f2dc5cb1a96a449cc24e1169cf988, type: 3}
 --- !u!4 &1487206987584391210 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9f5f2dc5cb1a96a449cc24e1169cf988, type: 3}
   m_PrefabInstance: {fileID: 1380678317451980737}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2299173701062627984 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9f5f2dc5cb1a96a449cc24e1169cf988, type: 3}
+  m_PrefabInstance: {fileID: 1380678317451980737}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6310698602293446147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2299173701062627984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 543dc9f80c05fd147862bdc4f1a859d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXFootsteps
+  character: 0
+  texture: 0
+  terrainParams:
+  - physicsMaterial: {fileID: 13400000, guid: 73016c17c5c4e3747b266f06d91c8a52, type: 2}
+    sfxParam: 0
+  - physicsMaterial: {fileID: 13400000, guid: 0068bc3fedb587a4cbee8b2c5a89d169, type: 2}
+    sfxParam: 1
+  eventPath:
+    Guid:
+      Data1: 1219859637
+      Data2: 1103861269
+      Data3: 1668588701
+      Data4: 1732037063
+    Path: event:/Characters/Player Character/Placeholder/footsteps
 --- !u!1001 &1972851473057535012
 PrefabInstance:
   m_ObjectHideFlags: 0

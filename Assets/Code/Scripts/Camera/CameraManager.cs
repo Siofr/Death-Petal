@@ -6,10 +6,13 @@ public struct CameraChangeEvent : IEvent
     public Transform transform;
     public CinemachineCamera cam;
 
-    public CameraChangeEvent (Transform newTransform, CinemachineCamera newCam)
+    public EntityBase[] entities; 
+    
+    public CameraChangeEvent (Transform newTransform, CinemachineCamera newCam, EntityBase[] exisitngEntities)
     {
         this.transform = newTransform;
         this.cam = newCam;
+        this.entities = exisitngEntities;
     }
 }
 

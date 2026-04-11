@@ -27,11 +27,14 @@ public class WallDestructable: EntityBase
     
     //Events
     private EventBindings<ActiveTargetEvent> _onTargetListener;
-
+    private EventBindings<LevelLoadedEvent> _levelLoadedListener;
+    
     protected override void Awake()
     {
         base.Awake();
-
+        
+        _levelLoadedListener = new EventBindings<LevelLoadedEvent>(CheckWallPieces);
+        
         foreach (var wall in _wallPiecesObjects)
         {
             _wallPieces.Add(new WallPiece(wall.GetComponentInChildren<Weakness>(), wall));
@@ -43,12 +46,14 @@ public class WallDestructable: EntityBase
         }
     }
 
-    private void Start()
+    protected virtual void Start()
     {
-        CheckWallPieces();
+        base.Start();
+        
+        InitialiseWallPieces();
     }
 
-    private void CheckWallPieces()
+    private void InitialiseWallPieces()
     {
         if (Weaknesses.Count == _wallPieces.Count) return;
 
@@ -72,14 +77,35 @@ public class WallDestructable: EntityBase
             Destroy(temp[i].transform.parent.gameObject);
         }
     }
-    
-    private void OnEnable()
+
+    private void CheckWallPieces()
     {
-        if(_isHidden) EventBus<ActiveTargetEvent>.Register(_onTargetListener);
+        for (int i = _wallPieces.Count - 1; i >= 0; i--)
+        {
+            if (Weaknesses.Contains(_wallPieces[i].weakness)) continue;
+            
+            Destroy(_wallPieces[i].wall);
+        }
+    }
+    
+    protected virtual void OnEnable()
+    {
+        base.OnEnable();
+        
+        EventBus<LevelLoadedEvent>.Register(_levelLoadedListener);
+        
+        if (_isHidden)
+        {
+            EventBus<ActiveTargetEvent>.Register(_onTargetListener);
+        }
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
+        base.OnDisable();
+        
+        EventBus<LevelLoadedEvent>.Unregister(_levelLoadedListener);
+        
         if(_isHidden) EventBus<ActiveTargetEvent>.Unregister(_onTargetListener);
     }
     

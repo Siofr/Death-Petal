@@ -7,8 +7,10 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using FMODUnity;
+using FMOD.Studio;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
+using SFXUtil;
 
 struct EnemyDeathEvent: IEvent
 {
@@ -62,15 +64,21 @@ public class EnemyBase : EntityBase, IEntity
 
     [Header("Audio Paths")]
     public EventReference onEnemyAttackEventPath;
-    
+    public EventReference enemyPassiveIdle;
+
+    public EventInstance enemyPassiveSFXEvent;
+
+    public EventReference exitIdleAlert;
+
     protected override void Awake()
     {
         base.Awake();
         defaultPos =  transform.position;
     }
     
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         Initialise();
     }
     
@@ -99,8 +107,10 @@ public class EnemyBase : EntityBase, IEntity
         return Vector3.Angle(transform.forward, targetPos)*multiplier;
     }
 
-    private void Initialise()
+    protected void Initialise()
     {
+        //enemyPassiveSFXEvent = SFXUtilities.CreateEventInstance(enemyPassiveIdle, this.gameObject);
+
         //Field Init
         __nmAgent = GetComponent<NavMeshAgent>();
         __enemyStateMachine = new StateMachine();
@@ -149,10 +159,12 @@ public class EnemyBase : EntityBase, IEntity
         
         __enemyStateMachine.SetState(idleState);
 
+        print("StateMachine Initialised");
     }
 
     protected virtual void OnEnable()
     {
+        base.OnEnable();
         __playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
         __playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
         
@@ -162,6 +174,7 @@ public class EnemyBase : EntityBase, IEntity
 
     protected virtual void OnDisable()
     {
+        base.OnDisable();
         EventBus<RoomPlayerEnterEvent>.Unregister(__playerRoomEnterEventListener);
         EventBus<RoomPlayerExitEvent>.Unregister(__playerRoomExitEventListener);
     }
@@ -175,6 +188,12 @@ public class EnemyBase : EntityBase, IEntity
     {
         if(target == null) return false;
         return Vector3.Distance(target.position, transform.position) < enemyData.attackRange;
+    }
+
+    public void FreezeEnemy(bool freeze)
+    {
+        StopAgent(freeze);
+        animator.speed = freeze ? 0 : 1;
     }
 
     public bool InDefaultPosRange()

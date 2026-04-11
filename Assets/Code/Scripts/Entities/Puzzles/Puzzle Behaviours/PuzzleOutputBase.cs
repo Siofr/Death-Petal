@@ -7,6 +7,7 @@ using FMOD.Studio;
 using FMODUnity;
 using UnityEngine.SceneManagement;
 
+[CanEditMultipleObjects]
 public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable<PuzzleOutputSaveData>
 {
     //Base Fields
@@ -17,6 +18,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     //Events
     private EventBindings<PuzzleSolvedEvent> _puzzleSolvedEventListener;
     private EventBindings<PuzzleResetEvent> _puzzleResetEventListener;
+    private EventBindings<LevelLoadedEvent> _levelLoadedEventListener;
 
     // SFX
     [Header("Audio Paths")]
@@ -32,6 +34,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     {
         _puzzleSolvedEventListener = new EventBindings<PuzzleSolvedEvent>(OnPuzzleSolved);
         _puzzleResetEventListener = new EventBindings<PuzzleResetEvent>(OnPuzzleReset);
+        _levelLoadedEventListener = new EventBindings<LevelLoadedEvent>(OnLevelLoaded);
     }
 
     private void Start()
@@ -46,12 +49,14 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     {
         EventBus<PuzzleSolvedEvent>.Register(_puzzleSolvedEventListener);
         EventBus<PuzzleResetEvent>.Register(_puzzleResetEventListener);
+        EventBus<LevelLoadedEvent>.Register(_levelLoadedEventListener);
     }
 
     public virtual void OnDisable()
     {
         EventBus<PuzzleSolvedEvent>.Unregister(_puzzleSolvedEventListener);
         EventBus<PuzzleResetEvent>.Unregister(_puzzleResetEventListener);
+        EventBus<LevelLoadedEvent>.Unregister(_levelLoadedEventListener);
     }
     
     public virtual void OnPuzzleSolved(PuzzleSolvedEvent context)
@@ -59,39 +64,58 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         if ((PuzzleOutputBase)context.puzzleOutput != this) return;
 
         RuntimeManager.PlayOneShot(onCompletionEventPath, transform.position);
-        animator.SetBool(Animator.StringToHash("IsSolved"), true);
+        if(animator != null) animator.SetBool(Animator.StringToHash("IsSolved"), true);
         IsSolved = true;
+    }
+
+    private void OnLevelLoaded(LevelLoadedEvent levelLoadedEvent)
+    {
+        if (_saveData.isSolved) EventBus<PuzzleSolvedEvent>.Raise(new PuzzleSolvedEvent(this));
     }
 
     public virtual void OnPuzzleReset(PuzzleResetEvent context)
     {
         if ((PuzzleOutputBase)context.puzzleOutput != this) return;
         
-        animator.SetBool(Animator.StringToHash("IsSolved"), false);
+        if(animator != null) animator.SetBool(Animator.StringToHash("IsSolved"), false);
         IsSolved = false;
     }
     
     //Saving Stuff
     
-    private PuzzleOutputSaveData _saveData;
-    private SaveID_SO _saveSO;
+    [SerializeField] private PuzzleOutputSaveData _saveData;
+    [SerializeField] private SaveID_SO _saveSO;
     
     public string SaveableName => name;
     public PuzzleOutputSaveData SaveInfo => _saveData;
     
     public SaveID_SO SaveSO => _saveSO;
     public int SaveID => _saveSO.saveID;
-
+    
     public void CreateSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
         if (_saveSO == null)
         {
+#if UNITY_EDITOR
             _saveSO = ScriptableObject.CreateInstance<SaveID_SO>();
-
-            var levelPath = "Assets/LevelSaves/";
             
-            AssetDatabase.CreateAsset(_saveSO, levelPath + name + "_ID.asset");
+            var levelPath = "Assets/LevelSaves/";
+            var fileName = name;
+            
+            if (ISaveableHelper.existingNames.ContainsKey(name))
+            {
+                fileName += ISaveableHelper.existingNames[name] + 1;
+
+                ISaveableHelper.existingNames[name]++;
+            }
+            else
+            {
+                ISaveableHelper.existingNames.Add(fileName, 0);
+            }
             AssetDatabase.SaveAssets();
+            
+            AssetDatabase.CreateAsset(_saveSO, levelPath + fileName + "_ID.asset");
+#endif
             
             //EditorUtility.SetDirty(_saveSO);
         }
@@ -100,19 +124,23 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         
         _saveData = new PuzzleOutputSaveData(SaveID, _isSolved);
         
+        #if UNITY_EDITOR
         EditorUtility.SetDirty(_saveSO);
         EditorUtility.SetDirty(this);
         PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+        #endif
         
         Debug.Log($"Created Save Instance for {name}");
     }
-
+    
     public void DeleteSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
-        ISaveableHelper.RemoveExistingID(levelSaveableData, this);
-        
-        _saveSO.saveID = 0;
         _saveData = new PuzzleOutputSaveData();
+        
+        if (_saveSO == null) return;
+        
+        ISaveableHelper.RemoveExistingID(levelSaveableData, this);
+        _saveSO.saveID = 0;
     }
 
     public void HandleSaveData(ref LevelSaveData refData)
@@ -126,10 +154,21 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
             if (refData.puzzleOutputSaveData[i].id != SaveID) continue;
             
             refData.puzzleOutputSaveData[i] = _saveData;
+            
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(this);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+#endif
+            
             return;
         }
         
         refData.puzzleOutputSaveData.Add(_saveData);
+        
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+#endif
     }
 
     public void HandleLoadData(ref LevelSaveData refData)
@@ -149,7 +188,11 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
             var output = GetComponent<IPuzzleOutput>();
             
             _saveData.Load(ref output);
-            return;
         }
+        
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+#endif
     }
 }

@@ -14,8 +14,7 @@ public class EnemyMotherVulnerableState: EnemyBaseState<EnemyMother>
         Debug.Log("Mother Vulnerable");
         
         _mother.SpawnEnemy(_mother.spawnTime);
-        _mother.Weaknesses[0].SetWeakType(_mother.defaultWeaknessTypes[0]);
-        _mother.Weaknesses[0].ToggleHitbox(true);
+        _mother.Weaknesses[0].Toggle(true);
     }
 
     public override void Update()
@@ -37,8 +36,7 @@ public class EnemyMotherProtectedState: EnemyBaseState<EnemyMother>
     {
         Debug.Log("Mother Protected");
         _mother.SpawnEnemy(_mother.spawnTime);
-        _mother.Weaknesses[0].SetWeakType(WeakTypes.PLAYER);
-        _mother.Weaknesses[0].ToggleHitbox(true);
+        _mother.Weaknesses[0].Toggle(false);
     }
     
     public override void Update()
