@@ -100,6 +100,79 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7997054721242931254, guid: 3054531750542d24ea20708bb5575bde, type: 3}
   m_PrefabInstance: {fileID: 396319568634959902}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1301906612588633429
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5510287363919150672}
+    m_Modifications:
+    - target: {fileID: 7379489878422688480, guid: b96e4bc9351b9ce4fa02426bee0e5e33, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.7442329
+      objectReference: {fileID: 0}
+    - target: {fileID: 7379489878422688480, guid: b96e4bc9351b9ce4fa02426bee0e5e33, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.2358947
+      objectReference: {fileID: 0}
+    - target: {fileID: 7379489878422688480, guid: b96e4bc9351b9ce4fa02426bee0e5e33, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.9404626
+      objectReference: {fileID: 0}
+    - target: {fileID: 7379489878422688480, guid: b96e4bc9351b9ce4fa02426bee0e5e33, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7379489878422688480, guid: b96e4bc9351b9ce4fa02426bee0e5e33, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7379489878422688480, guid: b96e4bc9351b9ce4fa02426bee0e5e33, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7379489878422688480, guid: b96e4bc9351b9ce4fa02426bee0e5e33, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7379489878422688480, guid: b96e4bc9351b9ce4fa02426bee0e5e33, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7379489878422688480, guid: b96e4bc9351b9ce4fa02426bee0e5e33, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7379489878422688480, guid: b96e4bc9351b9ce4fa02426bee0e5e33, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8593070992532357710, guid: b96e4bc9351b9ce4fa02426bee0e5e33, type: 3}
+      propertyPath: m_Name
+      value: BossHealthBar
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b96e4bc9351b9ce4fa02426bee0e5e33, type: 3}
+--- !u!114 &8392099298508284427 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7379135842498379614, guid: b96e4bc9351b9ce4fa02426bee0e5e33, type: 3}
+  m_PrefabInstance: {fileID: 1301906612588633429}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8966ae41ca93fa4ba3c1f48f51bf42d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthBar
+--- !u!4 &8392594076149108661 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7379489878422688480, guid: b96e4bc9351b9ce4fa02426bee0e5e33, type: 3}
+  m_PrefabInstance: {fileID: 1301906612588633429}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2616981711254915223
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -260,13 +333,37 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 686832602584888938, guid: c3f08d201b35f5a459a966864296f974, type: 3}
       insertIndex: -1
       addedObject: {fileID: 272181799426036679}
-    m_AddedComponents: []
+    - targetCorrespondingSourceObject: {fileID: 686832602584888938, guid: c3f08d201b35f5a459a966864296f974, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8392594076149108661}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 675939435818646562, guid: c3f08d201b35f5a459a966864296f974, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7231343739118168276}
   m_SourcePrefab: {fileID: 100100000, guid: c3f08d201b35f5a459a966864296f974, type: 3}
 --- !u!4 &5510287363919150672 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 686832602584888938, guid: c3f08d201b35f5a459a966864296f974, type: 3}
   m_PrefabInstance: {fileID: 5039642011616135226}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5517205177673069592 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 675939435818646562, guid: c3f08d201b35f5a459a966864296f974, type: 3}
+  m_PrefabInstance: {fileID: 5039642011616135226}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7231343739118168276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5517205177673069592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5b7acd50633edb4eb706ace04cb8da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossHealthBarConvert
+  bossBar: {fileID: 8392099298508284427}
 --- !u!1001 &7882418914711767222
 PrefabInstance:
   m_ObjectHideFlags: 0
