@@ -148,6 +148,7 @@ public class EnemyBase : EntityBase, IEntity
         var chaseState = new EnemyChaseState<EnemyBase>(this);
         var attackState = new EnemyAttackState<EnemyBase>(this);
         var deathState = new EnemyDeathState<EnemyBase>(this);
+        var spawnState = new EnemySpawnState<EnemyBase>(this);
         
         __enemyStateMachine.AddTransition(idleState, chaseState, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
         __enemyStateMachine.AddTransition(chaseState, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
@@ -156,6 +157,12 @@ public class EnemyBase : EntityBase, IEntity
         __enemyStateMachine.AddTransition(attackState, idleState, new FuncPredicate( ()=>!InAttackRange() && attackRoutine == null));
         
         __enemyStateMachine.AddAnyTransition(deathState, new FuncPredicate( ()=>IsDead ) );
+        
+        if (animator != null)
+        {
+            __enemyStateMachine.AddAnyTransition(spawnState, new FuncPredicate(()=> animator.GetBool("Spawning")));
+            __enemyStateMachine.AddTransition(spawnState, idleState, new FuncPredicate(()=> !animator.GetBool("Spawning")));
+        }
         
         __enemyStateMachine.SetState(idleState);
 
@@ -179,7 +186,7 @@ public class EnemyBase : EntityBase, IEntity
         EventBus<RoomPlayerExitEvent>.Unregister(__playerRoomExitEventListener);
     }
     
-    private void Update()
+    protected virtual void Update()
     {
         __enemyStateMachine.Update();
     }
