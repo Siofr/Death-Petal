@@ -1,5 +1,5 @@
-
 using UnityEngine;
+using FMODUnity;
 
 public class EnemyArcherTargetState: EnemyBaseState<EnemyArcher>
 {
@@ -12,6 +12,7 @@ public class EnemyArcherTargetState: EnemyBaseState<EnemyArcher>
     
     public override void OnEnter()
     {
+        RuntimeManager.PlayOneShot(enemyController.onArrowKnock, enemyController.transform.position);
         _archer.ToggleLineRenderer(true);
         _archer.ToggleLineRendererColor(Color.white);
         _archer.StartTargeting(_archer.targetTime);
@@ -43,6 +44,7 @@ public class EnemyArcherShootState : EnemyBaseState<EnemyArcher>
 
     public override void OnEnter()
     {
+        RuntimeManager.PlayOneShot(enemyController.onArrowRelease, enemyController.transform.position);
         _archer.ToggleLineRenderer(true);
         _archer.ToggleLineRendererColor(Color.red);
         _archer.StartShot(_archer.enemyData.attackSpeed);

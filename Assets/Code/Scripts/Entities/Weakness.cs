@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 [Flags]
@@ -96,7 +97,7 @@ public class Weakness : MonoBehaviour
             WeakTypes.RED | WeakTypes.GREEN => Color.yellow,
             WeakTypes.BLUE | WeakTypes.GREEN => Color.cyan,
             WeakTypes.RED | WeakTypes.BLUE | WeakTypes.GREEN => Color.white,
-            WeakTypes.PLAYER => Color.clear
+            _ => Color.clear
         };
 
         var tex = _weaknessType switch
@@ -109,17 +110,14 @@ public class Weakness : MonoBehaviour
         
         _renderer.material.SetTexture("_Texture2D", tex);
         
-        if(WeakType == WeakTypes.PLAYER) _renderer.material.SetFloat("_Opacity", 1f);
+        if(WeakType == WeakTypes.PLAYER || WeakType == WeakTypes.NONE) _renderer.material.SetFloat("_Opacity", 1f);
         else _renderer.material.SetFloat("_Opacity", .12f);
     }
 
-    public void RemoveWeakness()
+    public void StartDelayDestroy()
     {
-        if (ParentEntity == null) return;
-
-        ParentEntity.Weaknesses.Remove(this);
-        
-        Destroy(gameObject);
+        Toggle(false);
+        Destroy(transform.parent.gameObject);
     }
     
     private void Update()

@@ -47,6 +47,12 @@ public class Weight: EntityBase
     
     private IEnumerator MoveWeightRoutine(bool reset)
     {
+        if (_output.IsSolved)
+        {
+            EventBus<WeightShotEvent>.Raise(new WeightShotEvent(this));
+            yield break;
+        }
+        
         _routineAccess++;
         
         var initPos = transform.position;

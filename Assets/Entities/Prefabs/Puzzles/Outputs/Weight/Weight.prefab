@@ -63,6 +63,13 @@ MonoBehaviour:
   hitStopTime: 0.08
   hitStopPower: 0
   modelParent: {fileID: 8697369508748455877}
+  onEnemyShotEventPath:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &7155040247714572167
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,7 +82,7 @@ GameObject:
   - component: {fileID: 5256468085593966766}
   - component: {fileID: 8653166674459288196}
   - component: {fileID: 5184497965928963810}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Weight
   m_TagString: Weight
   m_Icon: {fileID: 0}
@@ -112,12 +119,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18aa2ea0548346f582567df7a8e81719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weight
-  _saveData: {fileID: 0}
+  __sequentialWeaknesses: 0
+  defaultWeaknessTypes: 
+  _saveData:
+    id: 0
+    position: {x: 0, y: 0, z: 0}
+    health: []
+  _saveSO: {fileID: 0}
   _linkedOutputObject: {fileID: 0}
   _weightModelAnimator: {fileID: 196443344385386433}
   _moveSteps: 0
   _moveSpeed: 0
   _moveDist: 0
+  onMoveEventPath:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!54 &8653166674459288196
 Rigidbody:
   m_ObjectHideFlags: 0
