@@ -12,6 +12,11 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
     
     //Properties
     public List<Weakness> Weaknesses => _weaknesses;
+
+    public void RemoveNulledWeakness(Weakness weakness)
+    {
+        _weaknesses.Remove(weakness);
+    }
     
     [FormerlySerializedAs("_sequentialWeaknesses")]
     [Header("Entity Sequential Fields")]
@@ -23,7 +28,7 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
     
     protected virtual void Awake()
     {
-        //InitialiseWeaknesses();
+        // InitialiseWeaknesses();
     }
 
     protected virtual void Start()
@@ -54,6 +59,7 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
         
         foreach (var weakness in weaknesses)
         {
+            //weakness.Initialise();
             _weaknesses.Add(weakness);
         }
         
@@ -69,8 +75,17 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
 
                 if (i == 0) continue;
                 
-                Weaknesses[i].SetWeakType(WeakTypes.PLAYER);
-                Weaknesses[i].ToggleHitbox(false);
+                //Weaknesses[i].SetWeakType(WeakTypes.PLAYER);
+                Weaknesses[i].Toggle(false);
+            }
+        }
+
+        for (int i = _weaknesses.Count - 1; i >= 0; i--)
+        {
+            if (Weaknesses[i].WeakType == WeakTypes.NONE)
+            {
+                Weaknesses[i].StartDelayDestroy();
+                Weaknesses.RemoveAt(i);
             }
         }
     }
@@ -101,7 +116,9 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
 
     private void OnCameraChange(CameraChangeEvent ctx)
     {
-        if(ctx.entities.Contains(this)) ToggleAllWeaknessIcons(true);
+        if (Weaknesses.Count < 1) return;
+        
+        if(ctx.entities.Contains(this)) Weaknesses[0].Toggle(true);
         else ToggleAllWeaknessIcons(false);
     }
     
@@ -118,8 +135,20 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
             _saveSO = ScriptableObject.CreateInstance<SaveID_SO>();
 
             var levelPath = "Assets/LevelSaves/";
+            var fileName = name;
             
-            AssetDatabase.CreateAsset(_saveSO, levelPath + name + "_ID.asset");
+            if (ISaveableHelper.existingNames.ContainsKey(name))
+            {
+                fileName += ISaveableHelper.existingNames[name] + 1;
+
+                ISaveableHelper.existingNames[name]++;
+            }
+            else
+            {
+                ISaveableHelper.existingNames.Add(fileName, 0);
+            }
+            
+            AssetDatabase.CreateAsset(_saveSO, levelPath + fileName + "_ID.asset");
             EditorUtility.SetDirty(_saveSO);
              #endif
         }
@@ -127,8 +156,11 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
         _saveSO.saveID = ISaveableHelper.GenerateISaveableID(levelSaveableData);
         InitialiseWeaknesses();
         
-        var health = new List<int>();
-        Weaknesses.ForEach(x=>health.Add((int)x.WeakType));
+        var health = new List<WeaknessSaveData>();
+        for (int i = 0; i < Weaknesses.Count; i++)
+        {
+            health.Add(new WeaknessSaveData(Weaknesses[i].WeaknessIconTransform.position, (int)Weaknesses[i].WeakType));
+        }
         
         _saveData = new EntitySaveData(SaveID, transform.position, health);
 
@@ -141,10 +173,13 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
 
     public void DeleteSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
-        ISaveableHelper.RemoveExistingID(levelSaveableData, this);
-
-        _saveSO.saveID = 0;
         _saveData = new EntitySaveData();
+        _saveSO = null;
+        
+        if (_saveSO == null) return;
+        
+        ISaveableHelper.RemoveExistingID(levelSaveableData, this);
+        _saveSO.saveID = 0;
     }
     
     public void HandleLoadData(ref LevelSaveData refData)
@@ -159,19 +194,21 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
             
             _saveData = data;
             _saveData.Load(transform, ref _weaknesses);
-            
-            if(data.health.Count > 0) InitialiseWeaknesses();
-            else
-            {
-                gameObject.SetActive(false);
-            }
-            return;
         }
+        
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+#endif
+
+        InitialiseWeaknesses();
     }
 
     public void HandleSaveData(ref LevelSaveData refData)
     {
         if (!refData.saveableID.Contains(SaveID)) return;
+        
+        InitialiseWeaknesses();
         
         _saveData.Save(transform.position, Weaknesses);
 
@@ -180,9 +217,20 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
             if (refData.entitySaveData[i].id != SaveID) continue;
 
             refData.entitySaveData[i] = _saveData;
+            
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(this);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+#endif
+            
             return;
         }
         
         refData.entitySaveData.Add(_saveData);
+        
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+#endif
     }
 }
