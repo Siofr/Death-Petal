@@ -21,6 +21,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     [Space]
     [SerializeField] protected CinemachineCamera _camera;
     [SerializeField] protected float _cameraPanTime;
+    [SerializeField] protected float _cameraPanSpeed;
     
     //Non-Serialized Fields
     private Coroutine _cameraPanRoutine;
@@ -51,16 +52,22 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     {
         if (_camera == null || _cameraPanRoutine != null) return;
 
-        _cameraPanRoutine = StartCoroutine(PanCameraRoutine(exitCondition));
+        _cameraPanRoutine = StartCoroutine(PanCameraRoutine(exitCondition, _cameraPanSpeed));
     }
     
-    protected IEnumerator PanCameraRoutine(Func<bool> exitCondition)
+    protected IEnumerator PanCameraRoutine(Func<bool> exitCondition, float panSpeed)
     {
         print("ended panning Camera");
         
         EventBus<CameraChangeEvent>.DisableEvent();
         
         if (_cameraPanRoutine != null || _camera == null) yield break;
+
+        var brain = FindAnyObjectByType<CinemachineBrain>();
+
+        if (brain == null) yield break;
+        
+        brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.EaseInOut, panSpeed);
         
         _camera.gameObject.SetActive(true);
 
@@ -74,6 +81,8 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         }
         
         yield return new WaitForSeconds(_cameraPanTime);
+
+        brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0);
         
         _camera.gameObject.SetActive(false);
 

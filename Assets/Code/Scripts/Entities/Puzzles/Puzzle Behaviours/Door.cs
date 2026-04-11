@@ -35,7 +35,7 @@ public class Door : PuzzleOutputBase
 
         if (_camera != null) yield return new WaitForSeconds(_cameraPanTime);
         
-        StartPanningCamera(() => CheckBlendState(isOpened));
+        if(isOpened) StartPanningCamera(() => CheckBlendState(true));
         
         for (float i = 0; i < 1; i += updateStep/openSpeed)
         {
