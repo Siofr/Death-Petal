@@ -10,6 +10,7 @@ public class EnemyMother: EnemyBase
     [Header("Mother Fields")] 
     [SerializeField] private List<EnemyBase> _spawnedEnemies = new List<EnemyBase>();
     [SerializeField] private Transform _spawnPointRef;
+    [SerializeField] public Material wingMaterial;
     public float maxSpawnCount;
     public float spawnTime;
     
