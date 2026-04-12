@@ -12,15 +12,30 @@ public class HealthUiHearts : MonoBehaviour
     public GameObject healthImage;
 
     public List<GameObject> _hearts;
+    private EventBindings<PlayerDamagedEvent> _playerDamageEventListener;
+
+    void Awake()
+    {
+        _playerDamageEventListener = new EventBindings<PlayerDamagedEvent>(UpdateHealthPedals);
+    }
+
 
     void OnEnable()
     {
+        EventBus<PlayerDamagedEvent>.Register(_playerDamageEventListener);
+
+
         _healthData = player.GetComponent<IEntity>();
 
         //maxHp = _healthData.Weaknesses.Count;
 
         //InnitHearts();
         InnitVisuals();
+    }
+
+    void OnDisable()
+    {
+        EventBus<PlayerDamagedEvent>.Unregister(_playerDamageEventListener);
     }
 
     void InnitHearts()
@@ -66,7 +81,7 @@ public class HealthUiHearts : MonoBehaviour
     void Update()
     {
         //TODO: Trigger this on an a player damage event!
-        UpdateHealthPedals();
+        //UpdateHealthPedals();
     }
 
     void UpdateHealthPedals()
