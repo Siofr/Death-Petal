@@ -27,9 +27,11 @@ public struct PlayerDeathEvent : IEvent { }
 
 public class TestPlayer : EntityBase, IEntity
 {
-    public float invulnWindow = 0.2f;
+    [Header("Player Fields")] 
+    [SerializeField] private float _damageCooldown;
+    
     private EventBindings<PetalPickpEvent> _petalPickupEventListener;
-    private float _lastHit;
+
     private int _maxHealth = 3;
     private int _currentPetalCharge;
     private int _goalPetalCharge = 3;
@@ -66,16 +68,20 @@ public class TestPlayer : EntityBase, IEntity
         EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Petal", 10));
     }
 
+    private float _lastDamageTime;
+    
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
-        if (Time.time < _lastHit + invulnWindow) return;
-
-        _lastHit = Time.time;
-
         if (!Weaknesses.Contains(weakness)) return;
 
         if (damageType == WeakTypes.PLAYER)
         {
+            var tempDamageTime = Time.time;
+
+            if (_lastDamageTime != 0 && tempDamageTime - _lastDamageTime < _damageCooldown) return;
+
+            _lastDamageTime = tempDamageTime;
+            
             print("player damaged");
             EventBus<PlayerDamageEvent>.Raise(new PlayerDamageEvent(this));
             EventBus<WipeComboEvent>.Raise(new WipeComboEvent());
@@ -83,7 +89,6 @@ public class TestPlayer : EntityBase, IEntity
 
             Destroy(weakness.transform.parent.gameObject);   
             EventBus<PlayerDamagedEvent>.Raise(new PlayerDamagedEvent(Weaknesses.Count));
-
         }
         
         if (Weaknesses.Count < 1)

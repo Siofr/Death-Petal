@@ -9,5 +9,6 @@ public abstract class EnemyConfig_SO : ScriptableObject
     [Header("Attack")]
     public float attackSpeed;
     public float attackRange;
+    public float attackCooldown;
 }
 
