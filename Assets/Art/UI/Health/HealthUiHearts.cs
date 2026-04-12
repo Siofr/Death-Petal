@@ -51,9 +51,11 @@ public class HealthUiHearts : MonoBehaviour
 
     void InnitVisuals()
     {
+        Material refMaterial = _hearts[0].GetComponent<RawImage>().material;
+
         for (int i = 0; i < _hearts.Count; i++)
         {
-            Material tempMat = _hearts[i].GetComponent<RawImage>().material;
+            Material tempMat = new Material(refMaterial);
 
             tempMat.SetFloat("_Index", 9 + (i % 3));
 
@@ -71,7 +73,7 @@ public class HealthUiHearts : MonoBehaviour
     {
         for (int i = 0; i < maxHp; i++)
         {
-            print(i);
+            //print(i);
             _hearts[i].GetComponent<RawImage>().enabled = i < (_healthData.Weaknesses.Count);
         }
 
