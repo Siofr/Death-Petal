@@ -21,7 +21,7 @@ public class EnemyAttackState<T> : EnemyBaseState<T> where T : EnemyBase
             playerEntity.OnShot(playerEntity.Weaknesses[0], WeakTypes.PLAYER);
             Debug.Log("Damage Dealt to Player");
             
-            yield return new WaitForSeconds(attackSpeed*2);
+            yield return new WaitForSeconds(enemyController.enemyData.attackCooldown);
         }
         
         Debug.Log("Attack Phase Over");

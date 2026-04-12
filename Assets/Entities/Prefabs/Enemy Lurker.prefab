@@ -142,7 +142,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3788502238141946903}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -2.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -188,19 +188,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLurker
   __sequentialWeaknesses: 1
-  defaultWeaknessTypes: 
+  defaultWeaknessTypes: 040000000800000010000000
   _saveData:
-    id: 0
-    position: {x: 0, y: 0, z: 0}
-    health: 
-  _saveSO: {fileID: 0}
-  animator: {fileID: 5761385908110231440}
-  enemyData: {fileID: 11400000, guid: 3eec9ccb8468afa42879340caeb93e69, type: 2}
+    id: 542512083
+    position: {x: 4.44, y: 0.083333336, z: 3.19}
+    health:
+    - iconPosition: {x: 4.652435, y: 2.0335233, z: 3.8000002}
+      weakType: 4
+    - iconPosition: {x: 4.652435, y: 2.0335233, z: 3.8000002}
+      weakType: 8
+    - iconPosition: {x: 4.652435, y: 2.0335233, z: 3.8000002}
+      weakType: 16
+  _saveSO: {fileID: 11400000, guid: 9f6c287b69feaf7478468571daf08515, type: 2}
+  animator: {fileID: 5334729672505599383}
+  enemyData: {fileID: 11400000, guid: 74acd992ae172c843b1f527a7f59f0d0, type: 2}
   defaultPos: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   enemyScoreValue: 0
   petalDropChance: 0
   onEnemyAttackEventPath:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  enemyPassiveIdle:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  exitIdleAlert:
     Guid:
       Data1: 0
       Data2: 0
@@ -550,15 +570,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMaterialController
   animatedRenderers:
   - {fileID: 7660167577560596383}
+  isHellspawn: 0
   parent: {fileID: 3788502238141946903}
 --- !u!4 &1807246517206506986 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 80879378e306794458bd22a4caee2b56, type: 3}
-  m_PrefabInstance: {fileID: 2206227653711280641}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &5761385908110231440 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 80879378e306794458bd22a4caee2b56, type: 3}
   m_PrefabInstance: {fileID: 2206227653711280641}
   m_PrefabAsset: {fileID: 0}
 --- !u!137 &7660167577560596383 stripped
@@ -645,6 +661,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Weakness (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4813234747927770320, guid: 3054531750542d24ea20708bb5575bde, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954524363064649774, guid: 3054531750542d24ea20708bb5575bde, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00000023841858
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954524363064649774, guid: 3054531750542d24ea20708bb5575bde, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.000000048428774
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954524363064649774, guid: 3054531750542d24ea20708bb5575bde, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.00000011920929
+      objectReference: {fileID: 0}
+    - target: {fileID: 6412962710999846974, guid: 3054531750542d24ea20708bb5575bde, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7997054721242931254, guid: 3054531750542d24ea20708bb5575bde, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.171
@@ -710,6 +746,26 @@ PrefabInstance:
     - target: {fileID: 1706479753236105945, guid: 3054531750542d24ea20708bb5575bde, type: 3}
       propertyPath: m_Name
       value: Weakness (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4813234747927770320, guid: 3054531750542d24ea20708bb5575bde, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954524363064649774, guid: 3054531750542d24ea20708bb5575bde, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00000023841858
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954524363064649774, guid: 3054531750542d24ea20708bb5575bde, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.000000048428774
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954524363064649774, guid: 3054531750542d24ea20708bb5575bde, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.00000011920929
+      objectReference: {fileID: 0}
+    - target: {fileID: 6412962710999846974, guid: 3054531750542d24ea20708bb5575bde, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7997054721242931254, guid: 3054531750542d24ea20708bb5575bde, type: 3}
       propertyPath: m_LocalPosition.x
@@ -863,6 +919,18 @@ PrefabInstance:
     - target: {fileID: 1706479753236105945, guid: 3054531750542d24ea20708bb5575bde, type: 3}
       propertyPath: m_Name
       value: Weakness
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954524363064649774, guid: 3054531750542d24ea20708bb5575bde, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00000023841858
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954524363064649774, guid: 3054531750542d24ea20708bb5575bde, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.000000048428774
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954524363064649774, guid: 3054531750542d24ea20708bb5575bde, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.00000011920929
       objectReference: {fileID: 0}
     - target: {fileID: 7997054721242931254, guid: 3054531750542d24ea20708bb5575bde, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1041,4 +1109,5 @@ MonoBehaviour:
   animatedRenderers:
   - {fileID: 1142041635803523403}
   - {fileID: 6737248484557880462}
+  isHellspawn: 0
   parent: {fileID: 3788502238141946903}
