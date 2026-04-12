@@ -88,10 +88,21 @@ public class HealthUiHearts : MonoBehaviour
     {
         for (int i = 0; i < maxHp; i++)
         {
-            //print(i);
-            _hearts[i].GetComponent<RawImage>().enabled = i < (_healthData.Weaknesses.Count);
+            if(i == 0)
+            {
+                if(_healthData.Weaknesses.Count == 1)
+                {
+                    _hearts[0].GetComponent<Animator>().SetBool("low", true);
+                }
+                else
+                {
+                    _hearts[0].GetComponent<Animator>().SetBool("low", false);
+                }
+            }
+            _hearts[i].GetComponent<Animator>().SetBool("active", i < _healthData.Weaknesses.Count);
+            
+            //_hearts[i].GetComponent<RawImage>().enabled = i < (_healthData.Weaknesses.Count);
         }
-
         //print("[HP] " + _healthData.Weaknesses.Count);
     }
 }
