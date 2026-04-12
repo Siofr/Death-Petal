@@ -44,6 +44,7 @@ public class EnemyAttackState<T> : EnemyBaseState<T> where T : EnemyBase
         enemyController.animator.SetFloat(Animator.StringToHash("Blend"),0f);
         
         enemyController.animator.SetBool(Animator.StringToHash("Attack"), true);
+        enemyController.animator.SetTrigger(Animator.StringToHash("Lunge"));
         enemyController.attackRoutine = enemyController.StartCoroutine(DealDamage(enemyController.enemyData.attackSpeed));
     }
 

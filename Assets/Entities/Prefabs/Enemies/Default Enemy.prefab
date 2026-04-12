@@ -4912,7 +4912,7 @@ MonoBehaviour:
   _saveData:
     id: 0
     position: {x: 0, y: 0, z: 0}
-    health: 
+    health: []
   _saveSO: {fileID: 0}
   animator: {fileID: 8523146786591781133}
   enemyData: {fileID: 11400000, guid: 3eec9ccb8468afa42879340caeb93e69, type: 2}
@@ -4927,6 +4927,20 @@ MonoBehaviour:
       Data3: 1121615513
       Data4: -463641041
     Path: event:/Characters/Enemies/enemySwipe
+  enemyPassiveIdle:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  exitIdleAlert:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &5348504789534349938
 GameObject:
   m_ObjectHideFlags: 0
@@ -10779,6 +10793,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMaterialController
   animatedRenderers:
   - {fileID: 6049074264474913026}
+  isHellspawn: 1
   parent: {fileID: 3545056797248692941}
 --- !u!137 &6049074264474913026 stripped
 SkinnedMeshRenderer:

@@ -16,16 +16,26 @@ public class Door : PuzzleOutputBase
 
     //Non-Serializable fields
     private Queue<IEnumerator> _routineQueue = new Queue<IEnumerator>();
+
+    private bool CheckBlendState(bool isOpened)
+    {
+        float value = isOpened ? 1f : 0f;
+        return animator.GetFloat(Animator.StringToHash("Blend")) == value;
+    }
     
     private IEnumerator OpenDoorRoutine(bool isOpened, float openSpeed, bool isEditor = false)
     {
         Debug.Log("Starting OpenDoor Routine");
-
+        
         RuntimeManager.PlayOneShot(onCompletionEventPath, transform.position);
 
         float updateStep = isEditor ? 1 / 60f : Time.deltaTime;
 
         float value = isOpened ? 0f : 1f;
+
+        if (_camera != null) yield return new WaitForSeconds(_cameraPanTime);
+        
+        if(isOpened) StartPanningCamera(() => CheckBlendState(true));
         
         for (float i = 0; i < 1; i += updateStep/openSpeed)
         {
