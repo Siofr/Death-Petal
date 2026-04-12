@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class InvisibleWallView : MonoBehaviour
 {
-    
+    public Color outline;
+    public Color fill;
     private void OnDrawGizmos()
     {
         foreach (var col in GetComponents<BoxCollider>())
         {
         // Draw wire box around area collider
-        Gizmos.color = new Color(1f, 0f, 0f, 0.5f); // Red
+        Gizmos.color = outline; // Red
 
         //BoxCollider boxCollider = GetComponent<BoxCollider>();
         BoxCollider boxCollider = col;
@@ -17,7 +18,7 @@ public class InvisibleWallView : MonoBehaviour
 
         Gizmos.DrawWireCube(boxPosition, boxSize);
 
-        Gizmos.color = new Color(1f, 0f, 0f, 0.2f);; // More transparent Red
+        Gizmos.color = fill;; // More transparent Red
 
         Gizmos.DrawCube(boxPosition, boxSize);
         }
