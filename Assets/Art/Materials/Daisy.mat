@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Envronment Dark
-  m_Shader: {fileID: -6465566751694194690, guid: f38a24c496103f04f8f424d1dff04d4a, type: 3}
+  m_Name: Daisy
+  m_Shader: {fileID: -6465566751694194690, guid: db9c25fd7a19bce459591045ac6fb8ad, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -93,6 +93,7 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
+    - _Center: 0.2
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Contrast: 1
@@ -107,11 +108,11 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _HasDarknessCap: 1
-    - _HasDistortion: 0
+    - _HasDarknessCap: 0
+    - _HasDistortion: 1
     - _HasSpecular: 0
     - _HitStop: 0
-    - _IsEditor: 0
+    - _IsEditor: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -126,21 +127,23 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _Value: 5
+    - _Value: 3
     - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColour: {r: 0, g: 0, b: 0, a: 1}
+    - _BaseColour: {r: 1, g: 0.4861994, b: 0.051886797, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Highlight: {r: 1, g: 0.8534628, b: 0, a: 1}
     - _HitStopColor: {r: 1, g: 1, b: 1, a: 1}
-    - _PlayerPosition: {r: -69.096954, g: -0.020049155, b: -33.32787, a: 0}
+    - _InnerColor: {r: 1, g: 0.30874828, b: 0, a: 1}
+    - _PlayerPosition: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &2967982823957178572
+--- !u!114 &1667744698603821810
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
