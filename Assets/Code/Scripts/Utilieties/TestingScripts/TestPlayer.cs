@@ -27,8 +27,9 @@ public struct PlayerDeathEvent : IEvent { }
 
 public class TestPlayer : EntityBase, IEntity
 {
+    public float invulnWindow = 0.2f;
     private EventBindings<PetalPickpEvent> _petalPickupEventListener;
-
+    private float _lastHit;
     private int _maxHealth = 3;
     private int _currentPetalCharge;
     private int _goalPetalCharge = 3;
@@ -67,6 +68,10 @@ public class TestPlayer : EntityBase, IEntity
 
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
+        if (Time.time < _lastHit + invulnWindow) return;
+
+        _lastHit = Time.time;
+
         if (!Weaknesses.Contains(weakness)) return;
 
         if (damageType == WeakTypes.PLAYER)
