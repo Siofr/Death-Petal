@@ -104,7 +104,7 @@ public class Weakness : MonoBehaviour
         {
             WeakTypes.RED => 1,
             WeakTypes.BLUE => 0,
-            WeakTypes.GREEN => 3,
+            WeakTypes.GREEN => 2,
             _ => _renderer.material.GetInt("_TextureIndex")
         };
         
