@@ -77,7 +77,7 @@ public class EnemyMother: EnemyBase
         EventBus<SpawnedEnemyEvent>.Unregister(_onSpawnedEnemiesListener);
     }
     
-    public override void OnShot(Weakness weakness, WeakTypes damageType)
+    /*public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
         //TO REMOVE JUST FOR TESTING
         if (Weaknesses.Count == 1 && Weaknesses[0].WeakType == damageType)
@@ -88,7 +88,7 @@ public class EnemyMother: EnemyBase
         base.OnShot(weakness, damageType);
         
         print("Mother Enemy Shot");
-    }
+    }*/
 
     private void CheckFirstEncounter(RoomPlayerEnterEvent context)
     {
