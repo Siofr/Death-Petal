@@ -13,6 +13,15 @@ public class CameraArea : MonoBehaviour
     private EventBindings<CameraChangeEvent> _onCameraChange;
 
     public bool isActiveArea;
+    [Header("Audio Variables")]
+    [Tooltip("0 = Completely Outside, 1 = Wind can't be heard")]
+    [Range(0.0f, 1.0f)]
+    [SerializeField] private float _outsideOcclusionValue;
+
+    [Tooltip("0 = Prelude, 1 = Walls of Dis, 2 = Boss Room")]
+    [SerializeField] private int _ambientStage;
+
+    [SerializeField] private bool _reverbArea;
 
     private void OnEnable()
     {
@@ -57,7 +66,7 @@ public class CameraArea : MonoBehaviour
             var targets = CheckEntitiesLinkedCameras();
             
             // Trigger Event
-            EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(_cam.transform, _cam, targets));
+            EventBus<CameraChangeEvent>.Raise(new CameraChangeEvent(_cam.transform, _cam, targets, _outsideOcclusionValue, _ambientStage, _reverbArea));
         }
     }
 

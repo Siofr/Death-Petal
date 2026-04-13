@@ -221,7 +221,7 @@ namespace State_Machine
             if (_cc.isGrounded) _ySpeed = 0;
 
             if (lookDir == Vector3.zero) _animator.SetFloat("Speed", 0.0f);
-            else _animator.SetFloat("Speed", Mathf.Clamp(currentSpeed / 10, 0.0f, 1.0f));
+            else _animator.SetFloat("Speed", Mathf.Clamp((currentSpeed / 10) * 1.5f, 0.0f, 1.0f));
 
             _ySpeed -= 9.8f * Time.deltaTime;
 
