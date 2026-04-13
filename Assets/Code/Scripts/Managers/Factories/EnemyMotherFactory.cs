@@ -1,0 +1,1 @@
+public class EnemyMotherFactory: EnemyFactory<EnemyMother> { }
