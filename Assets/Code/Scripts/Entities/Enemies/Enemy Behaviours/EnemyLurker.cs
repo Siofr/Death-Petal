@@ -1,6 +1,7 @@
 using State_Machine;
 using Unity.VisualScripting;
 using UnityEngine;
+using StateMachine = State_Machine.StateMachine;
 
 public class EnemyLurker : EnemyBase
 {
@@ -27,11 +28,12 @@ public class EnemyLurker : EnemyBase
 
     protected override void InitialiseStateMachine()
     {
-        var idleState = new EnemyIdleState<EnemyBase>(this);
-        var chaseState = new EnemyChaseState<EnemyBase>(this);
-        var attackState = new EnemyAttackState<EnemyBase>(this);
-        var deathState = new EnemyDeathState<EnemyBase>(this);
+        var idleState = new EnemyIdleState<EnemyLurker>(this);
+        var chaseState = new EnemyChaseState<EnemyLurker>(this);
+        var attackState = new EnemyAttackState<EnemyLurker>(this);
+        var deathState = new EnemyDeathState<EnemyLurker>(this);
         var freezeState = new EnemyLurkerFreezeState(this);
+        var spawnState = new EnemySpawnState<EnemyLurker>(this);
         
         __enemyStateMachine.AddTransition(idleState, chaseState, new FuncPredicate( ()=> !InDefaultPosRange() || target != null ));
         __enemyStateMachine.AddTransition(chaseState, idleState, new FuncPredicate( () => target == null && InDefaultPosRange() ));
@@ -43,8 +45,21 @@ public class EnemyLurker : EnemyBase
         
         __enemyStateMachine.AddTransition(chaseState, freezeState, new FuncPredicate(()=> _isTargeted));
         __enemyStateMachine.AddTransition(freezeState, chaseState, new FuncPredicate(()=> !_isTargeted));
+
+        if (animator != null)
+        {
+            __enemyStateMachine.AddAnyTransition(spawnState, new FuncPredicate(()=> animator.GetBool("Spawning")));
+            __enemyStateMachine.AddTransition(spawnState, idleState, new FuncPredicate(()=> !animator.GetBool("Spawning")));
+        }
+            
         
         __enemyStateMachine.SetState(idleState);
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        //print(__enemyStateMachine.GetActiveState());
     }
     
     public void CheckIfTargeted(ActiveTargetEvent context)

@@ -5,11 +5,20 @@ using State_Machine;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+public enum EnemyType
+{
+    Hellspawn,
+    Lurker,
+    Mother
+}
+
 public class EnemyMother: EnemyBase
 {
     [Header("Mother Fields")] 
     [SerializeField] private List<EnemyBase> _spawnedEnemies = new List<EnemyBase>();
     [SerializeField] private Transform _spawnPointRef;
+    [SerializeField] public Material wingMaterial;
+    [SerializeField] private EnemyType _spawnType;
     public float maxSpawnCount;
     public float spawnTime;
     
@@ -37,6 +46,20 @@ public class EnemyMother: EnemyBase
         __enemyStateMachine.SetState(idleState);
     }
 
+    protected override void Initialise()
+    {
+        base.Initialise();
+
+        var wingColor = _spawnType switch
+        {
+            EnemyType.Lurker => Color.crimson,
+            EnemyType.Hellspawn => Color.peru,
+            _ => Color.aquamarine
+        };
+        
+        wingMaterial.SetColor("_WingColor", wingColor);
+    }
+    
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -54,7 +77,7 @@ public class EnemyMother: EnemyBase
         EventBus<SpawnedEnemyEvent>.Unregister(_onSpawnedEnemiesListener);
     }
     
-    public override void OnShot(Weakness weakness, WeakTypes damageType)
+    /*public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
         //TO REMOVE JUST FOR TESTING
         if (Weaknesses.Count == 1 && Weaknesses[0].WeakType == damageType)
@@ -65,7 +88,7 @@ public class EnemyMother: EnemyBase
         base.OnShot(weakness, damageType);
         
         print("Mother Enemy Shot");
-    }
+    }*/
 
     private void CheckFirstEncounter(RoomPlayerEnterEvent context)
     {
@@ -109,8 +132,15 @@ public class EnemyMother: EnemyBase
             {
                 yield return new WaitForSeconds(spawnTimeInterval);
             }
+
+            var enemyType = _spawnType switch
+            {
+                EnemyType.Lurker => typeof(EnemyLurker),
+                EnemyType.Mother => typeof(EnemyMother),
+                _ => typeof(EnemyBase)
+            };
             
-            EventBus<SpawnEnemyEvent>.Raise(new SpawnEnemyEvent(_spawnPointRef.position, typeof(EnemyBase), transform.parent, gameObject));
+            EventBus<SpawnEnemyEvent>.Raise(new SpawnEnemyEvent(_spawnPointRef.position, enemyType, transform.parent, gameObject));
             
             if(_isFirstEncounter) _isFirstEncounter = false;
             
@@ -137,5 +167,11 @@ public class EnemyMother: EnemyBase
         if (context.requestObj != gameObject) return;
         
         _spawnedEnemies.Add(context.enemy);
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        //print(__enemyStateMachine.GetActiveState());
     }
 }

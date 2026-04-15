@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1123265918280938565
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7641084737120117732}
+  - component: {fileID: 461047939866232103}
+  - component: {fileID: 1512498505704792066}
+  - component: {fileID: 6043806548690892638}
+  m_Layer: 0
+  m_Name: Tutorial Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7641084737120117732
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123265918280938565}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7070574, z: -0, w: 0.7071562}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 89.992, z: 0}
+--- !u!114 &461047939866232103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123265918280938565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52defe42b6cd0294d90f8bbbe09089b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TutorialTrigger
+  tutorialSteps:
+  - tutorialInfo:
+    - tutorialText: Rotate Barrel Left
+      actionRef: {fileID: 3464053126853043821, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - tutorialText: Rotate Barrel Right
+      actionRef: {fileID: -3165975653455096592, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  - tutorialInfo:
+    - tutorialText: Insert Circle Bullet
+      actionRef: {fileID: -6449189664173893952, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - tutorialText: Insert Square Bullet
+      actionRef: {fileID: 3799063546306936736, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - tutorialText: Insert Triangle Bullet
+      actionRef: {fileID: 3475557162715063007, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  - tutorialInfo:
+    - tutorialText: Remove Bullet
+      actionRef: {fileID: 6071020157347750155, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+--- !u!65 &1512498505704792066
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123265918280938565}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.9784164, y: 7.02, z: 6.934141}
+  m_Center: {x: 0.3558321, y: 0, z: -2.9670975}
+--- !u!114 &6043806548690892638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123265918280938565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a64d9cc6ee7a7224480f5d07095bc826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InvisibleWallView
+  outline: {r: 0.8156863, g: 0.1254902, b: 0.5647059, a: 0.68235296}
+  fill: {r: 0.8156863, g: 0.1254902, b: 0.5647059, a: 0.24705882}

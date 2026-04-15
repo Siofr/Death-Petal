@@ -33,11 +33,15 @@ public class WeightPuzzle : PuzzleInputBase
     //Events
     public EventBindings<WeightShotEvent> _weightShotEventListener;
 
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
         InitializeWeights();
-        //puzzleColliders = GetComponentsInChildren<Collider>();
+
+        foreach (var output in PuzzleOutputs)
+        {
+            print($"{name} , PuzzleOutput: {output}");
+        }
     }
 
     private void OnEnable()
@@ -115,8 +119,6 @@ public class WeightPuzzle : PuzzleInputBase
                 break;
             }
         }
-
-        if (isWeightCompleted) _weightColliders.Remove(context.weight);
         
         CheckCompletionConditions();
     }

@@ -15,12 +15,14 @@ public class EnemyMotherVulnerableState: EnemyBaseState<EnemyMother>
         
         _mother.SpawnEnemy(_mother.spawnTime);
         _mother.Weaknesses[0].Toggle(true);
+        _mother.animator.SetBool("Vulnerable", true);
+        _mother.wingMaterial.SetFloat("_Lerp", 1f);
     }
 
-    public override void Update()
-    {
-        _mother.LookAtTarget();
-    }
+    // public override void Update()
+    // {
+    //     _mother.LookAtTarget();
+    // }
 }
 
 public class EnemyMotherProtectedState: EnemyBaseState<EnemyMother>
@@ -37,11 +39,13 @@ public class EnemyMotherProtectedState: EnemyBaseState<EnemyMother>
         Debug.Log("Mother Protected");
         _mother.SpawnEnemy(_mother.spawnTime);
         _mother.Weaknesses[0].Toggle(false);
+        _mother.animator.SetBool("Vulnerable", false);
+        _mother.wingMaterial.SetFloat("_Lerp", 0f);
     }
     
     public override void Update()
     {
-        _mother.LookAtTarget();
+        //_mother.LookAtTarget();
         _mother.CheckSpawnedEnemies();
     }
 }
@@ -63,7 +67,7 @@ public class EnemyMotherFullState: EnemyBaseState<EnemyMother>
     
     public override void Update()
     {
-        _mother.LookAtTarget();
+        //_mother.LookAtTarget();
         _mother.CheckSpawnedEnemies();
     }
 }

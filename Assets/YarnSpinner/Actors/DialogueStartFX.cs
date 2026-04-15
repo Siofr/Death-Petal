@@ -25,6 +25,7 @@ public class DialogueStartFX : MonoBehaviour
     {
         print("DialogueMove: starting");
 
+        EventBus<SFXSnapshot>.Raise(new SFXSnapshot(1, true));
         LeanTween.moveY(bottomBg, BottomRectValues.x, fadeTime).setEase(easeType);
         LeanTween.moveY(topBg, TopRectValues.x, fadeTime).setEase(easeType);
     }
@@ -34,6 +35,7 @@ public class DialogueStartFX : MonoBehaviour
     {
         print("DialogueMove: closing");
 
+        EventBus<SFXSnapshot>.Raise(new SFXSnapshot(1, false));
         LeanTween.moveY(bottomBg, BottomRectValues.y, fadeTime).setEase(easeType);
         LeanTween.moveY(topBg, TopRectValues.y, fadeTime).setEase(easeType);
     }

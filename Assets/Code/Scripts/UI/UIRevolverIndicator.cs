@@ -224,7 +224,7 @@ public class UIRevolverIndicator : MonoBehaviour
             if (ctx.bulletOrder[i] == null) continue;
             
             bulletSprites[tempSlot].enabled = true;
-            bulletSprites[tempSlot].sprite = ctx.bulletOrder[i].bulletSprite;
+            bulletSprites[tempSlot].transform.parent.GetComponent<MeshRenderer>().enabled = true;
         }
     }
 }

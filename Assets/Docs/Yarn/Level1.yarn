@@ -63,6 +63,7 @@ Harmony: Byeee!
 title: L1Rubble
 position: -189,160
 ---
+<<start LineView>>
 <<actor ActorScreen 0 "surprised">>
 Harmony: man this place is in shambles.
 <<actor ActorScreen 0 "sad">>
@@ -70,10 +71,12 @@ Harmony: I've been in some real bad dive bars but this one takes the cake!
 <<actor ActorScreen 0 "forlorn">>
 Harmony: This thing is going to take for everrrrr.
 <<hideAll ActorScreen>>
+<<end LineView>>
 ===
 title: L1Reload
 position: -187,351
 ---
+<<start LineView>>
 <<actor ActorScreen 0 "surprised">>
 <<actor ActorScreen 1 "happy" false>>
 Harmony: Hey, I never got ya name hon. 
@@ -95,14 +98,17 @@ Harmony: Oh the magazine was just a little stuck!
 <<actor ActorScreen 1 "sad" false>>
 Abby: I-I I, li-little flower... if that weapon would have broke, all of hell would-
 <<actor ActorScreen 0 "happy">>
-Harmony: Ah, Abby you worry too much. 
+Harmony: Ah, Abby you worry too much.
+<<event ReloadDialogue>> 
 <<hideAll ActorScreen>>
+<<end LineView>>
 ===
 
 title: L1Balcony
 position: -616,-135
 color: yellow
 ---
+<<start LineView>>
 <<actor ActorScreen 0 "happy">>
 <<actor ActorScreen 1 "happy" false>>
 Abaddon: See that Colosseum, little flower?
@@ -120,10 +126,12 @@ Harmony: That will take too long, I'll just kill him.
 <<actor ActorScreen 0 "sad">>
 Abaddon: I did not expect the little flower to have thorns.
 <<hideAll ActorScreen>>
+<<end LineView>>
 ===
 title: L1Boss
 position: -188,541
 ---
+<<start LineView>>
 <<actor ActorScreen 0 "happy">>
 <<actor ActorScreen 1 "happy" false>>
 Abby: Ahead lies the guardian. 
@@ -136,11 +144,13 @@ Harmony: You did not need to say more.
 Abby: You have a lot of drive for someone who's been broken in hell.
 Harmony: you can't break a flower, hon!
 <<hideAll ActorScreen>>
+<<end LineView>>
 ===
 title: L1Library
 position: -615,86
 color: yellow
 ---
+<<start LineView>>
 <<actor ActorScreen 0 "happy">>
 <<actor ActorScreen 1 "happy" false>>
 Abby: Question, Little flower. 
@@ -156,11 +166,13 @@ Harmony: So you a devil or what, you work for Satan?
 Abby: Hah, him.. Let's just say, I'm just curious.
 Harmony: Shady, you sure are lucky shooting you just makes you talk.
 <<hideAll ActorScreen>>
+<<end LineView>>
 ===
 title: L1Hidden
 position: -615,265
 color: yellow
 ---
+<<start LineView>>
 <<actor ActorScreen 0 "happy">>
 <<actor ActorScreen 1 "happy" false>>
 Harmony: So why do you follow me?
@@ -174,6 +186,7 @@ Abby: We are more modern than you think, little flower. And [imp]The Flower of H
 Harmony: I don't remember guns being my thing.
 Abby: Oh trust me, little flower. [imp]They were.[/]
 <<hideAll ActorScreen>>
+<<end LineView>>
 ===
 
 title: Note_1775422773848

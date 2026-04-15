@@ -9,6 +9,7 @@ public class Petal : MonoBehaviour
     [Header("Petal Fields")]
     [Header("In Units/Second")]
     [SerializeField] private float _petalHoverSpeed;
+
     [SerializeField] private float _petalHoverDistance;
     
     //Non-Serializable Fields

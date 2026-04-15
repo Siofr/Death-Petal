@@ -2,6 +2,7 @@ using System;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public struct SpawnEnemyEvent : IEvent
 {
@@ -54,8 +55,29 @@ public class EnemyFactory<T> : MonoBehaviour, IEnemyFactory<T> where T: EnemyBas
     {
         var enemyObj = Instantiate(enemyPrefab, position, enemyPrefab.transform.rotation, parentRoom);
         var enemyController = enemyObj.GetComponent<T>();
-        enemyController.Initialise(config);
+        
+        enemyController.InitialiseWeaknesses();
+        
+        var randomNum = new int[enemyController.Weaknesses.Count];
+        
+        for (int i = 0; i < randomNum.Length; i++)
+        {
+            randomNum[i] = Random.Range(0, 3);
 
+            var temp = randomNum[i] switch
+            {
+                0 => WeakTypes.RED,
+                1 => WeakTypes.BLUE,
+                _ => WeakTypes.GREEN
+            };
+            
+            print(temp);
+            
+            enemyController.Weaknesses[i].SetWeakType(temp);
+        }
+        
+        enemyController.Initialise(config);
+        
         if (requestObj != null)
         {
             EventBus<SpawnedEnemyEvent>.Raise(new SpawnedEnemyEvent(enemyController, requestObj));

@@ -21,7 +21,7 @@ public class EnemyAttackState<T> : EnemyBaseState<T> where T : EnemyBase
             playerEntity.OnShot(playerEntity.Weaknesses[0], WeakTypes.PLAYER);
             Debug.Log("Damage Dealt to Player");
             
-            yield return new WaitForSeconds(attackSpeed*2);
+            yield return new WaitForSeconds(enemyController.enemyData.attackCooldown);
         }
         
         Debug.Log("Attack Phase Over");
@@ -44,6 +44,7 @@ public class EnemyAttackState<T> : EnemyBaseState<T> where T : EnemyBase
         enemyController.animator.SetFloat(Animator.StringToHash("Blend"),0f);
         
         enemyController.animator.SetBool(Animator.StringToHash("Attack"), true);
+        enemyController.animator.SetTrigger(Animator.StringToHash("Lunge"));
         enemyController.attackRoutine = enemyController.StartCoroutine(DealDamage(enemyController.enemyData.attackSpeed));
     }
 
