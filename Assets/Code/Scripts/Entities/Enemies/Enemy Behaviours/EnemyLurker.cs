@@ -59,7 +59,7 @@ public class EnemyLurker : EnemyBase
     protected override void Update()
     {
         base.Update();
-        print(__enemyStateMachine.GetActiveState());
+        //print(__enemyStateMachine.GetActiveState());
     }
     
     public void CheckIfTargeted(ActiveTargetEvent context)
