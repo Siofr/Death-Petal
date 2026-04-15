@@ -40,6 +40,9 @@ public class CamShakeEffect : MonoBehaviour
     private void ShakeCamera()
     {
         //print("Starting Camera Shake");
+
+        //TODO - CURRENTLY PILING UP ERRORS
+        return;
         
         StartCoroutine(ShakingCoroutine());
 

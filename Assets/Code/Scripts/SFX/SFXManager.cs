@@ -1,6 +1,8 @@
 using UnityEngine;
 using FMOD.Studio;
 using FMODUnity;
+using System.Collections.Generic;
+using SFXUtil;
 
 /* Example of creating and playing an FMOD event that needs to be repeated or with parameters that need to be changed:
  * 
@@ -54,21 +56,68 @@ public struct SFXStopEvent : IEvent
     }
 }
 
+public struct SFXSnapshot : IEvent
+{
+    public int snapshot;
+    public bool activate;
+
+    public SFXSnapshot(int snapshot, bool activate)
+    {
+        this.snapshot = snapshot;
+        this.activate = activate;
+    }
+}
+
 public class SFXManager : Singleton<SFXManager>
 {
     private EventBindings<SFXEventTrigger> _sfxEventListener;
     private EventBindings<SFXStopEvent> _sfxStopEventListener;
+    private EventBindings<SFXSnapshot> _sfxSnapshotListener;
+
+    public List<EventReference> snapshotReferences = new List<EventReference>();
+    private List<EventInstance> snapshotInstances = new List<EventInstance>();
 
     protected override void Awake()
     {
         base.Awake();
+
         _sfxEventListener = new EventBindings<SFXEventTrigger>(PlaySFX);
         _sfxStopEventListener = new EventBindings<SFXStopEvent>(StopSFX);
+
+        foreach (EventReference snapshot in snapshotReferences)
+        {
+            snapshotInstances.Add(SFXUtilities.CreateEventInstance(snapshot, this.gameObject));
+        }
+
+        _sfxSnapshotListener = new EventBindings<SFXSnapshot>(ChangeSnapshot);
     }
 
     public void OnEnable()
     {
         EventBus<SFXEventTrigger>.Register(_sfxEventListener);
+        EventBus<SFXStopEvent>.Register(_sfxStopEventListener);
+        EventBus<SFXSnapshot>.Register(_sfxSnapshotListener);
+    }
+
+    public void OnDisable()
+    {
+        EventBus<SFXEventTrigger>.Unregister(_sfxEventListener);
+        EventBus<SFXStopEvent>.Unregister(_sfxStopEventListener);
+        EventBus<SFXSnapshot>.Unregister(_sfxSnapshotListener);
+    }
+
+    public void ChangeSnapshot(SFXSnapshot ctx)
+    {
+        if (ctx.snapshot >= snapshotInstances.Count || ctx.snapshot < 0) return;
+
+        if (ctx.activate && !IsPlaying(snapshotInstances[ctx.snapshot]))
+        {
+            snapshotInstances[ctx.snapshot].start();
+        }
+        else
+        {
+            snapshotInstances[ctx.snapshot].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
     }
 
     public void ChangeEventParameter(EventInstance eventInstance, PARAMETER_ID paramID, float paramValue)
@@ -80,11 +129,17 @@ public class SFXManager : Singleton<SFXManager>
     {
         RuntimeManager.AttachInstanceToGameObject(ctx.eventInstance, ctx.sourceObject);
         ctx.eventInstance.start();
-        // ctx.eventInstance.release();
     }
 
     public void StopSFX(SFXStopEvent ctx)
     {
         ctx.eventInstance.release();
+    }
+
+    bool IsPlaying(FMOD.Studio.EventInstance instance)
+    {
+        FMOD.Studio.PLAYBACK_STATE state;
+        instance.getPlaybackState(out state);
+        return state != FMOD.Studio.PLAYBACK_STATE.STOPPED;
     }
 }

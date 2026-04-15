@@ -107,31 +107,39 @@ public class EnemyBase : EntityBase, IEntity
         return Vector3.Angle(transform.forward, targetPos)*multiplier;
     }
 
-    protected void Initialise()
+    protected virtual void Initialise()
     {
         //enemyPassiveSFXEvent = SFXUtilities.CreateEventInstance(enemyPassiveIdle, this.gameObject);
 
         //Field Init
         __nmAgent = GetComponent<NavMeshAgent>();
         __enemyStateMachine = new StateMachine();
-
+        
         __nmAgent.speed = enemyData.movementSpeed;
 
         _enemyAreaBounds = GetComponentInParent<Room>() != null ? GetComponentInParent<Room>().Bounds : new Bounds();
-
+        
         var player = GameObject.FindWithTag("Player");
-
+        
+        //StateMachine Init
+        InitialiseStateMachine();
+        
         if (player != null)
         {
             var collider = player.GetComponentInChildren<Collider>();
             
             //print(_enemyAreaBounds);
-            
-            if (_enemyAreaBounds.Intersects(collider.bounds)) target = player.transform;
+
+            if (_enemyAreaBounds.Intersects(collider.bounds))
+            {
+                target = player.transform;
+                FreezeEnemy(false);
+            }
+            else
+            {
+                FreezeEnemy(true);
+            }
         }
-        
-        //StateMachine Init
-        InitialiseStateMachine();
         
         Debug.Log("Enemy Initialised");
     }
@@ -139,6 +147,7 @@ public class EnemyBase : EntityBase, IEntity
     public void Initialise(EnemyConfig_SO config)
     {
         enemyData = config;
+        InitialiseWeaknesses();
         Initialise();
     }
     
@@ -232,6 +241,8 @@ public class EnemyBase : EntityBase, IEntity
     
     private void OnPlayerRoomEnter(RoomPlayerEnterEvent context)
     {
+        FreezeEnemy(false);
+        
         var playerTransform =  context.playerTransform;
 
         if (context.room.Bounds != _enemyAreaBounds) return;

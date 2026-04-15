@@ -6,13 +6,19 @@ public struct CameraChangeEvent : IEvent
     public Transform transform;
     public CinemachineCamera cam;
 
-    public EntityBase[] entities; 
+    public EntityBase[] entities;
+    public float occlusionValue;
+    public int ambientStage;
+    public bool reverbArea;
     
-    public CameraChangeEvent (Transform newTransform, CinemachineCamera newCam, EntityBase[] exisitngEntities)
+    public CameraChangeEvent (Transform newTransform, CinemachineCamera newCam, EntityBase[] exisitngEntities, float occlusionValue, int ambientStage, bool reverbArea)
     {
         this.transform = newTransform;
         this.cam = newCam;
         this.entities = exisitngEntities;
+        this.occlusionValue = occlusionValue;
+        this.ambientStage = ambientStage;
+        this.reverbArea = reverbArea;
     }
 }
 

@@ -18,8 +18,11 @@ public class PuzzleReloadChamberOutput: PuzzleOutputBase
     
     public override void OnPuzzleSolved(PuzzleSolvedEvent context)
     {
-        EventBus<SetChamberEvent>.Raise(new SetChamberEvent(SetChamber()));
         base.OnPuzzleSolved(context);
+
+        if (context.puzzleOutput != this) return;
+        
+        EventBus<SetChamberEvent>.Raise(new SetChamberEvent(SetChamber()));
     }
 
     private BulletSO[] SetChamber()
