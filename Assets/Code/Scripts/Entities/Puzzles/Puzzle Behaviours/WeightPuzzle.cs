@@ -37,6 +37,11 @@ public class WeightPuzzle : PuzzleInputBase
     {
         base.Start();
         InitializeWeights();
+
+        foreach (var output in PuzzleOutputs)
+        {
+            print($"{name} , PuzzleOutput: {output}");
+        }
     }
 
     private void OnEnable()
