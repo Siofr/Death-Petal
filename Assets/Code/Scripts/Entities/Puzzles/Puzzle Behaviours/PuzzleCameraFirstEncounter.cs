@@ -19,10 +19,16 @@ public class PuzzleCameraFirstEncounter : PuzzleCameraCondition_SO
         };
 
         var allEnemies = FindObjectsOfType<EnemyBase>();
-
+        
+        Debug.Log($"Enemies Found: {allEnemies.Length}, Looking for {type}");
+        
         for (int i = 0; i < allEnemies.Length; i++)
         {
+            Debug.Log($"Enemies Type: {allEnemies[i].GetType()}, Looking for {type}");
+            
             if (allEnemies[i].GetType() != type) continue;
+            
+            Debug.Log("Reached Condition");
             
             _targetEnemy =  allEnemies[i];
             break;
