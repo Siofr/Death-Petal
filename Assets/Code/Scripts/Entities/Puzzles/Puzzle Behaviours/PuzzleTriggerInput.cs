@@ -7,48 +7,29 @@ public class PuzzleTriggerInput: PuzzleInputBase
     [Space]
     [Header("Puzzle Trigger Fields")]
     [SerializeField] private bool _isOneTimeUse;
-    
+
+    private bool _isUsed;
+    private BoxCollider _collider;
+
+    private void OnDrawGizmos()
+    {
+        if(_collider == null) _collider = GetComponent<BoxCollider>();
+
+        var redClear = new Color(1, 0, 0, .25f);
+        
+        Gizmos.color = redClear;
+        Gizmos.DrawCube(transform.position+_collider.center, _collider.size);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+        if (_isOneTimeUse && _isUsed) return;
+
+        if (other.CompareTag("Player")) _isUsed = true;
+        
         foreach (var output in PuzzleOutputs)
         {
             CompletionCondition(other.CompareTag("Player"), output);
         }
-    }
-}
-
-public class PuzzleCameraOutput : PuzzleOutputBase
-{
-    [Space]
-    [Header("Camera Condition Fields")]
-    [SerializeField] private PuzzleCameraCondition_SO _puzzleCameraCondition;
-
-    public override void OnPuzzleSolved(PuzzleSolvedEvent context)
-    {
-        base.OnPuzzleSolved(context);
-
-        if (context.puzzleOutput != this) return;
-
-        StartPanningCamera(_puzzleCameraCondition.exitCondition);
-    }
-}
-
-public abstract class PuzzleCameraCondition_SO : ScriptableObject
-{
-    public Func<bool> exitCondition;
-}
-
-public class PuzzleCameraFirstEncounter : PuzzleCameraCondition_SO
-{
-    [SerializeField] private EnemyBase _targetEnemy;
-    
-    private void Awake()
-    {
-        exitCondition = new Func<bool>(ExitCondition);
-    }
-
-    private bool ExitCondition()
-    {
-        return !_targetEnemy.animator.GetBool("Spawning");
     }
 }
