@@ -4,7 +4,7 @@ position: -187,-139
 ---
 <<start LineView>>
 <<actor ActorScreen 0 "happy">>
-<<actor ActorScreen 1 "happy" false>>
+<<actor ActorScreen 1 "none" false>>
 Harmony: Hello!
 Abaddon: Greetings, but I must stop you, little flower.
 <<actor ActorScreen 0 "surprised">>
@@ -38,17 +38,18 @@ Harmony: I won't stick around to find out why though, I'm getting out of here!
 Abaddon: An undead vessel won't be let to walk in the gardens of man, little flower...
 <<actor ActorScreen 0 "sad">>
 Harmony: How do I fix that?
-<<actor ActorScreen 1 "forlorn" false>>
 Abaddon: You can not, little flower.
 <<actor ActorScreen 0 "happy">>
 Harmony: Betchya this handy dandy gun can!
 Abaddon: Do not be foolish now... 
 Abaddon: And put some respect on [imp]The Flower of Hell. [/imp]
 Harmony: If I'm undead now.. and my gun kills undead things... I bet I could figure something out!
+<<actor ActorScreen 1 "surprised" false>>
 Abaddon: Erhh... I guess you do have a point...
 <<actor ActorScreen 0 "evil">>
 Harmony: Of course I do. 
 Harmony: With guns and violence, you can make the whole world turn!
+<<actor ActorScreen 1 "forlorn" false>>
 Abaddon: I don't know if that works down here...
 <<hideAll ActorScreen>>
 <<end LineView>>
@@ -60,7 +61,7 @@ color: red
 <<actor ActorScreen 0 "surprised">>
 Harmony: I'm just goin' Home, hon! 
 Harmony: Can't be chit-chatting, got business to take care of!
-<<actor ActorScreen 1 "forlorn" false>>
+<<actor ActorScreen 1 "surprised" false>>
 Abaddon: H-Halt.. Wait you cannot simply leave-
 Harmony: Byeee!
 <<hideAll ActorScreen>>
@@ -89,15 +90,16 @@ Harmony: Hey, I never got ya name hon.
 Abaddon: Abaddon, the devil of Dis, the once feared, old knife of Jerimiah, the undead winter, the-
 <<actor ActorScreen 0 "happy">>
 Harmony: That's a sweet name Abbot.
-<<actor ActorScreen 1 "forlorn" false>>
+<<actor ActorScreen 1 "evil" false>>
 Abaddon: I was not done.
 <<actor ActorScreen 0 "sad">>
 Harmony: Abbot, this handy dandy revolver, it's a real pain to reload. 
+<<actor ActorScreen 1 "forlorn" false>>
 Abaddon: I'm not Ab- Ah forget it.
-Abbot: You must invoke a heretic ritual to fill your weapon with a hellish emotion. 
+Abbot: As I told you before. You must invoke a heretic ritual to fill your weapon with a hellish emotion. 
 <<actor ActorScreen 0 "happy">>
 Harmony: What if I just-
-Flower of Hell: [imp] CLICK CHUNK CLICK CHUNK [/imp]
+[imp] CLICK CHUNK CLICK CHUNK [/imp]
 <<actor ActorScreen 1 "happy" false>>
 Abbot: Don't you DARE DEFILE THE GOD-SLAYING WEAPON, YOU-
 <<actor ActorScreen 0 "surprised">>
@@ -124,14 +126,17 @@ Harmony: It sure is big..
 Abbot: If you want to get into the [imp]City of Dis[/imp], you will need to get past the old guardian.
 <<actor ActorScreen 0 "happy">>
 Harmony: That'll be easy as pie.
+<<actor ActorScreen 1 "evil" false>>
 Abbot: Excuse me? What makes you think such an undertaking would be easy?
 <<actor ActorScreen 0 "evil">>
 Harmony: I'm gonna kill him. 
+<<actor ActorScreen 1 "happy" false>>
 Abbot: Many would love that. He is a cruel priest, but, I do not think that is the best move. 
 Abbot: I suggest you first get- 
 Harmony: That will take too long, I'll just kill him.
-<<actor ActorScreen 0 "sad">>
+<<actor ActorScreen 1 "forlorn" false>>
 Abbot: ...
+<<actor ActorScreen 1 "happy" false>>
 Abbot: I did not expect the little flower to have thorns.
 <<hideAll ActorScreen>>
 <<end LineView>>
@@ -143,13 +148,16 @@ position: -188,541
 <<actor ActorScreen 0 "happy">>
 <<actor ActorScreen 1 "happy" false>>
 Abbot: Ahead lies the guardian. 
+<<actor ActorScreen 0 "surprised">>
 Harmony: I got pretty handy with this lil, ol gun now!
 Abbot: I feel you are still set on slaying him?
 <<actor ActorScreen 0 "evil">>
 Harmony: Ah I got the taste for fight now..
 Abbot: An undead husk like you could, potentially, grow strong enough to come back with a power of him.
+<<actor ActorScreen 0 "surprised">>
 Harmony: You did not need to say more.
 Abbot: You have a lot of drive for someone who's been broken in hell.
+<<actor ActorScreen 0 "happy">>
 Harmony: you can't break a flower, hon!
 <<hideAll ActorScreen>>
 <<end LineView>>
@@ -162,16 +170,22 @@ color: yellow
 <<actor ActorScreen 0 "happy">>
 <<actor ActorScreen 1 "happy" false>>
 Abbot: Question, Little flower. 
+<<actor ActorScreen 0 "surprised">>
 Harmony: Yes?
 Abbot: I have overseen the wastes of hell, for far longer than the first soul wandered here.
 Abbot: I have seen a few souls muster up the spite, to move their old bodies. 
 Abbot: But not one has come with a weapon. Who or what gave it to you.
+<<actor ActorScreen 0 "sad">>
 Harmony: Oh, I don't know. I thought you would know with your whole, thing goin' on.
+<<actor ActorScreen 1 "surprised" false>>
 Abbot: Thing?
-Harmony: You look ancient and all knowing.  
+Harmony: You look ancient and all knowing.
+<<actor ActorScreen 1 "forlorn" false>>  
 Abbot: I simply write down, what happens in the Wastes of Hell. It's what I've always done. 
 Harmony: So you a devil or what, you work for Satan?
+<<actor ActorScreen 1 "happy" false>>
 Abbot: Hah, him.. Let's just say, I'm just curious.
+<<actor ActorScreen 0 "evil">>
 Harmony: Shady, you sure are lucky shooting you just makes you talk.
 <<hideAll ActorScreen>>
 <<end LineView>>
