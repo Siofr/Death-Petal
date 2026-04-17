@@ -216,10 +216,14 @@ namespace State_Machine
 
         public void HandleMovement()
         {
-            Vector3 camForward = Vector3.ProjectOnPlane(activeCam.transform.forward, GetPlaneNormal());
+            Vector3 camForward = new Vector3(activeCam.transform.forward.x, 0, 0);
+            Vector3 projectCamForward = Vector3.ProjectOnPlane(camForward, GetPlaneNormal());
             Vector3 camRight = Vector3.ProjectOnPlane(activeCam.transform.right, GetPlaneNormal());
 
-            Vector3 dir = (camForward.normalized * _movement.z + camRight.normalized * _movement.x).normalized;
+            Vector3 dir = (projectCamForward.normalized * _movement.z + camRight.normalized * _movement.x).normalized;
+
+            Debug.Log("Direction: " + dir);
+
             lookDir = dir;
 
             if (_cc.isGrounded) _ySpeed = 0;
