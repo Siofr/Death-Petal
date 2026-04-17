@@ -7,6 +7,7 @@ using DG.Tweening;
 public class UITutorial : MonoBehaviour
 {
     private Transform _tutorialContainer;
+    private Transform _destinationTransform;
     private Dictionary<GameObject, TMP_Text> _tutorialPopups = new Dictionary<GameObject, TMP_Text>();
     private Dictionary<string, GameObject> _tutorialReferences = new Dictionary<string, GameObject>();
 
@@ -17,12 +18,19 @@ public class UITutorial : MonoBehaviour
 
     // Animation
     private Sequence _animationSequence;
-    private float _xStartPos;
+    private float _yDestPos;
+    private float _yStartPos;
     private GameObject _fadeOutObject;
     private Dictionary<string, string> _savedDict;
 
+    private string _nextAction;
+    private int _currentStep = 0;
+
     private void Awake()
     {
+        _destinationTransform = transform.GetChild(1).transform;
+        _yDestPos = _destinationTransform.position.y;
+
         _tutorialTriggerListener = new EventBindings<TutorialTriggerEvent>(ResetPosition);
         _advanceTutorialEvent = new EventBindings<AdvanceTutorialEvent>(AdvanceStep);
         _endTutorialEvent = new EventBindings<EndTutorialEvent>(EndTutorial);
@@ -34,7 +42,7 @@ public class UITutorial : MonoBehaviour
             _tutorialPopups.Add(item.gameObject, item.GetChild(0).GetComponent<TMP_Text>());
         }
 
-        _xStartPos = _tutorialPopups.ElementAt(0).Key.transform.position.x;
+        _yStartPos = _tutorialPopups.ElementAt(0).Key.transform.position.y;
     }
 
     private void OnEnable()
@@ -54,7 +62,13 @@ public class UITutorial : MonoBehaviour
     private void AdvanceStep(AdvanceTutorialEvent ctx)
     {
         _animationSequence = DOTween.Sequence();
-        AnimateOut(_tutorialReferences[ctx.actionName]);
+        // AnimateOut(_tutorialReferences[ctx.actionName]);
+
+        _currentStep++;
+
+        if (_currentStep >= _savedDict.Count) return;
+
+        ShowTutorial();
         // _fadeOutObject = _tutorialReferences[ctx.actionName];
         // _animationSequence.OnComplete(ResetPosition);
     }
@@ -62,15 +76,20 @@ public class UITutorial : MonoBehaviour
     private void ShowTutorial()
     {
         _animationSequence = DOTween.Sequence();
-        _tutorialReferences.Clear();
 
-        for(int i = 0; i < _savedDict.Count;  i++)
-        {
-            _tutorialPopups.ElementAt(i).Key.SetActive(true);
-            AnimateIn(_tutorialPopups.ElementAt(i).Key);
-            _tutorialPopups.ElementAt(i).Value.text = _savedDict.ElementAt(i).Key;
-            _tutorialReferences.Add(_savedDict.ElementAt(i).Value, _tutorialPopups.ElementAt(i).Key);
-        }
+        _tutorialPopups.ElementAt(0).Key.SetActive(true);
+        Vector3 resetPos = _tutorialPopups.ElementAt(0).Key.transform.position;
+
+        _tutorialPopups.ElementAt(0).Key.transform.position = new Vector3(
+            resetPos.x,
+            _yDestPos,
+            resetPos.z
+            );
+
+        AnimateIn(_tutorialPopups.ElementAt(0).Key);
+        _tutorialPopups.ElementAt(0).Value.text = _savedDict.ElementAt(_currentStep).Key;
+        _nextAction = _savedDict.ElementAt(_currentStep).Key;
+        // _tutorialReferences.Add(_savedDict.ElementAt(_currentStep).Value, _tutorialPopups.ElementAt(0).Key);
 
         _animationSequence.Play();
     }
@@ -105,7 +124,7 @@ public class UITutorial : MonoBehaviour
     {
         go.GetComponent<CanvasGroup>().alpha = 1f;
         _animationSequence
-            .Append(go.transform.DOMoveX(200f, 0.15f))
+            .Append(go.transform.DOMoveY(_yDestPos, 0.15f))
             .Pause();
     }
 
@@ -114,7 +133,7 @@ public class UITutorial : MonoBehaviour
         _animationSequence
             .Append(
             go.GetComponent<CanvasGroup>()
-            .DOFade(0, 0.15f))
+            .DOFade(_yStartPos, 0.15f))
             .Play();
         _fadeOutObject = go;
     }
@@ -124,8 +143,8 @@ public class UITutorial : MonoBehaviour
         foreach(var item in _tutorialPopups)
         {
             item.Key.transform.position = new Vector3(
-                _xStartPos,
-                item.Key.transform.position.y,
+                item.Key.transform.position.x,
+                _yStartPos,
                 item.Key.transform.position.z);
         }
 
