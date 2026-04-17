@@ -289,6 +289,7 @@ GameObject:
   - component: {fileID: 8704716261618844710}
   - component: {fileID: 7897726615057058934}
   - component: {fileID: 4407373781615049261}
+  - component: {fileID: 1684677786467313114}
   m_Layer: 5
   m_Name: LeftActor
   m_TagString: Untagged
@@ -330,7 +331,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4443505127253555868}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -353,6 +354,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &1684677786467313114
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4443505127253555868}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cbb3969efd06ec14db730c88c8902f17, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6505955828118607640
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,6 +387,7 @@ GameObject:
   - component: {fileID: 7474453235458195669}
   - component: {fileID: 5872244361886639746}
   - component: {fileID: 5457888246907696699}
+  - component: {fileID: 5964389070519277393}
   m_Layer: 5
   m_Name: RightActor
   m_TagString: Untagged
@@ -428,6 +452,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &5964389070519277393
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505955828118607640}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cbb3969efd06ec14db730c88c8902f17, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7177580063452694754
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,6 +526,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ShowCharacters
   LeftActorImage: {fileID: 4407373781615049261}
   RightActorImage: {fileID: 5457888246907696699}
+  LeftActorAnimator: {fileID: 0}
+  RightActorAnimator: {fileID: 0}
   actorReferences:
   - {fileID: 11400000, guid: 16d63179f2bb4ae4c8113bb1191c8d92, type: 2}
   - {fileID: 11400000, guid: 0a071f306a0ef8a4ba9b1da1c1e29fb0, type: 2}
