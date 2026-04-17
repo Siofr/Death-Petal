@@ -66,7 +66,11 @@ public class UITutorial : MonoBehaviour
 
         _currentStep++;
 
-        if (_currentStep >= _savedDict.Count) return;
+        if (_currentStep >= _savedDict.Count)
+        {
+            _currentStep = 0;
+            return;
+        }
 
         ShowTutorial();
         // _fadeOutObject = _tutorialReferences[ctx.actionName];
@@ -153,12 +157,12 @@ public class UITutorial : MonoBehaviour
         if (_animationSequence.IsActive())
         {
             _animationSequence.OnComplete(ShowTutorial);
-            Debug.Log("Animating");
+            Debug.Log("Animating Tutorial");
         }
         else
         {
             ShowTutorial();
-            Debug.Log("Not animating");
+            Debug.Log("Not animating Tutorial");
         }
     }
 }

@@ -54,13 +54,13 @@ public class TutorialTrigger : MonoBehaviour
     void AdvanceTutorial(InputAction.CallbackContext ctx)
     {
         ctx.action.performed -= AdvanceTutorial;
-
         _stepIndex++;
         EventBus<AdvanceTutorialEvent>.Raise(new AdvanceTutorialEvent(ctx.action.name));
 
         if (_stepIndex >= tutorialInfo.Count)
         {
             EndTutorial();
+            return;
         }
 
         _actionList[_stepIndex].action.performed += AdvanceTutorial;
@@ -68,6 +68,8 @@ public class TutorialTrigger : MonoBehaviour
 
     public void TriggerTutorial(int tutorialIndex)
     {
+        Debug.Log("Trigger the tutorial!");
+
         if (tutorialInfo.Count == 0) return;
 
         foreach (var tutorialStep in tutorialInfo)
@@ -80,6 +82,7 @@ public class TutorialTrigger : MonoBehaviour
         }
 
         _actionList[0].action.performed += AdvanceTutorial;
+
         EventBus<TutorialTriggerEvent>.Raise(new TutorialTriggerEvent(_stepsDict));
     }
 
