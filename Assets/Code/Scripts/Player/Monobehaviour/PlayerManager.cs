@@ -216,7 +216,7 @@ namespace State_Machine
 
         public void HandleMovement()
         {
-            Vector3 camForward = new Vector3(activeCam.transform.forward.x, 0, 0);
+            Vector3 camForward = new Vector3(activeCam.transform.forward.x, 0, activeCam.transform.forward.z);
             Vector3 projectCamForward = Vector3.ProjectOnPlane(camForward, GetPlaneNormal());
             Vector3 camRight = Vector3.ProjectOnPlane(activeCam.transform.right, GetPlaneNormal());
 
