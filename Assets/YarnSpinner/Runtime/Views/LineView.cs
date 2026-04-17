@@ -332,12 +332,17 @@ namespace Yarn.Unity
             onInterruptLineFinished();
         }
 
+        
         /// <inheritdoc/>
         public override void RunLine(LocalizedLine dialogueLine, Action onDialogueLineFinished)
         {
             // Stop any coroutines currently running on this line view (for
             // example, any other RunLine that might be running)
             StopAllCoroutines();
+            
+            if(dialogueLine.RawText.StartsWith("Harmony:")) SendMessage("Relay", "Harmony");
+            else SendMessage("Relay", "Other");
+            
 
             // Begin running the line as a coroutine.
             StartCoroutine(RunLineInternal(dialogueLine, onDialogueLineFinished));
