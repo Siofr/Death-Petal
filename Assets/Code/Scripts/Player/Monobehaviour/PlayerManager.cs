@@ -123,6 +123,10 @@ namespace State_Machine
 
             Any(dialogueState, new FuncPredicate(() => _isDialogue));
             At(dialogueState, _idleState, new FuncPredicate(() => !_isDialogue));
+            At(dialogueState, _aimState, new FuncPredicate(() => !_isDialogue));
+            At(dialogueState, _reloadState, new FuncPredicate(() => !_isDialogue));
+            At(dialogueState, moveState, new FuncPredicate(() => !_isDialogue));
+            At(dialogueState, sprintState, new FuncPredicate(() => !_isDialogue));
         }
 
         private void Start()

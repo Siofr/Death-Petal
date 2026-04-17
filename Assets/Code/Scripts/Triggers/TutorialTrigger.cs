@@ -37,19 +37,14 @@ public class TutorialTrigger : MonoBehaviour
         public InputActionReference actionRef;
     }
 
-    [System.Serializable]
-    public struct TutorialStep
-    {
-        public List<TutorialInfo> tutorialInfo;
-    }
-
-    public List<TutorialStep> tutorialSteps = new List<TutorialStep>();
+    public List<TutorialInfo> tutorialInfo = new List<TutorialInfo>();
 
     private int _tutorialIndex;
     private int _stepIndex;
     private List<string> _tutorialText = new List<string>();
     private Dictionary<string, string> _stepsDict = new Dictionary<string, string>();
     private BoxCollider _collider;
+    private List<InputActionReference> _actionList = new List<InputActionReference>();
 
     private void Awake()
     {
@@ -62,30 +57,38 @@ public class TutorialTrigger : MonoBehaviour
         _stepIndex++;
         EventBus<AdvanceTutorialEvent>.Raise(new AdvanceTutorialEvent(ctx.action.name));
 
-        if (_stepIndex >= tutorialSteps[_tutorialIndex].tutorialInfo.Count)
+        if (_stepIndex >= tutorialInfo.Count)
         {
-            EndStep();
+            EndTutorial();
+            return;
         }
+
+        _actionList[_stepIndex].action.performed += AdvanceTutorial;
     }
 
     public void TriggerTutorial(int tutorialIndex)
     {
-        foreach (var tutorialStep in tutorialSteps[tutorialIndex].tutorialInfo)
+        Debug.Log("Trigger the tutorial!");
+
+        if (tutorialInfo.Count == 0) return;
+
+        foreach (var tutorialStep in tutorialInfo)
         {
-            tutorialStep.actionRef.action.performed += AdvanceTutorial;
+            _actionList.Add(tutorialStep.actionRef);
             string inputName = tutorialStep.actionRef.name;
             string output = inputName.Substring(inputName.IndexOf('/') + 1);
             string binds = SetButtonNameToBinding(tutorialStep.actionRef);
-            Debug.Log(binds);
             _stepsDict.Add(binds + " - " + tutorialStep.tutorialText, output);
         }
+
+        _actionList[0].action.performed += AdvanceTutorial;
 
         EventBus<TutorialTriggerEvent>.Raise(new TutorialTriggerEvent(_stepsDict));
     }
 
     void EndStep()
     {
-        foreach(var tutorialStep in tutorialSteps[_tutorialIndex].tutorialInfo)
+        foreach(var tutorialStep in tutorialInfo)
         {
             tutorialStep.actionRef.action.performed -= AdvanceTutorial;
         }
@@ -96,7 +99,7 @@ public class TutorialTrigger : MonoBehaviour
 
         // EventBus<AdvanceTutorialEvent>.Raise(new AdvanceTutorialEvent());
 
-        if (_tutorialIndex < tutorialSteps.Count)
+        if (_tutorialIndex < tutorialInfo.Count)
         {
             TriggerTutorial(_tutorialIndex);
         }
