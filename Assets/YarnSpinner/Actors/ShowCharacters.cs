@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,12 +10,15 @@ public class ShowCharacters : MonoBehaviour
 
     public Image LeftActorImage;
     public Image RightActorImage;
+    public Animator LeftActorAnimator;
+    public Animator RightActorAnimator;
     
     public ActorSprites[] actorReferences;
     
     [YarnCommand("actor")]
     public void ShowActor(int actorId, string emotion = "none", bool left = true)
     {
+        StartCoroutine(UpdateAnimation(left));
         if (left)
         {
             LeftActorImage.enabled = true;
@@ -26,7 +30,22 @@ public class ShowCharacters : MonoBehaviour
             RightActorImage.sprite = actorReferences.First(x => x.actorID == actorId).GetSelectedEmotion(emotion.ToLower());
         }
     }
-    
+
+    public void Focus(bool isLeft, bool isActive)
+    {
+        if(isLeft)
+            LeftActorAnimator.SetBool("Focussed", isActive);
+        else RightActorAnimator.SetBool("Focussed", isActive);
+    }
+
+    private IEnumerator UpdateAnimation(bool isLeft)
+    {
+        yield return new WaitForFixedUpdate();
+        if(isLeft)
+            LeftActorAnimator.SetTrigger("Update");
+        else RightActorAnimator.SetTrigger("Update");
+    }
+
 
     [YarnCommand("hideActor")]
     public void HideActor(bool left = true)
