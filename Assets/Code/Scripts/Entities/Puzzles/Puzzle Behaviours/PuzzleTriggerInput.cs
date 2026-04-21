@@ -27,6 +27,11 @@ public class PuzzleTriggerInput: PuzzleInputBase
 
         if (other.CompareTag("Player")) _isUsed = true;
         
+        foreach (IPuzzleOutput puzzleOutput in PuzzleOutputs)
+        {
+            puzzleOutput.OnPuzzleBoundsEntered();
+        }
+        
         foreach (var output in PuzzleOutputs)
         {
             CompletionCondition(other.CompareTag("Player"), output);

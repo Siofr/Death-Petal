@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "First Encounter Camera Pan Condition", menuName = "Camera Pan Conditions", order = 0)]
+[CreateAssetMenu(fileName = "First Encounter Camera Pan Condition", menuName = "Camera Pan Conditions/Hellspawn Encounter", order = 0)]
 public class PuzzleCameraFirstEncounter : PuzzleCameraCondition_SO
 {
     [SerializeField] private EnemyType _typeOfEnemy;
