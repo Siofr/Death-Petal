@@ -43,8 +43,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 1805664237419887726}
     m_Modifications:
     - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: tutorialSteps.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[0].actionRef
+      value: 
+      objectReference: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[1].actionRef
+      value: 
+      objectReference: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[0].tutorialText
+      value: Aim
+      objectReference: {fileID: 0}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[1].tutorialText
+      value: Shoot
       objectReference: {fileID: 0}
     - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: tutorialSteps.Array.data[0].tutorialInfo.Array.size
@@ -88,11 +108,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1123265918280938565, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Name
-      value: Tutorial Trigger
+      value: Tutorial Trigger (Shooting)
       objectReference: {fileID: 0}
     - target: {fileID: 1512498505704792066, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Size.x
-      value: 7.659528
+      value: 9.250892
       objectReference: {fileID: 0}
     - target: {fileID: 1512498505704792066, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Size.z
@@ -100,7 +120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1512498505704792066, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Center.x
-      value: -2.4847236
+      value: -3.2804055
       objectReference: {fileID: 0}
     - target: {fileID: 1512498505704792066, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Center.z
@@ -164,25 +184,89 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1805664237419887726}
     m_Modifications:
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: _unlocksInputs
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[0].actionRef
+      value: 
+      objectReference: {fileID: 3475557162715063007, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[1].actionRef
+      value: 
+      objectReference: {fileID: -6449189664173893952, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[2].actionRef
+      value: 
+      objectReference: {fileID: 3799063546306936736, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[3].actionRef
+      value: 
+      objectReference: {fileID: 3464053126853043821, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[4].actionRef
+      value: 
+      objectReference: {fileID: -3165975653455096592, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[5].actionRef
+      value: 
+      objectReference: {fileID: 6071020157347750155, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[6].actionRef
+      value: 
+      objectReference: {fileID: 6071020157347750155, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[0].tutorialText
+      value: Triangle Bullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[1].tutorialText
+      value: Circle Bullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[2].tutorialText
+      value: Square Bullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[3].tutorialText
+      value: Rotate Barel Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[4].tutorialText
+      value: Rotate Barel Right
+      objectReference: {fileID: 0}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[5].tutorialText
+      value: Remove Bullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[6].tutorialText
+      value: Remove Bullet
+      objectReference: {fileID: 0}
     - target: {fileID: 1123265918280938565, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Name
-      value: Tutorial Trigger (1)
+      value: Tutorial Trigger (Reload)
       objectReference: {fileID: 0}
     - target: {fileID: 1512498505704792066, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Size.x
-      value: 7.659528
+      value: 13.667896
       objectReference: {fileID: 0}
     - target: {fileID: 1512498505704792066, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Size.z
-      value: 2.010126
+      value: 10.826155
       objectReference: {fileID: 0}
     - target: {fileID: 1512498505704792066, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Center.x
-      value: -2.4847236
+      value: -0.6237078
       objectReference: {fileID: 0}
     - target: {fileID: 1512498505704792066, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Center.z
-      value: -0.50508976
+      value: 3.9029245
       objectReference: {fileID: 0}
     - target: {fileID: 7641084737120117732, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -243,8 +327,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 1805664237419887726}
     m_Modifications:
     - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: tutorialSteps.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[0].actionRef
+      value: 
+      objectReference: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[1].actionRef
+      value: 
+      objectReference: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[0].tutorialText
+      value: Walk
+      objectReference: {fileID: 0}
+    - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
+      propertyPath: tutorialInfo.Array.data[1].tutorialText
+      value: Sprint
       objectReference: {fileID: 0}
     - target: {fileID: 461047939866232103, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: tutorialSteps.Array.data[0].tutorialInfo.Array.size
@@ -288,7 +392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1123265918280938565, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Name
-      value: Tutorial Trigger (2)
+      value: Tutorial Trigger (Movement)
       objectReference: {fileID: 0}
     - target: {fileID: 1512498505704792066, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Size.x
@@ -296,7 +400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1512498505704792066, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Size.z
-      value: 2.010126
+      value: 9.650753
       objectReference: {fileID: 0}
     - target: {fileID: 1512498505704792066, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Center.x
@@ -304,7 +408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1512498505704792066, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_Center.z
-      value: -0.50508976
+      value: 0.86831856
       objectReference: {fileID: 0}
     - target: {fileID: 7641084737120117732, guid: 734d74dc3343a0b41abc524db15134f2, type: 3}
       propertyPath: m_LocalPosition.x

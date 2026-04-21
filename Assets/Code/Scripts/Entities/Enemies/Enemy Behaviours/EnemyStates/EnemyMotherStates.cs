@@ -62,7 +62,10 @@ public class EnemyMotherFullState: EnemyBaseState<EnemyMother>
     public override void OnEnter()
     {
         Debug.Log("Mother Full");
-        _mother.Weaknesses[0].SetWeakType(WeakTypes.PLAYER);
+        _mother.animator.SetBool("Vulnerable", false);
+        _mother.wingMaterial.SetFloat("_Lerp", 0f);
+        _mother.Weaknesses[0].Toggle(false);
+        //_mother.Weaknesses[0].SetWeakType(WeakTypes.PLAYER);
     }
     
     public override void Update()
