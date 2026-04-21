@@ -151,6 +151,7 @@ public class UIRevolverIndicator : MonoBehaviour
 
     public void AddBullet(AddBulletEvent ctx)
     {
+        print("ADD BULLET \n TYpE: " + ctx.bulletType);
         int trapdoorChamber = currentBullet - 1;
 
         if (trapdoorChamber < 0) trapdoorChamber = bulletSprites.Length - 1;
@@ -224,6 +225,7 @@ public class UIRevolverIndicator : MonoBehaviour
             if (ctx.bulletOrder[i] == null) continue;
             
             bulletSprites[tempSlot].enabled = true;
+            bulletSprites[tempSlot].sprite = ctx.bulletOrder[i].bulletReticle;
             bulletSprites[tempSlot].transform.parent.GetComponent<MeshRenderer>().enabled = true;
         }
     }
