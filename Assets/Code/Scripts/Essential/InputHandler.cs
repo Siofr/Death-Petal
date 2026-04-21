@@ -19,6 +19,7 @@ public class InputHandler : Singleton<InputHandler>
     public static InputAction HOTKEY; //depricated
     public static InputAction SPRINT;
     public static InputAction RESTART; //debug
+    public static InputAction PAUSE;
 
     // Face Buttons
     public static InputAction NORTH;
@@ -31,6 +32,8 @@ public class InputHandler : Singleton<InputHandler>
     public static InputAction BARLEFT;
     public static InputAction BARRIGHT;
 
+    public static event Action PauseEvent;
+    
     public static event Action<Vector2> MoveEvent;
     public static event Action InteractEvent;
     public static event Action<Vector2> LookEvent;
@@ -137,6 +140,11 @@ public class InputHandler : Singleton<InputHandler>
         RESTART.performed += OnRestartPerformed;
         inputDict.Add(RESTART.name, RESTART);
 
+        PAUSE = _inputActions.Player.Pause;
+        PAUSE.Enable();
+        PAUSE.performed += OnPausePerformed;
+        inputDict.Add(PAUSE.name, PAUSE);
+        
         Debug.Log("LockInputInit");
         EventBus<UnlockInput>.Register(_unlockInputListener);
         EventBus<LockInput>.Register(_lockInputListener);
@@ -158,11 +166,18 @@ public class InputHandler : Singleton<InputHandler>
 
         BARLEFT.Disable();
         BARLEFT.Disable();
+        
+        PAUSE.Disable();
 
         EventBus<UnlockInput>.Unregister(_unlockInputListener);
         EventBus<LockInput>.Unregister(_lockInputListener);
     }
 
+    private void OnPausePerformed(InputAction.CallbackContext ctx)
+    {
+        PauseEvent?.Invoke();
+    }
+    
     private void OnMovePerformed(InputAction.CallbackContext ctx)
     {
         MoveEvent?.Invoke(ctx.ReadValue<Vector2>());

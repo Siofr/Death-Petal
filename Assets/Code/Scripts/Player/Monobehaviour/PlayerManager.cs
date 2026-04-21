@@ -1,6 +1,7 @@
 using State_Machine;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace State_Machine
 {
@@ -21,6 +22,7 @@ namespace State_Machine
         private Vector3 _movement;
         private Vector2 _aim;
         public Vector3 lookDir;
+        public GameObject pauseMenu;
 
         private bool _isAiming;
         public bool _isSprinting;
@@ -61,7 +63,9 @@ namespace State_Machine
             EventBus<TriggerDialogueEvent>.Register(_dialogueEnteredListener);
             EventBus<ExitDialogueEvent>.Register(_exitDialogueEventListener);
             EventBus<PlayerDamagedEvent>.Register(_playerDamageEventListener);
-
+            
+            InputHandler.PauseEvent += OnPause;
+            
             // InputHandler.AimEvent += OnAim;
             InputHandler.SprintEvent += OnSprint;
             InputHandler.LongReloadEvent += OnReloadStart;
@@ -79,6 +83,8 @@ namespace State_Machine
             EventBus<ExitDialogueEvent>.Unregister(_exitDialogueEventListener);
             EventBus<PlayerDamagedEvent>.Unregister(_playerDamageEventListener);
 
+            InputHandler.PauseEvent -= OnPause;
+            
             // InputHandler.AimEvent -= OnAim;
             InputHandler.SprintEvent -= OnSprint;
             InputHandler.LongReloadEvent -= OnReloadStart;
@@ -169,6 +175,23 @@ namespace State_Machine
             stateMachine.FixedUpdate();
         }
 
+        private bool _isPaused;
+        
+        private void OnPause()
+        {
+            _isPaused = !_isPaused;
+
+            if (!_isPaused)
+            {
+                Time.timeScale = 1;
+                pauseMenu.SetActive(false);
+            } else
+            {
+                Time.timeScale = 1;
+                pauseMenu.SetActive(true);
+            }
+        }
+        
         void OnReloadStart()
         {
             _isReloading = true;
