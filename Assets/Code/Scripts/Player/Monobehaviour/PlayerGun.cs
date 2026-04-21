@@ -145,12 +145,7 @@ public class PlayerGun : MonoBehaviour
 
     public void RemoveBullet()
     {
-        if (bulletArray[currentChamber] == null)
-        {
-            RotateBarrel(1);
-            GetNextBullet();
-            return;
-        }
+        if (bulletArray[currentChamber] == null) return;
 
         _addRemoveEvent.setParameterByID(_addRemove, 0);
         EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.15f));

@@ -157,10 +157,13 @@ public class UIRevolverIndicator : MonoBehaviour
         if (trapdoorChamber < 0) trapdoorChamber = bulletSprites.Length - 1;
         if (bulletSprites[trapdoorChamber].enabled) return;
 
-        bulletSprites[trapdoorChamber].sprite = ctx.bulletType.bulletReticle;
-        bulletSprites[trapdoorChamber].enabled = true;
-        //bulletSprites[trapdoorChamber].color = ctx.bulletType.bulletColor;
-        bulletSprites[trapdoorChamber].transform.parent.GetComponent<MeshRenderer>().enabled = true;
+        if (ctx.bulletType)
+        {
+            bulletSprites[trapdoorChamber].sprite = ctx.bulletType.bulletReticle;
+            bulletSprites[trapdoorChamber].enabled = true;
+            //bulletSprites[trapdoorChamber].color = ctx.bulletType.bulletColor;
+            bulletSprites[trapdoorChamber].transform.parent.GetComponent<MeshRenderer>().enabled = true;
+        }
 
         if (TEMP_ReloadTesting.Instance.manualRotate)
         {
