@@ -1,6 +1,7 @@
 using State_Machine;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace State_Machine
 {
@@ -21,6 +22,7 @@ namespace State_Machine
         private Vector3 _movement;
         private Vector2 _aim;
         public Vector3 lookDir;
+        public GameObject pauseMenu;
 
         private bool _isAiming;
         public bool _isSprinting;
@@ -38,6 +40,7 @@ namespace State_Machine
         private EventBindings<CameraChangeEvent> _cameraChangeEventListener;
         private EventBindings<TriggerDialogueEvent> _dialogueEnteredListener;
         private EventBindings<ExitDialogueEvent> _exitDialogueEventListener;
+        private EventBindings<PlayerDamagedEvent> _playerDamageEventListener;
 
         [SerializeField]
         private Material[] playerDependentMaterials;
@@ -51,6 +54,7 @@ namespace State_Machine
             _cameraChangeEventListener = new EventBindings<CameraChangeEvent>(OnChangeCamera);
             _dialogueEnteredListener = new EventBindings<TriggerDialogueEvent>(OnDialogueEntered);
             _exitDialogueEventListener = new EventBindings<ExitDialogueEvent>(OnDialogueExited);
+            _playerDamageEventListener = new EventBindings<PlayerDamagedEvent>(OnPlayerDamage);
         }
 
         private void OnEnable()
@@ -58,7 +62,10 @@ namespace State_Machine
             EventBus<CameraChangeEvent>.Register(_cameraChangeEventListener);
             EventBus<TriggerDialogueEvent>.Register(_dialogueEnteredListener);
             EventBus<ExitDialogueEvent>.Register(_exitDialogueEventListener);
-
+            EventBus<PlayerDamagedEvent>.Register(_playerDamageEventListener);
+            
+            InputHandler.PauseEvent += OnPause;
+            
             // InputHandler.AimEvent += OnAim;
             InputHandler.SprintEvent += OnSprint;
             InputHandler.LongReloadEvent += OnReloadStart;
@@ -74,7 +81,10 @@ namespace State_Machine
             EventBus<CameraChangeEvent>.Unregister(_cameraChangeEventListener);
             EventBus<TriggerDialogueEvent>.Unregister(_dialogueEnteredListener);
             EventBus<ExitDialogueEvent>.Unregister(_exitDialogueEventListener);
+            EventBus<PlayerDamagedEvent>.Unregister(_playerDamageEventListener);
 
+            InputHandler.PauseEvent -= OnPause;
+            
             // InputHandler.AimEvent -= OnAim;
             InputHandler.SprintEvent -= OnSprint;
             InputHandler.LongReloadEvent -= OnReloadStart;
@@ -165,6 +175,23 @@ namespace State_Machine
             stateMachine.FixedUpdate();
         }
 
+        private bool _isPaused;
+        
+        private void OnPause()
+        {
+            _isPaused = !_isPaused;
+
+            if (!_isPaused)
+            {
+                Time.timeScale = 1;
+                pauseMenu.SetActive(false);
+            } else
+            {
+                Time.timeScale = 1;
+                pauseMenu.SetActive(true);
+            }
+        }
+        
         void OnReloadStart()
         {
             _isReloading = true;
@@ -301,6 +328,25 @@ namespace State_Machine
         private void OnDialogueExited()
         {
             _isDialogue = false;
+        }
+
+        private void OnPlayerDamage(PlayerDamagedEvent ctx)
+        {
+            Debug.Log(ctx.health);
+
+            if (ctx.health == 1)
+            {
+                StartCoroutine(LowHealthEffect());
+            }
+        }
+
+        IEnumerator LowHealthEffect()
+        {
+            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.75f, 0.75f, 0.15f));
+
+            yield return new WaitForSeconds(1.5f);
+
+            StartCoroutine(LowHealthEffect());
         }
     }
 }
