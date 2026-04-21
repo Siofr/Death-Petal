@@ -145,8 +145,12 @@ public class PlayerGun : MonoBehaviour
 
     public void RemoveBullet()
     {
-        // if (bulletIndex - 1 < 0) return;
-        if (bulletArray[currentChamber] == null) return;
+        if (bulletArray[currentChamber] == null)
+        {
+            RotateBarrel(1);
+            GetNextBullet();
+            return;
+        }
 
         _addRemoveEvent.setParameterByID(_addRemove, 0);
         EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.5f, 0.0f, 0.15f));
@@ -222,6 +226,16 @@ public class PlayerGun : MonoBehaviour
     {
         BulletSO nextBullet = bulletArray[currentChamber];
         EventBus<NextBulletEvent>.Raise(new NextBulletEvent(nextBullet));
+    }
+
+    private void EmptyBarrel()
+    {
+        for (int i = 0; i < bulletArray.Length; i++)
+        {
+            if (bulletArray[i] == null) continue;
+
+            bulletArray[i] = null;
+        }
     }
 
     private void OnSetChamber(SetChamberEvent ctx)
