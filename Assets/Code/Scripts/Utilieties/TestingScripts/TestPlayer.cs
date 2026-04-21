@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -33,13 +34,14 @@ public class TestPlayer : EntityBase, IEntity
     private EventBindings<PetalPickpEvent> _petalPickupEventListener;
 
     private int _maxHealth = 3;
+    private int _currentHealth;
     private int _currentPetalCharge;
     private int _goalPetalCharge = 3;
 
     public void Awake()
     {
         base.Awake();
-
+        _currentHealth = _maxHealth;
         _petalPickupEventListener = new EventBindings<PetalPickpEvent>(OnPetalCollected);
     }
 
@@ -61,7 +63,13 @@ public class TestPlayer : EntityBase, IEntity
         {
             EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Full Petal", 100));
             _currentPetalCharge = 0;
-            if (Weaknesses.Count < _maxHealth) Weaknesses.Add(new Weakness());
+
+            if (Weaknesses.Count < _maxHealth)
+            {
+                Weaknesses.Add(new Weakness());
+                OnPlayerHealthChange();
+            }
+
             return;
         }
 
@@ -97,5 +105,28 @@ public class TestPlayer : EntityBase, IEntity
             //print("Player diad");
             EventBus<PlayerDeathEvent>.Raise(new PlayerDeathEvent());
         }
+
+        OnPlayerHealthChange();
+    }
+
+
+    private void OnPlayerHealthChange()
+    {
+        _currentHealth = Weaknesses.Count;
+
+        if (_currentHealth == 1)
+        {
+            StartCoroutine(LowHealthEffect());
+        }
+    }
+
+    IEnumerator LowHealthEffect()
+    {
+        EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.75f, 0.75f, 0.15f));
+
+        yield return new WaitForSeconds(1.5f);
+
+        if (_currentHealth > 1 || _currentHealth <= 0) yield return null;
+        else StartCoroutine(LowHealthEffect());
     }
 }

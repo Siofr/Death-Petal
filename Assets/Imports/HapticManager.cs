@@ -27,6 +27,11 @@ public class HapticManager : Singleton<HapticManager>
         _onHapticEventListener = new EventBindings<HapticFeedbackEvent>(OnHapticEvent);
     }
 
+    private void OnLevelWasLoaded()
+    {
+        StopAllCoroutines();
+    }
+
     private void OnEnable()
     {
         EventBus<HapticFeedbackEvent>.Register(_onHapticEventListener);
@@ -35,6 +40,7 @@ public class HapticManager : Singleton<HapticManager>
     private void OnDisable()
     {
         EventBus<HapticFeedbackEvent>.Unregister(_onHapticEventListener);
+        StopAllCoroutines();
     }
 
     public void OnHapticEvent(HapticFeedbackEvent ctx)
