@@ -94,7 +94,7 @@ public class CameraArea : MonoBehaviour
     public EntityBase[] CheckEntities(Collider checkCollider = null)
     {
         var col = checkCollider ?? GetComponent<BoxCollider>();
-        var tempCol = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, 1 << 12 | 1 << 6 | 1 << 11);
+        var tempCol = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, 1 << 12 | 1 << 6 | 1 << 11 | 1 << 14);
         var tempEntities = new List<EntityBase>();
 
         _checkedColliders = tempCol;
