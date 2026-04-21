@@ -102,9 +102,9 @@ public class Weakness : MonoBehaviour
 
         int tex = _weaknessType switch
         {
-            WeakTypes.RED => 1,
+            WeakTypes.RED => 2,
             WeakTypes.BLUE => 0,
-            WeakTypes.GREEN => 2,
+            WeakTypes.GREEN => 1,
             _ => _renderer.material.GetInt("_TextureIndex")
         };
         

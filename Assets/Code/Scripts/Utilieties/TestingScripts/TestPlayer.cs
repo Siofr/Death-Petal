@@ -82,7 +82,7 @@ public class TestPlayer : EntityBase, IEntity
 
             _lastDamageTime = tempDamageTime;
             
-            print("player damaged");
+            //print("player damaged");
             EventBus<PlayerDamageEvent>.Raise(new PlayerDamageEvent(this));
             EventBus<WipeComboEvent>.Raise(new WipeComboEvent());
             Weaknesses.Remove(weakness);
@@ -94,7 +94,7 @@ public class TestPlayer : EntityBase, IEntity
         if (Weaknesses.Count < 1)
         {
             //UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-            print("Player diad");
+            //print("Player diad");
             EventBus<PlayerDeathEvent>.Raise(new PlayerDeathEvent());
         }
     }

@@ -27,8 +27,30 @@ public struct EndTutorialEvent : IEvent
 
 }
 
+public struct UnlockInput : IEvent
+{
+    public string inputAction;
+
+    public UnlockInput(string inputAction)
+    {
+        this.inputAction = inputAction;
+    }
+}
+
+public struct LockInput : IEvent
+{
+    public string InputAction;
+
+    public LockInput(string inputAction)
+    {
+        this.InputAction = inputAction;
+    }
+}
+
 public class TutorialTrigger : MonoBehaviour
 {
+    [SerializeField]
+    private bool _unlocksInputs;
 
     [System.Serializable]
     public struct TutorialInfo
@@ -37,23 +59,30 @@ public class TutorialTrigger : MonoBehaviour
         public InputActionReference actionRef;
     }
 
-    [System.Serializable]
-    public struct TutorialStep
-    {
-        public List<TutorialInfo> tutorialInfo;
-    }
-
-    public List<TutorialStep> tutorialSteps = new List<TutorialStep>();
+    public List<TutorialInfo> tutorialInfo = new List<TutorialInfo>();
 
     private int _tutorialIndex;
     private int _stepIndex;
+    private bool _playOnce = false;
     private List<string> _tutorialText = new List<string>();
+    private List<InputActionReference> _actionList = new List<InputActionReference>();
+
     private Dictionary<string, string> _stepsDict = new Dictionary<string, string>();
+
     private BoxCollider _collider;
 
     private void Awake()
     {
         _collider = GetComponent<BoxCollider>();
+    }
+
+    private void Start()
+    {
+        if (_playOnce) return;
+
+        if (!_unlocksInputs) return;
+
+        LockActions();
     }
 
     void AdvanceTutorial(InputAction.CallbackContext ctx)
@@ -62,30 +91,39 @@ public class TutorialTrigger : MonoBehaviour
         _stepIndex++;
         EventBus<AdvanceTutorialEvent>.Raise(new AdvanceTutorialEvent(ctx.action.name));
 
-        if (_stepIndex >= tutorialSteps[_tutorialIndex].tutorialInfo.Count)
+        if (_stepIndex >= tutorialInfo.Count)
         {
-            EndStep();
+            EndTutorial();
+            return;
         }
+
+        _actionList[_stepIndex].action.performed += AdvanceTutorial;
+        if (_unlocksInputs) EventBus<UnlockInput>.Raise(new UnlockInput(_actionList[_stepIndex].action.name));
     }
 
     public void TriggerTutorial(int tutorialIndex)
     {
-        foreach (var tutorialStep in tutorialSteps[tutorialIndex].tutorialInfo)
+        if (tutorialInfo.Count == 0) return;
+
+        foreach (var tutorialStep in tutorialInfo)
         {
-            tutorialStep.actionRef.action.performed += AdvanceTutorial;
+            _actionList.Add(tutorialStep.actionRef);
             string inputName = tutorialStep.actionRef.name;
             string output = inputName.Substring(inputName.IndexOf('/') + 1);
             string binds = SetButtonNameToBinding(tutorialStep.actionRef);
-            Debug.Log(binds);
             _stepsDict.Add(binds + " - " + tutorialStep.tutorialText, output);
         }
 
+        _actionList[0].action.performed += AdvanceTutorial;
+
         EventBus<TutorialTriggerEvent>.Raise(new TutorialTriggerEvent(_stepsDict));
+
+        if (_unlocksInputs) EventBus<UnlockInput>.Raise(new UnlockInput(_actionList[0].action.name));
     }
 
     void EndStep()
     {
-        foreach(var tutorialStep in tutorialSteps[_tutorialIndex].tutorialInfo)
+        foreach(var tutorialStep in tutorialInfo)
         {
             tutorialStep.actionRef.action.performed -= AdvanceTutorial;
         }
@@ -96,7 +134,7 @@ public class TutorialTrigger : MonoBehaviour
 
         // EventBus<AdvanceTutorialEvent>.Raise(new AdvanceTutorialEvent());
 
-        if (_tutorialIndex < tutorialSteps.Count)
+        if (_tutorialIndex < tutorialInfo.Count)
         {
             TriggerTutorial(_tutorialIndex);
         }
@@ -108,7 +146,6 @@ public class TutorialTrigger : MonoBehaviour
 
     void EndTutorial()
     {
-        _tutorialIndex = 0;
         _stepIndex = 0;
         _stepsDict.Clear();
         EventBus<EndTutorialEvent>.Raise(new EndTutorialEvent());
@@ -116,11 +153,23 @@ public class TutorialTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (_playOnce) return;
+
         if (other.transform.tag == "Player")
         {
+            _playOnce = true;
             TriggerTutorial(_tutorialIndex);
-            _collider.enabled = false;
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        for (int i = _tutorialIndex; i < tutorialInfo.Count; i++)
+        {
+            EventBus<UnlockInput>.Raise(new UnlockInput(_actionList[i].action.name));
+        }
+
+        EndTutorial();
     }
 
     public string SetButtonNameToBinding(InputActionReference inputActionRef)
@@ -138,5 +187,13 @@ public class TutorialTrigger : MonoBehaviour
             return rawName;
         }
 
+    }
+
+    public void LockActions()
+    {
+        foreach(TutorialInfo info in tutorialInfo)
+        {
+            EventBus<LockInput>.Raise(new LockInput(info.actionRef.action.name));
+        }
     }
 }

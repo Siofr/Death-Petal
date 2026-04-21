@@ -5,6 +5,7 @@ using Yarn.Unity;
 public class DialogueStartFX : MonoBehaviour
 {
     CanvasGroup canvasGroup;
+    public ShowCharacters characterDisplayController;
 
     public Vector2 BottomRectValues;
     public Vector2 TopRectValues;
@@ -23,8 +24,9 @@ public class DialogueStartFX : MonoBehaviour
     [YarnCommand("start")]
     public void showLineView()
     {
-        print("DialogueMove: starting");
+        //print("DialogueMove: starting");
 
+        EventBus<SFXSnapshot>.Raise(new SFXSnapshot(1, true));
         LeanTween.moveY(bottomBg, BottomRectValues.x, fadeTime).setEase(easeType);
         LeanTween.moveY(topBg, TopRectValues.x, fadeTime).setEase(easeType);
     }
@@ -32,9 +34,20 @@ public class DialogueStartFX : MonoBehaviour
     [YarnCommand("end")]
     public void hideLineView()
     {
-        print("DialogueMove: closing");
+        //print("DialogueMove: closing");
 
+        EventBus<SFXSnapshot>.Raise(new SFXSnapshot(1, false));
         LeanTween.moveY(bottomBg, BottomRectValues.y, fadeTime).setEase(easeType);
         LeanTween.moveY(topBg, TopRectValues.y, fadeTime).setEase(easeType);
+    }
+
+    
+    // Worlds hackiest implementation
+    public void Relay(string speaker)
+    {
+        //print("Message received: " + speaker);
+        bool isHarmony = speaker.StartsWith("Harmony");
+        characterDisplayController.Focus(isHarmony, true);
+        characterDisplayController.Focus(!isHarmony, false);
     }
 }

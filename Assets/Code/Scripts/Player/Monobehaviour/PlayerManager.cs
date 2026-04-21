@@ -123,6 +123,10 @@ namespace State_Machine
 
             Any(dialogueState, new FuncPredicate(() => _isDialogue));
             At(dialogueState, _idleState, new FuncPredicate(() => !_isDialogue));
+            At(dialogueState, _aimState, new FuncPredicate(() => !_isDialogue));
+            At(dialogueState, _reloadState, new FuncPredicate(() => !_isDialogue));
+            At(dialogueState, moveState, new FuncPredicate(() => !_isDialogue));
+            At(dialogueState, sprintState, new FuncPredicate(() => !_isDialogue));
         }
 
         private void Start()
@@ -212,16 +216,20 @@ namespace State_Machine
 
         public void HandleMovement()
         {
-            Vector3 camForward = Vector3.ProjectOnPlane(activeCam.transform.forward, GetPlaneNormal());
+            Vector3 camForward = new Vector3(activeCam.transform.forward.x, 0, activeCam.transform.forward.z);
+            Vector3 projectCamForward = Vector3.ProjectOnPlane(camForward, GetPlaneNormal());
             Vector3 camRight = Vector3.ProjectOnPlane(activeCam.transform.right, GetPlaneNormal());
 
-            Vector3 dir = (camForward.normalized * _movement.z + camRight.normalized * _movement.x).normalized;
+            Vector3 dir = (projectCamForward.normalized * _movement.z + camRight.normalized * _movement.x).normalized;
+
+//            Debug.Log("Direction: " + dir);
+
             lookDir = dir;
 
             if (_cc.isGrounded) _ySpeed = 0;
 
             if (lookDir == Vector3.zero) _animator.SetFloat("Speed", 0.0f);
-            else _animator.SetFloat("Speed", Mathf.Clamp(currentSpeed / 10, 0.0f, 1.0f));
+            else _animator.SetFloat("Speed", Mathf.Clamp((currentSpeed / 10) * 1.5f, 0.0f, 1.0f));
 
             _ySpeed -= 9.8f * Time.deltaTime;
 

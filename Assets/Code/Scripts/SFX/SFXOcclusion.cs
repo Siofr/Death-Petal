@@ -16,6 +16,7 @@ public class SFXOcclusion : MonoBehaviour
     private float _distanceWeighting = 0.3f;
 
     private bool _isPlaying = false;
+    private AmbientSFXManager _ambManager;
     private EventBindings<CameraChangeEvent> _cameraChangeEventListener;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -28,6 +29,7 @@ public class SFXOcclusion : MonoBehaviour
     private void Awake()
     {
         _cameraChangeEventListener = new EventBindings<CameraChangeEvent>(OnListenerPositionChange);
+        _ambManager = GetComponentInParent<AmbientSFXManager>();
     }
 
     private void OnEnable()
@@ -37,27 +39,7 @@ public class SFXOcclusion : MonoBehaviour
 
     void OnListenerPositionChange(CameraChangeEvent ctx)
     {
-        if (!CheckDistanceToListener(ctx.transform.position))
-        {
-            eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            _isPlaying = false;
-            return;
-        }
-
-        if(CheckOcclusion(ctx.transform.position))
-        {
-            ChangeAmbientValues(Vector3.Distance(ctx.transform.position, transform.position));
-        }
-        else
-        {
-            eventInstance.setParameterByID(_occlusionParam, 0);
-        }
-
-        if (!_isPlaying)
-        {
-            eventInstance.start();
-            _isPlaying = true;
-        }
+        if (!CheckDistanceToListener(ctx.transform.position)) return;
     }
 
     bool CheckDistanceToListener(Vector3 listenerPos)
@@ -73,13 +55,13 @@ public class SFXOcclusion : MonoBehaviour
         return hit.collider;
     }
 
-    void ChangeAmbientValues(float distance)
+    public float GetOcclusionValue(float distance)
     {
         float difference = maxDistance - distance;
         float distanceMult = _distanceWeighting * (difference / maxDistance);
 
-        float param = _occlusionWeighting + distanceMult;
+        return _occlusionWeighting + distanceMult;
 
-        eventInstance.setParameterByID(_occlusionParam, param);
+        // eventInstance.setParameterByID(_occlusionParam, param);
     }
 }
