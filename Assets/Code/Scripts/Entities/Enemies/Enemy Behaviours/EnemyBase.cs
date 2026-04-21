@@ -92,21 +92,6 @@ public class EnemyBase : EntityBase, IEntity
         transform.LookAt(targetPos);
     }
 
-    public float LookAtAngle()
-    {
-        if (target == null) return 0;
-
-        var targetPos = target.position;
-        targetPos.y = transform.position.y;
-        var multiplier = 1f;
-        var forward2D = new Vector2(transform.forward.x, transform.forward.z);
-        var localTargetPos = transform.InverseTransformPoint(targetPos);
-        if (localTargetPos.x < 0) multiplier = -1f;
-
-        print(Vector3.Angle(transform.forward, targetPos) * multiplier);
-        return Vector3.Angle(transform.forward, targetPos)*multiplier;
-    }
-
     protected virtual void Initialise()
     {
         //enemyPassiveSFXEvent = SFXUtilities.CreateEventInstance(enemyPassiveIdle, this.gameObject);
@@ -266,10 +251,10 @@ public class EnemyBase : EntityBase, IEntity
     {
         int weaknessCount = Weaknesses.Count;
         
-        print("Weakness before first fail state");
+        //print("Weakness before first fail state");
         if (!Weaknesses.Contains(weakness))
             return;
-        print("Weakness past first fail state");
+        //("Weakness past first fail state");
         if(weakness.WeakType.HasFlag(damageType))
             weakness.RemoveWeakType(damageType);
         else
@@ -302,13 +287,13 @@ public class EnemyBase : EntityBase, IEntity
         
         if (Weaknesses.Count < weaknessCount && Weaknesses.Count > 0)
         {
-            print("WEAKNESS SHOT");
+            //print("WEAKNESS SHOT");
             defaultWeaknessTypes.RemoveAt(0);
             Weaknesses[0].ToggleHitbox(true);
             Weaknesses[0].SetWeakType(defaultWeaknessTypes[0]);
         }
 
-        print("Enemy Base Shot");
+        //print("Enemy Base Shot");
     }
 
     public virtual void StopAllStateRoutines()

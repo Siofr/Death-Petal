@@ -14,7 +14,8 @@ public class EnemyArcher: EnemyBase
     [SerializeField] private Transform _LOSRef;
     public float targetTime;
     public float maxLOSRadius;
-    public float alertRotationAngle;
+    
+    [Range(0, 90)] public float alertRotationAngle;
 
     private Coroutine _alertRoutine;
     private Coroutine _targetRoutine;
@@ -28,16 +29,25 @@ public class EnemyArcher: EnemyBase
 
     protected override void Awake()
     {
+        base.Awake();
+        _initialRotation = transform.rotation.eulerAngles.y;
+        _currentRotation = transform.rotation.eulerAngles.y;
         _targetLineRender.enabled = false;
         _targetLineRender.SetPosition(0, _LOSRef.position);
     }
 
+    // protected override void Start()
+    // {
+    //     InitialiseWeaknesses();
+    //     Initialise();
+    // }
+    
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
         base.OnShot(weakness, damageType);
         
-        //TO REMOVE JUST FOR TESTING
-        if(Weaknesses.Count < 1) Destroy(gameObject);
+        // //TO REMOVE JUST FOR TESTING
+        // if(Weaknesses.Count < 1) Destroy(gameObject);
     }
 
     protected override void InitialiseStateMachine()
@@ -47,6 +57,7 @@ public class EnemyArcher: EnemyBase
         var alertState = new EnemyArcherAlertState(this);
         var targetState = new EnemyArcherTargetState(this);
         var shootState = new EnemyArcherShootState(this);
+        var spawnState = new EnemySpawnState<EnemyArcher>(this);
         
         __enemyStateMachine.AddAnyTransition(deathState, new FuncPredicate( () => IsDead));
         
@@ -59,11 +70,19 @@ public class EnemyArcher: EnemyBase
         __enemyStateMachine.AddTransition(targetState, shootState, new FuncPredicate( () => _targetRoutine == null));
         __enemyStateMachine.AddTransition(shootState, alertState, new FuncPredicate( ()=> _shotRoutine == null));
         
+        if (animator != null)
+        {
+            __enemyStateMachine.AddAnyTransition(spawnState, new FuncPredicate(()=> animator.GetBool("Spawning")));
+            __enemyStateMachine.AddTransition(spawnState, idleState, new FuncPredicate(()=> !animator.GetBool("Spawning")));
+        }
+        
         __enemyStateMachine.SetState(idleState);
     }
-
+    
     public void CheckLOS(float losRadius, float losDist)
     {
+        _LOSRef.eulerAngles = new Vector3(0, MapAnimToRot(animator.GetFloat(Animator.StringToHash("Angle"))), 0);
+        
         if (!Physics.SphereCast(_LOSRef.position, losRadius, _LOSRef.forward, out RaycastHit hit, losDist, 1 << 6))
         {
             _inLos = false;
@@ -125,80 +144,88 @@ public class EnemyArcher: EnemyBase
         if (target == null) yield break;
         
         var absAngle = Mathf.Abs(angle);
-        var absSpeed = Mathf.Abs(speed);
         
         var signAngle = Vector3.SignedAngle(transform.forward, target.position-transform.position, Vector3.up);
         speed = signAngle < 0 ? -speed : speed;
-        angle = signAngle < 0 ? absAngle : absAngle;
+        angle = signAngle < 0 ? -absAngle : absAngle;
 
-        var firstActivation = true;
-        var isFirst = false;
         var tempRot = 0f;
         
-        animator.SetFloat("Angle", LookAtAngle());
+        animator.SetFloat(Animator.StringToHash("Angle"), MapRotToAnim(_currentRotation));
         
-        while (target != null && !_inLos)
+        while (!_inLos)
         {
+            print(angle);
+            
+            if (angle == 0) yield return null;
 
-            if (firstActivation)
+            while (tempRot != angle)
             {
-                animator.SetTrigger("Spawn");
-                firstActivation = false;
-            }
+                tempRot += Time.deltaTime * speed;
+                _currentRotation += Time.deltaTime * speed;
+                
+                if (angle < 0)
+                {
+                    if (tempRot < angle || _currentRotation < _initialRotation + angle)
+                    {
+                        tempRot = angle;
+                        _currentRotation = _initialRotation + angle;
+                        animator.SetFloat(Animator.StringToHash("Angle"), MapRotToAnim(_currentRotation));
 
-            if (absAngle >= 360)
-            {
-                //transform.Rotate(transform.up, speed*Time.deltaTime);
+                        break;
+                    }
+                }
+                else
+                {
+                    if (tempRot > angle || _currentRotation > _initialRotation + angle)
+                    {
+                        tempRot = angle;
+                        _currentRotation = _initialRotation + angle;
+                        animator.SetFloat(Animator.StringToHash("Angle"), MapRotToAnim(_currentRotation));
+                        
+                        break;
+                    }
+                }
+
+                animator.SetFloat(Animator.StringToHash("Angle"), MapRotToAnim(_currentRotation));
                 
                 yield return null;
             }
-
-            if (angle == 0) yield return null;
-
-            if (!isFirst)
-            {
-                
-                
-                if (tempRot + absSpeed * Time.deltaTime < absAngle)
-                {
-                    tempRot += absSpeed * Time.deltaTime;
-                    //transform.Rotate(transform.up, speed * Time.deltaTime);
-                }
-                else
-                {
-                    isFirst = true;
-                    tempRot = 0f;
-                    speed = -speed;
-                    
-                    yield return new WaitForSeconds(pauseTime);
-                }
-            }
-            else
-            {
-                
-                if (tempRot + absSpeed * Time.deltaTime < absAngle * 2)
-                {
-                    tempRot += absSpeed * Time.deltaTime;
-                    //transform.Rotate(transform.up, speed * Time.deltaTime);
-                }
-                else
-                {
-                    tempRot = 0f;
-                    speed = -speed;
-
-                    yield return new WaitForSeconds(pauseTime);
-                }
-            }
-
-            yield return null;
-            //TODO ALERT STATE ROTATION
+            
+            yield return new WaitForSeconds(pauseTime);
+            
+            angle = -angle;
+            speed = -speed;
         }
-
-        _alertRoutine = null;
         
-        Debug.Log("Player Spotted");
+        print("Found Target");
     }
 
+    private float _initialRotation;
+    private float _currentRotation;
+
+    private float MapAnimToRot(float value)
+    {
+        var minRot = _initialRotation - 90;
+        var maxRot = _initialRotation + 90;
+
+        var minAnim = -90f;
+        var maxAnim = 90f;
+        
+        return minRot + (maxRot - minRot) * ((value - minAnim) / (maxAnim - minAnim));
+    }
+
+    private float MapRotToAnim(float value)
+    {
+        var minRot = _initialRotation - alertRotationAngle;
+        var maxRot = _initialRotation + alertRotationAngle;
+
+        var minAnim = -90f;
+        var maxAnim = 90f;
+        
+        return minAnim + (maxAnim - minAnim) * ((value - minRot) / (maxRot - minRot));
+    }
+    
     private IEnumerator TargetingRoutine(float time)
     {
         _timerRoutine = StartCoroutine(TimerRoutine(time));
@@ -206,10 +233,47 @@ public class EnemyArcher: EnemyBase
         while (_timerRoutine != null)
         {
             animator.SetFloat("Angle", LookAtAngle());
+
+            if (!IsInAlertRange())
+            {
+                _targetRoutine = null;
+
+                yield break;
+            }
+            
             yield return null;
         }
 
         _targetRoutine = null;
+    }
+
+    private bool IsInAlertRange()
+    {
+        var constraints = new Vector2(_initialRotation-alertRotationAngle, _initialRotation+alertRotationAngle);
+        
+        return _currentRotation >=  constraints.x && _currentRotation <= constraints.y;
+    }
+    
+    private float LookAtAngle()
+    {
+        if (target == null) return 0;
+
+        var targetPos = target.position;
+        targetPos.y = transform.position.y;
+        var multiplier = 1f;
+        var forward2D = new Vector2(transform.forward.x, transform.forward.z);
+        var localTargetPos = transform.InverseTransformPoint(targetPos);
+        if (localTargetPos.x < 0) multiplier = -1f;
+
+        var angle = Vector3.Angle(transform.forward, targetPos) * multiplier;
+        
+        print(angle);
+
+        _currentRotation = _initialRotation + angle;
+        
+        
+        
+        return angle;
     }
     
     public void StartTargeting(float time)
@@ -224,11 +288,11 @@ public class EnemyArcher: EnemyBase
         if (_timerRoutine != null || target == null) yield break;
         
         var playerController = target.GetComponent<TestPlayer>();
-        animator.SetTrigger("Shoot");
         
         yield return TimerRoutine(time);
         
         CheckLOS(maxLOSRadius, enemyData.attackRange);
+        animator.SetTrigger("Shoot");
         
         if(_inLos) playerController.OnShot(playerController.Weaknesses[0], WeakTypes.PLAYER);
 

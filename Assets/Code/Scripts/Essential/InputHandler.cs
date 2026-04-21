@@ -4,6 +4,7 @@ using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class InputHandler : Singleton<InputHandler>
 {
@@ -50,11 +51,22 @@ public class InputHandler : Singleton<InputHandler>
     public static event Action SprintEvent;
     public static event Action SprintCancelledEvent;
 
+    private EventBindings<UnlockInput> _unlockInputListener;
+    private EventBindings<LockInput> _lockInputListener;
+
+    [SerializeField]
+    private bool _bypassTutorialProgress;
+
+    private Dictionary<string, InputAction> inputDict = new Dictionary<string, InputAction>();
+
     protected override void Awake()
     {
         base.Awake();
 
         _inputActions = new InputSystem_Actions();
+
+        _unlockInputListener = new EventBindings<UnlockInput>(OnUnlockInput);
+        _lockInputListener = new EventBindings<LockInput>(OnLockInput);
     }
 
     void OnEnable()
@@ -64,18 +76,22 @@ public class InputHandler : Singleton<InputHandler>
         MOVE = _inputActions.Player.Move;
         MOVE.Enable();
         MOVE.performed += OnMovePerformed;
+        inputDict.Add(MOVE.name, MOVE);
 
         INTERACT = _inputActions.Player.Interact;
         INTERACT.Enable();
         INTERACT.performed += OnInteractPerformed;
+        inputDict.Add(INTERACT.name, INTERACT);
 
         LOOK = _inputActions.Player.Look;
         LOOK.Enable();
         LOOK.performed += OnLookPerformed;
+        inputDict.Add(LOOK.name, LOOK);
 
         ATTACK = _inputActions.Player.Attack;
         ATTACK.Enable();
         ATTACK.performed += OnAttackPerformed;
+        inputDict.Add(ATTACK.name, ATTACK);
 
         // RELOAD = _inputActions.Player.Reload;
         // RELOAD.Enable();
@@ -84,36 +100,46 @@ public class InputHandler : Singleton<InputHandler>
         SPRINT = _inputActions.Player.Sprint;
         SPRINT.Enable();
         SPRINT.performed += OnSprint;
+        inputDict.Add(SPRINT.name, SPRINT);
 
         NORTH = _inputActions.Player.North;
         NORTH.Enable();
         NORTH.performed += OnNorthPerformed;
+        inputDict.Add(NORTH.name, NORTH);
 
         WEST = _inputActions.Player.West;
         WEST.Enable();
         WEST.performed += OnWestPerformed;
+        inputDict.Add(WEST.name, WEST);
 
         EAST = _inputActions.Player.East;
         EAST.Enable();
         EAST.performed += OnEastPerformed;
+        inputDict.Add(EAST.name, EAST);
 
         SOUTH = _inputActions.Player.South;
         SOUTH.Enable();
         SOUTH.performed += OnSouthPerformed;
+        inputDict.Add(SOUTH.name, SOUTH);
 
         BARLEFT = _inputActions.Player.BarrelLeft;
         BARLEFT.Enable();
         BARLEFT.performed += OnBarrelLeft;
-        
+        inputDict.Add(BARLEFT.name, BARLEFT);
+
         BARRIGHT = _inputActions.Player.BarrelRight;
         BARRIGHT.Enable();
         BARRIGHT.performed += OnBarrelRight;
+        inputDict.Add(BARRIGHT.name, BARRIGHT);
 
         RESTART = _inputActions.Player.Restart;
         RESTART.Enable();
         RESTART.performed += OnRestartPerformed;
+        inputDict.Add(RESTART.name, RESTART);
 
-
+        Debug.Log("LockInputInit");
+        EventBus<UnlockInput>.Register(_unlockInputListener);
+        EventBus<LockInput>.Register(_lockInputListener);
     }
 
     private void OnDisable()
@@ -132,6 +158,9 @@ public class InputHandler : Singleton<InputHandler>
 
         BARLEFT.Disable();
         BARLEFT.Disable();
+
+        EventBus<UnlockInput>.Unregister(_unlockInputListener);
+        EventBus<LockInput>.Unregister(_lockInputListener);
     }
 
     private void OnMovePerformed(InputAction.CallbackContext ctx)
@@ -199,12 +228,23 @@ public class InputHandler : Singleton<InputHandler>
     private void OnSouthPerformed(InputAction.CallbackContext ctx)
     {
         RemoveBulletEvent?.Invoke();
-        // HotkeyEvent?.Invoke();
     }
 
     private void OnRestartPerformed(InputAction.CallbackContext ctx)
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void OnUnlockInput(UnlockInput ctx)
+    {
+        inputDict[ctx.inputAction].Enable();
+    }
+
+    private void OnLockInput(LockInput ctx)
+    {
+        if (_bypassTutorialProgress) return;
+
+        inputDict[ctx.InputAction].Disable();
     }
 
     void LoadUserRebinds()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using State_Machine;
@@ -32,9 +33,9 @@ public class ProjectileBase : EnemyBase
     {
         IEntity playerEntity;
         
-        callingEntity.target.TryGetComponent(out playerEntity);
+        target.TryGetComponent(out playerEntity);
         
-        print("Deal Damage");
+        //print("Deal Damage");
         playerEntity.OnShot(playerEntity.Weaknesses[0], WeakTypes.PLAYER);
         Debug.Log("Damage Dealt to Player");
         
@@ -47,6 +48,7 @@ public class ProjectileBase : EnemyBase
         active = true;
         
         startVector = direction;
+        target = callingEntity.target;
         StartCoroutine(KillTimer(lifetime));
         _projectileTarget = projectileTarget;
         _callingEntity = callingEntity;
@@ -76,12 +78,18 @@ public class ProjectileBase : EnemyBase
         //explode
     }
 
+    /*private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player")) Explode();
+    }*/
+
     private void Explode()
     {
         // do damage in radius
-        Instantiate(explodeVFX, transform.position, quaternion.identity);
-        if (Vector3.Distance(_callingEntity.transform.position, transform.position) < enemyData.attackRange)
+        
+        if (Vector3.Distance(target.position, transform.position) < enemyData.attackRange)
         {
+            Instantiate(explodeVFX, transform.position, quaternion.identity);
             DealDamage(_callingEntity);
         }
         

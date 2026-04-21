@@ -93,8 +93,8 @@ public class UIPlayerReticle : MonoBehaviour
         }
 
         ReticleSprite = ctx.bulletType.bulletReticle;
-        print("TRYING TO SET THE COLOUR");
-        print(ctx.bulletType.bulletColor);
+        //print("TRYING TO SET THE COLOUR");
+        //print(ctx.bulletType.bulletColor);
         foreach (Material ammoIndicatorMaterial in ammoIndicatorMaterials)
         {
             ammoIndicatorMaterial.SetColor("_Colour", ctx.bulletType.bulletColor);

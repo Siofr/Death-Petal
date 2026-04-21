@@ -33,7 +33,7 @@ public class BossBase : EnemyBase
     
     protected override void Start()
     {
-        base.Awake();
+        InitialiseWeaknesses();
         Initialise();
     }
 
@@ -85,11 +85,6 @@ public class BossBase : EnemyBase
         
         __enemyStateMachine.SetState(idleState);
 
-    }
-    
-    private void Update()
-    {
-        __enemyStateMachine.Update();
     }
     
     public bool InAttackRange()
@@ -150,10 +145,10 @@ public class BossBase : EnemyBase
     {
         int weaknessCount = Weaknesses.Count;
         
-        print("Weakness before first fail state");
+        //print("Weakness before first fail state");
         if (!Weaknesses.Contains(weakness))
             return;
-        print("Weakness past first fail state");
+        //print("Weakness past first fail state");
         if(weakness.WeakType.HasFlag(damageType))
             weakness.RemoveWeakType(damageType);
         else
@@ -181,7 +176,7 @@ public class BossBase : EnemyBase
         
         if (Weaknesses.Count < weaknessCount && Weaknesses.Count > 0)
         {
-            print("WEAKNESS SHOT");
+            //print("WEAKNESS SHOT");
             defaultWeaknessTypes.RemoveAt(0);
             Weaknesses[0].ToggleHitbox(true);
             Weaknesses[0].SetWeakType(defaultWeaknessTypes[0]);

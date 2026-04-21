@@ -20,7 +20,7 @@ public class PuzzleEffects : MonoBehaviour
 
     private void OnWrongShot(WrongShotPuzzleEvent ctx)
     {
-        print("wrong shot particles spawning");
+        //print("wrong shot particles spawning");
         if (ctx.weight != GetComponentInParent<Weight>())
             return;
 

@@ -55,13 +55,13 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
     private IEnumerator TargetSpit()
     {
         _bossController.isAttackReady = false;
-        print("Targetspit begun");
+        //print("Targetspit begun");
         float startTime = Time.time;
 
         while (Time.time - startTime < radialspit_attackLength)
         {
             _playerPosition = _bossController.target.transform.position;
-            print("shoot");
+            //print("shoot");
             var newProjectile = Instantiate(projectilePrefab, transform.position, quaternion.identity).GetComponent<ProjectileBase>();
             var attackVector = (_playerPosition - transform.position).normalized;
             attackVector = new Vector3(
@@ -80,7 +80,10 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
 
         for (int i = 0; i < spawnBackup_amount; i++)
         {
-            Vector3 spawnPoint = (Random.insideUnitCircle * spawnBackup_Radius);
+            Vector3 spawnPoint = new Vector3();
+
+            while (spawnPoint.magnitude < 3) spawnPoint = (Random.insideUnitCircle * (spawnBackup_Radius));
+            
             spawnPoint = new Vector3(
                 spawnPoint.x,
                 -1f,
@@ -92,10 +95,17 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
         _bossController.isAttackReady = true;
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.rebeccaPurple;
+        
+        Gizmos.DrawSphere(transform.position, spawnBackup_Radius);
+    }
+
     public IEnumerator RadialSpit(bool dual = false)
     {
         _bossController.isAttackReady = false;
-        print("RadialSpit begun");
+        //print("RadialSpit begun");
         float startTime = Time.time;
 
         while (Time.time - startTime < radialspit_attackLength)
@@ -106,7 +116,7 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
                 transform.eulerAngles.z
             );
 
-            print("shoot");
+            //print("shoot");
             var newProjectile = Instantiate(projectilePrefab, transform.position, quaternion.identity)
                 .GetComponent<ProjectileBase>();
             var attackVector = transform.forward;

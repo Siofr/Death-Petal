@@ -222,7 +222,7 @@ namespace State_Machine
 
             Vector3 dir = (projectCamForward.normalized * _movement.z + camRight.normalized * _movement.x).normalized;
 
-            Debug.Log("Direction: " + dir);
+//            Debug.Log("Direction: " + dir);
 
             lookDir = dir;
 
