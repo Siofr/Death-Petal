@@ -30,6 +30,12 @@ public class HapticManager : Singleton<HapticManager>
     private void OnLevelWasLoaded()
     {
         StopAllCoroutines();
+        InputSystem.ResetHaptics();
+    }
+
+    private void OnApplicationQuit()
+    {
+        InputSystem.ResetHaptics();
     }
 
     private void OnEnable()
@@ -40,7 +46,7 @@ public class HapticManager : Singleton<HapticManager>
     private void OnDisable()
     {
         EventBus<HapticFeedbackEvent>.Unregister(_onHapticEventListener);
-        StopAllCoroutines();
+        InputSystem.ResetHaptics();
     }
 
     public void OnHapticEvent(HapticFeedbackEvent ctx)
