@@ -12,6 +12,7 @@ public class EnemyArcher: EnemyBase
     [Header("Archer Fields")]
     [SerializeField] private LineRenderer _targetLineRender;
     [SerializeField] private Transform _LOSRef;
+    [SerializeField] private ParticleSystem _shootParticle;
     public float targetTime;
     public float maxLOSRadius;
     
@@ -295,6 +296,7 @@ public class EnemyArcher: EnemyBase
         
         CheckLOS(maxLOSRadius, enemyData.attackRange);
         animator.SetTrigger("Shoot");
+        _shootParticle.Play();
         
         if(_inLos) playerController.OnShot(playerController.Weaknesses[0], WeakTypes.PLAYER);
 
