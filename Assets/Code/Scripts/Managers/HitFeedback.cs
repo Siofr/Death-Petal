@@ -45,7 +45,7 @@ public class HitFeedback : MonoBehaviour
 
     private IEnumerator HitEffect()
     {
-        print("entered");
+        //print("entered");
 
         _vignette.active = true;
         _vignette.intensity.value = 0;
@@ -70,7 +70,7 @@ public class HitFeedback : MonoBehaviour
         }
 
         _vignette.intensity.value = 0f;
-        print("yurr");
+        //print("yurr");
 
         _vignette.active = false;
         _vignette.intensity.value = 0f;

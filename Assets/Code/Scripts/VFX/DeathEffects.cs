@@ -30,7 +30,7 @@ public class DeathEffects : MonoBehaviour
 
     private void OnDeath(EnemyDeathEvent ctx)
     {
-        print("enemy died particles spawning");
+        //print("enemy died particles spawning");
         
         if (ctx.enemy != GetComponentInParent<EnemyBase>())
             return;
@@ -49,7 +49,7 @@ public class DeathEffects : MonoBehaviour
 
     private void OnWrongShot(WrongShotEvent ctx)
     {
-        print("wrong shot particles spawning");
+        //print("wrong shot particles spawning");
         if (ctx.enemy != GetComponentInParent<EnemyBase>())
             return;
 

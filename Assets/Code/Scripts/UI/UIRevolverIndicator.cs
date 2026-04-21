@@ -151,7 +151,7 @@ public class UIRevolverIndicator : MonoBehaviour
 
     public void AddBullet(AddBulletEvent ctx)
     {
-        print("ADD BULLET \n TYpE: " + ctx.bulletType);
+        //print("ADD BULLET \n TYpE: " + ctx.bulletType);
         int trapdoorChamber = currentBullet - 1;
 
         if (trapdoorChamber < 0) trapdoorChamber = bulletSprites.Length - 1;
