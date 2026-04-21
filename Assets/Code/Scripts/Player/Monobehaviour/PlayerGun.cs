@@ -145,7 +145,6 @@ public class PlayerGun : MonoBehaviour
 
     public void RemoveBullet()
     {
-        // if (bulletIndex - 1 < 0) return;
         if (bulletArray[currentChamber] == null) return;
 
         _addRemoveEvent.setParameterByID(_addRemove, 0);
@@ -222,6 +221,16 @@ public class PlayerGun : MonoBehaviour
     {
         BulletSO nextBullet = bulletArray[currentChamber];
         EventBus<NextBulletEvent>.Raise(new NextBulletEvent(nextBullet));
+    }
+
+    private void EmptyBarrel()
+    {
+        for (int i = 0; i < bulletArray.Length; i++)
+        {
+            if (bulletArray[i] == null) continue;
+
+            bulletArray[i] = null;
+        }
     }
 
     private void OnSetChamber(SetChamberEvent ctx)

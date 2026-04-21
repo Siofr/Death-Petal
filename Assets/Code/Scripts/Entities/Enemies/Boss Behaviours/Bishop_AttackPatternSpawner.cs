@@ -80,7 +80,10 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
 
         for (int i = 0; i < spawnBackup_amount; i++)
         {
-            Vector3 spawnPoint = (Random.insideUnitCircle * spawnBackup_Radius);
+            Vector3 spawnPoint = new Vector3();
+
+            while (spawnPoint.magnitude < 3) spawnPoint = (Random.insideUnitCircle * (spawnBackup_Radius));
+            
             spawnPoint = new Vector3(
                 spawnPoint.x,
                 -1f,
@@ -90,6 +93,13 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
         yield return new WaitForSeconds(spawnBackup_attackLength);
         
         _bossController.isAttackReady = true;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.rebeccaPurple;
+        
+        Gizmos.DrawSphere(transform.position, spawnBackup_Radius);
     }
 
     public IEnumerator RadialSpit(bool dual = false)

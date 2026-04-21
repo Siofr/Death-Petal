@@ -68,6 +68,9 @@ public class InputTextToTMPIcon
             case "Right Stick Press":
                 output = "<sprite=6>";
                 return true;
+            case "RS":
+                output = "<sprite name=\"xbox_right_stick\">";
+                return true;
             //Left Stick
             case "LS Right":
                 output = "<sprite=14>";
@@ -83,6 +86,9 @@ public class InputTextToTMPIcon
                 return true;
             case "Left Stick Press":
                 output = "<sprite=5>";
+                return true;
+            case "LS":
+                output = "<sprite name=\"xbox_left_stick\">";
                 return true;
             //Misc
             case "Start":
