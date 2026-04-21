@@ -75,6 +75,8 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.EaseInOut, panSpeed);
         
         _camera.gameObject.SetActive(true);
+        _camera.Priority.Enabled = true;
+        _camera.Priority.Value = 100;
 
         var isComplete = false;
 
@@ -262,4 +264,10 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
 #endif
     }
+
+    public virtual void OnPuzzleBoundsEntered()
+    {
+        print("Puzzle bound entered");
+    }
+
 }
