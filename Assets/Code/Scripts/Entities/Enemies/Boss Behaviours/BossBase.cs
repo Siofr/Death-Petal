@@ -33,7 +33,7 @@ public class BossBase : EnemyBase
     
     protected override void Start()
     {
-        base.Awake();
+        InitialiseWeaknesses();
         Initialise();
     }
 
@@ -85,11 +85,6 @@ public class BossBase : EnemyBase
         
         __enemyStateMachine.SetState(idleState);
 
-    }
-    
-    private void Update()
-    {
-        __enemyStateMachine.Update();
     }
     
     public bool InAttackRange()
