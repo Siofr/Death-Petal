@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8713245932517255717}
   - component: {fileID: 1252159838808463033}
   - component: {fileID: 2244579622019045189}
+  - component: {fileID: 2355537806366520864}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -69,14 +70,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 096973c4c8f9914499b52c1e96a777c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileBase
+  __sequentialWeaknesses: 0
+  defaultWeaknessTypes: 
+  _saveData:
+    id: 0
+    position: {x: 0, y: 0, z: 0}
+    health: []
+  _saveSO: {fileID: 0}
   animator: {fileID: 0}
   enemyData: {fileID: 11400000, guid: de95591884a3594409f2d1ec9bda24a6, type: 2}
   defaultPos: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
+  enemyScoreValue: 0
   petalDropChance: 0
-  _sequentialWeaknesses: 0
-  defaultWeaknessTypes: 
   onEnemyAttackEventPath:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  enemyPassiveIdle:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  exitIdleAlert:
     Guid:
       Data1: 0
       Data2: 0
@@ -109,6 +130,27 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5103607
   m_Center: {x: -0.0025377274, y: 8.9129155e-12, z: 1.1670939e-18}
+--- !u!135 &2355537806366520864
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777348607944049649}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.62
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3888311340150489865
 GameObject:
   m_ObjectHideFlags: 0
