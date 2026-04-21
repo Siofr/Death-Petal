@@ -8,7 +8,7 @@ public class SwitchSelectedButton : MonoBehaviour
 
     private void OnEnable()
     {
-        _eventSystem = FindObjectOfType<EventSystem>();
+        _eventSystem = FindAnyObjectByType<EventSystem>();
     }
     public void JumpToElement(GameObject targetButton)
     {
