@@ -202,8 +202,12 @@ public class EnemyBase : EntityBase, IEntity
         return Vector3.Distance(transform.position, defaultPos) < 1f;
     }
 
+    [SerializeField] private bool _ignoreNavMesh;
+    
     public void StopAgent(bool stop)
     {
+        if (_ignoreNavMesh) return;
+        
         __nmAgent.isStopped = stop;
     }
     
@@ -214,6 +218,7 @@ public class EnemyBase : EntityBase, IEntity
     
     public void SetTarget(Transform target)
     {
+        if (_ignoreNavMesh) return;
         
         if (target == null)
         {
