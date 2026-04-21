@@ -5,6 +5,7 @@ using UnityEngine;
 public class PuzzleCameraFirstEncounter : PuzzleCameraCondition_SO
 {
     [SerializeField] private EnemyType _typeOfEnemy;
+    [SerializeField] private string _enemyName;
     private EnemyBase _targetEnemy;
     
     private void OnEnable()
@@ -29,9 +30,12 @@ public class PuzzleCameraFirstEncounter : PuzzleCameraCondition_SO
             if (allEnemies[i].GetType() != type) continue;
             
             Debug.Log("Reached Condition");
-            
-            _targetEnemy =  allEnemies[i];
-            break;
+
+            if (_targetEnemy.gameObject.name == _enemyName)
+            {
+                _targetEnemy =  allEnemies[i];
+                break;
+            }
         }
         
         exitCondition = new Func<bool>(ExitCondition);
