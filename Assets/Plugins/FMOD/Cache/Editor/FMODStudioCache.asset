@@ -792,10 +792,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639120490127616227
+  lastModified: 639124142812974371
   FileSizes:
   - Name: Desktop
-    Value: 2652
+    Value: 2692
   Exists: 1
 --- !u!114 &-7612803833253743594
 MonoBehaviour:
@@ -956,6 +956,32 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 600
+--- !u!114 &-7427806334475208301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/disMusic/GameState
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: GameState
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 3055472416
+    data2: 2526337474
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Passive
+  - Combat
+  Exists: 1
 --- !u!114 &-7411884580165728226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -971,10 +997,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639120490127606221
+  lastModified: 639124142812963835
   FileSizes:
   - Name: Desktop
-    Value: 1797216
+    Value: 4162272
   Exists: 1
 --- !u!114 &-7307348011287011395
 MonoBehaviour:
@@ -2130,6 +2156,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 671
+--- !u!114 &-5479773662864494279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Intensity
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Intensity
+  StudioPath: parameter:/Intensity
+  Min: 0
+  Max: 2
+  Default: 1
+  ID:
+    data1: 4281329474
+    data2: 919575436
+  Type: 2
+  IsGlobal: 1
+  Labels:
+  - Nil
+  - Low
+  - High
+  Exists: 1
 --- !u!114 &-5303590040218980533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3951,30 +4004,6 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &-1909110405490646058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Intensity
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
-  Name: Intensity
-  StudioPath: parameter:/Intensity
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 637268302
-    data2: 840915435
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
 --- !u!114 &-1885748007075174600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5295,13 +5324,13 @@ MonoBehaviour:
   - {fileID: 6627544183758807935}
   - {fileID: 3831980719986141404}
   EditorParameters:
-  - {fileID: -1909110405490646058}
+  - {fileID: -5479773662864494279}
   MasterBanks:
   - {fileID: -7411884580165728226}
   StringsBanks:
   - {fileID: -7628973957120125070}
   cacheVersion: 131849
-  cacheTime: 639120490127616227
+  cacheTime: 639124142812974371
   SerializableEventsDict:
   - key: event:/Characters/Player Character/Placeholder/death
     index: 0
@@ -7807,10 +7836,12 @@ MonoBehaviour:
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
-  Parameters: []
+  Parameters:
+  - {fileID: -7427806334475208301}
+  - {fileID: 4583164733285209093}
   MinDistance: 1
   MaxDistance: 20
-  Length: 46316
+  Length: 247571
 --- !u!114 &4298980066913644119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7946,6 +7977,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &4583164733285209093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/disMusic/Intensity
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Intensity
+  StudioPath: 
+  Min: 0
+  Max: 2
+  Default: 1
+  ID:
+    data1: 4281329474
+    data2: 919575436
+  Type: 2
+  IsGlobal: 1
+  Labels:
+  - Nil
+  - Low
+  - High
+  Exists: 1
 --- !u!114 &4628571604098978067
 MonoBehaviour:
   m_ObjectHideFlags: 0
