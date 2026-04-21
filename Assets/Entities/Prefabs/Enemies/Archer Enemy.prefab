@@ -10419,7 +10419,7 @@ MonoBehaviour:
   _saveData:
     id: 0
     position: {x: 0, y: 0, z: 0}
-    health: 
+    health: []
   _saveSO: {fileID: 0}
   animator: {fileID: 0}
   enemyData: {fileID: 11400000, guid: 1319cf9f6f953004fa70b08a77807e5b, type: 2}
@@ -10434,11 +10434,39 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  enemyPassiveIdle:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  exitIdleAlert:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   _targetLineRender: {fileID: 2856312806676705890}
   _LOSRef: {fileID: 7640212085732838490}
   targetTime: 5
   maxLOSRadius: 1
   alertRotationAngle: 90
+  onArrowKnock:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  onArrowRelease:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!120 &2856312806676705890
 LineRenderer:
   serializedVersion: 2
@@ -10465,7 +10493,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 247c9431fb87d1e49a52e61d848ec871, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
