@@ -175,8 +175,9 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Cleared Saveable Objects");
 
         var failedPaths = new List<string>();
+        #if UNITY_EDITOR
         AssetDatabase.DeleteAssets(AssetDatabase.FindAssets("t:Save_SO"), failedPaths);
-        
+        #endif        
         SaveSystem.RemoveLevelData(SceneManager.GetActiveScene().name);
         ISaveableHelper.RemoveAllIDs(saveableData);
     }

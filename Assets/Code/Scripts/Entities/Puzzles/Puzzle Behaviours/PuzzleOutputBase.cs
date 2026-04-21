@@ -10,7 +10,9 @@ using Unity.Cinemachine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
+#if UNITY_EDITOR
 [CanEditMultipleObjects]
+#endif
 public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable<PuzzleOutputSaveData>
 {
     //Base Fields
