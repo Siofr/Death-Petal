@@ -5,8 +5,12 @@ public class EntityTrigger : EntityBase, IEntity
     public string yarnNode;
     public bool isOneShot;
 
+    public bool isSavePoint;
+    
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
+        EventBus<LevelSaveEvent>.Raise(new LevelSaveEvent());
+        
         int weaknessCount = Weaknesses.Count;
 
         print("Weakness before first fail state");

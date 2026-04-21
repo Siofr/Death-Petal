@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -5,7 +6,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public struct LevelSaveEvent : IEvent { }
-public struct LevelLoadEvent : IEvent { }
+
+public struct LevelLoadEvent : IEvent
+{
+    public bool isDefault;
+
+    public LevelLoadEvent(bool isDefault = true)
+    {
+        this.isDefault = isDefault;
+    }
+}
+
+
 
 public class LevelManager : MonoBehaviour
 {
@@ -180,6 +192,24 @@ public class LevelManager : MonoBehaviour
         #endif        
         SaveSystem.RemoveLevelData(SceneManager.GetActiveScene().name);
         ISaveableHelper.RemoveAllIDs(saveableData);
+    }
+    
+    private void OnLoadRequest(LevelLoadEvent ctx)
+    {
+        LoadLevelData(ctx.isDefault);
+    }
+
+    private EventBindings<LevelLoadEvent> _loadRequestListener;
+    
+    private void OnEnable()
+    {
+        _loadRequestListener = new EventBindings<LevelLoadEvent>(OnLoadRequest);
+        EventBus<LevelLoadEvent>.Register(_loadRequestListener);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<LevelLoadEvent>.Unregister(_loadRequestListener);
     }
 
     public void Start()
