@@ -61,7 +61,7 @@ AnimatorStateMachine:
     m_Position: {x: 520, y: 40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4824374540192723663}
-    m_Position: {x: 280, y: 150, z: 0}
+    m_Position: {x: 260, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3469610364127397097}
     m_Position: {x: 280, y: 80, z: 0}
@@ -92,7 +92,7 @@ BlendTree:
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: -4208126673474522600, guid: ee5a41f721c826b4696c9719d6765be8, type: 3}
-    m_Threshold: -180
+    m_Threshold: -90
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -108,7 +108,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 1232267873812136226, guid: ee5a41f721c826b4696c9719d6765be8, type: 3}
-    m_Threshold: 180
+    m_Threshold: 90
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -116,11 +116,23 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: Angle
   m_BlendParameterY: Angle
-  m_MinThreshold: -180
-  m_MaxThreshold: 180
+  m_MinThreshold: -90
+  m_MaxThreshold: 90
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
+--- !u!114 &-2507810952462254284
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1414230959416af47b83ab320de0dbb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CheckSpawn
 --- !u!1102 &-474786429679276606
 AnimatorState:
   serializedVersion: 6
@@ -207,6 +219,12 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
+  - m_Name: Spawning
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Aim Layer
@@ -281,7 +299,8 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1956987639174171523}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -2507810952462254284}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -306,7 +325,7 @@ BlendTree:
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 8368485522528198315, guid: 0e894881a40a0da4e8ea19c292ee4c90, type: 3}
-    m_Threshold: -20
+    m_Threshold: -90
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -322,7 +341,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -7783519478392284905, guid: 0e894881a40a0da4e8ea19c292ee4c90, type: 3}
-    m_Threshold: 20
+    m_Threshold: 90
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -330,8 +349,8 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: Angle
   m_BlendParameterY: Angle
-  m_MinThreshold: -20
-  m_MaxThreshold: 20
+  m_MinThreshold: -90
+  m_MaxThreshold: 90
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
