@@ -11,6 +11,7 @@ namespace State_Machine
         public override void OnEnter()
         {
             animator.SetFloat(SpeedHash, 0);
+            player.activeCam = player.newActiveCam;
             player.transform.LookAt(player.transform.position, player.lookDir);
         }
 
