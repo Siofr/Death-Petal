@@ -57,11 +57,15 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     
     protected IEnumerator PanCameraRoutine(Func<bool> exitCondition, float panSpeed)
     {
-        print("ended panning Camera");
+        print("Started panning Camera");
         
         EventBus<CameraChangeEvent>.DisableEvent();
-
-        if (InputHandler.Instance != null) InputHandler.Instance.enabled = false;
+        
+        EventBus<LockInput>.Raise(new LockInput("Move"));
+        EventBus<LockInput>.Raise(new LockInput("Look"));
+        EventBus<LockInput>.Raise(new LockInput("Attack"));
+        
+        //if (InputHandler.Instance != null) InputHandler.Instance.enabled = false;
         
         if (_cameraPanRoutine != null || _camera == null) yield break;
 
@@ -95,11 +99,15 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         
         brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0);
         
-        if (InputHandler.Instance != null) InputHandler.Instance.enabled = true;
+        //if (InputHandler.Instance != null) InputHandler.Instance.enabled = true;
+        
+        EventBus<UnlockInput>.Raise(new UnlockInput("Move"));
+        EventBus<UnlockInput>.Raise(new UnlockInput("Look"));
+        EventBus<UnlockInput>.Raise(new UnlockInput("Attack"));
         
         _cameraPanRoutine = null;
         
-        print("started panning Camera");
+        print("Ended panning Camera");
     }
     
     private void Start()
