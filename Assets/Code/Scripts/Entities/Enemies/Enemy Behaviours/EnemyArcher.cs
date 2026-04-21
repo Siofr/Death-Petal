@@ -81,7 +81,7 @@ public class EnemyArcher: EnemyBase
     
     public void CheckLOS(float losRadius, float losDist)
     {
-        _LOSRef.eulerAngles = new Vector3(0, MapAnimToRot(animator.GetFloat(Animator.StringToHash("Angle"))), 0);
+        _LOSRef.localEulerAngles = new Vector3(0, animator.GetFloat("Angle"), 0);
         
         if (!Physics.SphereCast(_LOSRef.position, losRadius, _LOSRef.forward, out RaycastHit hit, losDist, 1 << 6))
         {
@@ -230,10 +230,16 @@ public class EnemyArcher: EnemyBase
     {
         _timerRoutine = StartCoroutine(TimerRoutine(time));
         
-        while (_timerRoutine != null)
+        while (_timerRoutine != null )
         {
+            if (target == null)
+            {
+                _targetRoutine = null;
+                
+                yield break;
+            }
+            
             animator.SetFloat("Angle", LookAtAngle());
-
             if (!IsInAlertRange())
             {
                 _targetRoutine = null;
@@ -258,20 +264,16 @@ public class EnemyArcher: EnemyBase
     {
         if (target == null) return 0;
 
-        var targetPos = target.position;
-        targetPos.y = transform.position.y;
-        var multiplier = 1f;
-        var forward2D = new Vector2(transform.forward.x, transform.forward.z);
-        var localTargetPos = transform.InverseTransformPoint(targetPos);
-        if (localTargetPos.x < 0) multiplier = -1f;
+        _LOSRef.LookAt(target);
+        
+        var angle = _LOSRef.localEulerAngles.y;
 
-        var angle = Vector3.Angle(transform.forward, targetPos) * multiplier;
+        if (angle > 180)
+        {
+            angle = -angle % 90f;
+        }
         
-        print(angle);
-
-        _currentRotation = _initialRotation + angle;
-        
-        
+        _currentRotation = _LOSRef.eulerAngles.y;
         
         return angle;
     }
