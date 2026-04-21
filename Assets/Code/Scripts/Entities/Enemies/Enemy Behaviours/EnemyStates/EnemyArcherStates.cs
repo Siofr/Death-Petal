@@ -75,7 +75,7 @@ public class EnemyArcherAlertState : EnemyBaseState<EnemyArcher>
     
     public override void OnEnter()
     {
-        _archer.StartAlertRoutine(2f, _archer.alertRotationAngle, 60f);
+        _archer.StartAlertRoutine(1f, _archer.alertRotationAngle, 60f);
         
         Debug.Log("Enter Alert State");
     }

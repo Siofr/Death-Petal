@@ -92,21 +92,6 @@ public class EnemyBase : EntityBase, IEntity
         transform.LookAt(targetPos);
     }
 
-    public float LookAtAngle()
-    {
-        if (target == null) return 0;
-
-        var targetPos = target.position;
-        targetPos.y = transform.position.y;
-        var multiplier = 1f;
-        var forward2D = new Vector2(transform.forward.x, transform.forward.z);
-        var localTargetPos = transform.InverseTransformPoint(targetPos);
-        if (localTargetPos.x < 0) multiplier = -1f;
-
-        print(Vector3.Angle(transform.forward, targetPos) * multiplier);
-        return Vector3.Angle(transform.forward, targetPos)*multiplier;
-    }
-
     protected virtual void Initialise()
     {
         //enemyPassiveSFXEvent = SFXUtilities.CreateEventInstance(enemyPassiveIdle, this.gameObject);

@@ -8,6 +8,8 @@ public class EnemyIdleState<T> : EnemyBaseState<T> where T: EnemyBase
     public override void OnEnter()
     {
         Debug.Log("Entering Idle State");
+
+        enemyController.animator.SetTrigger("Spawn");
         enemyController.StopAllStateRoutines();
         EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(enemyController.enemyPassiveSFXEvent, enemyController.gameObject));
     }
