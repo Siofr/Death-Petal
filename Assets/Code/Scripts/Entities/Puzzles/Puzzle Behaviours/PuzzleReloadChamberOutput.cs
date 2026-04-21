@@ -47,6 +47,7 @@ public class PuzzleReloadChamberOutput: PuzzleOutputBase
                     value = bulletPrefabs[2];
                     break;
                 default:
+                    return;
                     value = null;
                     break;
             }
