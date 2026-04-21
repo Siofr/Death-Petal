@@ -55,13 +55,13 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
     private IEnumerator TargetSpit()
     {
         _bossController.isAttackReady = false;
-        print("Targetspit begun");
+        //print("Targetspit begun");
         float startTime = Time.time;
 
         while (Time.time - startTime < radialspit_attackLength)
         {
             _playerPosition = _bossController.target.transform.position;
-            print("shoot");
+            //print("shoot");
             var newProjectile = Instantiate(projectilePrefab, transform.position, quaternion.identity).GetComponent<ProjectileBase>();
             var attackVector = (_playerPosition - transform.position).normalized;
             attackVector = new Vector3(
@@ -95,7 +95,7 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
     public IEnumerator RadialSpit(bool dual = false)
     {
         _bossController.isAttackReady = false;
-        print("RadialSpit begun");
+        //print("RadialSpit begun");
         float startTime = Time.time;
 
         while (Time.time - startTime < radialspit_attackLength)
@@ -106,7 +106,7 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
                 transform.eulerAngles.z
             );
 
-            print("shoot");
+            //print("shoot");
             var newProjectile = Instantiate(projectilePrefab, transform.position, quaternion.identity)
                 .GetComponent<ProjectileBase>();
             var attackVector = transform.forward;
