@@ -46,7 +46,7 @@ public class EnemyArcherShootState : EnemyBaseState<EnemyArcher>
     {
         RuntimeManager.PlayOneShot(enemyController.onArrowRelease, enemyController.transform.position);
         _archer.ToggleLineRenderer(true);
-        _archer.ToggleLineRendererColor(Color.red);
+        //_archer.ToggleLineRendererColor(Color.red);
         _archer.StartShot(_archer.enemyData.attackSpeed);
         
         Debug.Log("Enter Shoot State");
