@@ -247,6 +247,7 @@ public class InputHandler : Singleton<InputHandler>
 
     private void OnRestartPerformed(InputAction.CallbackContext ctx)
     {
+        EventBusUtils.ClearAllBuses();
         LevelManager.isLoadingDefault = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

@@ -65,7 +65,7 @@ public static class EventBusUtils
     }
     
     //Cleanup Method
-    private static void ClearAllBuses()
+    public static void ClearAllBuses()
     {
         Debug.Log("Clearing all buses...");
         foreach (var type in EventBusTypes)

@@ -9,6 +9,7 @@ public class TempSceneManager : MonoBehaviour
     
     public void reloadScene()
     {
+        EventBusUtils.ClearAllBuses();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         EventBus<LevelLoadEvent>.Raise(new LevelLoadEvent(false));
     }
