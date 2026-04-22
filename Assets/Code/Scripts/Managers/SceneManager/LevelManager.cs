@@ -196,25 +196,54 @@ public class LevelManager : MonoBehaviour
     
     private void OnLoadRequest(LevelLoadEvent ctx)
     {
-        LoadLevelData(ctx.isDefault);
+        isLoadingDefault = ctx.isDefault;
+        
+        //LoadLevelData(ctx.isDefault);
     }
 
+    private void OnSaveRequest(LevelSaveEvent ctx)
+    {
+        SaveLevelData();
+    }
+    
     private EventBindings<LevelLoadEvent> _loadRequestListener;
+    private EventBindings<LevelSaveEvent> _saveRequestListener;
     
     private void OnEnable()
     {
         _loadRequestListener = new EventBindings<LevelLoadEvent>(OnLoadRequest);
+        _saveRequestListener = new EventBindings<LevelSaveEvent>(OnSaveRequest);
+        
         EventBus<LevelLoadEvent>.Register(_loadRequestListener);
+        EventBus<LevelSaveEvent>.Register(_saveRequestListener);
     }
 
     private void OnDisable()
     {
         EventBus<LevelLoadEvent>.Unregister(_loadRequestListener);
+        EventBus<LevelSaveEvent>.Unregister(_saveRequestListener);
     }
 
+    static public bool isLoadingDefault = true;
+    
     public void Start()
     {
         //if(saveables.Count < 1) saveables = FindSaveables();
         //LoadLevelData();
+
+        if (!isLoadingDefault)
+        {
+            LoadLevelData();
+            
+            EventBus<UnlockInput>.Raise(new UnlockInput("Move"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("Attack"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("Look"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("Aim"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("North"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("South"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("West"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("BarrelRight"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("BarrelLeft"));
+        }
     }
 }

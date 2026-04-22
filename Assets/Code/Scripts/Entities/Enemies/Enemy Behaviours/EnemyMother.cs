@@ -172,6 +172,6 @@ public class EnemyMother: EnemyBase
     protected override void Update()
     {
         base.Update();
-        print(__enemyStateMachine.GetActiveState());
+        //print(__enemyStateMachine.GetActiveState());
     }
 }

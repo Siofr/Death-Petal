@@ -3,6 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class TempSceneManager : MonoBehaviour
 {
+    protected void Awake()
+    {
+    }
+    
     public void reloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

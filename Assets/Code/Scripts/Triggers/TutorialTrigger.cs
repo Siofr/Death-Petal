@@ -191,6 +191,8 @@ public class TutorialTrigger : MonoBehaviour
 
     public void LockActions()
     {
+        if (!LevelManager.isLoadingDefault) return;
+        
         foreach(TutorialInfo info in tutorialInfo)
         {
             EventBus<LockInput>.Raise(new LockInput(info.actionRef.action.name));
