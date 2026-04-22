@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -5,7 +6,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public struct LevelSaveEvent : IEvent { }
-public struct LevelLoadEvent : IEvent { }
+
+public struct LevelLoadEvent : IEvent
+{
+    public bool isDefault;
+
+    public LevelLoadEvent(bool isDefault = true)
+    {
+        this.isDefault = isDefault;
+    }
+}
+
+
 
 public class LevelManager : MonoBehaviour
 {
@@ -181,10 +193,57 @@ public class LevelManager : MonoBehaviour
         SaveSystem.RemoveLevelData(SceneManager.GetActiveScene().name);
         ISaveableHelper.RemoveAllIDs(saveableData);
     }
+    
+    private void OnLoadRequest(LevelLoadEvent ctx)
+    {
+        isLoadingDefault = ctx.isDefault;
+        
+        //LoadLevelData(ctx.isDefault);
+    }
 
+    private void OnSaveRequest(LevelSaveEvent ctx)
+    {
+        SaveLevelData();
+    }
+    
+    private EventBindings<LevelLoadEvent> _loadRequestListener;
+    private EventBindings<LevelSaveEvent> _saveRequestListener;
+    
+    private void OnEnable()
+    {
+        _loadRequestListener = new EventBindings<LevelLoadEvent>(OnLoadRequest);
+        _saveRequestListener = new EventBindings<LevelSaveEvent>(OnSaveRequest);
+        
+        EventBus<LevelLoadEvent>.Register(_loadRequestListener);
+        EventBus<LevelSaveEvent>.Register(_saveRequestListener);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<LevelLoadEvent>.Unregister(_loadRequestListener);
+        EventBus<LevelSaveEvent>.Unregister(_saveRequestListener);
+    }
+
+    static public bool isLoadingDefault = true;
+    
     public void Start()
     {
         //if(saveables.Count < 1) saveables = FindSaveables();
         //LoadLevelData();
+
+        if (!isLoadingDefault)
+        {
+            LoadLevelData();
+            
+            EventBus<UnlockInput>.Raise(new UnlockInput("Move"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("Attack"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("Look"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("Aim"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("North"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("South"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("West"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("BarrelRight"));
+            EventBus<UnlockInput>.Raise(new UnlockInput("BarrelLeft"));
+        }
     }
 }

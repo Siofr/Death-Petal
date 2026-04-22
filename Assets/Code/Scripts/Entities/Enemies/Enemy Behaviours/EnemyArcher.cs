@@ -12,7 +12,6 @@ public class EnemyArcher: EnemyBase
     [Header("Archer Fields")]
     [SerializeField] private LineRenderer _targetLineRender;
     [SerializeField] private Transform _LOSRef;
-    [SerializeField] private ParticleSystem _shootParticle;
     public float targetTime;
     public float maxLOSRadius;
     
@@ -82,8 +81,6 @@ public class EnemyArcher: EnemyBase
     
     public void CheckLOS(float losRadius, float losDist)
     {
-        _LOSRef.localEulerAngles = new Vector3(0, animator.GetFloat("Angle"), 0);
-        
         if (!Physics.SphereCast(_LOSRef.position, losRadius, _LOSRef.forward, out RaycastHit hit, losDist, 1 << 6))
         {
             _inLos = false;
@@ -152,7 +149,7 @@ public class EnemyArcher: EnemyBase
 
         var tempRot = 0f;
         
-        animator.SetFloat(Animator.StringToHash("Angle"), MapRotToAnim(_currentRotation));
+        animator.SetFloat(Animator.StringToHash("Angle"), 0);
         
         while (!_inLos)
         {
@@ -165,13 +162,16 @@ public class EnemyArcher: EnemyBase
                 tempRot += Time.deltaTime * speed;
                 _currentRotation += Time.deltaTime * speed;
                 
+                transform.eulerAngles = new Vector3(0, _currentRotation, 0);
+                
                 if (angle < 0)
                 {
                     if (tempRot < angle || _currentRotation < _initialRotation + angle)
                     {
                         tempRot = angle;
-                        _currentRotation = _initialRotation + angle;
-                        animator.SetFloat(Animator.StringToHash("Angle"), MapRotToAnim(_currentRotation));
+                        transform.eulerAngles = new Vector3(0, _initialRotation + angle, 0);
+                        _currentRotation = transform.eulerAngles.y;
+                        //animator.SetFloat(Animator.StringToHash("Angle"), MapRotToAnim(_currentRotation));
 
                         break;
                     }
@@ -181,14 +181,13 @@ public class EnemyArcher: EnemyBase
                     if (tempRot > angle || _currentRotation > _initialRotation + angle)
                     {
                         tempRot = angle;
-                        _currentRotation = _initialRotation + angle;
-                        animator.SetFloat(Animator.StringToHash("Angle"), MapRotToAnim(_currentRotation));
+                        transform.eulerAngles = new Vector3(0, _initialRotation + angle, 0);
+                        _currentRotation = transform.eulerAngles.y;
+                        //animator.SetFloat(Animator.StringToHash("Angle"), MapRotToAnim(_currentRotation));
                         
                         break;
                     }
                 }
-
-                animator.SetFloat(Animator.StringToHash("Angle"), MapRotToAnim(_currentRotation));
                 
                 yield return null;
             }
@@ -231,16 +230,10 @@ public class EnemyArcher: EnemyBase
     {
         _timerRoutine = StartCoroutine(TimerRoutine(time));
         
-        while (_timerRoutine != null )
+        while (_timerRoutine != null)
         {
-            if (target == null)
-            {
-                _targetRoutine = null;
-                
-                yield break;
-            }
-            
-            animator.SetFloat("Angle", LookAtAngle());
+            LookAt();
+
             if (!IsInAlertRange())
             {
                 _targetRoutine = null;
@@ -261,22 +254,11 @@ public class EnemyArcher: EnemyBase
         return _currentRotation >=  constraints.x && _currentRotation <= constraints.y;
     }
     
-    private float LookAtAngle()
+    private void LookAt()
     {
-        if (target == null) return 0;
+        if (target == null) return;
 
-        _LOSRef.LookAt(target);
-        
-        var angle = _LOSRef.localEulerAngles.y;
-
-        if (angle > 180)
-        {
-            angle = -angle % 90f;
-        }
-        
-        _currentRotation = _LOSRef.eulerAngles.y;
-        
-        return angle;
+        transform.LookAt(target);
     }
     
     public void StartTargeting(float time)
@@ -296,7 +278,6 @@ public class EnemyArcher: EnemyBase
         
         CheckLOS(maxLOSRadius, enemyData.attackRange);
         animator.SetTrigger("Shoot");
-        _shootParticle.Play();
         
         if(_inLos) playerController.OnShot(playerController.Weaknesses[0], WeakTypes.PLAYER);
 
