@@ -867,6 +867,66 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -3.323944
       objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onAddBulletSFX.Path
+      value: event:/Weapons/Revolver/revAddBullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onRemoveBulletSFX.Path
+      value: event:/Weapons/Revolver/revRemoveBullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onRotateBarrelSFX.Path
+      value: event:/Weapons/Revolver/revRotate
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onAddBulletSFX.Guid.Data1
+      value: -602170272
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onAddBulletSFX.Guid.Data2
+      value: 1207494475
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onAddBulletSFX.Guid.Data3
+      value: 352768141
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onAddBulletSFX.Guid.Data4
+      value: -678521937
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onRemoveBulletSFX.Guid.Data1
+      value: 634815597
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onRemoveBulletSFX.Guid.Data2
+      value: 1294345916
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onRemoveBulletSFX.Guid.Data3
+      value: 46940060
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onRemoveBulletSFX.Guid.Data4
+      value: -1276572403
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onRotateBarrelSFX.Guid.Data1
+      value: -1701699586
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onRotateBarrelSFX.Guid.Data2
+      value: 1315340852
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onRotateBarrelSFX.Guid.Data3
+      value: -1990005591
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230243347038388780, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: onRotateBarrelSFX.Guid.Data4
+      value: 566436675
+      objectReference: {fileID: 0}
     - target: {fileID: 2537717969584252659, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
       propertyPath: m_Color.b
       value: 0
@@ -2077,7 +2137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8591632901123551502, guid: eb808c3daced7b34583ca1597cf50cea, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -18
+      value: -18.00003
       objectReference: {fileID: 0}
     - target: {fileID: 8591632901250295450, guid: eb808c3daced7b34583ca1597cf50cea, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2631,9 +2691,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1215802010}
   - component: {fileID: 1215802009}
-  - component: {fileID: 1215802008}
   - component: {fileID: 1215802011}
   - component: {fileID: 1215802012}
+  - component: {fileID: 1215802013}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2641,14 +2701,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1215802008
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1215802007}
-  m_Enabled: 1
 --- !u!20 &1215802009
 Camera:
   m_ObjectHideFlags: 0
@@ -2682,7 +2734,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 50
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2708,8 +2760,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215802007}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.39327714, y: -0.58666706, z: 0.40202376, w: 0.5826935}
-  m_LocalPosition: {x: -26.912634, y: 7.487444, z: 13.055245}
+  m_LocalRotation: {x: 0.17552632, y: -0.7853891, z: 0.2578325, w: 0.5346746}
+  m_LocalPosition: {x: -66.40084, y: 1.9458256, z: -38.915752}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2791,6 +2843,20 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!114 &1215802013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215802007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 1215802007}
 --- !u!1001 &1220043167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6405,6 +6471,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1886337736
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 783322094620458572, guid: afad5236c9acaf945a58e7bebfd22228, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.23862
+      objectReference: {fileID: 0}
+    - target: {fileID: 783322094620458572, guid: afad5236c9acaf945a58e7bebfd22228, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.10003
+      objectReference: {fileID: 0}
+    - target: {fileID: 783322094620458572, guid: afad5236c9acaf945a58e7bebfd22228, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 14.01619
+      objectReference: {fileID: 0}
+    - target: {fileID: 783322094620458572, guid: afad5236c9acaf945a58e7bebfd22228, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 783322094620458572, guid: afad5236c9acaf945a58e7bebfd22228, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783322094620458572, guid: afad5236c9acaf945a58e7bebfd22228, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783322094620458572, guid: afad5236c9acaf945a58e7bebfd22228, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783322094620458572, guid: afad5236c9acaf945a58e7bebfd22228, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783322094620458572, guid: afad5236c9acaf945a58e7bebfd22228, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 783322094620458572, guid: afad5236c9acaf945a58e7bebfd22228, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2532966625056945671, guid: afad5236c9acaf945a58e7bebfd22228, type: 3}
+      propertyPath: m_Name
+      value: Audio Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: afad5236c9acaf945a58e7bebfd22228, type: 3}
 --- !u!1 &1902195731 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4918208557101940725, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
@@ -6536,10 +6659,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 110788084869724779, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _reverbArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 110788084869724779, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 190312761679742337, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 190312761679742337, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224479616013381090, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _reverbArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224479616013381090, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224479616013381090, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.9
+      objectReference: {fileID: 0}
     - target: {fileID: 234319312223705619, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 331900002778090051, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 331900002778090051, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.95
+      objectReference: {fileID: 0}
     - target: {fileID: 398596113318242513, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -6560,6 +6719,18 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 1774374808607896265, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _reverbArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1774374808607896265, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1774374808607896265, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1777487220773896510, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -6608,6 +6779,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1976538577943637166, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2019458356529200748, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -6616,14 +6791,38 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 2286705237001681358, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 2316477729560452382, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 2373437156458949650, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _reverbArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2373437156458949650, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2373437156458949650, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 2377035554668138857, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 2390208296301500357, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2390208296301500357, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.9
+      objectReference: {fileID: 0}
     - target: {fileID: 2591296335102510471, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -6634,7 +6833,7 @@ PrefabInstance:
       objectReference: {fileID: 210902247}
     - target: {fileID: 2625238685536911245, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_VersionIndex
-      value: 3562
+      value: 3565
       objectReference: {fileID: 0}
     - target: {fileID: 2787512464337858358, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: TrackingTarget
@@ -6644,6 +6843,14 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 2925813987276898379, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _reverbArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2925813987276898379, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3079471021921896211, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -6656,6 +6863,14 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 3537277072010047267, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537277072010047267, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3590710806609747947, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -6666,7 +6881,11 @@ PrefabInstance:
       objectReference: {fileID: 16164401}
     - target: {fileID: 3592037735945004054, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_VersionIndex
-      value: 3562
+      value: 3565
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782129297259050057, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _reverbArea
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3827556724097241754, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_Name
@@ -6680,6 +6899,14 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 4275930805297281059, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4275930805297281059, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4372394236786820367, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -6696,10 +6923,34 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 4917853781150866181, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063358060144006161, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5063358060144006161, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 5330879532907981308, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1277455590}
+    - target: {fileID: 5386736799019993554, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _reverbArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5386736799019993554, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5386736799019993554, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.9
+      objectReference: {fileID: 0}
     - target: {fileID: 5448822124219148023, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -6712,14 +6963,62 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 5803736643155198918, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _reverbArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5803736643155198918, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977076850035612127, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _reverbArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5977076850035612127, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.9
+      objectReference: {fileID: 0}
     - target: {fileID: 6010088379064466209, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 6074665635597447417, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6523036535611070769, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 6743504570698264930, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 6817870077798232961, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _reverbArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817870077798232961, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817870077798232961, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836430140010650360, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _reverbArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836430140010650360, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836430140010650360, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7036870988428534658, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -6728,6 +7027,10 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 7673583658400421941, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7675920963046782446, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
@@ -6744,13 +7047,53 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 1154716242}
+    - target: {fileID: 8718637182860567219, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718637182860567219, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8903063673970378482, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _reverbArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8903063673970378482, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9046461083117999956, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _reverbArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9046461083117999956, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9105123153628395617, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1277455590}
     - target: {fileID: 9105123153628395617, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_VersionIndex
-      value: 4089
+      value: 4092
+      objectReference: {fileID: 0}
+    - target: {fileID: 9154988374510640996, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _reverbArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9154988374510640996, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9154988374510640996, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _outsideOcclusionValue
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9210319865452111203, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      propertyPath: _ambientStage
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6937,3 +7280,4 @@ SceneRoots:
   - {fileID: 1435619230}
   - {fileID: 1955276149}
   - {fileID: 1838295837}
+  - {fileID: 1886337736}
