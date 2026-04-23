@@ -12,6 +12,16 @@ using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 using SFXUtil;
 
+public struct PlayerTargetedEvent : IEvent
+{
+
+}
+
+public struct PlayerLostTargetEvent : IEvent
+{
+
+}
+
 struct EnemyDeathEvent: IEvent
 {
     public EnemyBase enemy;
@@ -225,7 +235,7 @@ public class EnemyBase : EntityBase, IEntity
             __nmAgent.destination = defaultPos;
             return;
         }
-        
+
         __nmAgent.destination = target.position;
     }
     
@@ -236,7 +246,8 @@ public class EnemyBase : EntityBase, IEntity
         var playerTransform =  context.playerTransform;
 
         if (context.room.Bounds != _enemyAreaBounds) return;
-        
+
+        EventBus<PlayerTargetedEvent>.Raise(new PlayerTargetedEvent());
         Debug.Log("Is Entering");
         target = playerTransform;
     }
@@ -248,7 +259,8 @@ public class EnemyBase : EntityBase, IEntity
         var roomBounds = context.room.Bounds;
         
         if(_enemyAreaBounds != roomBounds) return;
-        
+
+        EventBus<PlayerLostTargetEvent>.Raise(new PlayerLostTargetEvent());
         target = null;
     }
     
@@ -280,6 +292,7 @@ public class EnemyBase : EntityBase, IEntity
         if (Weaknesses.Count == 0)
         {
             animator.SetTrigger("Death");
+            EventBus<PlayerLostTargetEvent>.Raise(new PlayerLostTargetEvent());
             EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));
             EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Kill", enemyScoreValue));
             _isDead = true;

@@ -29,6 +29,7 @@ public struct RoomPlayerExitEvent : IEvent
 public class Room : MonoBehaviour
 {
     private BoxCollider _collider;
+    private int _enemyCount;
     
     public Bounds Bounds => _collider.bounds;
     
