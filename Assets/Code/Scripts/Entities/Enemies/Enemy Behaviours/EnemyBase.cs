@@ -14,12 +14,22 @@ using SFXUtil;
 
 public struct PlayerTargetedEvent : IEvent
 {
+    public int threatLevel;
 
+    public PlayerTargetedEvent(int threatLevel)
+    {
+        this.threatLevel = threatLevel;
+    }
 }
 
 public struct PlayerLostTargetEvent : IEvent
 {
+    public int threatLevel;
 
+    public PlayerLostTargetEvent(int threatLevel)
+    {
+        this.threatLevel = threatLevel;
+    }
 }
 
 struct EnemyDeathEvent: IEvent
@@ -247,7 +257,7 @@ public class EnemyBase : EntityBase, IEntity
 
         if (context.room.Bounds != _enemyAreaBounds) return;
 
-        EventBus<PlayerTargetedEvent>.Raise(new PlayerTargetedEvent());
+        EventBus<PlayerTargetedEvent>.Raise(new PlayerTargetedEvent(enemyData.threatLevel));
         Debug.Log("Is Entering");
         target = playerTransform;
     }
@@ -260,7 +270,7 @@ public class EnemyBase : EntityBase, IEntity
         
         if(_enemyAreaBounds != roomBounds) return;
 
-        EventBus<PlayerLostTargetEvent>.Raise(new PlayerLostTargetEvent());
+        EventBus<PlayerLostTargetEvent>.Raise(new PlayerLostTargetEvent(enemyData.threatLevel));
         target = null;
     }
     
@@ -292,7 +302,7 @@ public class EnemyBase : EntityBase, IEntity
         if (Weaknesses.Count == 0)
         {
             animator.SetTrigger("Death");
-            EventBus<PlayerLostTargetEvent>.Raise(new PlayerLostTargetEvent());
+            EventBus<PlayerLostTargetEvent>.Raise(new PlayerLostTargetEvent(enemyData.threatLevel));
             EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));
             EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Kill", enemyScoreValue));
             _isDead = true;

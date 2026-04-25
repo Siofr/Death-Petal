@@ -9,5 +9,8 @@ public abstract class EnemyConfig_SO : ScriptableObject
     public float attackSpeed;
     public float attackRange;
     public float attackCooldown;
+
+    [Header("Threat Level (for Dynamic Music)")]
+    public int threatLevel;
 }
 

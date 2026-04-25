@@ -21,7 +21,7 @@ public class MusicManager : MonoBehaviour
     void Start()
     {
         _gameStateParam = SFXUtilities.AssignParamID("GameState", musicEventPath);
-        _gameIntensityParam = SFXUtilities.AssignParamID("Intensity", musicEventPath);
+        _gameIntensityParam = SFXUtilities.AssignParamID("Threat", musicEventPath);
         _playerStateParam = SFXUtilities.AssignParamID("PlayerState", musicEventPath);
 
         _musicEventInstance = SFXUtilities.CreateEventInstance(musicEventPath, this.gameObject);
@@ -76,44 +76,38 @@ public class MusicManager : MonoBehaviour
 
     void OnThreatLevelUpdate(int newThreatLevel)
     {
+        _musicEventInstance.setParameterByID(_gameIntensityParam, newThreatLevel);
+
         if (newThreatLevel <= 0)
         {
             UpdateGameState(1);
             return;
         }
 
-        UpdateGameIntensity(newThreatLevel);
         UpdateGameState(2);
     }
 
     void UpdateGameState(int gameState)
     {
-        Debug.Log("Update Game State");
-        float value;
-
         _musicEventInstance.setParameterByID(_gameStateParam, gameState);
-        Debug.Log(_musicEventInstance.getParameterByID(_gameStateParam, out value));
-        Debug.Log("State " + value);
-    }
-
-    void UpdateGameIntensity(int threatLevel)
-    {
-
     }
 
     void OnPlayerTargeted(PlayerTargetedEvent ctx)
     {
-        Debug.Log("Update threat");
-
-        _playerThreat += 1;
+        _playerThreat += ctx.threatLevel;
 
         OnThreatLevelUpdate(_playerThreat);
     }
 
     void OnPlayerUntargeted(PlayerLostTargetEvent ctx)
     {
-        _playerThreat -= 1;
+        _playerThreat -= ctx.threatLevel;
 
         OnThreatLevelUpdate(_playerThreat);
+    }
+
+    void OnPlayerCriticalHealth()
+    {
+
     }
 }
