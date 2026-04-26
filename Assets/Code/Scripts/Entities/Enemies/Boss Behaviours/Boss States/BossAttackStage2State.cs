@@ -34,8 +34,6 @@ public class BossAttackStage2State<T> : BossBaseState<T> where T : BossBase
         Debug.Log("Entering Attack State");
         //enemyController.SetTarget(null);
 
-        RuntimeManager.PlayOneShot(bossController.onEnemyAttackEventPath, bossController.transform.position);
-
         bossController.StopAllCoroutines();
         bossController.animator.SetFloat(Animator.StringToHash("Blend"),0f);
         

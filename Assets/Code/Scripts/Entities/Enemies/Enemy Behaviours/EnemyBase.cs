@@ -82,13 +82,7 @@ public class EnemyBase : EntityBase, IEntity
     protected EventBindings<RoomPlayerEnterEvent> __playerRoomEnterEventListener;
     protected EventBindings<RoomPlayerExitEvent> __playerRoomExitEventListener;
 
-    [Header("Audio Paths")]
-    public EventReference onEnemyAttackEventPath;
-    public EventReference enemyPassiveIdle;
-
-    public EventInstance enemyPassiveSFXEvent;
-
-    public EventReference exitIdleAlert;
+    public TriggerSFXState sfxStateManager;
 
     protected override void Awake()
     {
@@ -100,6 +94,7 @@ public class EnemyBase : EntityBase, IEntity
     {
         base.Start();
         Initialise();
+        TryGetComponent<TriggerSFXState>(out sfxStateManager);
     }
     
     public void LookAtTarget()
