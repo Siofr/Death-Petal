@@ -37,8 +37,6 @@ public class EnemyAttackState<T> : EnemyBaseState<T> where T : EnemyBase
         
         Debug.Log("Entering Attack State");
         //enemyController.SetTarget(null);
-        
-        RuntimeManager.PlayOneShot(enemyController.onEnemyAttackEventPath, enemyController.transform.position);
 
         enemyController.StopAllCoroutines();
         enemyController.animator.SetFloat(Animator.StringToHash("Blend"),0f);
