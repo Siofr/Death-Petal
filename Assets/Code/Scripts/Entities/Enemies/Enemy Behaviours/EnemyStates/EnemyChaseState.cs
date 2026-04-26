@@ -11,7 +11,7 @@ public class EnemyChaseState<T> : EnemyBaseState<T> where T: EnemyBase
 
     public override void OnEnter()
     {
-        enemyController.sfxStateManager.OnStateEnter("Chase");
+        enemyController.sfxStateManager?.OnStateEnter("Chase");
         Debug.Log("Entering Chase State");
         //enemyController.animator.SetFloat(Animator.StringToHash("Speed"),1f);
         enemyController.StartCoroutine(LerpBlendState("Speed", 1f, 1f));
