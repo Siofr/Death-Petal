@@ -12,6 +12,7 @@ namespace State_Machine
             EventBus<AimEvent>.Raise(new AimEvent());
             player.currentSpeed = player.playerAimSpeed;
             InputHandler.AttackEvent += HandleShoot;
+            animator.SetFloat("Speed", 0.1f);
         }
 
         public override void Update()

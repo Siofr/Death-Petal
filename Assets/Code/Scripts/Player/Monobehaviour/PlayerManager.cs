@@ -121,7 +121,7 @@ namespace State_Machine
             At(moveState, _reloadState, new FuncPredicate(() => _isReloading));
 
             At(sprintState, moveState, new FuncPredicate(() => !_isSprinting));
-            // At(sprintState, _idleState, new FuncPredicate(() => !_isSprinting));
+            At(sprintState, _idleState, new FuncPredicate(() => _movement == Vector3.zero));
             At(sprintState, _aimState, new FuncPredicate(() => _aim != Vector2.zero));
             At(sprintState, _reloadState, new FuncPredicate(() => _isReloading));
 
@@ -251,8 +251,7 @@ namespace State_Machine
 
             if (_cc.isGrounded) _ySpeed = 0;
 
-            if (lookDir == Vector3.zero) _animator.SetFloat("Speed", 0.0f);
-            else _animator.SetFloat("Speed", Mathf.Clamp((currentSpeed / 10) * 1.5f, 0.0f, 1.0f));
+            // if (lookDir == Vector3.zero) _animator.SetFloat("Speed", 0.0f);
 
             _ySpeed -= 9.8f * Time.deltaTime;
 

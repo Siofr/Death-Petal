@@ -9,6 +9,7 @@ namespace State_Machine
         public override void OnEnter()
         {
             Debug.Log("Enter Move State");
+            animator.SetFloat("Speed", 0.4f);
         }
 
         public override void Update()

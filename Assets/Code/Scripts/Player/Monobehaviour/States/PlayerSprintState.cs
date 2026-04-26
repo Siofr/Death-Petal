@@ -10,6 +10,7 @@ namespace State_Machine
         {
             Debug.Log("Enter Sprint State");
             player.currentSpeed = player.playerSprintSpeed;
+            animator.SetFloat("Speed", 0.95f);
         }
 
         public override void Update()
