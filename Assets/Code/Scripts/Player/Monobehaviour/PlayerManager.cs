@@ -19,7 +19,7 @@ namespace State_Machine
         public float playerSprintSpeed;
         public float playerAimSpeed;
         public float currentSpeed;
-        private Vector3 _movement;
+        [HideInInspector] public Vector3 _movement;
         private Vector2 _aim;
         public Vector3 lookDir;
         public GameObject pauseMenu;
