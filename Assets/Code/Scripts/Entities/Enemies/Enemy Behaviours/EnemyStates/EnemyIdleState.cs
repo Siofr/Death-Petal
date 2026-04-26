@@ -11,13 +11,11 @@ public class EnemyIdleState<T> : EnemyBaseState<T> where T: EnemyBase
 
         enemyController.animator.SetTrigger("Spawn");
         enemyController.StopAllStateRoutines();
-        EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(enemyController.enemyPassiveSFXEvent, enemyController.gameObject));
     }
     
     public override void OnExit()
     {
-        enemyController.enemyPassiveSFXEvent.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        RuntimeManager.PlayOneShot(enemyController.exitIdleAlert, enemyController.transform.position);
+
     }
     
     
