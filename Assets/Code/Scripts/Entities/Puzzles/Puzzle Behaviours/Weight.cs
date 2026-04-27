@@ -19,10 +19,9 @@ public struct CorrectShotPuzzleEvent : IEvent
     public CorrectShotPuzzleEvent(Weight weightReference) => weight = weightReference;
 }
 
-public class Weight: EntityBase
+public class Weight: PuzzleInputBase
 {
     [Header("Weight Fields")] 
-    [SerializeField] private GameObject _linkedOutputObject;
     [SerializeField] private Animator _weightModelAnimator;
     
     //[SerializeField] private Bounds _bounds;
@@ -35,19 +34,15 @@ public class Weight: EntityBase
 
     [Header("Audio Paths")]
     public EventReference onMoveEventPath;
-
-    //Non-Serializable Fields
-    private IPuzzleOutput _output;
-
+    
     private Coroutine _moveRoutine;
     private int _routineAccess;
     
     //Properties
-    public IPuzzleOutput LinkedOutput => _output;
     
     private IEnumerator MoveWeightRoutine(bool reset)
     {
-        if (_output.IsSolved)
+        if (PuzzleOutputs[0].IsSolved)
         {
             EventBus<WeightShotEvent>.Raise(new WeightShotEvent(this));
             yield break;
@@ -113,9 +108,9 @@ public class Weight: EntityBase
         }
     }
     
-    private void Awake()
-    {
-        base.Awake();
-        if(_linkedOutputObject != null) _linkedOutputObject.TryGetComponent(out _output);
-    }
+    
+    // private void Awake()
+    // {
+    //     base.Awake();
+    // }
 }

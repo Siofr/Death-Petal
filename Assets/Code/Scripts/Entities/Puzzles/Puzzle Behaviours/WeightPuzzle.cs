@@ -36,7 +36,7 @@ public class WeightPuzzle : PuzzleInputBase
     protected override void Start()
     {
         base.Start();
-        InitializeWeights();
+        //InitializeWeights();
 
         foreach (var output in PuzzleOutputs)
         {
@@ -60,30 +60,9 @@ public class WeightPuzzle : PuzzleInputBase
     {
     }
 
-    private void InitializeWeights()
-    {
-        List<Weight> nullWeights = new List<Weight>();
-        
-        foreach (var weight in _weights)
-        {
-            if (weight.LinkedOutput != null && PuzzleOutputs.Contains(weight.LinkedOutput))
-            {
-                PuzzleOutputs.Remove(weight.LinkedOutput);
-            }
-            else
-            {
-                nullWeights.Add(weight);
-            }
-        }
-        
-        foreach (var weight in nullWeights)
-            _weights.Remove(weight);
-
-        foreach (var weight in _weights)
-        {
-            weight.Initialize(_weightSteps, _weightSpeed, _weightDist);
-        }
-    }
+    // private void InitializeWeights()
+    // {
+    // }
     
     private void CheckCompletionConditions()
     {
@@ -91,7 +70,15 @@ public class WeightPuzzle : PuzzleInputBase
         
         foreach(var weight in _weights)
         {
-            conditionIndex = CompletionCondition(_weightColliders.ContainsKey(weight), weight.LinkedOutput) ? conditionIndex+1 : conditionIndex;
+            if (_weightColliders.ContainsKey(weight))
+            {
+                conditionIndex++;
+                
+                foreach(var output in weight.PuzzleOutputs)
+                {
+                    weight.CompletionCondition(true, output);
+                }
+            }
         }
 
         var overallCondition = conditionIndex >= _weights.Count;
