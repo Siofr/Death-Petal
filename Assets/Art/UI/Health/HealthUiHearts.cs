@@ -13,17 +13,19 @@ public class HealthUiHearts : MonoBehaviour
 
     public List<GameObject> _hearts;
     private EventBindings<PlayerDamagedEvent> _playerDamageEventListener;
-
+    private EventBindings<PlayerHealedEvent> _playerHealedEventListener;
+    
     void Awake()
     {
         _playerDamageEventListener = new EventBindings<PlayerDamagedEvent>(UpdateHealthPedals);
+        _playerHealedEventListener = new EventBindings<PlayerHealedEvent>(UpdateHealthPedals);
     }
 
 
     void OnEnable()
     {
         EventBus<PlayerDamagedEvent>.Register(_playerDamageEventListener);
-
+        EventBus<PlayerHealedEvent>.Register(_playerHealedEventListener);
 
         _healthData = player.GetComponent<IEntity>();
 
@@ -36,6 +38,7 @@ public class HealthUiHearts : MonoBehaviour
     void OnDisable()
     {
         EventBus<PlayerDamagedEvent>.Unregister(_playerDamageEventListener);
+        EventBus<PlayerHealedEvent>.Unregister(_playerHealedEventListener);
     }
 
     void InnitHearts()

@@ -24,6 +24,10 @@ public struct PlayerDamagedEvent : IEvent
     }
 }
 
+public struct PlayerHealedEvent : IEvent { }
+
+public struct PlayerLowHealthEvent : IEvent { }
+
 public struct PlayerDeathEvent : IEvent { }
 
 public class TestPlayer : EntityBase, IEntity
@@ -31,7 +35,7 @@ public class TestPlayer : EntityBase, IEntity
     [Header("Player Fields")] 
     [SerializeField] private float _damageCooldown;
     
-    private EventBindings<PetalPickpEvent> _petalPickupEventListener;
+    //private EventBindings<PetalPickpEvent> _petalPickupEventListener;
 
     private int _maxHealth = 3;
     private int _currentHealth;
@@ -41,21 +45,21 @@ public class TestPlayer : EntityBase, IEntity
     public void Awake()
     {
         base.Awake();
-        _currentHealth = _maxHealth;
-        _petalPickupEventListener = new EventBindings<PetalPickpEvent>(OnPetalCollected);
+        // _currentHealth = _maxHealth;
+        // _petalPickupEventListener = new EventBindings<PetalPickpEvent>(OnPetalCollected);
     }
 
     private void OnEnable()
     {
-        EventBus<PetalPickpEvent>.Register(_petalPickupEventListener);
+        //EventBus<PetalPickpEvent>.Register(_petalPickupEventListener);
     }
 
     private void OnDisable()
     {
-        EventBus<PetalPickpEvent>.Unregister(_petalPickupEventListener);
+        //EventBus<PetalPickpEvent>.Unregister(_petalPickupEventListener);
     }
 
-    private void OnPetalCollected()
+    /*private void OnPetalCollected()
     {
         _currentPetalCharge++;
 
@@ -67,14 +71,15 @@ public class TestPlayer : EntityBase, IEntity
             if (Weaknesses.Count < _maxHealth)
             {
                 Weaknesses.Add(new Weakness());
-                OnPlayerHealthChange();
+                //DEPRECATED
+                //OnPlayerHealthChange();
             }
 
             return;
         }
 
         EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Petal", 10));
-    }
+    }*/
 
     private float _lastDamageTime;
     
@@ -99,6 +104,8 @@ public class TestPlayer : EntityBase, IEntity
             EventBus<PlayerDamagedEvent>.Raise(new PlayerDamagedEvent(Weaknesses.Count));
         }
         
+        if(Weaknesses.Count == 1) EventBus<PlayerLowHealthEvent>.Raise(new PlayerLowHealthEvent());
+        
         if (Weaknesses.Count < 1)
         {
             //UnityEngine.SceneManagement.SceneManager.LoadScene(0);
@@ -106,19 +113,20 @@ public class TestPlayer : EntityBase, IEntity
             EventBus<PlayerDeathEvent>.Raise(new PlayerDeathEvent());
         }
 
-        OnPlayerHealthChange();
+        //DEPRECATED
+        //OnPlayerHealthChange();
     }
 
 
-    private void OnPlayerHealthChange()
-    {
-        _currentHealth = Weaknesses.Count;
-
-        if (_currentHealth == 1)
-        {
-            StartCoroutine(LowHealthEffect());
-        }
-    }
+    // private void OnPlayerHealthChange()
+    // {
+    //     _currentHealth = Weaknesses.Count;
+    //
+    //     if (_currentHealth == 1)
+    //     {
+    //         StartCoroutine(LowHealthEffect());
+    //     }
+    // }
 
     IEnumerator LowHealthEffect()
     {
