@@ -2,6 +2,8 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using FMODUnity;
+using FMOD;
 using Yarn.Unity;
 
 
@@ -23,19 +25,26 @@ public class ShowCharacters : MonoBehaviour
         {
             LeftActorImage.enabled = true;
             LeftActorImage.sprite = actorReferences.First(x => x.actorID == actorId).GetSelectedEmotion(emotion.ToLower());
+            RuntimeManager.PlayOneShot(actorReferences.First(x => x.actorID == actorId).GetAudioCue(emotion.ToLower()));
         }
         else
         {
             RightActorImage.enabled = true;
             RightActorImage.sprite = actorReferences.First(x => x.actorID == actorId).GetSelectedEmotion(emotion.ToLower());
+            RuntimeManager.PlayOneShot(actorReferences.First(x => x.actorID == actorId).GetAudioCue(emotion.ToLower()));
         }
     }
 
     public void Focus(bool isLeft, bool isActive)
     {
-        if(isLeft)
+        if (isLeft)
+        {
             LeftActorAnimator.SetBool("Focussed", isActive);
-        else RightActorAnimator.SetBool("Focussed", isActive);
+        }
+        else
+        {
+            RightActorAnimator.SetBool("Focussed", isActive);
+        }
     }
 
     private IEnumerator UpdateAnimation(bool isLeft)
