@@ -19,7 +19,7 @@ public class EnemyChaseState<T> : EnemyBaseState<T> where T: EnemyBase
 
     public override void OnExit()
     {
-        enemyController.sfxStateManager.OnStateExit("Chase");
+        enemyController.sfxStateManager?.OnStateExit("Chase");
         //enemyController.animator.SetFloat(Animator.StringToHash("Speed"),0f);
     }
 }
