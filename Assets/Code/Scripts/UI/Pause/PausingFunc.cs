@@ -12,18 +12,6 @@ public class PausingFunc : MonoBehaviour
     }
     void Update()
     {
-        if(isPaused)
-        {
-            PauseUpdate();
-        }
-        else
-        {
-            Time.timeScale = 1f;
-        }
-    }
-
-    void PauseUpdate()
-    {
-        Time.timeScale = 0f;
+        
     }
 }
