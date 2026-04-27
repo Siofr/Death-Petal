@@ -358,6 +358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6469064468247629748}
   - component: {fileID: 3612601579875464982}
+  - component: {fileID: 62824067812992019}
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -398,6 +399,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ClosePanel
   closeTime: 0.2
+--- !u!114 &62824067812992019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460384625770185683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5cdf8a0e94650847b910dcc8fe559a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ResolutionChange
+  resolution: {x: 1280, y: 720}
+  isFullScreen: 0
+  resolutionDropdown: {fileID: 8894955895904433154}
+  fullscreenToggle: {fileID: 1457672839168974415}
 --- !u!1 &1732960320946095804
 GameObject:
   m_ObjectHideFlags: 0
@@ -6192,6 +6209,14 @@ PrefabInstance:
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
       objectReference: {fileID: 8894955895904433154}
+    - target: {fileID: 8797455977829939126, guid: 944a7065104c5834a8b39d463b6ebd48, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 62824067812992019}
+    - target: {fileID: 8797455977829939126, guid: 944a7065104c5834a8b39d463b6ebd48, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleFullScreen
+      objectReference: {fileID: 0}
     - target: {fileID: 9112338213128160315, guid: 944a7065104c5834a8b39d463b6ebd48, type: 3}
       propertyPath: m_ChildForceExpandWidth
       value: 0
@@ -6232,11 +6257,19 @@ PrefabInstance:
     - target: {fileID: 602867351284198772, guid: b1a468948a0a3634da2612bbc0c1df9f, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1457672839168974415}
     - target: {fileID: 602867351284198772, guid: b1a468948a0a3634da2612bbc0c1df9f, type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
       objectReference: {fileID: 1457672839168974415}
+    - target: {fileID: 602867351284198772, guid: b1a468948a0a3634da2612bbc0c1df9f, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 62824067812992019}
+    - target: {fileID: 602867351284198772, guid: b1a468948a0a3634da2612bbc0c1df9f, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateResolution
+      objectReference: {fileID: 0}
     - target: {fileID: 1149521927666131757, guid: b1a468948a0a3634da2612bbc0c1df9f, type: 3}
       propertyPath: m_Name
       value: Dropdown Box
