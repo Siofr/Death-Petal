@@ -80,7 +80,9 @@ public class WeightPuzzle : PuzzleInputBase
                 }
             }
         }
-
+        
+        print($"Weights Solved: {conditionIndex}");
+        
         var overallCondition = conditionIndex >= _weights.Count;
 
         foreach (var output in PuzzleOutputs)

@@ -107,8 +107,13 @@ public class Weight: PuzzleInputBase
             EventBus<CorrectShotPuzzleEvent>.Raise(new CorrectShotPuzzleEvent(this));
         }
     }
-    
-    
+
+    public override bool CompletionCondition(bool condition, IPuzzleOutput targetOutput)
+    {
+        ToggleAllWeaknesses(false);
+        return base.CompletionCondition(condition, targetOutput);
+    }
+
     // private void Awake()
     // {
     //     base.Awake();
