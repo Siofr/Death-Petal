@@ -9,10 +9,7 @@ Harmony: Hello!
 Abaddon: Greetings, but I must stop you, little flower.
 <<actor ActorScreen 0 "surprised">>
 Harmony: This is my chance to get out of here, so please don't!
-Abaddon: I'm afraid it doesn't work like that...
-<<actor ActorScreen 0 "sad">>
-Harmony: I just need to find a path out of this place and I'll be back home!
-Abaddon: Don't you care to know how much trouble you are in, little flower?
+Abaddon: Don't you care to know how much trouble you are in?
 
 -> Nope! I just want to shoot! 
     <<jump L1SpawnQuick>>
@@ -27,15 +24,21 @@ color: blue
 <<actor ActorScreen 0 "happy">>
 Harmony: Indulge me.
 <<actor ActorScreen 1 "happy" false>>
-Abaddon: You, my little flower have died, and worst of all, your soul has been shunned by the grace of god.
-Harmony: I figured! Endless torment and smell of sulphur probably means I'm in Hell!
+Abaddon: You, my little flower have died.
+Abaddon: Worst of all, your soul has been shunned by the grace of god.
+Harmony: I knew it!
+<<actor ActorScreen 0 "sad">>
+Harmony: The endless torment and smell of sulpher was a dead giveaway.
 Abaddon: Yes, but you have awoken...
 Abaddon: [imp] Something or someone[/imp] has planted a seed...
 Abaddon: In the form of that weapon you're holding. 
 Abaddon: [imp] The Flower of Hell. [/imp]
-Harmony: Well thanks, something or someone! 
-Harmony: I won't stick around to find out why though, I'm getting out of here!
-Abaddon: An undead vessel won't be let to walk in the gardens of man, little flower...
+<<actor ActorScreen 0 "surprised">>
+Harmony: Sounds mysterious...
+<<actor ActorScreen 0 "happy">>
+Harmony: Anyways, time to get out of here. 
+Abaddon: I'm not sure you understand...
+Abaddon: Undead vessels cannot tread the gardens of man. 
 <<actor ActorScreen 0 "sad">>
 Harmony: How do I fix that?
 Abaddon: You can not, little flower.
@@ -96,9 +99,9 @@ Abaddon: ...I wasn't finished.
 Harmony: Abbot, this handy dandy revolver, it's a real pain to reload. 
 <<actor ActorScreen 1 "forlorn" false>>
 Abaddon: I'm not Ab- Ah forget it.
-Abbot: As I told you before. You must invoke a heretic ritual to fill your weapon with a hellish emotion. 
+Abbot: As I told you before. You must invoke a heretic ritual to fill your weapon--
 <<actor ActorScreen 0 "happy">>
-Harmony: But what if I just-
+Harmony: But what if I just--
 Flower of Hell: [imp] chunk...click...KCHUNK [/imp]
 <<actor ActorScreen 1 "happy" false>>
 Abbot: Don't you DARE DEFILE THE GOD-SLAYING WEAPON, YOU-
@@ -131,7 +134,8 @@ Abbot: Excuse me? What makes you think such an undertaking would be easy?
 <<actor ActorScreen 0 "evil">>
 Harmony: I'm gonna kill him. 
 <<actor ActorScreen 1 "happy" false>>
-Abbot: Many would love that. He is a cruel priest, but, I do not think that is the best move. 
+Abbot: Many would thank you. He may be cruel...
+Abbot: But his presence ensures that order is maintained.
 Abbot: I suggest you first get- 
 Harmony: That will take too long, I'll just kill him.
 <<actor ActorScreen 1 "forlorn" false>>
@@ -152,8 +156,10 @@ Abbot: Ahead lies the guardian.
 Harmony: I'm getting pretty handy with this lil' ol' gun now!
 Abbot: I sense you are still set on slaying him?
 <<actor ActorScreen 0 "evil">>
-Harmony: Ah I got the taste for a fight now..
-Abbot: An undead husk like you could, potentially, grow strong enough to come back with a power of him.
+Harmony: Yep! I've got the taste for a fight now...
+Abbot: Hmm... Should you manage to defeat him,
+Abbot: The Flower of Hell may bloom with his power...
+Abbot: And grant some of it to you. 
 <<actor ActorScreen 0 "surprised">>
 Harmony: Oh, I [i]like[/i] the sound of that. 
 Abbot: You have a lot of drive for someone who's been broken and tossed into hell.
@@ -172,16 +178,18 @@ color: yellow
 Abbot: Question, Little flower. 
 <<actor ActorScreen 0 "surprised">>
 Harmony: Yes?
-Abbot: I have overseen the wastes of hell, for far longer than the first soul wandered here.
-Abbot: I have seen a few souls muster up the spite, to move their old bodies. 
-Abbot: But not one has come with a weapon. Who or what gave it to you.
+Abbot: I began watching over the wastes of hell long before the first souls came to wander here. 
+Abbot: I have witnessed souls muster up the spite to move their old bodies. 
+Abbot: But not one has come with a weapon.
+Abbot: [i]Who or what gave it to you?[/i]
 <<actor ActorScreen 0 "sad">>
 Harmony: Oh, I don't know. I thought you would know with your whole, thing goin' on.
 <<actor ActorScreen 1 "surprised" false>>
 Abbot: Thing?
 Harmony: You look ancient and all knowing.
 <<actor ActorScreen 1 "forlorn" false>>  
-Abbot: I simply write down, what happens in the Wastes of Hell. It's what I've always done. 
+Abbot: I simply chronicle what transpires in the wastes of Hell.
+Abbot: It is what I have always done.  
 Harmony: So are you a devil? You work for Satan?
 <<actor ActorScreen 1 "happy" false>>
 Abbot: Hah, him.. Let's just say I'm naturally curious.
@@ -198,12 +206,14 @@ color: yellow
 <<actor ActorScreen 0 "happy">>
 <<actor ActorScreen 1 "happy" false>>
 Harmony: So why do you follow me?
-Abbot: I was sent to torture you. But that weapon. It intrigued me.
+Abbot: My intent was simply to add you to my records.
+Abbot: That weapon... it intrigued me.
+Abbot: I did not mean to concern myself with it. And yet, I have. 
 Harmony: So you're breaking the rules.
 Abbot: I'm a devil, little flower, I do what I want. 
 Abbot: I just want to make sure that weapon stays safe.
 <<actor ActorScreen 0 "surprised">>
-Harmony: Didn't know revolvers were a thing in hell. It's real old here. 
+Harmony: Didn't know revolvers were a thing in hell. It's really old around here. 
 Abbot: We are more modern than you think, little flower. And [imp]The Flower of Hell[/imp] changes based on the wielder.
 Harmony: I don't remember guns being my thing.
 Abbot: Oh trust me, little flower. [imp]They were.[/]
