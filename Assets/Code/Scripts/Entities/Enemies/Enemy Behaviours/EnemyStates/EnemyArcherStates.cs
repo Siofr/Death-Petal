@@ -67,7 +67,6 @@ public class EnemyArcherAlertState : EnemyBaseState<EnemyArcher>
     public EnemyArcherAlertState(EnemyArcher enemyController) : base(enemyController)
     {
         _archer = enemyController;
-        _archer.sfxStateManager?.OnStateEnter("Alert");
     }
     
     private EnemyArcher _archer;
@@ -80,7 +79,7 @@ public class EnemyArcherAlertState : EnemyBaseState<EnemyArcher>
     public override void OnEnter()
     {
         _archer.StartAlertRoutine(1f, _archer.alertRotationAngle, 60f);
-        
+        _archer.sfxStateManager?.OnStateEnter("Alert");
         Debug.Log("Enter Alert State");
     }
     
