@@ -176,16 +176,14 @@ namespace State_Machine
         private void OnPause()
         {
             _isPaused = !_isPaused;
-
-            if (!_isPaused)
-            {
-                Time.timeScale = 1;
-                pauseMenu.SetActive(false);
-            } else
-            {
-                Time.timeScale = 1;
-                pauseMenu.SetActive(true);
-            }
+            
+            Time.timeScale = _isPaused ? 0 : 1;
+            
+            if(_isPaused) EntityHelper.LockAllInputs();
+            else EntityHelper.UnlockAllInputs();
+            
+            pauseMenu.SetActive(_isPaused);
+            EventBus<PauseEvent>.Raise(new PauseEvent(_isPaused));
         }
         
         void OnReloadStart()

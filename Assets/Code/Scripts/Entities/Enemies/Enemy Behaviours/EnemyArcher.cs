@@ -140,32 +140,30 @@ public class EnemyArcher: EnemyBase
         var absAngle = Mathf.Abs(angle);
         
         var signAngle = Vector3.SignedAngle(transform.forward, target.position-transform.position, Vector3.up);
-        speed = signAngle < 0 ? -speed : speed;
-        angle = signAngle < 0 ? -absAngle : absAngle;
+        var tempSpeed = signAngle < 0 ? -speed : speed;
+        var tempAngle = signAngle < 0 ? -absAngle : absAngle;
 
         var tempRot = 0f;
         
-        animator.SetFloat(Animator.StringToHash("Angle"), 0);
+        //animator.SetFloat(Animator.StringToHash("Angle"), 0);
         
         while (!_inLos)
         {
-            print(angle);
-            
             if (angle == 0) yield return null;
 
-            while (tempRot != angle)
+            while (tempRot != tempAngle)
             {
-                tempRot += Time.deltaTime * speed;
-                _currentRotation += Time.deltaTime * speed;
+                tempRot += Time.deltaTime * tempSpeed;
+                _currentRotation += Time.deltaTime * tempSpeed;
                 
                 transform.eulerAngles = new Vector3(0, _currentRotation, 0);
                 
-                if (angle < 0)
+                if (tempAngle < 0)
                 {
-                    if (tempRot < angle || _currentRotation < _initialRotation + angle)
+                    if (tempRot < tempAngle)
                     {
-                        tempRot = angle;
-                        transform.eulerAngles = new Vector3(0, _initialRotation + angle, 0);
+                        tempRot = tempAngle;
+                        transform.eulerAngles = new Vector3(0, _initialRotation + tempAngle, 0);
                         _currentRotation = transform.eulerAngles.y;
                         //animator.SetFloat(Animator.StringToHash("Angle"), MapRotToAnim(_currentRotation));
 
@@ -174,10 +172,10 @@ public class EnemyArcher: EnemyBase
                 }
                 else
                 {
-                    if (tempRot > angle || _currentRotation > _initialRotation + angle)
+                    if (tempRot > tempAngle)
                     {
-                        tempRot = angle;
-                        transform.eulerAngles = new Vector3(0, _initialRotation + angle, 0);
+                        tempRot = tempAngle;
+                        transform.eulerAngles = new Vector3(0, _initialRotation + tempAngle, 0);
                         _currentRotation = transform.eulerAngles.y;
                         //animator.SetFloat(Animator.StringToHash("Angle"), MapRotToAnim(_currentRotation));
                         
@@ -190,8 +188,8 @@ public class EnemyArcher: EnemyBase
             
             yield return new WaitForSeconds(pauseTime);
             
-            angle = -angle;
-            speed = -speed;
+            tempAngle = -tempAngle;
+            tempSpeed = -tempSpeed;
         }
         
         print("Found Target");
