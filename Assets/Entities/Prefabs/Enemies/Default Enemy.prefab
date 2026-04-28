@@ -4920,27 +4920,8 @@ MonoBehaviour:
   target: {fileID: 0}
   enemyScoreValue: 0
   petalDropChance: 1
-  onEnemyAttackEventPath:
-    Guid:
-      Data1: 1386666450
-      Data2: 1224467063
-      Data3: 1121615513
-      Data4: -463641041
-    Path: event:/Characters/Enemies/enemySwipe
-  enemyPassiveIdle:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  exitIdleAlert:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  sfxStateManager: {fileID: 0}
+  _ignoreNavMesh: 0
 --- !u!1 &5348504789534349938
 GameObject:
   m_ObjectHideFlags: 0
@@ -10100,6 +10081,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 15.665588
       objectReference: {fileID: 0}
+    - target: {fileID: -8391222552659086748, guid: 80879378e306794458bd22a4caee2b56, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -8192978807737355532, guid: 80879378e306794458bd22a4caee2b56, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -0.043625478
@@ -10718,12 +10703,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8417361359673230750, guid: 80879378e306794458bd22a4caee2b56, type: 3}
       propertyPath: m_Materials.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8417361359673230750, guid: 80879378e306794458bd22a4caee2b56, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: 9535829b0473e6a48a2afc8a4d4d6a81, type: 2}
+      objectReference: {fileID: 2100000, guid: c9f24448590c6d14d8f2c137ca52f838, type: 2}
     - target: {fileID: 8483335245307170752, guid: 80879378e306794458bd22a4caee2b56, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -0.08018355
