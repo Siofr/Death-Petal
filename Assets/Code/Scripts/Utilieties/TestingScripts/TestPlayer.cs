@@ -42,9 +42,17 @@ public class TestPlayer : EntityBase, IEntity
     private int _currentPetalCharge;
     private int _goalPetalCharge = 3;
 
+    private EventBindings<PlayerLowHealthEvent> _onPlayerLowHealth;
+    private EventBindings<PlayerHealedEvent> _onPlayerHealedEvent;
+
+    private bool _isCritical;
+
     public void Awake()
     {
         base.Awake();
+
+        _onPlayerLowHealth = new EventBindings<PlayerLowHealthEvent>(OnPlayerCriticalHealth);
+        _onPlayerHealedEvent = new EventBindings<PlayerHealedEvent>(OnPlayerRecovered);
         // _currentHealth = _maxHealth;
         // _petalPickupEventListener = new EventBindings<PetalPickpEvent>(OnPetalCollected);
     }
@@ -52,11 +60,15 @@ public class TestPlayer : EntityBase, IEntity
     private void OnEnable()
     {
         //EventBus<PetalPickpEvent>.Register(_petalPickupEventListener);
+        EventBus<PlayerLowHealthEvent>.Register(_onPlayerLowHealth);
+        EventBus<PlayerHealedEvent>.Register(_onPlayerHealedEvent);
     }
 
     private void OnDisable()
     {
         //EventBus<PetalPickpEvent>.Unregister(_petalPickupEventListener);
+        EventBus<PlayerLowHealthEvent>.Unregister(_onPlayerLowHealth);
+        EventBus<PlayerHealedEvent>.Unregister(_onPlayerHealedEvent);
     }
 
     /*private void OnPetalCollected()
@@ -128,13 +140,24 @@ public class TestPlayer : EntityBase, IEntity
     //     }
     // }
 
+    private void OnPlayerCriticalHealth(PlayerLowHealthEvent ctx)
+    {
+        _isCritical = true;
+        StartCoroutine(LowHealthEffect());
+    }
+
+    private void OnPlayerRecovered(PlayerHealedEvent ctx)
+    {
+        _isCritical = false;
+    }
+
     IEnumerator LowHealthEffect()
     {
         EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.75f, 0.75f, 0.15f));
 
         yield return new WaitForSeconds(1.5f);
 
-        if (_currentHealth > 1 || _currentHealth <= 0) yield return null;
+        if (!_isCritical) yield return null;
         else StartCoroutine(LowHealthEffect());
     }
 }
