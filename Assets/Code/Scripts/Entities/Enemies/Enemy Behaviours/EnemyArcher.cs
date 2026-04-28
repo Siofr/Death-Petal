@@ -23,10 +23,6 @@ public class EnemyArcher: EnemyBase
     private Coroutine _timerRoutine;
     private bool _inLos;
 
-    [Header("Unit Specific Audio Paths")]
-    public EventReference onArrowKnock;
-    public EventReference onArrowRelease;
-
     protected override void Awake()
     {
         base.Awake();

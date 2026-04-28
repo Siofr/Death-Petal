@@ -16,7 +16,7 @@ public class TriggerSFXState : MonoBehaviour
     public AudioReference[] audioReferences;
     public Dictionary<string, EventInstance> audioBanks = new Dictionary<string, EventInstance>();
 
-    public void Start()
+    public void Awake()
     {
         if (audioReferences.Length <= 0) return;
 
