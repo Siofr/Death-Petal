@@ -1,5 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using FMODUnity;
+using FMOD;
 using Yarn.Unity;
 
 public class DialogueStartFX : MonoBehaviour
@@ -17,6 +19,9 @@ public class DialogueStartFX : MonoBehaviour
 
     public LeanTweenType easeType;
 
+    public EventReference dialogueStartSFX;
+    public EventReference dialogueEndSFX;
+
     void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -27,6 +32,7 @@ public class DialogueStartFX : MonoBehaviour
         //print("DialogueMove: starting");
 
         EventBus<SFXSnapshot>.Raise(new SFXSnapshot(1, true));
+        RuntimeManager.PlayOneShot(dialogueStartSFX);
         LeanTween.moveY(bottomBg, BottomRectValues.x, fadeTime).setEase(easeType);
         LeanTween.moveY(topBg, TopRectValues.x, fadeTime).setEase(easeType);
     }
@@ -37,6 +43,7 @@ public class DialogueStartFX : MonoBehaviour
         //print("DialogueMove: closing");
 
         EventBus<SFXSnapshot>.Raise(new SFXSnapshot(1, false));
+        RuntimeManager.PlayOneShot(dialogueEndSFX);
         LeanTween.moveY(bottomBg, BottomRectValues.y, fadeTime).setEase(easeType);
         LeanTween.moveY(topBg, TopRectValues.y, fadeTime).setEase(easeType);
     }

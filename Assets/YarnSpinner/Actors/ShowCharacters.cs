@@ -25,14 +25,18 @@ public class ShowCharacters : MonoBehaviour
         {
             LeftActorImage.enabled = true;
             LeftActorImage.sprite = actorReferences.First(x => x.actorID == actorId).GetSelectedEmotion(emotion.ToLower());
-            RuntimeManager.PlayOneShot(actorReferences.First(x => x.actorID == actorId).GetAudioCue(emotion.ToLower()));
         }
         else
         {
             RightActorImage.enabled = true;
             RightActorImage.sprite = actorReferences.First(x => x.actorID == actorId).GetSelectedEmotion(emotion.ToLower());
-            RuntimeManager.PlayOneShot(actorReferences.First(x => x.actorID == actorId).GetAudioCue(emotion.ToLower()));
         }
+    }
+
+    [YarnCommand("audio")]
+    public void PlaySFX(int actorId, string emotion = "none")
+    {
+        RuntimeManager.PlayOneShot(actorReferences.First(x => x.actorID == actorId).GetAudioCue(emotion.ToLower()));
     }
 
     public void Focus(bool isLeft, bool isActive)
