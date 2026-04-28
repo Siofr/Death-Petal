@@ -47,11 +47,11 @@ public class EnemyArcherShootState : EnemyBaseState<EnemyArcher>
 
     public override void OnEnter()
     {
-        enemyController.sfxStateManager?.OnStateEnter("Release");
         _archer.ToggleLineRenderer(true);
         //_archer.ToggleLineRendererColor(Color.red);
         _archer.StartShot(_archer.enemyData.attackSpeed);
-        
+        _archer.sfxStateManager?.OnStateEnter("Release");
+
         Debug.Log("Enter Shoot State");
     }
     
@@ -67,6 +67,7 @@ public class EnemyArcherAlertState : EnemyBaseState<EnemyArcher>
     public EnemyArcherAlertState(EnemyArcher enemyController) : base(enemyController)
     {
         _archer = enemyController;
+        _archer.sfxStateManager?.OnStateEnter("Alert");
     }
     
     private EnemyArcher _archer;
