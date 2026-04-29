@@ -189,11 +189,6 @@ namespace State_Machine
             if(_isPaused) EntityHelper.LockAllInputs();
             else EntityHelper.UnlockAllInputs();
             
-            pauseMenu.SetActive(_isPaused);
-            
-            if(_isPaused) EntityHelper.LockAllInputs();
-            else EntityHelper.UnlockAllInputs();
-            
             pauseMenu.SetActive(_isPaused);            
         }
         

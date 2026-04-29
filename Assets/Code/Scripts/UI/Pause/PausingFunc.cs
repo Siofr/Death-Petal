@@ -9,18 +9,19 @@ public class PausingFunc : MonoBehaviour
 {
     public bool isPaused;
     public Image UISludge;
-
+    
     public void TogglePause()
     {
-        isPaused = !isPaused;
-        print("b");
-        StartCoroutine(EnterUISludge());
+        // isPaused = !isPaused;
+        // print("b");
+        // StartCoroutine(EnterUISludge());
+        //
+        // if(!isPaused)
         
-        if(!isPaused)
-            EventBus<PauseEvent>.Raise(new PauseEvent(false));
+        EventBus<PauseEvent>.Raise(new PauseEvent(false));
     }
-    
 
+    
     private IEnumerator EnterUISludge()
     {
         for (float i = 0; i <= 1; i += Time.deltaTime * 4f)
@@ -31,9 +32,21 @@ public class PausingFunc : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        StartCoroutine(EnterUISludge());
+    }
+
+    private void Awake()
+    {
+        // _pauseEventListener = new EventBindings<PauseEvent>(OnPause);
+        // EventBus<PauseEvent>.Register(_pauseEventListener);
+    }
+    
     private void OnDisable()
     {
-        StopAllCoroutines();
+        // EventBus<PauseEvent>.Unregister(_pauseEventListener);
+        // StopAllCoroutines();
     }
     void Update()
     {
