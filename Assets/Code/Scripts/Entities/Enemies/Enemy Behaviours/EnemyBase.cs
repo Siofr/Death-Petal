@@ -189,7 +189,6 @@ public class EnemyBase : EntityBase, IEntity
     private void OnPause(PauseEvent ctx)
     {
         StopAgent(ctx.isPaused);
-        
         animator.speed = ctx.isPaused ? 0 : 1;
     }
 

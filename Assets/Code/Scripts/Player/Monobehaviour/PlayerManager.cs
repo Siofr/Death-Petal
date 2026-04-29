@@ -40,7 +40,8 @@ namespace State_Machine
         private EventBindings<CameraChangeEvent> _cameraChangeEventListener;
         private EventBindings<TriggerDialogueEvent> _dialogueEnteredListener;
         private EventBindings<ExitDialogueEvent> _exitDialogueEventListener;
-
+        private EventBindings<PauseEvent> _pauseEventListener;
+        
         [SerializeField]
         private Material[] playerDependentMaterials;
 
@@ -53,6 +54,7 @@ namespace State_Machine
             _cameraChangeEventListener = new EventBindings<CameraChangeEvent>(OnChangeCamera);
             _dialogueEnteredListener = new EventBindings<TriggerDialogueEvent>(OnDialogueEntered);
             _exitDialogueEventListener = new EventBindings<ExitDialogueEvent>(OnDialogueExited);
+            _pauseEventListener = new EventBindings<PauseEvent>((OnPause));
         }
 
         private void OnEnable()
@@ -60,8 +62,9 @@ namespace State_Machine
             EventBus<CameraChangeEvent>.Register(_cameraChangeEventListener);
             EventBus<TriggerDialogueEvent>.Register(_dialogueEnteredListener);
             EventBus<ExitDialogueEvent>.Register(_exitDialogueEventListener);
+            EventBus<PauseEvent>.Register(_pauseEventListener);
             
-            InputHandler.PauseEvent += OnPause;
+            InputHandler.PauseEvent += OnPauseInput;
             
             // InputHandler.AimEvent += OnAim;
             InputHandler.SprintEvent += OnSprint;
@@ -78,8 +81,9 @@ namespace State_Machine
             EventBus<CameraChangeEvent>.Unregister(_cameraChangeEventListener);
             EventBus<TriggerDialogueEvent>.Unregister(_dialogueEnteredListener);
             EventBus<ExitDialogueEvent>.Unregister(_exitDialogueEventListener);
+            EventBus<PauseEvent>.Unregister(_pauseEventListener);
 
-            InputHandler.PauseEvent -= OnPause;
+            InputHandler.PauseEvent -= OnPauseInput;
             
             // InputHandler.AimEvent -= OnAim;
             InputHandler.SprintEvent -= OnSprint;
@@ -173,17 +177,24 @@ namespace State_Machine
 
         private bool _isPaused;
         
-        private void OnPause()
+        private void OnPauseInput()
         {
-            _isPaused = !_isPaused;
-            
-            Time.timeScale = _isPaused ? 0 : 1;
+            EventBus<PauseEvent>.Raise(new PauseEvent(!_isPaused));
+        }
+
+        public void OnPause(PauseEvent ctx)
+        {
+            _isPaused = ctx.isPaused;
             
             if(_isPaused) EntityHelper.LockAllInputs();
             else EntityHelper.UnlockAllInputs();
             
             pauseMenu.SetActive(_isPaused);
-            EventBus<PauseEvent>.Raise(new PauseEvent(_isPaused));
+            
+            if(_isPaused) EntityHelper.LockAllInputs();
+            else EntityHelper.UnlockAllInputs();
+            
+            pauseMenu.SetActive(_isPaused);            
         }
         
         void OnReloadStart()
