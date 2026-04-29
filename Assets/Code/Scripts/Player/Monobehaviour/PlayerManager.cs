@@ -177,7 +177,7 @@ namespace State_Machine
         {
             _isPaused = !_isPaused;
             
-            Time.timeScale = _isPaused ? 0 : 1;
+            //Time.timeScale = _isPaused ? 0 : 1;
             
             if(_isPaused) EntityHelper.LockAllInputs();
             else EntityHelper.UnlockAllInputs();
