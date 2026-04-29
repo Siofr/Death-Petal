@@ -2823,9 +2823,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1215802010}
   - component: {fileID: 1215802009}
-  - component: {fileID: 1215802008}
   - component: {fileID: 1215802011}
   - component: {fileID: 1215802012}
+  - component: {fileID: 1215802013}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2833,14 +2833,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1215802008
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1215802007}
-  m_Enabled: 1
 --- !u!20 &1215802009
 Camera:
   m_ObjectHideFlags: 0
@@ -2874,7 +2866,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 50
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2900,8 +2892,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215802007}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17552632, y: -0.7853891, z: 0.2578325, w: 0.5346746}
-  m_LocalPosition: {x: -66.40084, y: 1.9458256, z: -38.915752}
+  m_LocalRotation: {x: 0.39327714, y: -0.58666706, z: 0.40202376, w: 0.5826935}
+  m_LocalPosition: {x: -26.912634, y: 7.487444, z: 13.055245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2983,6 +2975,20 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!114 &1215802013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215802007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 1215802007}
 --- !u!1001 &1220043167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7121,7 +7127,7 @@ PrefabInstance:
       objectReference: {fileID: 210902247}
     - target: {fileID: 2625238685536911245, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_VersionIndex
-      value: 3748
+      value: 3907
       objectReference: {fileID: 0}
     - target: {fileID: 2787512464337858358, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: TrackingTarget
@@ -7153,7 +7159,7 @@ PrefabInstance:
       objectReference: {fileID: 16164401}
     - target: {fileID: 3592037735945004054, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_VersionIndex
-      value: 3748
+      value: 3907
       objectReference: {fileID: 0}
     - target: {fileID: 3827556724097241754, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_Name
@@ -7237,7 +7243,7 @@ PrefabInstance:
       objectReference: {fileID: 1277455590}
     - target: {fileID: 9105123153628395617, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_VersionIndex
-      value: 4275
+      value: 4434
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
