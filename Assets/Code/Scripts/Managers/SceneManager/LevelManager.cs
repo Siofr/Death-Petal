@@ -197,7 +197,7 @@ public class LevelManager : MonoBehaviour
     {
         isLoadingDefault = ctx.isDefault;
         
-        LoadLevelData(ctx.isDefault);
+        //LoadLevelData(ctx.isDefault);
     }
 
     private void OnSaveRequest(LevelSaveEvent ctx)
