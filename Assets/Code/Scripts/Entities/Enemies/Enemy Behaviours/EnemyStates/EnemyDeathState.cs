@@ -15,6 +15,6 @@ public class EnemyDeathState<T>: EnemyBaseState<T> where T : EnemyBase
 
     public override void OnExit()
     {
-        enemyController.sfxStateManager.OnStateExit("Death");
+        enemyController.sfxStateManager?.OnStateExit("Death");
     }
 }

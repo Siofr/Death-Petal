@@ -12,7 +12,8 @@ public class EnemyArcherTargetState: EnemyBaseState<EnemyArcher>
     
     public override void OnEnter()
     {
-        RuntimeManager.PlayOneShot(enemyController.onArrowKnock, enemyController.transform.position);
+        enemyController.sfxStateManager?.OnStateEnter("Windup");
+        
         _archer.ToggleLineRenderer(true);
         _archer.ToggleLineRendererColor(Color.white);
         _archer.StartTargeting(_archer.targetTime);
@@ -22,6 +23,7 @@ public class EnemyArcherTargetState: EnemyBaseState<EnemyArcher>
 
     public override void OnExit()
     {
+        enemyController.sfxStateManager?.OnStateExit("Windup");
         _archer.ToggleLineRenderer(false);
         _archer.StopAllStateRoutines();
     }
@@ -29,6 +31,7 @@ public class EnemyArcherTargetState: EnemyBaseState<EnemyArcher>
     public override void Update()
     {
         //_archer.CheckLOS(_archer.maxLOSRadius, _archer.enemyData.attackRange);
+        
         _archer.UpdateLineRenderer();
     }
 }
@@ -44,11 +47,11 @@ public class EnemyArcherShootState : EnemyBaseState<EnemyArcher>
 
     public override void OnEnter()
     {
-        RuntimeManager.PlayOneShot(enemyController.onArrowRelease, enemyController.transform.position);
         _archer.ToggleLineRenderer(true);
         //_archer.ToggleLineRendererColor(Color.red);
         _archer.StartShot(_archer.enemyData.attackSpeed);
-        
+        _archer.sfxStateManager?.OnStateEnter("Release");
+
         Debug.Log("Enter Shoot State");
     }
     
@@ -64,6 +67,7 @@ public class EnemyArcherAlertState : EnemyBaseState<EnemyArcher>
     public EnemyArcherAlertState(EnemyArcher enemyController) : base(enemyController)
     {
         _archer = enemyController;
+        _archer.sfxStateManager?.OnStateEnter("Alert");
     }
     
     private EnemyArcher _archer;

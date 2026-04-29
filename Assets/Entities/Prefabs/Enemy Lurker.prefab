@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 3584127621098747670}
   - component: {fileID: 6541559607956750116}
   - component: {fileID: 6854842949820264109}
+  - component: {fileID: 753365686879044092}
   m_Layer: 0
   m_Name: Enemy Lurker
   m_TagString: Untagged
@@ -208,6 +209,35 @@ MonoBehaviour:
   petalDropChance: 0
   sfxStateManager: {fileID: 0}
   _ignoreNavMesh: 0
+--- !u!114 &753365686879044092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3788502238141946903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289bb19b2d862914aab9bf19536c87a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerSFXState
+  audioReferences:
+  - audioName: Chase
+    eventReference:
+      Guid:
+        Data1: -113316259
+        Data2: 1335490557
+        Data3: 634979982
+        Data4: 1107884551
+      Path: event:/Characters/Enemies/Lurker/lurkerWalking
+  - audioName: Death
+    eventReference:
+      Guid:
+        Data1: -835685006
+        Data2: 1260033917
+        Data3: -1922014845
+        Data4: -1176928729
+      Path: event:/Characters/Enemies/Lurker/lurkerDeath
 --- !u!1 &3821564098021094678
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,7 +419,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d51f88f264bfc0c418c0e2da14be8093, type: 2}
-  - {fileID: 2100000, guid: 5cb18888a8b4a97408a4ab241f64f973, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -843,17 +872,9 @@ PrefabInstance:
       value: Lurker
       objectReference: {fileID: 0}
     - target: {fileID: 7603786706384944740, guid: ed7c5054212a10e4298449b1c39b142d, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7603786706384944740, guid: ed7c5054212a10e4298449b1c39b142d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 49e32d7ac114d554b9c907f8997e8f4c, type: 2}
-    - target: {fileID: 7603786706384944740, guid: ed7c5054212a10e4298449b1c39b142d, type: 3}
-      propertyPath: 'm_Materials.Array.data[1]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 5cb18888a8b4a97408a4ab241f64f973, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

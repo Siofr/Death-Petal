@@ -235,15 +235,7 @@ public class LevelManager : MonoBehaviour
         {
             LoadLevelData();
             
-            EventBus<UnlockInput>.Raise(new UnlockInput("Move"));
-            EventBus<UnlockInput>.Raise(new UnlockInput("Attack"));
-            EventBus<UnlockInput>.Raise(new UnlockInput("Look"));
-            EventBus<UnlockInput>.Raise(new UnlockInput("Aim"));
-            EventBus<UnlockInput>.Raise(new UnlockInput("North"));
-            EventBus<UnlockInput>.Raise(new UnlockInput("South"));
-            EventBus<UnlockInput>.Raise(new UnlockInput("West"));
-            EventBus<UnlockInput>.Raise(new UnlockInput("BarrelRight"));
-            EventBus<UnlockInput>.Raise(new UnlockInput("BarrelLeft"));
+            EntityHelper.UnlockAllInputs();
         }
     }
 }
