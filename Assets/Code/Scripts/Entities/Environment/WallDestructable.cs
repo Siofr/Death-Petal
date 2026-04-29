@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,8 @@ public class WallDestructable: EntityBase
     //Events
     private EventBindings<ActiveTargetEvent> _onTargetListener;
     private EventBindings<LevelLoadedEvent> _levelLoadedListener;
+
+    public EventReference panelDestroyedSFX;
     
     protected override void Awake()
     {
@@ -136,6 +139,9 @@ public class WallDestructable: EntityBase
         int weaknessCount = Weaknesses.Count;
         
         if (!Weaknesses.Contains(weakness)) return;
+
+        Debug.Log("Panel Destruction");
+        RuntimeManager.PlayOneShot(panelDestroyedSFX);
 
         if (weakness.WeakType != damageType)
         {
