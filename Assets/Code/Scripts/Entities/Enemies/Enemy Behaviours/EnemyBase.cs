@@ -196,7 +196,7 @@ public class EnemyBase : EntityBase, IEntity
     protected override void OnCameraChange(CameraChangeEvent ctx)
     {
         base.OnCameraChange(ctx);
-        if (animator.GetBool(Animator.StringToHash("Spawning"))) Weaknesses[0].ToggleIcon(false);
+        if (animator.GetBool(Animator.StringToHash("Spawning"))) Weaknesses[0].Toggle(false);
     }
 
     protected virtual void OnEnable()

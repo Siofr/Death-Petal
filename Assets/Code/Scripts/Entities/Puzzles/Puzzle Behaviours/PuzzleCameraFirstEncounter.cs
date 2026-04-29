@@ -19,7 +19,7 @@ public class PuzzleCameraFirstEncounter : PuzzleCameraCondition_SO
             _ => typeof(EnemyBase)
         };
 
-        var allEnemies = FindObjectsOfType<EnemyBase>();
+        var allEnemies = FindObjectsByType<EnemyBase>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
         
         Debug.Log($"Enemies Found: {allEnemies.Length}, Looking for {type}");
         
@@ -30,8 +30,8 @@ public class PuzzleCameraFirstEncounter : PuzzleCameraCondition_SO
             if (allEnemies[i].GetType() != type) continue;
             
             Debug.Log("Reached Condition");
-
-            if (_targetEnemy.gameObject.name == _enemyName)
+            
+            if (allEnemies[i].name == _enemyName)
             {
                 _targetEnemy =  allEnemies[i];
                 break;
