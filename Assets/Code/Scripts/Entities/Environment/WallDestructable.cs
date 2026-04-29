@@ -168,4 +168,10 @@ public class WallDestructable: EntityBase
             Weaknesses[0].SetWeakType(defaultWeaknessTypes[0]);
         }
     }
+
+    public override void HandleLoadData(ref LevelSaveData refData)
+    {
+        base.HandleLoadData(ref refData);
+        if(Weaknesses.Count < 1) gameObject.SetActive(false);
+    }
 }

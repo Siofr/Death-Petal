@@ -309,4 +309,18 @@ public class EnemyArcher: EnemyBase
         _shotRoutine = null;
         _timerRoutine = null;
     }
+
+    public override void HandleLoadData(ref LevelSaveData refData)
+    {
+        base.HandleLoadData(ref refData);
+        if (SaveInfo.health.Count < 1)
+        {
+            Debug.Log($"{name}: Correct Archer 0 Health Check");
+            
+            gameObject.SetActive(true);
+            _isDead = true;
+            
+            ToggleAllWeaknesses(false);
+        }
+    }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -31,7 +32,7 @@ public class LevelManager : MonoBehaviour
     {
         var temp = new LevelSaveData(SceneManager.GetActiveScene().name);
         
-        var tempSaveables = FindSaveables();
+        var tempSaveables = FindSaveables().Result;
 
         if (tempSaveables.Count < 1)
         {
@@ -89,7 +90,7 @@ public class LevelManager : MonoBehaviour
 
             levelSaveData = temp;
 
-            saveableGO = FindSaveables();
+            saveableGO = FindSaveables().Result;
             var tempSaveables = GetSaveablesWithObjects();
 
             foreach (var tempSaveable in tempSaveables)
@@ -111,10 +112,12 @@ public class LevelManager : MonoBehaviour
         
         Debug.Log("Loaded Level Data");
         
+        EntityHelper.UnlockAllInputs();
+        
         EventBus<LevelLoadedEvent>.Raise(new LevelLoadedEvent());
     }
     
-    public List<GameObject> FindSaveables()
+    public async Task<List<GameObject>> FindSaveables()
     {
         if (saveableData == null)
         {
@@ -135,18 +138,23 @@ public class LevelManager : MonoBehaviour
         
         if(tempSaveables.Count < 1) Debug.Log("No Saveable Objects in Level");
 
-        foreach (var saveable in tempSaveables)
-        {
-            if (saveable.SaveSO == null || saveable.SaveSO.saveID < 1)
-            {
-                //Debug.Log(saveable.SaveSO.saveID);
-                saveable.CreateSaveInstance(saveableData);
-            }
-        }
+        await InitialiseSaveables(tempSaveables);
 
         return saveableObjects;
     }
 
+    private async Task InitialiseSaveables(List<ISaveable> saveables)
+    {
+        foreach (var saveable in saveables)
+        {
+            if (saveable.SaveSO == null || saveable.SaveSO.saveID < 1)
+            {
+                //Debug.Log(saveable.SaveSO.saveID);
+                await saveable.CreateSaveInstance(saveableData);
+            }
+        }
+    }
+    
     public List<ISaveable> GetSaveables()
     {
         var temp = new List<ISaveable>();
@@ -183,14 +191,9 @@ public class LevelManager : MonoBehaviour
         levelSaveData =  new LevelSaveData(SceneManager.GetActiveScene().name);
         saveableGO.Clear();
         
+        SaveSystem.SaveGameData();
+        
         Debug.Log("Cleared Saveable Objects");
-
-        var failedPaths = new List<string>();
-        #if UNITY_EDITOR
-        AssetDatabase.DeleteAssets(AssetDatabase.FindAssets("t:Save_SO"), failedPaths);
-        #endif        
-        SaveSystem.RemoveLevelData(SceneManager.GetActiveScene().name);
-        ISaveableHelper.RemoveAllIDs(saveableData);
     }
     
     private void OnLoadRequest(LevelLoadEvent ctx)

@@ -21,10 +21,10 @@ public static class SaveSystem
         Debug.Log("Saved Game Data");
     }
 
-    public static void LoadGameData()
+    public static GameSaveData LoadGameData()
     {
-        gameSaveData = JsonUtility.FromJson<GameSaveData>(File.ReadAllText(GetSaveDataPath()));
         Debug.Log("Read Game Save Data");
+        return JsonUtility.FromJson<GameSaveData>(File.ReadAllText(GetSaveDataPath()));
     }
     
     public static void SaveLevelData(LevelSaveData levelSaveData)
@@ -91,11 +91,12 @@ public static class SaveSystem
 public struct GameSaveData
 {
     public List<LevelSaveData> levelSaveData;
-
+    
     static public GameSaveData Initialise()
     {
         var result = new GameSaveData();
-        result.levelSaveData = new List<LevelSaveData>();
+        
+        result = SaveSystem.LoadGameData();
 
         return result;
     }
@@ -172,12 +173,6 @@ public struct EntitySaveData
     public void Load(Transform refTransform, ref List<Weakness> refWeaknesses)
     {
         refTransform.position = position;
-
-        if (health.Count < 1)
-        {
-            refTransform.gameObject.SetActive(false);
-            return;
-        }
 
         var temp = new List<CreateWeaknessEvent>();
         var entity = refTransform.GetComponent<EntityBase>();

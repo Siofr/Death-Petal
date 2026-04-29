@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.IO.Hashing;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using UnityEditor;
 using Random = UnityEngine.Random;
 
@@ -18,10 +19,10 @@ public interface ISaveable
     public string SaveableName { get; }
     public SaveID_SO SaveSO { get; }
     public int SaveID { get; }
-    public void CreateSaveInstance(LevelSaveableData_SO levelSaveableData);
-    public void DeleteSaveInstance(LevelSaveableData_SO levelSaveableData);
-    public void HandleSaveData(ref LevelSaveData refData);
-    public void HandleLoadData(ref LevelSaveData refData);
+    public Task CreateSaveInstance(LevelSaveableData_SO levelSaveableData);
+    public Task DeleteSaveInstance(LevelSaveableData_SO levelSaveableData);
+    public virtual void HandleSaveData(ref LevelSaveData refData) { }
+    public virtual void HandleLoadData(ref LevelSaveData refData) { }
 }
 
 public class ISaveableHelper
@@ -53,5 +54,6 @@ public class ISaveableHelper
     public static void RemoveAllIDs(LevelSaveableData_SO levelSaveableData)
     {
         levelSaveableData.saveableIDs.Clear();
+        existingNames.Clear();
     }
 }

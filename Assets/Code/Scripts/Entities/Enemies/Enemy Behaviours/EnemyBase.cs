@@ -220,6 +220,7 @@ public class EnemyBase : EntityBase, IEntity
     {
         base.OnCameraChange(ctx);
         if (animator.GetBool(Animator.StringToHash("Spawning"))) Weaknesses[0].Toggle(false);
+        if(IsDead) ToggleAllWeaknesses(false);
     }
 
     protected virtual void OnEnable()
@@ -364,6 +365,18 @@ public class EnemyBase : EntityBase, IEntity
         }
 
         //print("Enemy Base Shot");
+    }
+
+    public override void HandleLoadData(ref LevelSaveData refData)
+    {
+        base.HandleLoadData(ref refData);
+        if (SaveInfo.health.Count < 1)
+        {
+            gameObject.SetActive(true);
+            _isDead = true;
+            
+            ToggleAllWeaknesses(false);
+        }
     }
 
     public virtual void StopAllStateRoutines()

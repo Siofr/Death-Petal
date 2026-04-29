@@ -61,4 +61,10 @@ public class BoxDestructible : EntityBase
         }
         Destroy(this.gameObject);
     }
+
+    public override void HandleLoadData(ref LevelSaveData refData)
+    {
+        base.HandleLoadData(ref refData);
+        if(Weaknesses.Count < 1) gameObject.SetActive(false); 
+    }
 }
