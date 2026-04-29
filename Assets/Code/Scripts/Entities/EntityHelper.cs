@@ -5,7 +5,7 @@ public class EntityHelper
         EventBus<LockInput>.Raise(new LockInput("Move"));
         EventBus<LockInput>.Raise(new LockInput("Attack"));
         EventBus<LockInput>.Raise(new LockInput("Look"));
-        EventBus<LockInput>.Raise(new LockInput("Aim"));
+        //EventBus<LockInput>.Raise(new LockInput("Aim"));
         EventBus<LockInput>.Raise(new LockInput("North"));
         EventBus<LockInput>.Raise(new LockInput("South"));
         EventBus<LockInput>.Raise(new LockInput("West"));
@@ -18,7 +18,7 @@ public class EntityHelper
         EventBus<UnlockInput>.Raise(new UnlockInput("Move"));
         EventBus<UnlockInput>.Raise(new UnlockInput("Attack"));
         EventBus<UnlockInput>.Raise(new UnlockInput("Look"));
-        EventBus<UnlockInput>.Raise(new UnlockInput("Aim"));
+        //EventBus<UnlockInput>.Raise(new UnlockInput("Aim"));
         EventBus<UnlockInput>.Raise(new UnlockInput("North"));
         EventBus<UnlockInput>.Raise(new UnlockInput("South"));
         EventBus<UnlockInput>.Raise(new UnlockInput("West"));

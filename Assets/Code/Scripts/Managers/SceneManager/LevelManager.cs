@@ -81,7 +81,6 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            
             var tempName = SceneManager.GetActiveScene().name;
         
             var temp = SaveSystem.GetLevelData(tempName);
@@ -198,7 +197,7 @@ public class LevelManager : MonoBehaviour
     {
         isLoadingDefault = ctx.isDefault;
         
-        //LoadLevelData(ctx.isDefault);
+        LoadLevelData(ctx.isDefault);
     }
 
     private void OnSaveRequest(LevelSaveEvent ctx)
