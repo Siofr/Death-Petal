@@ -186,15 +186,7 @@ namespace State_Machine
         {
             _isPaused = ctx.isPaused;
             
-            if(_isPaused) EntityHelper.LockAllInputs();
-            else EntityHelper.UnlockAllInputs();
-            
             pauseMenu.SetActive(_isPaused);
-            
-            if(_isPaused) EntityHelper.LockAllInputs();
-            else EntityHelper.UnlockAllInputs();
-            
-            pauseMenu.SetActive(_isPaused);            
         }
         
         void OnReloadStart()

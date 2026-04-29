@@ -23,4 +23,9 @@ public class PuzzleCircleInput: PuzzleInputBase
             }
         }
     }
+
+    protected override void OnCameraChange(CameraChangeEvent ctx)
+    {
+        ToggleAllWeaknesses(false);
+    }
 }

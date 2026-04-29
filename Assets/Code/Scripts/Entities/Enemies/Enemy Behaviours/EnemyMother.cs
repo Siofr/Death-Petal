@@ -133,12 +133,16 @@ public class EnemyMother: EnemyBase
                 yield return new WaitForSeconds(spawnTimeInterval);
             }
 
+            if (__isPaused) yield return null;
+            
             var enemyType = _spawnType switch
             {
                 EnemyType.Lurker => typeof(EnemyLurker),
                 EnemyType.Mother => typeof(EnemyMother),
                 _ => typeof(EnemyBase)
             };
+            
+            if (__isPaused) yield return null;
             
             EventBus<SpawnEnemyEvent>.Raise(new SpawnEnemyEvent(_spawnPointRef.position, enemyType, transform.parent, gameObject));
             

@@ -153,6 +153,8 @@ public class EnemyArcher: EnemyBase
 
             while (tempRot != tempAngle)
             {
+                if (__isPaused) yield return null;
+                
                 tempRot += Time.deltaTime * tempSpeed;
                 _currentRotation += Time.deltaTime * tempSpeed;
                 
@@ -226,6 +228,8 @@ public class EnemyArcher: EnemyBase
         
         while (_timerRoutine != null)
         {
+            if (__isPaused) yield return null;
+            
             LookAt();
 
             if (!IsInAlertRange())
@@ -269,6 +273,8 @@ public class EnemyArcher: EnemyBase
         var playerController = target.GetComponent<TestPlayer>();
         
         yield return TimerRoutine(time);
+        
+        if (__isPaused) yield return null;
         
         CheckLOS(maxLOSRadius, enemyData.attackRange);
         animator.SetTrigger("Shoot");

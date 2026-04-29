@@ -56,8 +56,30 @@ struct CorrectShotEvent : IEvent
 public struct PauseEvent : IEvent
 {
     public bool isPaused;
+
+    public static List<string> savedInputs = new List<string>();
     
-    public PauseEvent(bool isPaused) => this.isPaused = isPaused;
+    public PauseEvent(bool isPaused)
+    {
+        this.isPaused = isPaused;
+
+        if (isPaused)
+        {
+            foreach (var input in InputHandler.inputDict)
+            {
+                if(input.Value.enabled) savedInputs.Add(input.Key);
+            }
+            
+            EntityHelper.LockAllInputs();
+        }
+        else
+        {
+            foreach (var input in savedInputs)
+            {
+                EventBus<UnlockInput>.Raise(new UnlockInput(input));
+            }
+        }
+    }
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -81,6 +103,7 @@ public class EnemyBase : EntityBase, IEntity
     public Coroutine attackRoutine = null;
 
     protected bool _isDead;
+    protected bool __isPaused;
     
     //Properties
     public bool IsDead => _isDead;
@@ -188,6 +211,7 @@ public class EnemyBase : EntityBase, IEntity
 
     private void OnPause(PauseEvent ctx)
     {
+        __isPaused = ctx.isPaused;
         StopAgent(ctx.isPaused);
         animator.speed = ctx.isPaused ? 0 : 1;
     }

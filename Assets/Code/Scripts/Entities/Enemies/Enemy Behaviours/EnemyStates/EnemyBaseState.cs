@@ -7,6 +7,8 @@ using UnityEngine.PlayerLoop;
 public class EnemyBaseState<T> : IState where T: EnemyBase
 {
     protected readonly T enemyController;
+
+    protected bool __isPaused;
     
     protected EnemyBaseState() {  }
     
