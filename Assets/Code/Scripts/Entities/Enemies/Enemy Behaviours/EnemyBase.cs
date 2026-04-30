@@ -275,12 +275,11 @@ public class EnemyBase : EntityBase, IEntity
     
     private void OnPlayerRoomEnter(RoomPlayerEnterEvent context)
     {
-        FreezeEnemy(false);
-        
         var playerTransform =  context.playerTransform;
 
         if (context.room.Bounds != _enemyAreaBounds) return;
-
+        FreezeEnemy(false);
+        
         EventBus<PlayerTargetedEvent>.Raise(new PlayerTargetedEvent(enemyData.threatLevel));
         Debug.Log("Is Entering");
         target = playerTransform;
