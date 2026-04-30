@@ -2257,6 +2257,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-3336621384557327543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Dialogue/Effects/dialogueAdvance
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Dialogue/Effects/dialogueAdvance
+  Guid:
+    Data1: 1105127975
+    Data2: 1324433612
+    Data3: 1926340255
+    Data4: -212525578
+  Banks:
+  - {fileID: 4865722936513190796}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-3302610214778742770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3049,6 +3076,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-1454048864138048615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/Pause Menu/pause
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/UI/Pause Menu/pause
+  Guid:
+    Data1: 1764840133
+    Data2: 1103638949
+    Data3: -1235141978
+    Data4: 271926118
+  Banks:
+  - {fileID: 4865722936513190796}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-1431547367460411297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3551,13 +3605,16 @@ MonoBehaviour:
   - {fileID: 8434464126978821268}
   - {fileID: -3664548092310565124}
   - {fileID: -8560549414885953728}
+  - {fileID: -3336621384557327543}
+  - {fileID: 1861197007058225992}
+  - {fileID: -1454048864138048615}
   EditorParameters: []
   MasterBanks:
   - {fileID: 4865722936513190796}
   StringsBanks:
   - {fileID: 9113292504978964348}
   cacheVersion: 131849
-  cacheTime: 639131641374766903
+  cacheTime: 639131801659067251
   SerializableEventsDict:
   - key: event:/Characters/Enemies/Bishop/bishopLoop
     index: 0
@@ -3721,6 +3778,12 @@ MonoBehaviour:
     index: 79
   - key: snapshot:/Pause
     index: 80
+  - key: event:/Dialogue/Effects/dialogueAdvance
+    index: 81
+  - key: event:/UI/Pause Menu/unpause
+    index: 82
+  - key: event:/UI/Pause Menu/pause
+    index: 83
 --- !u!114 &50958259417677923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4527,6 +4590,33 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &1861197007058225992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/Pause Menu/unpause
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/UI/Pause Menu/unpause
+  Guid:
+    Data1: 1178723766
+    Data2: 1145473114
+    Data3: -871967599
+    Data4: -1195794376
+  Banks:
+  - {fileID: 4865722936513190796}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &1932314566705480978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5780,10 +5870,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639131641374671643
+  lastModified: 639131801659044418
   FileSizes:
   - Name: Desktop
-    Value: 5163232
+    Value: 5222368
   Exists: 1
 --- !u!114 &4953922096405066079
 MonoBehaviour:
@@ -7385,7 +7475,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 1740
 --- !u!114 &8733361859626918533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7684,7 +7774,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 3121
 --- !u!114 &9035997232979158121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7727,8 +7817,8 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639131641374766903
+  lastModified: 639131801659067251
   FileSizes:
   - Name: Desktop
-    Value: 5490
+    Value: 5608
   Exists: 1
