@@ -14,11 +14,38 @@ public class SFXVolumeSlider : MonoBehaviour
     {
         _slider = GetComponentInChildren<Slider>();
         _bus = RuntimeManager.GetBus("bus:/" + busPath);
+
+        LoadBusVolume();
+
+        InnitSetVolumeSlider();
+
         OnVolumeChanged(_slider.value);
     }
 
     public void OnVolumeChanged(float sliderValue)
     {
         _bus.setVolume(sliderValue);
+
+        SaveBusVolume();
+    }
+
+    public void InnitSetVolumeSlider()
+    {
+        float currentVol;
+        _bus.getVolume(out currentVol);
+
+        _slider.value = currentVol;
+    }
+
+    public void SaveBusVolume()
+    {
+        float currentVol;
+        _bus.getVolume(out currentVol);
+
+        PlayerPrefs.SetFloat("bus:/" + busPath, currentVol);
+    }
+    public void LoadBusVolume()
+    {
+        _bus.setVolume(PlayerPrefs.GetFloat("bus:/" + busPath, 1.0f));
     }
 }
