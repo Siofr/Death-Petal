@@ -195,7 +195,16 @@ public class EnemyBase : EntityBase, IEntity
     private void OnPause(PauseEvent ctx)
     {
         StopAgent(ctx.isPaused);
+        
         animator.speed = ctx.isPaused ? 0 : 1;
+
+        if (!ctx.isPaused)
+        {
+            if (target == null && animator.GetBool(Animator.StringToHash("Spawning")))
+            {
+                animator.speed = 0;
+            }
+        }
     }
 
     protected override void OnCameraChange(CameraChangeEvent ctx)
