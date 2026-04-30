@@ -40,10 +40,14 @@ namespace State_Machine
         private EventBindings<CameraChangeEvent> _cameraChangeEventListener;
         private EventBindings<TriggerDialogueEvent> _dialogueEnteredListener;
         private EventBindings<ExitDialogueEvent> _exitDialogueEventListener;
-        private EventBindings<PlayerDamagedEvent> _playerDamageEventListener;
-
+        private EventBindings<PauseEvent> _pauseEventListener;
+        private EventBindings<CameraActionEvent> _cameraActionEventListener;
+        
         [SerializeField]
         private Material[] playerDependentMaterials;
+
+        [Space] [Header("Player Positional Materials")][SerializeField]
+        private Material[] _playerPositionalMaterials;
 
         protected override void Awake()
         {
@@ -54,7 +58,8 @@ namespace State_Machine
             _cameraChangeEventListener = new EventBindings<CameraChangeEvent>(OnChangeCamera);
             _dialogueEnteredListener = new EventBindings<TriggerDialogueEvent>(OnDialogueEntered);
             _exitDialogueEventListener = new EventBindings<ExitDialogueEvent>(OnDialogueExited);
-            _playerDamageEventListener = new EventBindings<PlayerDamagedEvent>(OnPlayerDamage);
+            _pauseEventListener = new EventBindings<PauseEvent>((OnPause));
+            _cameraActionEventListener = new EventBindings<CameraActionEvent>(OnCameraAction);
         }
 
         private void OnEnable()
@@ -62,9 +67,10 @@ namespace State_Machine
             EventBus<CameraChangeEvent>.Register(_cameraChangeEventListener);
             EventBus<TriggerDialogueEvent>.Register(_dialogueEnteredListener);
             EventBus<ExitDialogueEvent>.Register(_exitDialogueEventListener);
-            EventBus<PlayerDamagedEvent>.Register(_playerDamageEventListener);
+            EventBus<PauseEvent>.Register(_pauseEventListener);
+            EventBus<CameraActionEvent>.Register(_cameraActionEventListener);
             
-            InputHandler.PauseEvent += OnPause;
+            InputHandler.PauseEvent += OnPauseInput;
             
             // InputHandler.AimEvent += OnAim;
             InputHandler.SprintEvent += OnSprint;
@@ -81,9 +87,10 @@ namespace State_Machine
             EventBus<CameraChangeEvent>.Unregister(_cameraChangeEventListener);
             EventBus<TriggerDialogueEvent>.Unregister(_dialogueEnteredListener);
             EventBus<ExitDialogueEvent>.Unregister(_exitDialogueEventListener);
-            EventBus<PlayerDamagedEvent>.Unregister(_playerDamageEventListener);
+            EventBus<PauseEvent>.Unregister(_pauseEventListener);
+            EventBus<CameraActionEvent>.Unregister(_cameraActionEventListener);
 
-            InputHandler.PauseEvent -= OnPause;
+            InputHandler.PauseEvent -= OnPauseInput;
             
             // InputHandler.AimEvent -= OnAim;
             InputHandler.SprintEvent -= OnSprint;
@@ -177,19 +184,19 @@ namespace State_Machine
 
         private bool _isPaused;
         
-        private void OnPause()
+        private void OnPauseInput()
         {
-            _isPaused = !_isPaused;
+            EventBus<PauseEvent>.Raise(new PauseEvent(!_isPaused));
+        }
 
-            if (!_isPaused)
-            {
-                Time.timeScale = 1;
-                pauseMenu.SetActive(false);
-            } else
-            {
-                Time.timeScale = 1;
-                pauseMenu.SetActive(true);
-            }
+        public void OnPause(PauseEvent ctx)
+        {
+            _isPaused = ctx.isPaused;
+            
+            if(_isPaused) EntityHelper.LockAllInputs();
+            else EntityHelper.UnlockAllInputs();
+            
+            pauseMenu.SetActive(_isPaused);            
         }
         
         void OnReloadStart()
@@ -285,7 +292,7 @@ namespace State_Machine
             RaycastHit hit;
             Weakness weakness;
 
-            if (Physics.SphereCast(transform.position, 0.5f, transform.forward, out hit, 30,1 &~(1 << 6 | 1 << 12 | 1 << 10)))
+            if (Physics.SphereCast(transform.position, 0.75f, transform.forward, out hit, 30,1 &~(1 << 6 | 1 << 12 | 1 << 10)))
             {
                 if (hit.transform.TryGetComponent<Weakness>(out weakness))
                 {
@@ -329,23 +336,14 @@ namespace State_Machine
             _isDialogue = false;
         }
 
-        private void OnPlayerDamage(PlayerDamagedEvent ctx)
+        public void OnCameraAction(CameraActionEvent ctx)
         {
-            Debug.Log(ctx.health);
-
-            if (ctx.health == 1)
+            var isActive = ctx.isActive? 1 : 0;
+        
+            foreach (var editorHinderedMaterial in _playerPositionalMaterials)
             {
-                StartCoroutine(LowHealthEffect());
+                editorHinderedMaterial.SetFloat("_IsEditor", isActive);
             }
-        }
-
-        IEnumerator LowHealthEffect()
-        {
-            EventBus<HapticFeedbackEvent>.Raise(new HapticFeedbackEvent(0.75f, 0.75f, 0.15f));
-
-            yield return new WaitForSeconds(1.5f);
-
-            StartCoroutine(LowHealthEffect());
         }
     }
 }

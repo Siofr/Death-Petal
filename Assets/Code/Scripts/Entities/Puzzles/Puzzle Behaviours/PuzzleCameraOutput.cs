@@ -9,6 +9,8 @@ public class PuzzleCameraOutput : PuzzleOutputBase
     [Space]
     [Header("Animator Conditions")]
     [SerializeField] private Animator _animator;
+    
+    
 
     public override void OnPuzzleSolved(PuzzleSolvedEvent context)
     {

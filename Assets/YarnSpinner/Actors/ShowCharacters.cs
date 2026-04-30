@@ -2,6 +2,8 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using FMODUnity;
+using FMOD;
 using Yarn.Unity;
 
 
@@ -31,11 +33,22 @@ public class ShowCharacters : MonoBehaviour
         }
     }
 
+    [YarnCommand("audio")]
+    public void PlaySFX(int actorId, string emotion = "none")
+    {
+        RuntimeManager.PlayOneShot(actorReferences.First(x => x.actorID == actorId).GetAudioCue(emotion.ToLower()));
+    }
+
     public void Focus(bool isLeft, bool isActive)
     {
-        if(isLeft)
+        if (isLeft)
+        {
             LeftActorAnimator.SetBool("Focussed", isActive);
-        else RightActorAnimator.SetBool("Focussed", isActive);
+        }
+        else
+        {
+            RightActorAnimator.SetBool("Focussed", isActive);
+        }
     }
 
     private IEnumerator UpdateAnimation(bool isLeft)

@@ -18,6 +18,9 @@ public class MusicManager : MonoBehaviour
     private EventBindings<PlayerTargetedEvent> _onPlayerTargetedEventListener;
     private EventBindings<PlayerLostTargetEvent> _onPlayerTargetLostEventListener;
 
+    private EventBindings<PlayerLowHealthEvent> _lowHealthListener;
+    private EventBindings<PlayerHealedEvent> _recoveredListener;
+
     void Start()
     {
         _gameStateParam = SFXUtilities.AssignParamID("GameState", musicEventPath);
@@ -33,18 +36,27 @@ public class MusicManager : MonoBehaviour
     {
         _onPlayerTargetedEventListener = new EventBindings<PlayerTargetedEvent>(OnPlayerTargeted);
         _onPlayerTargetLostEventListener = new EventBindings<PlayerLostTargetEvent>(OnPlayerUntargeted);
+
+        _lowHealthListener = new EventBindings<PlayerLowHealthEvent>(OnPlayerCriticalHealth);
+        _recoveredListener = new EventBindings<PlayerHealedEvent>(OnPlayerRecovered);
     }
 
     private void OnEnable()
     {
         EventBus<PlayerTargetedEvent>.Register(_onPlayerTargetedEventListener);
         EventBus<PlayerLostTargetEvent>.Register(_onPlayerTargetLostEventListener);
+
+        EventBus<PlayerLowHealthEvent>.Register(_lowHealthListener);
+        EventBus<PlayerHealedEvent>.Register(_recoveredListener);
     }
 
     private void OnDisable()
     {
         EventBus<PlayerTargetedEvent>.Unregister(_onPlayerTargetedEventListener);
         EventBus<PlayerLostTargetEvent>.Unregister(_onPlayerTargetLostEventListener);
+
+        EventBus<PlayerLowHealthEvent>.Unregister(_lowHealthListener);
+        EventBus<PlayerHealedEvent>.Unregister(_recoveredListener);
     }
 
     void ResetParameters()
@@ -69,9 +81,14 @@ public class MusicManager : MonoBehaviour
         _isPlaying = false;
     }
 
-    void UpdatePlayerState()
+    void OnPlayerCriticalHealth(PlayerLowHealthEvent ctx)
     {
+        _musicEventInstance.setParameterByID(_playerStateParam, 0.00f);
+    }
 
+    void OnPlayerRecovered(PlayerHealedEvent ctx)
+    {
+        _musicEventInstance.setParameterByID(_playerStateParam, 1.0f);
     }
 
     void OnThreatLevelUpdate(int newThreatLevel)
@@ -104,10 +121,5 @@ public class MusicManager : MonoBehaviour
         _playerThreat -= ctx.threatLevel;
 
         OnThreatLevelUpdate(_playerThreat);
-    }
-
-    void OnPlayerCriticalHealth()
-    {
-
     }
 }

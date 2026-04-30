@@ -241,12 +241,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac97689c4cb38140ac0d91cbbda3a71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueStartFX
+  characterDisplayController: {fileID: 0}
   BottomRectValues: {x: 0, y: -200}
   TopRectValues: {x: 920, y: 1100}
   bottomBg: {fileID: 4935123090371513925}
   topBg: {fileID: 6313848577364719117}
   fadeTime: 0.6
   easeType: 24
+  dialogueStartSFX:
+    Guid:
+      Data1: -1723843847
+      Data2: 1124013839
+      Data3: -352020823
+      Data4: -519427634
+    Path: event:/Dialogue/Effects/dialogueStart
+  dialogueEndSFX:
+    Guid:
+      Data1: 849068494
+      Data2: 1266047942
+      Data3: 1352335520
+      Data4: -917417471
+    Path: event:/Dialogue/Effects/dialogueEnd
 --- !u!1 &4935123090305946390
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,8 +329,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Here's a big long line of dialogue, ready to be shown to the player.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ff8b4002411d35a47bdfcff2e53c2043, type: 2}
+  m_sharedMaterial: {fileID: -4436451699889025806, guid: ff8b4002411d35a47bdfcff2e53c2043, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -499,8 +514,8 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 4
   m_Spacing: -35.67
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
@@ -980,8 +995,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Character Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ff8b4002411d35a47bdfcff2e53c2043, type: 2}
+  m_sharedMaterial: {fileID: -4436451699889025806, guid: ff8b4002411d35a47bdfcff2e53c2043, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -53,6 +53,19 @@ struct CorrectShotEvent : IEvent
     public CorrectShotEvent(EnemyBase enemyRefrence) => enemy = enemyRefrence;
 }
 
+public struct PauseEvent : IEvent
+{
+    public bool isPaused;
+    
+    public PauseEvent(bool isPaused) => this.isPaused = isPaused;
+}
+
+public struct CameraActionEvent : IEvent
+{
+    public bool isActive;
+    public CameraActionEvent(bool isActive) => this.isActive = isActive;
+}
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBase : EntityBase, IEntity
 {
@@ -81,7 +94,8 @@ public class EnemyBase : EntityBase, IEntity
     //Events
     protected EventBindings<RoomPlayerEnterEvent> __playerRoomEnterEventListener;
     protected EventBindings<RoomPlayerExitEvent> __playerRoomExitEventListener;
-
+    protected EventBindings<PauseEvent> __pauseEventListener;
+    
     public TriggerSFXState sfxStateManager;
 
     protected override void Awake()
@@ -178,14 +192,28 @@ public class EnemyBase : EntityBase, IEntity
         print("StateMachine Initialised");
     }
 
+    private void OnPause(PauseEvent ctx)
+    {
+        StopAgent(ctx.isPaused);
+        animator.speed = ctx.isPaused ? 0 : 1;
+    }
+
+    protected override void OnCameraChange(CameraChangeEvent ctx)
+    {
+        base.OnCameraChange(ctx);
+        if (animator.GetBool(Animator.StringToHash("Spawning"))) Weaknesses[0].Toggle(false);
+    }
+
     protected virtual void OnEnable()
     {
         base.OnEnable();
         __playerRoomEnterEventListener = new EventBindings<RoomPlayerEnterEvent>(OnPlayerRoomEnter);
         __playerRoomExitEventListener = new EventBindings<RoomPlayerExitEvent>(OnPlayerRoomExit);
+        __pauseEventListener = new EventBindings<PauseEvent>(OnPause);
         
         EventBus<RoomPlayerEnterEvent>.Register(__playerRoomEnterEventListener);
         EventBus<RoomPlayerExitEvent>.Register(__playerRoomExitEventListener);
+        EventBus<PauseEvent>.Register(__pauseEventListener);
     }
 
     protected virtual void OnDisable()
@@ -193,6 +221,7 @@ public class EnemyBase : EntityBase, IEntity
         base.OnDisable();
         EventBus<RoomPlayerEnterEvent>.Unregister(__playerRoomEnterEventListener);
         EventBus<RoomPlayerExitEvent>.Unregister(__playerRoomExitEventListener);
+        EventBus<PauseEvent>.Unregister(__pauseEventListener);
     }
     
     protected virtual void Update()

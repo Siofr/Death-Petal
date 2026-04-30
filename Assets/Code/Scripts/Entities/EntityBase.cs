@@ -114,11 +114,14 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
     [SerializeField] private EntitySaveData _saveData;
     [SerializeField] private SaveID_SO _saveSO;
 
-    private void OnCameraChange(CameraChangeEvent ctx)
+    protected virtual void OnCameraChange(CameraChangeEvent ctx)
     {
         if (Weaknesses.Count < 1) return;
-        
-        if(ctx.entities.Contains(this)) Weaknesses[0].Toggle(true);
+
+        if (ctx.entities.Contains(this))
+        {
+            Weaknesses[0].Toggle(true);
+        }
         else ToggleAllWeaknessIcons(false);
     }
     

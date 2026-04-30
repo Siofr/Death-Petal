@@ -57,7 +57,11 @@ public class WeaknessFactory : Singleton<WeaknessFactory>
     public void CreatePlayerWeakness()
     {
         if (_player == null) return;
+
+        if (_player.Weaknesses.Count >= 3) return;
+        
         CreateWeakness(_player, WeakTypes.PLAYER, _player.transform.position);
+        EventBus<PlayerHealedEvent>.Raise(new PlayerHealedEvent());
     }
 
     public void OnWeaknessRequest(CreateWeaknessEvent ctx)

@@ -490,6 +490,7 @@ MonoBehaviour:
   actorReferences:
   - {fileID: 11400000, guid: 16d63179f2bb4ae4c8113bb1191c8d92, type: 2}
   - {fileID: 11400000, guid: 0a071f306a0ef8a4ba9b1da1c1e29fb0, type: 2}
+  - {fileID: 11400000, guid: fbe01922bec761b4a9315af0b1cd8b02, type: 2}
 --- !u!1001 &2074295985571184877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -498,6 +499,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3626005696983405107}
     m_Modifications:
+    - target: {fileID: 1187350426100766888, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
+      propertyPath: continueActionReference
+      value: 
+      objectReference: {fileID: 6071020157347750155, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     - target: {fileID: 1678648245497934575, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
       propertyPath: m_SizeDelta.x
       value: 810.1219
@@ -728,11 +733,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7778558434935992803, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9976012
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7778558434935992803, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.069223545
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7778558434935992803, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -744,7 +749,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7778558434935992803, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -7.939
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7778558434935992803, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -758,10 +763,6 @@ PrefabInstance:
       propertyPath: m_Type
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7778558434935992808, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 06914a3e659ebb44ba52f705568703be, type: 3}
     - target: {fileID: 7778558434976753271, guid: 7f29e5f7ffdea4a6793cefb278b61f0c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

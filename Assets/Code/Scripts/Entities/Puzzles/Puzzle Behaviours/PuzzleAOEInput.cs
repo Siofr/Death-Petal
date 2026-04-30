@@ -5,6 +5,7 @@ public class PuzzleAOEInput : PuzzleInputBase
 {
     [Header("AOE Effect Input Setup")] 
     [SerializeField] private float _effectTime;
+    [SerializeField] private ParticleSystem[] _onShotParticles;
     
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
@@ -15,6 +16,11 @@ public class PuzzleAOEInput : PuzzleInputBase
             CompletionCondition(true, output);
             
             StartEffectTimer(_effectTime);
+        }
+        
+        foreach (ParticleSystem onShotParticle in _onShotParticles)
+        {
+            onShotParticle.Play();
         }
         
         ToggleAllWeaknesses(false);

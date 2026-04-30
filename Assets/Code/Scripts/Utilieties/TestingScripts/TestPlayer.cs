@@ -24,6 +24,10 @@ public struct PlayerDamagedEvent : IEvent
     }
 }
 
+public struct PlayerHealedEvent : IEvent { }
+
+public struct PlayerLowHealthEvent : IEvent { }
+
 public struct PlayerDeathEvent : IEvent { }
 
 public class TestPlayer : EntityBase, IEntity
@@ -31,31 +35,43 @@ public class TestPlayer : EntityBase, IEntity
     [Header("Player Fields")] 
     [SerializeField] private float _damageCooldown;
     
-    private EventBindings<PetalPickpEvent> _petalPickupEventListener;
+    //private EventBindings<PetalPickpEvent> _petalPickupEventListener;
 
     private int _maxHealth = 3;
     private int _currentHealth;
     private int _currentPetalCharge;
     private int _goalPetalCharge = 3;
 
+    private EventBindings<PlayerLowHealthEvent> _onPlayerLowHealth;
+    private EventBindings<PlayerHealedEvent> _onPlayerHealedEvent;
+
+    private bool _isCritical;
+
     public void Awake()
     {
         base.Awake();
-        _currentHealth = _maxHealth;
-        _petalPickupEventListener = new EventBindings<PetalPickpEvent>(OnPetalCollected);
+
+        _onPlayerLowHealth = new EventBindings<PlayerLowHealthEvent>(OnPlayerCriticalHealth);
+        _onPlayerHealedEvent = new EventBindings<PlayerHealedEvent>(OnPlayerRecovered);
+        // _currentHealth = _maxHealth;
+        // _petalPickupEventListener = new EventBindings<PetalPickpEvent>(OnPetalCollected);
     }
 
     private void OnEnable()
     {
-        EventBus<PetalPickpEvent>.Register(_petalPickupEventListener);
+        //EventBus<PetalPickpEvent>.Register(_petalPickupEventListener);
+        EventBus<PlayerLowHealthEvent>.Register(_onPlayerLowHealth);
+        EventBus<PlayerHealedEvent>.Register(_onPlayerHealedEvent);
     }
 
     private void OnDisable()
     {
-        EventBus<PetalPickpEvent>.Unregister(_petalPickupEventListener);
+        //EventBus<PetalPickpEvent>.Unregister(_petalPickupEventListener);
+        EventBus<PlayerLowHealthEvent>.Unregister(_onPlayerLowHealth);
+        EventBus<PlayerHealedEvent>.Unregister(_onPlayerHealedEvent);
     }
 
-    private void OnPetalCollected()
+    /*private void OnPetalCollected()
     {
         _currentPetalCharge++;
 
@@ -67,14 +83,15 @@ public class TestPlayer : EntityBase, IEntity
             if (Weaknesses.Count < _maxHealth)
             {
                 Weaknesses.Add(new Weakness());
-                OnPlayerHealthChange();
+                //DEPRECATED
+                //OnPlayerHealthChange();
             }
 
             return;
         }
 
         EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Petal", 10));
-    }
+    }*/
 
     private float _lastDamageTime;
     
@@ -99,6 +116,8 @@ public class TestPlayer : EntityBase, IEntity
             EventBus<PlayerDamagedEvent>.Raise(new PlayerDamagedEvent(Weaknesses.Count));
         }
         
+        if(Weaknesses.Count == 1) EventBus<PlayerLowHealthEvent>.Raise(new PlayerLowHealthEvent());
+        
         if (Weaknesses.Count < 1)
         {
             //UnityEngine.SceneManagement.SceneManager.LoadScene(0);
@@ -106,18 +125,30 @@ public class TestPlayer : EntityBase, IEntity
             EventBus<PlayerDeathEvent>.Raise(new PlayerDeathEvent());
         }
 
-        OnPlayerHealthChange();
+        //DEPRECATED
+        //OnPlayerHealthChange();
     }
 
 
-    private void OnPlayerHealthChange()
-    {
-        _currentHealth = Weaknesses.Count;
+    // private void OnPlayerHealthChange()
+    // {
+    //     _currentHealth = Weaknesses.Count;
+    //
+    //     if (_currentHealth == 1)
+    //     {
+    //         StartCoroutine(LowHealthEffect());
+    //     }
+    // }
 
-        if (_currentHealth == 1)
-        {
-            StartCoroutine(LowHealthEffect());
-        }
+    private void OnPlayerCriticalHealth(PlayerLowHealthEvent ctx)
+    {
+        _isCritical = true;
+        StartCoroutine(LowHealthEffect());
+    }
+
+    private void OnPlayerRecovered(PlayerHealedEvent ctx)
+    {
+        _isCritical = false;
     }
 
     IEnumerator LowHealthEffect()
@@ -126,7 +157,7 @@ public class TestPlayer : EntityBase, IEntity
 
         yield return new WaitForSeconds(1.5f);
 
-        if (_currentHealth > 1 || _currentHealth <= 0) yield return null;
+        if (!_isCritical) yield return null;
         else StartCoroutine(LowHealthEffect());
     }
 }

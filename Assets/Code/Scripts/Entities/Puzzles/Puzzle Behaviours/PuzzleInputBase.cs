@@ -26,7 +26,7 @@ public abstract class PuzzleInputBase : EntityBase, IPuzzleInput
         if (!Weaknesses.Contains(weakness)) return;
     }
 
-    public bool CompletionCondition(bool condition, IPuzzleOutput targetOutput)
+    public virtual bool CompletionCondition(bool condition, IPuzzleOutput targetOutput)
     {
         Debug.Log("Evaluating Puzzle Conditions");
         
