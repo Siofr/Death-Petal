@@ -73,6 +73,7 @@ public class SFXManager : Singleton<SFXManager>
     private EventBindings<SFXEventTrigger> _sfxEventListener;
     private EventBindings<SFXStopEvent> _sfxStopEventListener;
     private EventBindings<SFXSnapshot> _sfxSnapshotListener;
+    private EventBindings<PauseEvent> _pauseEventListener;
 
     public List<EventReference> snapshotReferences = new List<EventReference>();
     private List<EventInstance> snapshotInstances = new List<EventInstance>();
@@ -90,6 +91,7 @@ public class SFXManager : Singleton<SFXManager>
         }
 
         _sfxSnapshotListener = new EventBindings<SFXSnapshot>(ChangeSnapshot);
+        _pauseEventListener = new EventBindings<PauseEvent>(OnPauseEvent);
     }
 
     public void OnEnable()
@@ -97,6 +99,7 @@ public class SFXManager : Singleton<SFXManager>
         EventBus<SFXEventTrigger>.Register(_sfxEventListener);
         EventBus<SFXStopEvent>.Register(_sfxStopEventListener);
         EventBus<SFXSnapshot>.Register(_sfxSnapshotListener);
+        EventBus<PauseEvent>.Register(_pauseEventListener);
     }
 
     public void OnDisable()
@@ -104,6 +107,7 @@ public class SFXManager : Singleton<SFXManager>
         EventBus<SFXEventTrigger>.Unregister(_sfxEventListener);
         EventBus<SFXStopEvent>.Unregister(_sfxStopEventListener);
         EventBus<SFXSnapshot>.Unregister(_sfxSnapshotListener);
+        EventBus<PauseEvent>.Unregister(_pauseEventListener);
     }
 
     public void ChangeSnapshot(SFXSnapshot ctx)
@@ -141,5 +145,16 @@ public class SFXManager : Singleton<SFXManager>
         FMOD.Studio.PLAYBACK_STATE state;
         instance.getPlaybackState(out state);
         return state != FMOD.Studio.PLAYBACK_STATE.STOPPED;
+    }
+
+    void OnPauseEvent(PauseEvent ctx)
+    {
+        if (ctx.isPaused)
+        {
+            EventBus<SFXSnapshot>.Raise(new SFXSnapshot(2, true));
+            return;
+        }
+
+        EventBus<SFXSnapshot>.Raise(new SFXSnapshot(2, false));
     }
 }

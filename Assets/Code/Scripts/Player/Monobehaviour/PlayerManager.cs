@@ -312,12 +312,14 @@ namespace State_Machine
 
         public void AddBullet(int index)
         {
+            if (_isDialogue) return;
             EventBus<AddBulletEvent>.Raise(new AddBulletEvent(bulletTypes[index]));
             // EventBus<AddBulletEvent>.Raise(new AddBulletEvent(bulletTypes[index]));
         }
 
         public void RemoveBullet()
         {
+            if (_isDialogue) return;
             EventBus<RemoveBulletEvent>.Raise(new RemoveBulletEvent(-1, -1));
         }
 
