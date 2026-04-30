@@ -60,6 +60,12 @@ public struct PauseEvent : IEvent
     public PauseEvent(bool isPaused) => this.isPaused = isPaused;
 }
 
+public struct CameraActionEvent : IEvent
+{
+    public bool isActive;
+    public CameraActionEvent(bool isActive) => this.isActive = isActive;
+}
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBase : EntityBase, IEntity
 {

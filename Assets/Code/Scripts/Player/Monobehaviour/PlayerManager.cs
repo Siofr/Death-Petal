@@ -41,9 +41,13 @@ namespace State_Machine
         private EventBindings<TriggerDialogueEvent> _dialogueEnteredListener;
         private EventBindings<ExitDialogueEvent> _exitDialogueEventListener;
         private EventBindings<PauseEvent> _pauseEventListener;
+        private EventBindings<CameraActionEvent> _cameraActionEventListener;
         
         [SerializeField]
         private Material[] playerDependentMaterials;
+
+        [Space] [Header("Player Positional Materials")][SerializeField]
+        private Material[] _playerPositionalMaterials;
 
         protected override void Awake()
         {
@@ -55,6 +59,7 @@ namespace State_Machine
             _dialogueEnteredListener = new EventBindings<TriggerDialogueEvent>(OnDialogueEntered);
             _exitDialogueEventListener = new EventBindings<ExitDialogueEvent>(OnDialogueExited);
             _pauseEventListener = new EventBindings<PauseEvent>((OnPause));
+            _cameraActionEventListener = new EventBindings<CameraActionEvent>(OnCameraAction);
         }
 
         private void OnEnable()
@@ -63,6 +68,7 @@ namespace State_Machine
             EventBus<TriggerDialogueEvent>.Register(_dialogueEnteredListener);
             EventBus<ExitDialogueEvent>.Register(_exitDialogueEventListener);
             EventBus<PauseEvent>.Register(_pauseEventListener);
+            EventBus<CameraActionEvent>.Register(_cameraActionEventListener);
             
             InputHandler.PauseEvent += OnPauseInput;
             
@@ -82,6 +88,7 @@ namespace State_Machine
             EventBus<TriggerDialogueEvent>.Unregister(_dialogueEnteredListener);
             EventBus<ExitDialogueEvent>.Unregister(_exitDialogueEventListener);
             EventBus<PauseEvent>.Unregister(_pauseEventListener);
+            EventBus<CameraActionEvent>.Unregister(_cameraActionEventListener);
 
             InputHandler.PauseEvent -= OnPauseInput;
             
@@ -327,6 +334,16 @@ namespace State_Machine
         private void OnDialogueExited()
         {
             _isDialogue = false;
+        }
+
+        public void OnCameraAction(CameraActionEvent ctx)
+        {
+            var isActive = ctx.isActive? 1 : 0;
+        
+            foreach (var editorHinderedMaterial in _playerPositionalMaterials)
+            {
+                editorHinderedMaterial.SetFloat("_IsEditor", isActive);
+            }
         }
     }
 }
