@@ -267,18 +267,35 @@ position: -615,454
 ---
 <<start LineView>>
 <<actor ActorScreen 0 "evil">>
-<<actor ActorScreen 2 "surprised" false>>
+<<actor ActorScreen 2 "sad" false>>
 Hellspawn: Wait! Stop shooting! I’m friendly!
-Harmony: Enough chat, Hellspawn. Attack me already!
+Harmony: Enough chat. Attack me already!
 Hellspawn: Fight you? Are you crazy?!
 Hellspawn: You’re holding the Flower of Hell! 
+<<actor ActorScreen 0 "sad">>
 Harmony: Ugh… so everyone tells me. 
+<<actor ActorScreen 2 "forlorn" false>>
 Hellspawn: They say the Flower of Hell can shoot through [imp] anything.[/imp] 
 Hellspawn: Even the fabric that holds this place together.  
+<<actor ActorScreen 0 "surpised">>
 Harmony: [imp] Interesting…[/imp]
 Harmony: So if I figure out how to harness this thing’s power…
 Harmony: I can finally go home?
+<<actor ActorScreen 2 "surprised" false>>
 Hellspawn: Uhh… Maybe?
+<<hideAll ActorScreen>>
+<<end LineView>>
+===
+
+title: L1PreBalcony
+position: -799,-285
+---
+<<start LineView>>
+<<actor ActorScreen 0 "surprised">>
+<<actor ActorScreen 1 "surprised" false>>
+Harmony: Nice view huh.
+Abaddon: You could say that.
+<<event BalconyDialogue>>
 <<hideAll ActorScreen>>
 <<end LineView>>
 ===
