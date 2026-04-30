@@ -44,5 +44,6 @@ public class Petal : MonoBehaviour
     public void OnDestroy()
     {
         EventBus<PetalPickpEvent>.Raise(new PetalPickpEvent());
+        EventBus<ChangeScoreEvent>.Raise(new ChangeScoreEvent("Petal", 50));
     }
 }
