@@ -119,7 +119,7 @@ public class MusicManager : MonoBehaviour
 
     void OnPlayerUntargeted(PlayerLostTargetEvent ctx)
     {
-        _playerThreat -= ctx.threatLevel;
+        _playerThreat = Mathf.Clamp(_playerThreat - ctx.threatLevel, 0, 1000);
 
         OnThreatLevelUpdate(_playerThreat);
     }
