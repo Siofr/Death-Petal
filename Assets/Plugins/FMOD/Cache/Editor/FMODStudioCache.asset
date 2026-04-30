@@ -42,7 +42,7 @@ MonoBehaviour:
   Name: GameState
   StudioPath: 
   Min: 0
-  Max: 3
+  Max: 2
   Default: 0
   ID:
     data1: 3055472416
@@ -53,7 +53,6 @@ MonoBehaviour:
   - None
   - Passive
   - Combat
-  - Pause
   Exists: 1
 --- !u!114 &-9101916683127596160
 MonoBehaviour:
@@ -189,6 +188,33 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
+  Length: 0
+--- !u!114 &-8560549414885953728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: snapshot:/Pause
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: snapshot:/Pause
+  Guid:
+    Data1: -646513719
+    Data2: 1250885246
+    Data3: 2024722597
+    Data4: -372747932
+  Banks:
+  - {fileID: 4865722936513190796}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
   Length: 0
 --- !u!114 &-8457333641816573652
 MonoBehaviour:
@@ -1990,6 +2016,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1500
+--- !u!114 &-3664548092310565124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Characters/Player Character/Placeholder/deathEffect
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Characters/Player Character/Placeholder/deathEffect
+  Guid:
+    Data1: 1210948400
+    Data2: 1281306341
+    Data3: 993965444
+    Data4: 777777907
+  Banks:
+  - {fileID: 4865722936513190796}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 12200
 --- !u!114 &-3651695537611920929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3496,13 +3549,15 @@ MonoBehaviour:
   - {fileID: 4007809383840190616}
   - {fileID: -4296120307866998797}
   - {fileID: 8434464126978821268}
+  - {fileID: -3664548092310565124}
+  - {fileID: -8560549414885953728}
   EditorParameters: []
   MasterBanks:
   - {fileID: 4865722936513190796}
   StringsBanks:
   - {fileID: 9113292504978964348}
   cacheVersion: 131849
-  cacheTime: 639131539444165210
+  cacheTime: 639131641374766903
   SerializableEventsDict:
   - key: event:/Characters/Enemies/Bishop/bishopLoop
     index: 0
@@ -3662,6 +3717,10 @@ MonoBehaviour:
     index: 77
   - key: event:/Weapons/Revolver/revRotate
     index: 78
+  - key: event:/Characters/Player Character/Placeholder/deathEffect
+    index: 79
+  - key: snapshot:/Pause
+    index: 80
 --- !u!114 &50958259417677923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5721,10 +5780,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639131539444145094
+  lastModified: 639131641374671643
   FileSizes:
   - Name: Desktop
-    Value: 5140000
+    Value: 5163232
   Exists: 1
 --- !u!114 &4953922096405066079
 MonoBehaviour:
@@ -7668,8 +7727,8 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639131539444165210
+  lastModified: 639131641374766903
   FileSizes:
   - Name: Desktop
-    Value: 5300
+    Value: 5490
   Exists: 1

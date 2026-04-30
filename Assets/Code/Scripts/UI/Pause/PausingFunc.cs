@@ -4,11 +4,16 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using FMOD;
+using FMODUnity;
 
 public class PausingFunc : MonoBehaviour
 {
     public bool isPaused;
     public Image UISludge;
+
+    public EventReference openPause;
+    public EventReference closePause;
     
     public void TogglePause()
     {
@@ -35,6 +40,8 @@ public class PausingFunc : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(EnterUISludge());
+
+        RuntimeManager.PlayOneShot(openPause);
     }
 
     private void Awake()
@@ -45,11 +52,7 @@ public class PausingFunc : MonoBehaviour
     
     private void OnDisable()
     {
-        // EventBus<PauseEvent>.Unregister(_pauseEventListener);
+        RuntimeManager.PlayOneShot(closePause);
         // StopAllCoroutines();
-    }
-    void Update()
-    {
-        
     }
 }
