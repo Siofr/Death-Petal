@@ -25,7 +25,19 @@ public class TempSceneManager : MonoBehaviour
 
     public void loadScene(int sceneIndex)
     {
-        SceneManager.LoadScene(sceneIndex);
+        StartCoroutine(LoadSceneWithTransition(sceneIndex));
+    }
+
+    private IEnumerator LoadSceneWithTransition(int sceneIndex)
+    {
+        Scene activeScene = SceneManager.GetActiveScene();
+        EventBus<SetTransitionEvent>.Raise(new SetTransitionEvent(true, true));
+        yield return new WaitForSeconds(0.3f);
+        
+        //Loading
+        yield return SceneManager.LoadSceneAsync(sceneIndex);
+        SceneManager.UnloadSceneAsync(activeScene);
+        //EventBus<SetTransitionEvent>.Raise(new SetTransitionEvent(false, true));
     }
 
     public void LoadCredits()

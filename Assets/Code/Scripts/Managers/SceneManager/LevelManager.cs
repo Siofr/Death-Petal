@@ -236,5 +236,7 @@ public class LevelManager : MonoBehaviour
             
             EntityHelper.UnlockAllInputs();
         }
+        
+        EventBus<SetTransitionEvent>.Raise( new SetTransitionEvent(false, true));
     }
 }
