@@ -122,7 +122,7 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
         {
             Weaknesses[0].Toggle(true);
         }
-        else ToggleAllWeaknessIcons(false);
+        else ToggleAllWeaknesses(false);
     }
     
     public string SaveableName => name;

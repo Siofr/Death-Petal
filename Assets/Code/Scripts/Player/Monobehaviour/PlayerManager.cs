@@ -1,5 +1,8 @@
+using System;
 using State_Machine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -287,27 +290,68 @@ namespace State_Machine
             transform.LookAt(lookForward);
         }
 
+        private List<Collider> _aimColliders = new List<Collider>();
+        
         public void HandleAim()
         {
-            RaycastHit hit;
-            Weakness weakness;
+            _aimColliders.Clear();
+            var results = new RaycastHit[12];
 
-            if (Physics.SphereCast(transform.position, 0.75f, transform.forward, out hit, 30,1 &~(1 << 6 | 1 << 12 | 1 << 10)))
+            var targetCheck = Physics.SphereCastNonAlloc(transform.position, .75f, transform.forward, results, 30,
+                1 & ~(1 << 6 | 1 << 12 | 1 << 10 | 1 << 15 | 1 << 16));
+
+            if (targetCheck < 1)
             {
-                if (hit.transform.TryGetComponent<Weakness>(out weakness))
-                {
-                    if (hit.transform != activeTarget)
-                    {
-                        activeTarget = hit.transform;
-                        EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(hit.transform));
-                    }
+                activeTarget = null;
+                EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
+                return;
+            }
 
-                    return;
+            var tempWeaknesses = new List<Weakness>();
+
+            foreach (var tempWeakness in results)
+            {
+                if (tempWeakness.transform == null) continue;
+                
+                _aimColliders.Add(tempWeakness.collider);
+                
+                tempWeakness.transform.TryGetComponent(out Weakness weakness);
+
+                if (weakness == null) continue;
+                
+                tempWeaknesses.Add(weakness);
+            }
+
+            if (tempWeaknesses.Count == 0)
+            {
+                activeTarget = null;
+                EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
+                return;
+            }
+
+            if (tempWeaknesses.Count < 2)
+            {
+                activeTarget = tempWeaknesses[0].transform;
+                EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(tempWeaknesses[0].transform));
+                return;
+            }
+            
+            var closestWeakness = tempWeaknesses[0];
+            var tempDistance =  Vector3.Distance(transform.position, tempWeaknesses[0].transform.position);
+            
+            for (int i = 1; i < tempWeaknesses.Count; i++)
+            {
+                var dist = Vector3.Distance(transform.position, tempWeaknesses[i].transform.position);
+
+                if (dist < tempDistance)
+                {
+                    tempDistance = dist;
+                    closestWeakness = tempWeaknesses[i];
                 }
             }
 
-            activeTarget = null;
-            EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(null));
+            activeTarget = closestWeakness.transform;
+            EventBus<ActiveTargetEvent>.Raise(new ActiveTargetEvent(closestWeakness.transform));
         }
 
         public void AddBullet(int index)
@@ -346,6 +390,13 @@ namespace State_Machine
             {
                 editorHinderedMaterial.SetFloat("_IsEditor", isActive);
             }
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.darkGreen;
+            
+            Gizmos.DrawLine(transform.position, transform.forward*30f);
         }
     }
 }

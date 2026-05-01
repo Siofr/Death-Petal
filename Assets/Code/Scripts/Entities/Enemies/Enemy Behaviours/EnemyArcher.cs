@@ -123,6 +123,8 @@ public class EnemyArcher: EnemyBase
 
     public void UpdateLineRenderer()
     {
+        if(target == null) return;
+        
         _targetLineRender.SetPosition(1, target.position);
     }
     

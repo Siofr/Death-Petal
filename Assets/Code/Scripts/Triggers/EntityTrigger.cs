@@ -9,7 +9,7 @@ public class EntityTrigger : EntityBase, IEntity
     
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
-        EventBus<LevelSaveEvent>.Raise(new LevelSaveEvent());
+        //EventBus<LevelSaveEvent>.Raise(new LevelSaveEvent());
         
         int weaknessCount = Weaknesses.Count;
 
