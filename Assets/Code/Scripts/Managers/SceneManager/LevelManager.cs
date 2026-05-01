@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -237,6 +238,14 @@ public class LevelManager : MonoBehaviour
             EntityHelper.UnlockAllInputs();
         }
         
+        EventBus<SetTransitionEvent>.Raise( new SetTransitionEvent(false, true));
+
+    }
+
+    private IEnumerator EnterScene()
+    {
+        yield return new WaitForFixedUpdate();
+        print("Testing A");
         EventBus<SetTransitionEvent>.Raise( new SetTransitionEvent(false, true));
     }
 }
