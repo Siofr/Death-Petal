@@ -667,7 +667,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 874984a2413ea5047981244a2ddf9342, type: 2}
+  - {fileID: 2100000, guid: 0cae711be7fff7e4aa60d58cd4698798, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1288,7 +1288,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 874984a2413ea5047981244a2ddf9342, type: 2}
+  - {fileID: 2100000, guid: 0cae711be7fff7e4aa60d58cd4698798, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1397,7 +1397,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3669816929730411309
 Transform:
   m_ObjectHideFlags: 0
@@ -1438,7 +1438,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7196831035469062271, guid: a052453e46b20954fb2be80eb50991cb, type: 3}
+  - {fileID: 2100000, guid: 0cae711be7fff7e4aa60d58cd4698798, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1889,7 +1889,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 874984a2413ea5047981244a2ddf9342, type: 2}
+  - {fileID: 2100000, guid: 0cae711be7fff7e4aa60d58cd4698798, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2882,7 +2882,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 874984a2413ea5047981244a2ddf9342, type: 2}
+  - {fileID: 2100000, guid: 0cae711be7fff7e4aa60d58cd4698798, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3122,7 +3122,10 @@ MonoBehaviour:
   playerSprintSpeed: 5.5
   playerAimSpeed: 2.5
   currentSpeed: 0
+  _movement: {x: 0, y: 0, z: 0}
   lookDir: {x: 0, y: 0, z: 0}
+  pauseMenu: {fileID: 0}
+  _isSprinting: 0
   activeTarget: {fileID: 0}
   playerDependentMaterials:
   - {fileID: 2100000, guid: 341d364530d4c5441bd580dd31ef7927, type: 2}
@@ -3130,6 +3133,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: a4f29bea978a9d9459fc41a7d926c690, type: 2}
   - {fileID: -876546973899608171, guid: f38a24c496103f04f8f424d1dff04d4a, type: 3}
   - {fileID: 2100000, guid: b29b855caf3ef7d40ae7c5de1612203d, type: 2}
+  _playerPositionalMaterials: []
 --- !u!114 &3742391590718636333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3156,6 +3160,27 @@ MonoBehaviour:
       Data3: -1841470556
       Data4: 193580785
     Path: event:/Weapons/Placeholder/addRemoveBullet
+  onAddBulletSFX:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  onRemoveBulletSFX:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  onRotateBarrelSFX:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &5534597485403694237
 GameObject:
   m_ObjectHideFlags: 0
@@ -3213,7 +3238,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 874984a2413ea5047981244a2ddf9342, type: 2}
+  - {fileID: 2100000, guid: 0cae711be7fff7e4aa60d58cd4698798, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3857,6 +3882,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543dc9f80c05fd147862bdc4f1a859d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SFXFootsteps
+  character: 0
+  texture: 0
+  terrainParams: []
   eventPath:
     Guid:
       Data1: 1219859637
@@ -3876,6 +3904,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543dc9f80c05fd147862bdc4f1a859d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SFXFootsteps
+  character: 0
+  texture: 0
+  terrainParams: []
   eventPath:
     Guid:
       Data1: 1219859637
@@ -4891,6 +4922,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa88ba538d6463439ef93bf67c0c2e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TempSceneManager
+  _credits: {fileID: 0}
+  _creditsButton: {fileID: 0}
+  isCreditsOpen: 0
 --- !u!1 &8108885791494765307
 GameObject:
   m_ObjectHideFlags: 0
@@ -5129,7 +5163,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 874984a2413ea5047981244a2ddf9342, type: 2}
+  - {fileID: 2100000, guid: 0cae711be7fff7e4aa60d58cd4698798, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

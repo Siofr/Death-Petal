@@ -68,6 +68,7 @@ public class UIGradeDisplay : MonoBehaviour
         EventBus<ChangeCameraState>.Raise(new ChangeCameraState(true));
         EventBus<TriggerDialogueEvent>.Raise(new TriggerDialogueEvent());
 
+        container.gameObject.SetActive(true);
         background.gameObject.SetActive(true);
 
         for (int i = 0; i < ctx.grades.Count; i++)
