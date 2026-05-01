@@ -18,7 +18,7 @@ public struct ExitDialogueEvent : IEvent
 
 public class DialogueManager : Singleton<DialogueManager>
 {
-    private DialogueRunner dialogueRunner;
+    [SerializeField] private DialogueRunner dialogueRunner;
     private EventBindings<TriggerDialogueEvent> _triggerDialogueEventListener;
 
     protected override void Awake()
@@ -40,7 +40,7 @@ public class DialogueManager : Singleton<DialogueManager>
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        dialogueRunner = FindFirstObjectByType<DialogueRunner>();
+        //dialogueRunner = FindFirstObjectByType<DialogueRunner>();
         dialogueRunner.onDialogueComplete.AddListener(OnDialogueEnd);
     }
 
