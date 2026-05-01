@@ -23,6 +23,11 @@ public struct OnLevelStartEvent : IEvent
     }
 }
 
+public struct OnBossKilledEvent : IEvent
+{
+    
+}
+
 public struct DisplayEndUI : IEvent
 {
     public Dictionary<string, string> grades;
@@ -40,6 +45,7 @@ public class GradeManager : MonoBehaviour
     EventBindings<OnLevelEndEvent> _levelEndEventListener;
     EventBindings<OnLevelStartEvent> _levelStartEventListener;
     EventBindings<UpdateScoreEvent> _updateScoreEventListener;
+    EventBindings<OnBossKilledEvent> _onBossKilledEventListener;
 
     public GradeSO[] gradeObjects;
     private Stage currentStage;
@@ -85,6 +91,7 @@ public class GradeManager : MonoBehaviour
         _levelEndEventListener = new EventBindings<OnLevelEndEvent>(OnLevelEnd);
         _levelStartEventListener = new EventBindings<OnLevelStartEvent>(OnLevelStart);
         _updateScoreEventListener = new EventBindings<UpdateScoreEvent>(OnScoreUpdate);
+        _onBossKilledEventListener = new EventBindings<OnBossKilledEvent>(OnBossKilled);
     }
 
     private void OnEnable()
@@ -92,6 +99,7 @@ public class GradeManager : MonoBehaviour
         EventBus<OnLevelEndEvent>.Register(_levelEndEventListener);
         EventBus<OnLevelStartEvent>.Register(_levelStartEventListener);
         EventBus<UpdateScoreEvent>.Register(_updateScoreEventListener);
+        EventBus<OnBossKilledEvent>.Register(_onBossKilledEventListener);
     }
 
     private void OnDisable()
@@ -99,6 +107,7 @@ public class GradeManager : MonoBehaviour
         EventBus<OnLevelEndEvent>.Unregister(_levelEndEventListener);
         EventBus<OnLevelStartEvent>.Unregister(_levelStartEventListener);
         EventBus<UpdateScoreEvent>.Unregister(_updateScoreEventListener);
+        EventBus<OnBossKilledEvent>.Unregister(_onBossKilledEventListener);
     }
 
     private void Update()
@@ -174,6 +183,11 @@ public class GradeManager : MonoBehaviour
             finalGrades,
             totalLetterGrade
             ));
+    }
+
+    private void OnBossKilled()
+    {
+        EventBus<OnLevelEndEvent>.Raise(new OnLevelEndEvent(currentStage));
     }
 
     private string ConvertToTime(float time)
