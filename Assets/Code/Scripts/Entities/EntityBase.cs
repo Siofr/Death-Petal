@@ -165,8 +165,6 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
         {
             health.Add(new WeaknessSaveData(Weaknesses[i].WeaknessIconTransform.position, (int)Weaknesses[i].WeakType));
         }
-        
-        _saveData = new EntitySaveData(SaveID, transform.position, health);
 
  #if UNITY_EDITOR
             EditorUtility.SetDirty(_saveSO);
@@ -188,8 +186,6 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
     public virtual void HandleLoadData(ref LevelSaveData refData)
     {
         Debug.Log($"{name}: Loading");
-        
-        if (!refData.saveableID.Contains(SaveID)) return;
 
         foreach (var data in refData.entitySaveData)
         {
@@ -205,15 +201,26 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
         EditorUtility.SetDirty(this);
         PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
 #endif
-
+        
         InitialiseWeaknesses();
+        
+        if (!refData.saveableID.Contains(SaveID))
+        {
+            _saveData.health = new List<WeaknessSaveData>();
+        }
     }
 
     public virtual void HandleSaveData(ref LevelSaveData refData)
     {
-        if (!refData.saveableID.Contains(SaveID)) return;
+        // if (!refData.saveableID.Contains(SaveID))
+        // {
+        //     InitialiseWeaknesses();
+        //     
+        // }
         
         InitialiseWeaknesses();
+
+        if (!gameObject.activeSelf) Weaknesses.Clear();
         
         _saveData.Save(transform.position, Weaknesses);
 

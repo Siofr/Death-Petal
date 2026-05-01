@@ -66,6 +66,8 @@ public class WeightPuzzle : PuzzleInputBase
     
     private void CheckCompletionConditions()
     {
+        if (PuzzleOutputs[0].IsSolved) return;
+        
         var conditionIndex = 0;
         
         foreach(var weight in _weights)
@@ -100,12 +102,17 @@ public class WeightPuzzle : PuzzleInputBase
         
         foreach (var pCollider in puzzleColliders)
         {
-            if (!pCollider.bounds.Intersects(context.collider.bounds)) continue;
-
-            if (!_weightColliders.ContainsKey(context.weight))
+            foreach (var weight in _weights)
             {
-                _weightColliders.Add(context.weight, context.collider);
-                break;
+                var collider = weight.GetComponent<Collider>();
+                
+                if (!pCollider.bounds.Intersects(collider.bounds)) continue;
+
+                if (!_weightColliders.ContainsKey(weight))
+                {
+                    _weightColliders.Add(weight, collider);
+                    continue;
+                }   
             }
         }
         

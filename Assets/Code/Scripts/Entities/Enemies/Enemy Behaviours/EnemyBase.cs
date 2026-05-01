@@ -206,7 +206,7 @@ public class EnemyBase : EntityBase, IEntity
         
         if (animator != null)
         {
-            __enemyStateMachine.AddAnyTransition(spawnState, new FuncPredicate(()=> animator.GetBool("Spawning")));
+            __enemyStateMachine.AddTransition(idleState, spawnState, new FuncPredicate(()=> animator.GetBool("Spawning")));
             __enemyStateMachine.AddTransition(spawnState, idleState, new FuncPredicate(()=> !animator.GetBool("Spawning")));
         }
         
@@ -386,7 +386,7 @@ public class EnemyBase : EntityBase, IEntity
         base.HandleLoadData(ref refData);
         if (SaveInfo.health.Count < 1)
         {
-            gameObject.SetActive(true);
+            gameObject.SetActive(false);
             _isDead = true;
             
             ToggleAllWeaknesses(false);

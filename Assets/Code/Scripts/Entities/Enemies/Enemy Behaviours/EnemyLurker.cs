@@ -48,7 +48,7 @@ public class EnemyLurker : EnemyBase
 
         if (animator != null)
         {
-            __enemyStateMachine.AddAnyTransition(spawnState, new FuncPredicate(()=> animator.GetBool("Spawning")));
+            __enemyStateMachine.AddTransition(idleState, spawnState, new FuncPredicate(()=> animator.GetBool("Spawning")));
             __enemyStateMachine.AddTransition(spawnState, idleState, new FuncPredicate(()=> !animator.GetBool("Spawning")));
         }
             

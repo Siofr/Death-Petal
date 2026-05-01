@@ -68,6 +68,6 @@ public class BoxDestructible : EntityBase
     public override void HandleLoadData(ref LevelSaveData refData)
     {
         base.HandleLoadData(ref refData);
-        if(Weaknesses.Count < 1) gameObject.SetActive(false); 
+        if(SaveInfo.health.Count < 1) gameObject.SetActive(false);
     }
 }

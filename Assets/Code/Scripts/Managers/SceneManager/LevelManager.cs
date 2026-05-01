@@ -95,16 +95,13 @@ public class LevelManager : MonoBehaviour
             saveableGO = FindSaveables().Result;
             var tempSaveables = GetSaveablesWithObjects();
 
-            foreach (var tempSaveable in tempSaveables)
-            {
-                if (temp.saveableID.Contains(tempSaveable.Value.SaveID))
-                {
-                    
-                    continue;
-                }
-                
-                tempSaveable.Key.SetActive(false);
-            }
+            // foreach (var tempSaveable in tempSaveables)
+            // {
+            //     if (temp.saveableID.Contains(tempSaveable.Value.SaveID))
+            //     {
+            //         continue;
+            //     }
+            // }
             
             foreach (var saveable in tempSaveables.Values)
             {

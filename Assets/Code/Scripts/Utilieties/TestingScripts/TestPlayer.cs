@@ -28,6 +28,8 @@ public struct PlayerHealedEvent : IEvent { }
 
 public struct PlayerLowHealthEvent : IEvent { }
 
+public struct UpdateHealthEvent : IEvent { }
+
 public struct PlayerDeathEvent : IEvent { }
 
 public class TestPlayer : EntityBase, IEntity
@@ -159,5 +161,14 @@ public class TestPlayer : EntityBase, IEntity
 
         if (!_isCritical) yield return null;
         else StartCoroutine(LowHealthEffect());
+    }
+
+    public override void HandleLoadData(ref LevelSaveData refData)
+    {
+        var healthCount = Weaknesses.Count;
+        base.HandleLoadData(ref refData);
+
+        if (healthCount < 2) EventBus<PlayerLowHealthEvent>.Raise(new PlayerLowHealthEvent());
+        else EventBus<PlayerHealedEvent>.Raise(new PlayerHealedEvent());
     }
 }
