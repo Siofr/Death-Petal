@@ -60,10 +60,11 @@ public class InputHandler : Singleton<InputHandler>
     [SerializeField]
     private bool _bypassTutorialProgress;
 
-    private Dictionary<string, InputAction> inputDict = new Dictionary<string, InputAction>();
+    static public Dictionary<string, InputAction> inputDict = new Dictionary<string, InputAction>();
 
     protected override void Awake()
     {
+        inputDict.Clear();
         base.Awake();
 
         _inputActions = new InputSystem_Actions();

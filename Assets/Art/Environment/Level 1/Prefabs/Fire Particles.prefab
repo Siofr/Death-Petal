@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5553584613229304708}
   - component: {fileID: 2973644284107493655}
   - component: {fileID: 8433627502467133721}
+  - component: {fileID: 9030132271353889581}
   m_Layer: 0
   m_Name: Fire Particles
   m_TagString: Untagged
@@ -4836,3 +4837,34 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &9030132271353889581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9095120004034374476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1644746029
+      Data2: 1306705780
+      Data3: 1625083547
+      Data4: -9104214
+    Path: event:/Interactables/Puzzles/torchLoop
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 10

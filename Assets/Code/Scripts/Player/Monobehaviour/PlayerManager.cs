@@ -193,10 +193,7 @@ namespace State_Machine
         {
             _isPaused = ctx.isPaused;
             
-            if(_isPaused) EntityHelper.LockAllInputs();
-            else EntityHelper.UnlockAllInputs();
-            
-            pauseMenu.SetActive(_isPaused);            
+            pauseMenu.SetActive(_isPaused);
         }
         
         void OnReloadStart()
@@ -292,7 +289,7 @@ namespace State_Machine
             RaycastHit hit;
             Weakness weakness;
 
-            if (Physics.SphereCast(transform.position, 0.75f, transform.forward, out hit, 30,1 &~(1 << 6 | 1 << 12 | 1 << 10)))
+            if (Physics.SphereCast(transform.position, 0.75f, transform.forward, out hit, 30,1 &~(1 << 6 | 1 << 12 | 1 << 10 | 1 << 15)))
             {
                 if (hit.transform.TryGetComponent<Weakness>(out weakness))
                 {

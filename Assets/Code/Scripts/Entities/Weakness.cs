@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [Flags]
@@ -114,9 +115,8 @@ public class Weakness : MonoBehaviour
         else _renderer.material.SetFloat("_Opacity", .12f);
     }
 
-    public void StartDelayDestroy()
+    public async Task StartDelayDestroy()
     {
-        Toggle(false);
         Destroy(transform.parent.gameObject);
     }
     

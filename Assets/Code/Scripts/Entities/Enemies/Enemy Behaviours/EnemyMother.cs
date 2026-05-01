@@ -133,12 +133,16 @@ public class EnemyMother: EnemyBase
                 yield return new WaitForSeconds(spawnTimeInterval);
             }
 
+            if (__isPaused) yield return null;
+            
             var enemyType = _spawnType switch
             {
                 EnemyType.Lurker => typeof(EnemyLurker),
                 EnemyType.Mother => typeof(EnemyMother),
                 _ => typeof(EnemyBase)
             };
+            
+            if (__isPaused) yield return null;
             
             EventBus<SpawnEnemyEvent>.Raise(new SpawnEnemyEvent(_spawnPointRef.position, enemyType, transform.parent, gameObject));
             
@@ -169,9 +173,17 @@ public class EnemyMother: EnemyBase
         _spawnedEnemies.Add(context.enemy);
     }
 
-    protected override void Update()
+    public override void HandleLoadData(ref LevelSaveData refData)
     {
-        base.Update();
-        //print(__enemyStateMachine.GetActiveState());
+        base.HandleLoadData(ref refData);
+        if (SaveInfo.health.Count < 1)
+        {
+            Debug.Log($"{name}: Correct Mother 0 Health Check");
+            
+            gameObject.SetActive(true);
+            _isDead = true;
+            
+            ToggleAllWeaknesses(false);
+        }
     }
 }

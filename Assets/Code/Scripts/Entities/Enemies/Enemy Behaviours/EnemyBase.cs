@@ -56,8 +56,30 @@ struct CorrectShotEvent : IEvent
 public struct PauseEvent : IEvent
 {
     public bool isPaused;
+
+    public static List<string> savedInputs = new List<string>();
     
-    public PauseEvent(bool isPaused) => this.isPaused = isPaused;
+    public PauseEvent(bool isPaused)
+    {
+        this.isPaused = isPaused;
+
+        if (isPaused)
+        {
+            foreach (var input in InputHandler.inputDict)
+            {
+                if(input.Value.enabled) savedInputs.Add(input.Key);
+            }
+            
+            EntityHelper.LockAllInputs();
+        }
+        else
+        {
+            foreach (var input in savedInputs)
+            {
+                EventBus<UnlockInput>.Raise(new UnlockInput(input));
+            }
+        }
+    }
 }
 
 public struct CameraActionEvent : IEvent
@@ -87,6 +109,7 @@ public class EnemyBase : EntityBase, IEntity
     public Coroutine attackRoutine = null;
 
     protected bool _isDead;
+    protected bool __isPaused;
     
     //Properties
     public bool IsDead => _isDead;
@@ -194,6 +217,7 @@ public class EnemyBase : EntityBase, IEntity
 
     private void OnPause(PauseEvent ctx)
     {
+        __isPaused = ctx.isPaused;
         StopAgent(ctx.isPaused);
         
         animator.speed = ctx.isPaused ? 0 : 1;
@@ -211,6 +235,7 @@ public class EnemyBase : EntityBase, IEntity
     {
         base.OnCameraChange(ctx);
         if (animator.GetBool(Animator.StringToHash("Spawning"))) Weaknesses[0].Toggle(false);
+        if(IsDead) ToggleAllWeaknesses(false);
     }
 
     protected virtual void OnEnable()
@@ -354,6 +379,18 @@ public class EnemyBase : EntityBase, IEntity
         }
 
         //print("Enemy Base Shot");
+    }
+
+    public override void HandleLoadData(ref LevelSaveData refData)
+    {
+        base.HandleLoadData(ref refData);
+        if (SaveInfo.health.Count < 1)
+        {
+            gameObject.SetActive(true);
+            _isDead = true;
+            
+            ToggleAllWeaknesses(false);
+        }
     }
 
     public virtual void StopAllStateRoutines()

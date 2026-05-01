@@ -24,6 +24,8 @@ public class EnemyAttackState<T> : EnemyBaseState<T> where T : EnemyBase
             yield return new WaitForSeconds(enemyController.enemyData.attackCooldown);
         }
         
+        yield return new WaitForSeconds(enemyController.enemyData.attackCooldown);
+        
         Debug.Log("Attack Phase Over");
         
         enemyController.attackRoutine = null;

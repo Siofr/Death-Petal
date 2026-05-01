@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 //using UnityEngine.SceneManagement;
@@ -47,7 +48,7 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
         EventBus<CameraChangeEvent>.Unregister(_onCameraChange);
     }
     
-    public virtual void InitialiseWeaknesses()
+    public async virtual Task InitialiseWeaknesses()
     {
         if (_weaknesses == null) return;
         
@@ -130,7 +131,7 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
     public SaveID_SO SaveSO => _saveSO;
     public int SaveID => _saveSO.saveID;
     
-    public void CreateSaveInstance(LevelSaveableData_SO levelSaveableData)
+    public async Task CreateSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
         if (_saveSO == null)
         {
@@ -174,26 +175,27 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
 #endif
     }
 
-    public void DeleteSaveInstance(LevelSaveableData_SO levelSaveableData)
+    public async Task DeleteSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
         _saveData = new EntitySaveData();
-        _saveSO = null;
-        
-        if (_saveSO == null) return;
-        
-        ISaveableHelper.RemoveExistingID(levelSaveableData, this);
-        _saveSO.saveID = 0;
+
+        if (_saveSO != null && _saveSO.saveID > 0)
+        {
+            _saveData.id = _saveSO.saveID;
+        }
     }
     
-    public void HandleLoadData(ref LevelSaveData refData)
+    public virtual void HandleLoadData(ref LevelSaveData refData)
     {
+        Debug.Log($"{name}: Loading");
+        
         if (!refData.saveableID.Contains(SaveID)) return;
 
         foreach (var data in refData.entitySaveData)
         {
             if (data.id != SaveID) continue;
             
-            InitialiseWeaknesses();
+            //InitialiseWeaknesses();
             
             _saveData = data;
             _saveData.Load(transform, ref _weaknesses);
@@ -207,7 +209,7 @@ public abstract class EntityBase : MonoBehaviour, IEntity, ISaveable<EntitySaveD
         InitialiseWeaknesses();
     }
 
-    public void HandleSaveData(ref LevelSaveData refData)
+    public virtual void HandleSaveData(ref LevelSaveData refData)
     {
         if (!refData.saveableID.Contains(SaveID)) return;
         

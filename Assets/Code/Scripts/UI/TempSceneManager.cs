@@ -18,14 +18,20 @@ public class TempSceneManager : MonoBehaviour
 
     public void reloadScene()
     {
+        //EventBusUtils.ClearAllBuses();
+        EventBus<LevelLoadEvent>.Raise(new LevelLoadEvent(false));
         EventBusUtils.ClearAllBuses();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        EventBus<LevelLoadEvent>.Raise(new LevelLoadEvent(false));
     }
 
     public void loadScene(int sceneIndex)
     {
         StartCoroutine(LoadSceneWithTransition(sceneIndex));
+    }
+
+    public void save()
+    {
+        EventBus<LevelSaveEvent>.Raise(new LevelSaveEvent());
     }
 
     private IEnumerator LoadSceneWithTransition(int sceneIndex)

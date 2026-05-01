@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -59,6 +60,8 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     
     protected IEnumerator PanCameraRoutine(Func<bool> exitCondition, float panSpeed)
     {
+        if (_alreadyLoaded) yield break;
+        
         print("Started panning Camera");
         
         EventBus<CameraActionEvent>.Raise(new CameraActionEvent(true));
@@ -145,11 +148,14 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         IsSolved = true;
     }
 
+    private bool _alreadyLoaded;
+    
     private void OnLevelLoaded(LevelLoadedEvent levelLoadedEvent)
     {
         if (_saveData.isSolved)
         {
             IsSolved = true;
+            _alreadyLoaded = true;
             EventBus<PuzzleSolvedEvent>.Raise(new PuzzleSolvedEvent(this));
         }
     }
@@ -173,7 +179,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     public SaveID_SO SaveSO => _saveSO;
     public int SaveID => _saveSO.saveID;
     
-    public void CreateSaveInstance(LevelSaveableData_SO levelSaveableData)
+    public async Task CreateSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
         if (_saveSO == null)
         {
@@ -214,17 +220,17 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         Debug.Log($"Created Save Instance for {name}");
     }
     
-    public void DeleteSaveInstance(LevelSaveableData_SO levelSaveableData)
+    public async Task DeleteSaveInstance(LevelSaveableData_SO levelSaveableData)
     {
         _saveData = new PuzzleOutputSaveData();
         
-        if (_saveSO == null) return;
-        
-        ISaveableHelper.RemoveExistingID(levelSaveableData, this);
-        _saveSO.saveID = 0;
+        if (_saveSO != null && _saveSO.saveID > 0)
+        {
+            _saveData.id = _saveSO.saveID;
+        }
     }
 
-    public void HandleSaveData(ref LevelSaveData refData)
+    public virtual void HandleSaveData(ref LevelSaveData refData)
     {
         if (!refData.saveableID.Contains(SaveID)) return;
         
@@ -252,7 +258,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
 #endif
     }
 
-    public void HandleLoadData(ref LevelSaveData refData)
+    public virtual void HandleLoadData(ref LevelSaveData refData)
     {
         if (!refData.saveableID.Contains(SaveID))
         {

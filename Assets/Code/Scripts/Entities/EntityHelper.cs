@@ -9,6 +9,7 @@ public class EntityHelper
         EventBus<LockInput>.Raise(new LockInput("North"));
         EventBus<LockInput>.Raise(new LockInput("South"));
         EventBus<LockInput>.Raise(new LockInput("West"));
+        EventBus<LockInput>.Raise(new LockInput("East"));
         EventBus<LockInput>.Raise(new LockInput("BarrelRight"));
         EventBus<LockInput>.Raise(new LockInput("BarrelLeft"));
     }
@@ -22,6 +23,7 @@ public class EntityHelper
         EventBus<UnlockInput>.Raise(new UnlockInput("North"));
         EventBus<UnlockInput>.Raise(new UnlockInput("South"));
         EventBus<UnlockInput>.Raise(new UnlockInput("West"));
+        EventBus<UnlockInput>.Raise(new UnlockInput("East"));
         EventBus<UnlockInput>.Raise(new UnlockInput("BarrelRight"));
         EventBus<UnlockInput>.Raise(new UnlockInput("BarrelLeft"));
     }

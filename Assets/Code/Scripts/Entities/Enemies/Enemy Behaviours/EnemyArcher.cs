@@ -153,6 +153,8 @@ public class EnemyArcher: EnemyBase
 
             while (tempRot != tempAngle)
             {
+                if (__isPaused) yield return null;
+                
                 tempRot += Time.deltaTime * tempSpeed;
                 _currentRotation += Time.deltaTime * tempSpeed;
                 
@@ -226,6 +228,8 @@ public class EnemyArcher: EnemyBase
         
         while (_timerRoutine != null)
         {
+            if (__isPaused) yield return null;
+            
             LookAt();
 
             if (!IsInAlertRange())
@@ -270,6 +274,8 @@ public class EnemyArcher: EnemyBase
         
         yield return TimerRoutine(time);
         
+        if (__isPaused) yield return null;
+        
         CheckLOS(maxLOSRadius, enemyData.attackRange);
         animator.SetTrigger("Shoot");
         
@@ -302,5 +308,19 @@ public class EnemyArcher: EnemyBase
         _targetRoutine = null;
         _shotRoutine = null;
         _timerRoutine = null;
+    }
+
+    public override void HandleLoadData(ref LevelSaveData refData)
+    {
+        base.HandleLoadData(ref refData);
+        if (SaveInfo.health.Count < 1)
+        {
+            Debug.Log($"{name}: Correct Archer 0 Health Check");
+            
+            gameObject.SetActive(true);
+            _isDead = true;
+            
+            ToggleAllWeaknesses(false);
+        }
     }
 }
