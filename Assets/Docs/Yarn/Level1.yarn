@@ -299,3 +299,30 @@ Abaddon: You could say that.
 <<hideAll ActorScreen>>
 <<end LineView>>
 ===
+
+title: L1Intro
+position: -799,-280
+---
+<<blackout LineView true>>
+<<start LineView>>
+Narrator: [nar]The ground, warm to the hellish touch, rumbles. [/nar]
+Narrator: [nar]Nobody watches, as a small crack appears along the dried dirt.[/nar]
+Narrator: [imp]An arm[/imp][nar]! An arm reaches through the floor... A body follows it too! [/nar]
+Narrator: [nar]A girl! [/nar][imp]A zombie girl has climbed out[/imp][nar]![/nar]
+<<actor ActorScreen 0 "zombie">>
+Harmony: Ergh... oughh... errrrgggg...
+Narrator: [nar]The zombie shakes her head left to right, leaves and dirt scattering across the room.[/nar]
+<<actor ActorScreen 0 "forlorn">>
+Harmony: Oh my sweet Lord below! What kind of hospitality is this!
+Narrator: [nar]Brush brush, she brushes the dirt from her clothes. [/nar]
+<<actor ActorScreen 0 "happy">>
+Harmony: Downtown has really gone down hill huh? Well... I just gotta get back uptown and--
+<<actor ActorScreen 0 "surprised">>
+Harmony: Oh neat!
+Narrator: [imp]Click, Click[/imp]
+<<actor ActorScreen 0 "evil">>
+Harmony: Someone's left me a gun!
+<<blackout LineView false>>
+<<hideAll ActorScreen>>
+<<end LineView>>
+===

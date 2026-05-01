@@ -41,6 +41,7 @@ public class TransitionManager : MonoBehaviour
 
     public void OnSetTransitionEvent(SetTransitionEvent ctx)
     {
+        print("Set Transition:" + ctx.showTransition + ctx.doAnimation);
         if(ctx.doAnimation)
             StartCoroutine(AnimateTransition(ctx.showTransition));
         else
