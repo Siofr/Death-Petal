@@ -1337,6 +1337,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 25.72702
       objectReference: {fileID: 0}
+    - target: {fileID: 4202623016333895455, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4298284469873691542, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -1672,6 +1676,10 @@ PrefabInstance:
     - target: {fileID: 7189380640475131980, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 22.675797
+      objectReference: {fileID: 0}
+    - target: {fileID: 7306665732791631016, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7487713643728230647, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2064,6 +2072,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: afad5236c9acaf945a58e7bebfd22228, type: 3}
+--- !u!1 &708356427 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4202623016333895455, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+  m_PrefabInstance: {fileID: 272796117}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &768721078 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1930096165713603630, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
@@ -2875,7 +2888,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 50
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2901,8 +2914,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215802007}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.008126646, y: 0.90388846, z: -0.017188862, w: -0.42734545}
-  m_LocalPosition: {x: -5.0702744, y: 3.037323, z: 12.557118}
+  m_LocalRotation: {x: 0.17552632, y: -0.7853891, z: 0.2578325, w: 0.5346746}
+  m_LocalPosition: {x: -66.40084, y: 1.9458256, z: -38.915752}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3686,6 +3699,11 @@ GameObject:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5179042380832375705, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
   m_PrefabInstance: {fileID: 127609053255897155}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1545197835 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7824949178524253203, guid: 0e23ad21747f3184eb6f7c2662f0b82a, type: 3}
+  m_PrefabInstance: {fileID: 272796117}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1556713711 stripped
 GameObject:
@@ -7410,6 +7428,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1299217493344226876, guid: 3cfe1d49f86404d47bcf9d0e55311b08, type: 3}
+      propertyPath: lockedUi
+      value: 
+      objectReference: {fileID: 1545197835}
+    - target: {fileID: 1299217493344226876, guid: 3cfe1d49f86404d47bcf9d0e55311b08, type: 3}
+      propertyPath: unlocksUi
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1299217493344226876, guid: 3cfe1d49f86404d47bcf9d0e55311b08, type: 3}
+      propertyPath: _unlocksInputs
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1805664237419887726, guid: 3cfe1d49f86404d47bcf9d0e55311b08, type: 3}
       propertyPath: m_LocalPosition.x
       value: -33.3
@@ -7453,6 +7483,14 @@ PrefabInstance:
     - target: {fileID: 1843024864004008378, guid: 3cfe1d49f86404d47bcf9d0e55311b08, type: 3}
       propertyPath: m_Name
       value: Tutorials
+      objectReference: {fileID: 0}
+    - target: {fileID: 6886033641366566679, guid: 3cfe1d49f86404d47bcf9d0e55311b08, type: 3}
+      propertyPath: lockedUi
+      value: 
+      objectReference: {fileID: 708356427}
+    - target: {fileID: 6886033641366566679, guid: 3cfe1d49f86404d47bcf9d0e55311b08, type: 3}
+      propertyPath: unlocksUi
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
