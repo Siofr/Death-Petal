@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIGradeDisplay : MonoBehaviour
@@ -110,6 +112,18 @@ public class UIGradeDisplay : MonoBehaviour
     void ChangeStageTitle(OnLevelEndEvent ctx)
     {
         stageName.text = ctx.stage.stageName;
+    }
+
+    public void GoToMainMenu()
+    {
+        StartCoroutine(ReturnToMainMenuWithTransition());
+    }
+
+    private IEnumerator ReturnToMainMenuWithTransition()
+    {
+        EventBus<SetTransitionEvent>.Raise(new SetTransitionEvent(true, true));
+        yield return new WaitForSeconds(0.5f);
+        yield return SceneManager.LoadSceneAsync(0);
     }
 
     public void ResetUI()
