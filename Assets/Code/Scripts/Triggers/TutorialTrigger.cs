@@ -80,9 +80,12 @@ public class TutorialTrigger : MonoBehaviour
     {
         if (_playOnce) return;
 
+        LockUI();
+
         if (!_unlocksInputs) return;
 
         LockActions();
+        
     }
 
     void AdvanceTutorial(InputAction.CallbackContext ctx)
@@ -151,6 +154,9 @@ public class TutorialTrigger : MonoBehaviour
         EventBus<EndTutorialEvent>.Raise(new EndTutorialEvent());
     }
 
+    public bool unlocksUi = false;
+    public GameObject lockedUi;
+
     private void OnTriggerEnter(Collider other)
     {
         if (_playOnce) return;
@@ -159,6 +165,11 @@ public class TutorialTrigger : MonoBehaviour
         {
             _playOnce = true;
             TriggerTutorial(_tutorialIndex);
+
+            if(unlocksUi)
+            {
+                lockedUi.SetActive(true);
+            }
         }
     }
 
@@ -197,5 +208,12 @@ public class TutorialTrigger : MonoBehaviour
         {
             EventBus<LockInput>.Raise(new LockInput(info.actionRef.action.name));
         }
+    }
+
+    public void LockUI()
+    {
+        if (!LevelManager.isLoadingDefault) return;
+
+        lockedUi.SetActive(false);
     }
 }

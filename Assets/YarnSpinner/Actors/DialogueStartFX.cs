@@ -22,6 +22,8 @@ public class DialogueStartFX : MonoBehaviour
     public EventReference dialogueStartSFX;
     public EventReference dialogueEndSFX;
 
+    [SerializeField] private GameObject _BGPanel;
+
     void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -48,7 +50,13 @@ public class DialogueStartFX : MonoBehaviour
         LeanTween.moveY(topBg, TopRectValues.y, fadeTime).setEase(easeType);
     }
 
-    
+    [YarnCommand("blackout")]
+    public void SetBGVisibility(bool setVisible)
+    {
+        _BGPanel.SetActive(setVisible);
+    }
+
+
     // Worlds hackiest implementation
     public void Relay(string speaker)
     {

@@ -90,6 +90,17 @@ public class Weight: PuzzleInputBase
         _moveDist = moveDist;
     }
 
+    protected override void OnCameraChange(CameraChangeEvent ctx)
+    {
+        if (PuzzleOutputs[0].IsSolved)
+        {
+            ToggleAllWeaknesses(false);
+            return;
+        }
+        
+        base.OnCameraChange(ctx);
+    }
+
     public override void OnShot(Weakness weakness, WeakTypes damageType)
     {
         if (!Weaknesses.Contains(weakness) || _moveRoutine != null) return;

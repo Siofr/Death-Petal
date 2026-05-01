@@ -82,6 +82,12 @@ public struct PauseEvent : IEvent
     }
 }
 
+public struct CameraActionEvent : IEvent
+{
+    public bool isActive;
+    public CameraActionEvent(bool isActive) => this.isActive = isActive;
+}
+
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBase : EntityBase, IEntity
 {
@@ -213,7 +219,16 @@ public class EnemyBase : EntityBase, IEntity
     {
         __isPaused = ctx.isPaused;
         StopAgent(ctx.isPaused);
+        
         animator.speed = ctx.isPaused ? 0 : 1;
+
+        if (!ctx.isPaused)
+        {
+            if (target == null && animator.GetBool(Animator.StringToHash("Spawning")))
+            {
+                animator.speed = 0;
+            }
+        }
     }
 
     protected override void OnCameraChange(CameraChangeEvent ctx)
@@ -294,12 +309,11 @@ public class EnemyBase : EntityBase, IEntity
     
     private void OnPlayerRoomEnter(RoomPlayerEnterEvent context)
     {
-        FreezeEnemy(false);
-        
         var playerTransform =  context.playerTransform;
 
         if (context.room.Bounds != _enemyAreaBounds) return;
-
+        FreezeEnemy(false);
+        
         EventBus<PlayerTargetedEvent>.Raise(new PlayerTargetedEvent(enemyData.threatLevel));
         Debug.Log("Is Entering");
         target = playerTransform;

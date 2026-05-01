@@ -34,6 +34,9 @@ public class BoxDestructible : EntityBase
     {
         RuntimeManager.PlayOneShot(onBoxShotEventPath, transform.position);
 
+        Weaknesses.Remove(weakness);
+        Destroy(weakness.transform.parent.gameObject);
+        
         _solidBox.SetActive(false);
         _fragmentedBox.SetActive(true);
 

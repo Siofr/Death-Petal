@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,7 @@ public class WallDestructable: EntityBase
     [SerializeField] private bool _isHidden;
 
     [SerializeField] private GameObject[] _wallPiecesObjects;
+    [SerializeField] private GameObject _particleContainer;
     
     //Serialized Fields
     private List<WallPiece> _wallPieces = new List<WallPiece>();
@@ -28,6 +30,8 @@ public class WallDestructable: EntityBase
     //Events
     private EventBindings<ActiveTargetEvent> _onTargetListener;
     private EventBindings<LevelLoadedEvent> _levelLoadedListener;
+
+    public EventReference panelDestroyedSFX;
     
     protected override void Awake()
     {
@@ -137,6 +141,9 @@ public class WallDestructable: EntityBase
         
         if (!Weaknesses.Contains(weakness)) return;
 
+        Debug.Log("Panel Destruction");
+        RuntimeManager.PlayOneShot(panelDestroyedSFX);
+
         if (weakness.WeakType != damageType)
         {
             EventBus<WrongShotEvent>.Raise(new WrongShotEvent());
@@ -149,6 +156,16 @@ public class WallDestructable: EntityBase
             
             Destroy(_wallPieces[i].wall);
             Weaknesses.Remove(weakness);
+            
+            // make new container so it doesn't die when the game object is destroyed
+            var newParticleContainer = Instantiate(_particleContainer);
+            newParticleContainer.transform.position = _wallPieces[i].weakness.transform.position;
+            foreach (ParticleSystem componentsInChild in newParticleContainer.GetComponentsInChildren<ParticleSystem>())
+            {
+                componentsInChild.Play();
+            }
+            
+            
             Destroy(_wallPieces[i].weakness.transform.parent.gameObject);
             _wallPieces.RemoveAt(i);
             break;

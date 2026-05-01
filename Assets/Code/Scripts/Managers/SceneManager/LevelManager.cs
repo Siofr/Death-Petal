@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ public class LevelManager : MonoBehaviour
     [Header("LevelManager Fields, Attach Component to Level Prefab")]
     public LevelSaveableData_SO saveableData;
     public LevelSaveData levelSaveData;
+    public bool playIntro = false;
     
     public List<GameObject> saveableGO = new List<GameObject>();
     
@@ -239,5 +241,18 @@ public class LevelManager : MonoBehaviour
             
             EntityHelper.UnlockAllInputs();
         }
+        
+        EventBus<SetTransitionEvent>.Raise( new SetTransitionEvent(false, true));
+        if(playIntro)
+            StartCoroutine(PlayIntro());
+
     }
+
+    private IEnumerator PlayIntro()
+    {
+        yield return new WaitForFixedUpdate();
+        EventBus<TriggerDialogueEvent>.Raise(new TriggerDialogueEvent("L1Intro"));
+    }
+
+
 }

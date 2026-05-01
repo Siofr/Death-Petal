@@ -260,3 +260,69 @@ Harmony: Sounds dandy.
 <<hideAll ActorScreen>>
 <<end LineView>>
 ===
+
+title: L1Hellspawn
+color: yellow
+position: -615,454
+---
+<<start LineView>>
+<<actor ActorScreen 0 "evil">>
+<<actor ActorScreen 2 "sad" false>>
+Hellspawn: Wait! Stop shooting! I’m friendly!
+Harmony: Enough chat. Attack me already!
+Hellspawn: Fight you? Are you crazy?!
+Hellspawn: You’re holding the Flower of Hell! 
+<<actor ActorScreen 0 "sad">>
+Harmony: Ugh… so everyone tells me. 
+<<actor ActorScreen 2 "forlorn" false>>
+Hellspawn: They say the Flower of Hell can shoot through [imp] anything.[/imp] 
+Hellspawn: Even the fabric that holds this place together.  
+<<actor ActorScreen 0 "surpised">>
+Harmony: [imp] Interesting…[/imp]
+Harmony: So if I figure out how to harness this thing’s power…
+Harmony: I can finally go home?
+<<actor ActorScreen 2 "surprised" false>>
+Hellspawn: Uhh… Maybe?
+<<hideAll ActorScreen>>
+<<end LineView>>
+===
+
+title: L1PreBalcony
+position: -799,-285
+---
+<<start LineView>>
+<<actor ActorScreen 0 "surprised">>
+<<actor ActorScreen 1 "surprised" false>>
+Harmony: Nice view huh.
+Abaddon: You could say that.
+<<event BalconyDialogue>>
+<<hideAll ActorScreen>>
+<<end LineView>>
+===
+
+title: L1Intro
+position: -799,-280
+---
+<<blackout LineView true>>
+<<start LineView>>
+Narrator: [nar]The ground, warm to the hellish touch, rumbles. [/nar]
+Narrator: [nar]Nobody watches, as a small crack appears along the dried dirt.[/nar]
+Narrator: [imp]An arm[/imp][nar]! An arm reaches through the floor... A body follows it too! [/nar]
+Narrator: [nar]A girl! [/nar][imp]A zombie girl has climbed out[/imp][nar]![/nar]
+<<actor ActorScreen 0 "zombie">>
+Harmony: Ergh... oughh... errrrgggg...
+Narrator: [nar]The zombie shakes her head left to right, leaves and dirt scattering across the room.[/nar]
+<<actor ActorScreen 0 "forlorn">>
+Harmony: Oh my sweet Lord below! What kind of hospitality is this!
+Narrator: [nar]Brush brush, she brushes the dirt from her clothes. [/nar]
+<<actor ActorScreen 0 "happy">>
+Harmony: Downtown has really gone down hill huh? Well... I just gotta get back uptown and--
+<<actor ActorScreen 0 "surprised">>
+Harmony: Oh neat!
+Narrator: [imp]Click, Click[/imp]
+<<actor ActorScreen 0 "evil">>
+Harmony: Someone's left me a gun!
+<<blackout LineView false>>
+<<hideAll ActorScreen>>
+<<end LineView>>
+===

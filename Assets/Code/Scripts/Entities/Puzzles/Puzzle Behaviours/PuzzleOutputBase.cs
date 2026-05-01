@@ -54,7 +54,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     protected void StartPanningCamera(Func<bool> exitCondition)
     {
         if (_camera == null || _cameraPanRoutine != null) return;
-
+        
         _cameraPanRoutine = StartCoroutine(PanCameraRoutine(exitCondition, _cameraPanSpeed));
     }
     
@@ -64,6 +64,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         
         print("Started panning Camera");
         
+        EventBus<CameraActionEvent>.Raise(new CameraActionEvent(true));
         EventBus<CameraChangeEvent>.DisableEvent();
         
         EventBus<LockInput>.Raise(new LockInput("Move"));
@@ -112,6 +113,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         
         _cameraPanRoutine = null;
         
+        EventBus<CameraActionEvent>.Raise(new CameraActionEvent(false));
         print("Ended panning Camera");
     }
     

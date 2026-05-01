@@ -14,6 +14,7 @@ public class MusicManager : MonoBehaviour
 
     private int _playerThreat;
     private bool _isPlaying;
+    private float _previousGameState;
 
     private EventBindings<PlayerTargetedEvent> _onPlayerTargetedEventListener;
     private EventBindings<PlayerLostTargetEvent> _onPlayerTargetLostEventListener;
@@ -118,7 +119,7 @@ public class MusicManager : MonoBehaviour
 
     void OnPlayerUntargeted(PlayerLostTargetEvent ctx)
     {
-        _playerThreat -= ctx.threatLevel;
+        _playerThreat = Mathf.Clamp(_playerThreat - ctx.threatLevel, 0, 1000);
 
         OnThreatLevelUpdate(_playerThreat);
     }

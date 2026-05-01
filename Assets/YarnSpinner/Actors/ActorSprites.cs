@@ -25,6 +25,9 @@ public class ActorSprites : ScriptableObject
     [Header("Evil Reactions")]
     public Sprite evil;
     public EventReference evilSFX;
+    [Header("Zombie Reactions")]
+    public Sprite zombie;
+    public EventReference zombieSFX;
     
     public Sprite GetSelectedEmotion(string emotion)
     {
@@ -40,6 +43,8 @@ public class ActorSprites : ScriptableObject
                 return forlorn;
             case "evil":
                 return evil;
+            case "zombie":
+                return zombie;
             default:
                 return characterDefault;
         }
@@ -59,6 +64,8 @@ public class ActorSprites : ScriptableObject
                 return forlornSFX;
             case "evil":
                 return evilSFX;
+            case "zombie":
+                return zombieSFX;
             default:
                 return defaultSFX;
         }
