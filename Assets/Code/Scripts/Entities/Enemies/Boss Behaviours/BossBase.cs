@@ -164,6 +164,7 @@ public class BossBase : EnemyBase
         if (Weaknesses.Count == 0)
         {
             animator.SetTrigger("Death");
+            EventBus<OnBossKilledEvent>.Raise(new OnBossKilledEvent());
             EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));
             _isDead = true;
             Death();

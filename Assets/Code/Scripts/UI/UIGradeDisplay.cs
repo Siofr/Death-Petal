@@ -101,6 +101,12 @@ public class UIGradeDisplay : MonoBehaviour
             .Play();
     }
 
+    public void DEBUG_endLevel()
+    {
+        var debugStage = GameObject.FindFirstObjectByType<Stage>();
+        EventBus<OnLevelEndEvent>.Raise(new OnLevelEndEvent(debugStage));
+    }
+
     void ChangeStageTitle(OnLevelEndEvent ctx)
     {
         stageName.text = ctx.stage.stageName;
