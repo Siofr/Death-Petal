@@ -2015,7 +2015,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 1500
+  Length: 1000
 --- !u!114 &-3664548092310565124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3608,13 +3608,14 @@ MonoBehaviour:
   - {fileID: -3336621384557327543}
   - {fileID: 1861197007058225992}
   - {fileID: -1454048864138048615}
+  - {fileID: 5365453533648501198}
   EditorParameters: []
   MasterBanks:
   - {fileID: 4865722936513190796}
   StringsBanks:
   - {fileID: 9113292504978964348}
   cacheVersion: 131849
-  cacheTime: 639132316360749328
+  cacheTime: 639132439176087164
   SerializableEventsDict:
   - key: event:/Characters/Enemies/Bishop/bishopLoop
     index: 0
@@ -3784,6 +3785,8 @@ MonoBehaviour:
     index: 82
   - key: event:/UI/Pause Menu/pause
     index: 83
+  - key: event:/Interactables/Puzzles/torchLoop
+    index: 84
 --- !u!114 &50958259417677923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5870,10 +5873,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639132316360733981
+  lastModified: 639132439176006616
   FileSizes:
   - Name: Desktop
-    Value: 5288960
+    Value: 5504224
   Exists: 1
 --- !u!114 &4953922096405066079
 MonoBehaviour:
@@ -5986,6 +5989,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 288571
+--- !u!114 &5365453533648501198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Interactables/Puzzles/torchLoop
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Interactables/Puzzles/torchLoop
+  Guid:
+    Data1: -1644746029
+    Data2: 1306705780
+    Data3: 1625083547
+    Data4: -9104214
+  Banks:
+  - {fileID: 4865722936513190796}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 10
+  Length: 7000
 --- !u!114 &5372782528783210704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7817,8 +7847,8 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639132316360749328
+  lastModified: 639132439176087164
   FileSizes:
   - Name: Desktop
-    Value: 5608
+    Value: 5654
   Exists: 1
