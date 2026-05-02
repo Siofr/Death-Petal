@@ -39,7 +39,7 @@ public class UITutorial : MonoBehaviour
 
         foreach(Transform item in _tutorialContainer)
         {
-            _tutorialPopups.Add(item.gameObject, item.GetChild(0).GetComponent<TMP_Text>());
+            _tutorialPopups.Add(item.gameObject, item.GetChild(1).GetComponent<TMP_Text>());
         }
 
         _yStartPos = _tutorialPopups.ElementAt(0).Key.transform.position.y;
@@ -128,7 +128,7 @@ public class UITutorial : MonoBehaviour
     {
         go.GetComponent<CanvasGroup>().alpha = 1f;
         _animationSequence
-            .Append(go.transform.DOMoveY(_yDestPos, 0.15f))
+            .Append(go.transform.DOMoveY(_yDestPos, 0.5f))
             .Pause();
     }
 
@@ -137,7 +137,7 @@ public class UITutorial : MonoBehaviour
         _animationSequence
             .Append(
             go.GetComponent<CanvasGroup>()
-            .DOFade(_yStartPos, 0.15f))
+            .DOFade(_yStartPos, 0.5f))
             .Play();
         _fadeOutObject = go;
     }
