@@ -62,7 +62,11 @@ public class DialogueStartFX : MonoBehaviour
     {
         //print("Message received: " + speaker);
         bool isHarmony = speaker.StartsWith("Harmony");
+        bool isCharacter = speaker.StartsWith("Ab") || speaker.StartsWith("Hell");
+        print(speaker + " | " + isCharacter);
         characterDisplayController.Focus(isHarmony, true);
-        characterDisplayController.Focus(!isHarmony, false);
+        characterDisplayController.Focus(isCharacter, false);
+        
+        if (!isHarmony && !isCharacter) characterDisplayController.UnFocus();
     }
 }

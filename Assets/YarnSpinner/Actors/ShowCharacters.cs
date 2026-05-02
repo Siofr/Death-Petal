@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using FMODUnity;
 using FMOD;
+using TMPro;
 using Yarn.Unity;
 
 
@@ -12,10 +13,15 @@ public class ShowCharacters : MonoBehaviour
 
     public Image LeftActorImage;
     public Image RightActorImage;
+    public Image ItemImage;
     public Animator LeftActorAnimator;
     public Animator RightActorAnimator;
+    public Animator ItemImageAnimator;
+    public TMP_Text ItemNameField;
+    public TMP_Text ItemDescriptionField;
     
     public ActorSprites[] actorReferences;
+    public DialogItem[] dialogItems;
     
     [YarnCommand("actor")]
     public void ShowActor(int actorId, string emotion = "none", bool left = true)
@@ -31,6 +37,17 @@ public class ShowCharacters : MonoBehaviour
             RightActorImage.enabled = true;
             RightActorImage.sprite = actorReferences.First(x => x.actorID == actorId).GetSelectedEmotion(emotion.ToLower());
         }
+    }
+
+    [YarnCommand("item")]
+    public void ShowItem(int itemID, bool setActive)
+    {
+        ItemImage.gameObject.SetActive(setActive);
+        var dialogItem = dialogItems.First(x => x.itemID == itemID);
+        ItemImage.sprite = dialogItem.itemIcon;
+        ItemImageAnimator.enabled = setActive;
+        ItemNameField.text = dialogItem.itemName;
+        ItemDescriptionField.text = dialogItem.itemDescription;
     }
 
     [YarnCommand("audio")]
@@ -49,6 +66,12 @@ public class ShowCharacters : MonoBehaviour
         {
             RightActorAnimator.SetBool("Focussed", isActive);
         }
+    }
+
+    public void UnFocus()
+    {
+        LeftActorAnimator.SetBool("Focussed", false);
+        RightActorAnimator.SetBool("Focussed", false);
     }
 
     private IEnumerator UpdateAnimation(bool isLeft)

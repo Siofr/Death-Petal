@@ -340,8 +340,9 @@ namespace Yarn.Unity
             // example, any other RunLine that might be running)
             StopAllCoroutines();
             
-            if(dialogueLine.RawText.StartsWith("Harmony:")) SendMessage("Relay", "Harmony");
-            else SendMessage("Relay", "Other");
+            SendMessage("Relay", dialogueLine.RawText.Split(":")[0]);
+            //if(dialogueLine.RawText.StartsWith("Harmony:")) SendMessage("Relay", "Harmony");
+            //else SendMessage("Relay", "Other");
             
 
             // Begin running the line as a coroutine.
