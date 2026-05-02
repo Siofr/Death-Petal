@@ -50,7 +50,7 @@ public class BossBar : MonoBehaviour
 
     private void OnCorrectShot(CorrectShotEvent ctx)
     {
-        ctx.enemy = bossRef;
+        //ctx.enemy = bossRef;
 
         _relativeHP = GetRelativeHp();
         _lerpHp = true;
