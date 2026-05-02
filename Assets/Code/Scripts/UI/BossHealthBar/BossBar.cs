@@ -42,7 +42,7 @@ public class BossBar : MonoBehaviour
     private float GetRelativeHp()
     {
         float relativeHp = 0f;
-        relativeHp =  GetCurrentHP() / _innitMaxHP;
+        relativeHp =  (GetCurrentHP() - 1.0f) / _innitMaxHP;
         return relativeHp;
     }
 
