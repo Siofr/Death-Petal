@@ -4847,7 +4847,6 @@ GameObject:
   - component: {fileID: 9101354743606666588}
   - component: {fileID: 3960965377929797854}
   - component: {fileID: 7308204237626846204}
-  - component: {fileID: 7129423086133261712}
   m_Layer: 2
   m_Name: Default Enemy
   m_TagString: Untagged
@@ -4921,29 +4920,8 @@ MonoBehaviour:
   target: {fileID: 0}
   enemyScoreValue: 0
   petalDropChance: 1
-  sfxStateManager: {fileID: 7129423086133261712}
+  sfxStateManager: {fileID: 0}
   _ignoreNavMesh: 0
---- !u!114 &7129423086133261712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3545056797248692941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 289bb19b2d862914aab9bf19536c87a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TriggerSFXState
-  audioReferences:
-  - audioName: Spawn
-    eventReference:
-      Guid:
-        Data1: -1506372846
-        Data2: 1090111903
-        Data3: -1060636768
-        Data4: -2084964211
-      Path: event:/Characters/Enemies/Grunt/gruntSpawn
 --- !u!1 &5348504789534349938
 GameObject:
   m_ObjectHideFlags: 0
@@ -10779,6 +10757,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 80879378e306794458bd22a4caee2b56, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5820001084097135087}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 80879378e306794458bd22a4caee2b56, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4231462899245124651}
   m_SourcePrefab: {fileID: 100100000, guid: 80879378e306794458bd22a4caee2b56, type: 3}
 --- !u!4 &2353236413214714743 stripped
 Transform:
@@ -10828,6 +10809,35 @@ MonoBehaviour:
       Data3: 1668588701
       Data4: 1732037063
     Path: event:/Characters/Player Character/Placeholder/footsteps
+--- !u!114 &4231462899245124651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3162565566072173005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42fbf57789ab40e4a99dbaf275c1ced5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXAnimationEvent
+  audioReferences:
+  - audioName: Attack
+    eventReference:
+      Guid:
+        Data1: -1254361236
+        Data2: 1213560261
+        Data3: 109101246
+        Data4: 219267572
+      Path: event:/Characters/Enemies/Grunt/gruntAttack
+  - audioName: Death
+    eventReference:
+      Guid:
+        Data1: -278921457
+        Data2: 1151392248
+        Data3: 2056915390
+        Data4: -182911180
+      Path: event:/Characters/Enemies/Grunt/gruntDeath
 --- !u!137 &6049074264474913026 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8417361359673230750, guid: 80879378e306794458bd22a4caee2b56, type: 3}
