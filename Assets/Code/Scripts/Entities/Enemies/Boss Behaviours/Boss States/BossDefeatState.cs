@@ -8,6 +8,5 @@ public class BossDefeatState<T> : BossBaseState<T> where T : BossBase
     {
         bossController.StopAllCoroutines();
         bossController.animator.SetFloat(Animator.StringToHash("Blend"),0f);
-        bossController.ClearPath();
     }
 }
