@@ -60,4 +60,5 @@ public class DeathEffects : MonoBehaviour
             effect.SetActive(true);
         }
     }
+    
 }
