@@ -22,6 +22,7 @@ public class BossBase : EnemyBase
     public bool isAttackReady = true;
     public Bishop_AttackPatternSpawner attackPatternSpawner;
     [SerializeField] private GameObject[] eyes;
+    [SerializeField] private ParticleSystem[] particles;
     public Bishop_Phase1Attacks activeAttack = Bishop_Phase1Attacks.None;
     
     protected override void Awake()
@@ -140,7 +141,16 @@ public class BossBase : EnemyBase
         
         target = null;
     }
-    
+
+    private void PlayOnShotParticles(Transform position)
+    {
+        foreach (var particle in particles)
+        {
+            particle.transform.position = position.position;
+            particle.Play();
+        }
+    }
+
     public override void OnShot( Weakness weakness, WeakTypes damageType)
     {
         int weaknessCount = Weaknesses.Count;
@@ -178,6 +188,7 @@ public class BossBase : EnemyBase
         if (Weaknesses.Count < weaknessCount && Weaknesses.Count > 0)
         {
             //print("WEAKNESS SHOT");
+            PlayOnShotParticles(weakness.transform);
             defaultWeaknessTypes.RemoveAt(0);
             Weaknesses[0].ToggleHitbox(true);
             Weaknesses[0].SetWeakType(defaultWeaknessTypes[0]);
