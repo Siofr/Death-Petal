@@ -36,8 +36,8 @@ public class BossBar : MonoBehaviour
 
     private void ShowBossBar(RoomPlayerEnterEvent ctx)
     {
-        if (ctx.room = bossRoom)
-        LeanTween.alphaCanvas(bossBarCanvasGroup, 1f, 1.5f);
+        if (ctx.room == bossRoom)
+            LeanTween.alphaCanvas(bossBarCanvasGroup, 1f, 1.5f);
     }
 
     private void OnDisable()
