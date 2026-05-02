@@ -187,6 +187,7 @@ public class GradeManager : MonoBehaviour
 
     private void OnBossKilled()
     {
+        print("BOSS KILLED");
         EventBus<OnLevelEndEvent>.Raise(new OnLevelEndEvent(currentStage));
     }
 

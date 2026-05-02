@@ -23,6 +23,7 @@ public class UIGradeDisplay : MonoBehaviour
     public TMP_Text finalGrade;
     private List<CanvasGroup> canvasGroups = new List<CanvasGroup>();
 
+    [SerializeField] private GameObject finalGradeUI;
     public Transform container;
     public Transform background;
     public Transform continueButton;
@@ -65,9 +66,12 @@ public class UIGradeDisplay : MonoBehaviour
 
     private void OnDisplayUI(DisplayEndUI ctx)
     {
+        
+        
         EventBus<ChangeCameraState>.Raise(new ChangeCameraState(true));
         EventBus<TriggerDialogueEvent>.Raise(new TriggerDialogueEvent());
 
+        finalGradeUI.SetActive(true);
         container.gameObject.SetActive(true);
         background.gameObject.SetActive(true);
 

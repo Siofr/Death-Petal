@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using State_Machine;
 #if UNITY_EDITOR
@@ -7,6 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using FMODUnity;
+using Unity.Mathematics;
 using Random = UnityEngine.Random;
 
 public class BossBase : EnemyBase
@@ -23,6 +25,7 @@ public class BossBase : EnemyBase
     public Bishop_AttackPatternSpawner attackPatternSpawner;
     [SerializeField] private GameObject[] eyes;
     [SerializeField] private ParticleSystem[] particles;
+    [SerializeField] private ParticleSystem extraEyeParticle;
     public Bishop_Phase1Attacks activeAttack = Bishop_Phase1Attacks.None;
     
     protected override void Awake()
@@ -151,6 +154,19 @@ public class BossBase : EnemyBase
         }
     }
 
+    public void SpawnVFXAtLocation(GameObject location)
+    {
+        foreach (var particle in particles)
+        {
+            var part = Instantiate(particle, transform);
+            part.transform.position = location.transform.position;
+            part.Play();
+        }
+        var eyePart = Instantiate(extraEyeParticle, transform);
+        eyePart.transform.position = location.transform.position;
+        eyePart.Play();
+    }
+
     public override void OnShot( Weakness weakness, WeakTypes damageType)
     {
         int weaknessCount = Weaknesses.Count;
@@ -174,10 +190,10 @@ public class BossBase : EnemyBase
         if (Weaknesses.Count == 0)
         {
             animator.SetTrigger("Death");
-            EventBus<OnBossKilledEvent>.Raise(new OnBossKilledEvent());
-            EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));
+            
+            EventBus<TriggerDialogueEvent>.Raise(new TriggerDialogueEvent());
+            //EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));
             _isDead = true;
-            Death();
 
             var random = Random.value;
             if (random <= petalDropChance) EventBus<PetalSpawnEvent>.Raise(new PetalSpawnEvent(transform.position));
@@ -188,17 +204,18 @@ public class BossBase : EnemyBase
         if (Weaknesses.Count < weaknessCount && Weaknesses.Count > 0)
         {
             //print("WEAKNESS SHOT");
-            PlayOnShotParticles(weakness.transform);
+            PlayOnShotParticles(weakness.WeaknessIconTransform);
             defaultWeaknessTypes.RemoveAt(0);
             Weaknesses[0].ToggleHitbox(true);
             Weaknesses[0].SetWeakType(defaultWeaknessTypes[0]);
         }
     }
 
-    // temporary death thing
-    private void Death()
+    public void RaiseBossKilledEvent()
     {
-        Destroy(gameObject);
+        EventBus<OnBossKilledEvent>.Raise(new OnBossKilledEvent());
     }
+
+    // temporary death thing
 }
 
