@@ -230,14 +230,6 @@ MonoBehaviour:
         Data3: 634979982
         Data4: 1107884551
       Path: event:/Characters/Enemies/Lurker/lurkerWalking
-  - audioName: Death
-    eventReference:
-      Guid:
-        Data1: -835685006
-        Data2: 1260033917
-        Data3: -1922014845
-        Data4: -1176928729
-      Path: event:/Characters/Enemies/Lurker/lurkerDeath
 --- !u!1 &3821564098021094678
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,6 +880,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ed7c5054212a10e4298449b1c39b142d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7146140746242014147}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ed7c5054212a10e4298449b1c39b142d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5567893459870933586}
   m_SourcePrefab: {fileID: 100100000, guid: ed7c5054212a10e4298449b1c39b142d, type: 3}
 --- !u!137 &1142041635803523403 stripped
 SkinnedMeshRenderer:
@@ -948,3 +943,40 @@ MonoBehaviour:
   - {fileID: 6737248484557880462}
   isHellspawn: 0
   parent: {fileID: 3788502238141946903}
+--- !u!114 &5567893459870933586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7682616195746507390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42fbf57789ab40e4a99dbaf275c1ced5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXAnimationEvent
+  audioReferences:
+  - audioName: Spawn
+    eventReference:
+      Guid:
+        Data1: -1325912646
+        Data2: 1332405962
+        Data3: 1513943206
+        Data4: 1026177797
+      Path: event:/Characters/Enemies/Lurker/lurkerSpawn
+  - audioName: Attack
+    eventReference:
+      Guid:
+        Data1: -565953959
+        Data2: 1213717221
+        Data3: 767393181
+        Data4: -1142325140
+      Path: event:/Characters/Enemies/Lurker/lurkerAttack
+  - audioName: Death
+    eventReference:
+      Guid:
+        Data1: -835685006
+        Data2: 1260033917
+        Data3: -1922014845
+        Data4: -1176928729
+      Path: event:/Characters/Enemies/Lurker/lurkerDeath
