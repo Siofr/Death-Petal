@@ -10757,6 +10757,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 80879378e306794458bd22a4caee2b56, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5820001084097135087}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 80879378e306794458bd22a4caee2b56, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4231462899245124651}
   m_SourcePrefab: {fileID: 100100000, guid: 80879378e306794458bd22a4caee2b56, type: 3}
 --- !u!4 &2353236413214714743 stripped
 Transform:
@@ -10806,6 +10809,35 @@ MonoBehaviour:
       Data3: 1668588701
       Data4: 1732037063
     Path: event:/Characters/Player Character/Placeholder/footsteps
+--- !u!114 &4231462899245124651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3162565566072173005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42fbf57789ab40e4a99dbaf275c1ced5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXAnimationEvent
+  audioReferences:
+  - audioName: Attack
+    eventReference:
+      Guid:
+        Data1: -1254361236
+        Data2: 1213560261
+        Data3: 109101246
+        Data4: 219267572
+      Path: event:/Characters/Enemies/Grunt/gruntAttack
+  - audioName: Death
+    eventReference:
+      Guid:
+        Data1: -278921457
+        Data2: 1151392248
+        Data3: 2056915390
+        Data4: -182911180
+      Path: event:/Characters/Enemies/Grunt/gruntDeath
 --- !u!137 &6049074264474913026 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8417361359673230750, guid: 80879378e306794458bd22a4caee2b56, type: 3}
@@ -10999,13 +11031,52 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5947342765798650630, guid: 3142fbde96e188b4280f87a8856c1b03, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6818466777976992136}
   m_SourcePrefab: {fileID: 100100000, guid: 3142fbde96e188b4280f87a8856c1b03, type: 3}
 --- !u!4 &504659262031265360 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6801531792186663606, guid: 3142fbde96e188b4280f87a8856c1b03, type: 3}
   m_PrefabInstance: {fileID: 6441007069615365350}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &858561840704057312 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5947342765798650630, guid: 3142fbde96e188b4280f87a8856c1b03, type: 3}
+  m_PrefabInstance: {fileID: 6441007069615365350}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6818466777976992136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858561840704057312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1506372846
+      Data2: 1090111903
+      Data3: -1060636768
+      Data4: -2084964211
+    Path: event:/Characters/Enemies/Grunt/gruntSpawn
+  Event: 
+  EventPlayTrigger: 11
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 9
+  OverrideMaxDistance: 40
 --- !u!1001 &6949099868812002309
 PrefabInstance:
   m_ObjectHideFlags: 0
