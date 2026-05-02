@@ -17,7 +17,11 @@ public class BossBar : MonoBehaviour
     public Image actualHealthImage;
     public Image laggedHealthImage;
 
+    public Room bossRoom;
+    public CanvasGroup bossBarCanvasGroup;
+
     private EventBindings<CorrectShotEvent> _onCorrectShotListener;
+    private EventBindings<RoomPlayerEnterEvent> _onCameraChangeListener;
 
     private void OnEnable()
     {
@@ -25,12 +29,21 @@ public class BossBar : MonoBehaviour
         _relativeHP = GetRelativeHp();
 
         _onCorrectShotListener = new EventBindings<CorrectShotEvent>(OnCorrectShot);
+        _onCameraChangeListener = new EventBindings<RoomPlayerEnterEvent>(ShowBossBar);
         EventBus<CorrectShotEvent>.Register(_onCorrectShotListener);
+        EventBus<RoomPlayerEnterEvent>.Register(_onCameraChangeListener);
+    }
+
+    private void ShowBossBar(RoomPlayerEnterEvent ctx)
+    {
+        if (ctx.room = bossRoom)
+        LeanTween.alphaCanvas(bossBarCanvasGroup, 1f, 1.5f);
     }
 
     private void OnDisable()
     {
         EventBus<CorrectShotEvent>.Unregister(_onCorrectShotListener);
+        EventBus<RoomPlayerEnterEvent>.Unregister(_onCameraChangeListener);
     }
     private float GetCurrentHP()
     {
@@ -55,6 +68,11 @@ public class BossBar : MonoBehaviour
         _relativeHP = GetRelativeHp();
         _lerpHp = true;
         _lerpLaggedHp = true;
+
+        if (_relativeHP == 0f)
+        {
+            LeanTween.alphaCanvas(bossBarCanvasGroup, 0f, 3f);
+        }
     }
 
     private bool _lerpHp;
