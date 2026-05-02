@@ -1,5 +1,7 @@
+using FMODUnity;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AOEBurn : AOEEffect
 {
@@ -7,12 +9,16 @@ public class AOEBurn : AOEEffect
     [SerializeField] private float _damageTime;
 
     private Coroutine _damageTimer;
+
+    [SerializeField] private UnityEvent _startEvent;
+    [SerializeField] private UnityEvent _endEvent;
     
     public override void StartEffect()
     {
         __targets = CheckTargets();
         
         __isActive = true;
+        _startEvent.Invoke();
         StartDamageTimer();
         
         StartPlaceHolderVFX(true);
@@ -26,7 +32,7 @@ public class AOEBurn : AOEEffect
         StopAllCoroutines();
 
         _damageTimer = null;
-        
+        _endEvent.Invoke();
         StartPlaceHolderVFX(false);
         
         __targets.Clear();
