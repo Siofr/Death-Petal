@@ -16,6 +16,13 @@ public class UIStageTitle : MonoBehaviour
     private void Awake()
     {
         _onLevelStartEventListener = new EventBindings<OnLevelStartEvent>(OnStageStart);
+        
+        _titleTransform = transform.GetChild(0);
+        _nameTransform = transform.GetChild(1);
+
+        _startPosition = _titleTransform.position;
+        _stageNameText = _nameTransform.GetComponent<TMP_Text>();
+        _canvasGroup = GetComponent<CanvasGroup>();
     }
 
     private void OnEnable()
@@ -30,12 +37,7 @@ public class UIStageTitle : MonoBehaviour
 
     void Start()
     {
-        _titleTransform = transform.GetChild(0);
-        _nameTransform = transform.GetChild(1);
 
-        _startPosition = _titleTransform.position;
-        _stageNameText = _nameTransform.GetComponent<TMP_Text>();
-        _canvasGroup = GetComponent<CanvasGroup>();
     }
 
     void OnStageStart(OnLevelStartEvent ctx)

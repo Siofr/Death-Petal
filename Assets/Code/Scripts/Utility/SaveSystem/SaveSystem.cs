@@ -292,7 +292,7 @@ public struct GradeSaveData
         if(gradeManager.currentStage != null)
         
         EventBus<OnLevelStartEvent>.Raise(new OnLevelStartEvent(gradeManager.currentStage, timeElapsed));
-        EventBus<UpdateScoreEvent>.Raise(new UpdateScoreEvent(score));
+        EventBus<UpdateScoreEvent>.Raise(new UpdateScoreEvent(score, true));
     }
 }
 
