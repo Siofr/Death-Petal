@@ -8,7 +8,12 @@ namespace State_Machine
         Dictionary<Type, StateNode> nodes = new();
         HashSet<ITransition> anyTransitions = new();
 
-        public void Update() {
+        private bool _isPaused;
+        
+        public void Update()
+        {
+            if (_isPaused) return;
+            
             var transition = GetTransition();
             if (transition != null) 
                 ChangeState(transition.To);
@@ -77,7 +82,9 @@ namespace State_Machine
             
             return node;
         }
-
+        
+        public void PauseStateMachine(bool isPaused) => _isPaused = isPaused;
+        
         class StateNode {
             public IState State { get; }
             public HashSet<ITransition> Transitions { get; }

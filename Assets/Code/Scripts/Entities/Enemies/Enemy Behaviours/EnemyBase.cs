@@ -220,6 +220,8 @@ public class EnemyBase : EntityBase, IEntity
         __isPaused = ctx.isPaused;
         StopAgent(ctx.isPaused);
         
+        __enemyStateMachine.PauseStateMachine(ctx.isPaused);
+        
         animator.speed = ctx.isPaused ? 0 : 1;
 
         if (!ctx.isPaused)
