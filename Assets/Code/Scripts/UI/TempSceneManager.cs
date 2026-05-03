@@ -39,6 +39,8 @@ public class TempSceneManager : MonoBehaviour
         Scene activeScene = SceneManager.GetActiveScene();
         EventBus<SetTransitionEvent>.Raise(new SetTransitionEvent(true, true));
         yield return new WaitForSeconds(0.3f);
+
+        EventBusUtils.ClearAllBuses();
         
         yield return SceneManager.LoadSceneAsync(3, LoadSceneMode.Additive);
         yield return SceneManager.LoadSceneAsync(sceneIndex);
