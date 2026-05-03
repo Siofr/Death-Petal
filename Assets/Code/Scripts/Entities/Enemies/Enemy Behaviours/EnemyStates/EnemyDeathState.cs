@@ -6,10 +6,10 @@ public class EnemyDeathState<T>: EnemyBaseState<T> where T : EnemyBase
 	
 	public override void OnEnter()
     {
-		enemyController.sfxStateManager?.OnStateEnter("Death");
 	    enemyController.StopAllCoroutines();
 	    enemyController.animator.SetFloat(Animator.StringToHash("Blend"),0f);
 	    enemyController.animator.SetTrigger("Death");
+        enemyController.sfxStateManager?.OnStateEnter("Death");
         enemyController.ClearPath();
     }
 
