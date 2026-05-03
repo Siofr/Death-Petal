@@ -51,6 +51,33 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &-9024319493333344494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Characters/Enemies/Lurker/lurkerSpawn
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Characters/Enemies/Lurker/lurkerSpawn
+  Guid:
+    Data1: -1325912646
+    Data2: 1332405962
+    Data3: 1513943206
+    Data4: 1026177797
+  Banks:
+  - {fileID: -207975926020211653}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 900
 --- !u!114 &-8995251625096158954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,10 +419,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639133558848465695
+  lastModified: 639133564486716243
   FileSizes:
   - Name: Desktop
-    Value: 5796
+    Value: 5832
   Exists: 1
 --- !u!114 &-7169126679549350423
 MonoBehaviour:
@@ -555,7 +582,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 1000
 --- !u!114 &-5858043587873318974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1594,10 +1621,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639133558848445231
+  lastModified: 639133564486664171
   FileSizes:
   - Name: Desktop
-    Value: 5735424
+    Value: 5805696
   Exists: 1
 --- !u!114 &-50027687769245882
 MonoBehaviour:
@@ -1730,13 +1757,14 @@ MonoBehaviour:
   - {fileID: -4709707883576880682}
   - {fileID: 7156452680189950909}
   - {fileID: -3726423295143846426}
+  - {fileID: -9024319493333344494}
   EditorParameters: []
   MasterBanks:
   - {fileID: -207975926020211653}
   StringsBanks:
   - {fileID: -7454297375032179920}
   cacheVersion: 131849
-  cacheTime: 639133558848465695
+  cacheTime: 639133564486716243
   SerializableEventsDict:
   - key: event:/Characters/Enemies/Bishop/bishopLoop
     index: 0
@@ -1914,6 +1942,8 @@ MonoBehaviour:
     index: 86
   - key: event:/Weapons/Revolver/revRotate
     index: 87
+  - key: event:/Characters/Enemies/Lurker/lurkerSpawn
+    index: 88
 --- !u!114 &226925113443759321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2316,7 +2346,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 500
+  Length: 715
 --- !u!114 &3273907670579836974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2925,13 +2955,13 @@ MonoBehaviour:
     Data4: 1107884551
   Banks:
   - {fileID: -207975926020211653}
-  IsStream: 1
+  IsStream: 0
   Is3D: 1
   IsOneShot: 0
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 13000
+  Length: 7000
 --- !u!114 &8880027356225398339
 MonoBehaviour:
   m_ObjectHideFlags: 0
