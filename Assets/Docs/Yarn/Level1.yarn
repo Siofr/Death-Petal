@@ -5,16 +5,11 @@ position: -187,-139
 <<start LineView>>
 <<actor ActorScreen 0 "happy">>
 <<actor ActorScreen 1 "happy" false>>
-Harmony: Hello!
 Abaddon: Greetings, but I must stop you, little flower.
 <<actor ActorScreen 0 "surprised">>
 Harmony: This is my chance to get out of here, so please don't!
 Abaddon: Don't you care to know how much trouble you are in?
-
--> Nope! I just want to shoot! 
-    <<jump L1SpawnQuick>>
--> Sure...
-    <<jump L1SpawnLore>>
+<<jump L1SpawnLore>>
 ===
 
 title: L1SpawnLore
@@ -24,8 +19,7 @@ color: blue
 <<actor ActorScreen 0 "happy">>
 Harmony: Indulge me.
 <<actor ActorScreen 1 "happy" false>>
-Abaddon: You, my little flower, have [imp]died.[/imp]
-Abaddon: Worst of all, your soul has been shunned by the grace of god.
+Abaddon: You, my little flower, are in [imp]Hell.[/imp]
 Harmony: I knew it!
 <<actor ActorScreen 0 "sad">>
 Harmony: The endless torment and smell of sulpher was a dead giveaway.
@@ -37,27 +31,14 @@ Abaddon: [imp] The Flower of Hell. [/imp]
 Harmony: Sounds mysterious...
 <<actor ActorScreen 0 "happy">>
 Harmony: Anyways, time to get out of here. 
-Abaddon: I'm not sure you understand...
-Abaddon: [imp]Undead vessels[/imp] cannot tread the gardens of man. 
+Abaddon: I must warn you,[imp]Undead vessels[/imp] cannot walk the gardens of man. 
 <<actor ActorScreen 0 "sad">>
 Harmony: How do I fix that?
 Abaddon: You can not, little flower.
 <<actor ActorScreen 0 "happy">>
-Harmony: Betchya this handy dandy gun can!
-Abaddon: Do not be foolish now... 
-Abaddon: And put some respect on [imp]The Flower of Hell. [/imp]
-<<actor ActorScreen 0 "forlorn">>
-Harmony: If I'm [imp]undead[/imp] now...
-<<actor ActorScreen 0 "surprised">>
-Harmony: and this gun kills undead things... 
+Harmony: Sure I can!
 <<actor ActorScreen 0 "evil">>
-Harmony: I bet I'll figure something out!
-<<actor ActorScreen 1 "surprised" false>>
-Abaddon: Erhh... I guess you do have a point...
-<<actor ActorScreen 0 "happy">>
-Harmony: Of course I do. 
-<<actor ActorScreen 0 "evil">>
-Harmony: With guns and violence, you can make the whole world turn!
+Harmony: With guns and violence, I can make the whole world turn!
 <<actor ActorScreen 1 "forlorn" false>>
 Abaddon: I don't know if that works down here...
 <<hideAll ActorScreen>>
@@ -105,7 +86,7 @@ Abaddon: ...I wasn't finished.
 <<actor ActorScreen 0 "sad">>
 Harmony: Abbot, this handy dandy revolver, it's a real pain to reload. 
 <<actor ActorScreen 1 "forlorn" false>>
-Abaddon: I'm not Ab- Ah forget it.
+Abott: I'm not Ab- Ah forget it.
 Abbot: As I told you before. You must invoke a heretic ritual to fill your weapon--
 <<actor ActorScreen 0 "happy">>
 Harmony: But what if I just--
@@ -218,8 +199,19 @@ color: yellow
 <<start LineView>>
 <<actor ActorScreen 0 "happy">>
 <<actor ActorScreen 1 "happy" false>>
-Harmony: So why do you follow me?
-Abbot: My intent was simply to add you to my records.
+Abbot: What how did you get here?
+Harmony: I love exploring, and it was really really badly hidden door...
+Harmony: Are you smoking..?
+Abbot: What, even I need my vices. But my light blew out and I'm out of matches.
+<<item ActorScreen 1 true>>
+Harmony: Here have a lighter!
+Abott: Oh thanks, wait... [imp]P-P-Petals[/]?
+Abott: I do not want any devil forsaken [imp] Petal Lighter[/].
+Harmony: Suit your self, I don't have one with a skeleton on it.
+Abott: Ah forget it.
+<<item ActorScreen 1 false>>
+Harmony: So, anyway. why do you follow me?
+Abbot: First of all, you are following [imp]me[/]. My intent was simply to add you to my records.
 Abbot: That weapon... it intrigued me.
 Abbot: I did not mean to concern myself with it. And yet, I have. 
 <<actor ActorScreen 0 "evil">>

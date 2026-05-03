@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using System.Timers;
 using State_Machine;
 using UnityEngine;
@@ -11,6 +12,9 @@ public class EnemyArcher: EnemyBase
     [FormerlySerializedAs("targetLineRender")]
     [Header("Archer Fields")]
     [SerializeField] private LineRenderer _targetLineRender;
+
+    [SerializeField] private GameObject _ShootObj;
+    [SerializeField] private GameObject _ShootHit;
     [SerializeField] private Transform _LOSRef;
     public float targetTime;
     public float maxLOSRadius;
@@ -166,6 +170,7 @@ public class EnemyArcher: EnemyBase
                     {
                         tempRot = tempAngle;
                         transform.eulerAngles = new Vector3(0, _initialRotation + tempAngle, 0);
+                        _ShootObj.transform.eulerAngles = new Vector3(0, _initialRotation + tempAngle, 0);
                         _currentRotation = transform.eulerAngles.y;
                         //animator.SetFloat(Animator.StringToHash("Angle"), MapRotToAnim(_currentRotation));
 
@@ -178,6 +183,7 @@ public class EnemyArcher: EnemyBase
                     {
                         tempRot = tempAngle;
                         transform.eulerAngles = new Vector3(0, _initialRotation + tempAngle, 0);
+                        _ShootObj.transform.eulerAngles = new Vector3(0, _initialRotation + tempAngle, 0);
                         _currentRotation = transform.eulerAngles.y;
                         //animator.SetFloat(Animator.StringToHash("Angle"), MapRotToAnim(_currentRotation));
                         
@@ -224,6 +230,7 @@ public class EnemyArcher: EnemyBase
     
     private IEnumerator TargetingRoutine(float time)
     {
+         var startTime = Time.time;
         _timerRoutine = StartCoroutine(TimerRoutine(time));
         
         while (_timerRoutine != null)
@@ -232,6 +239,9 @@ public class EnemyArcher: EnemyBase
             
             LookAt();
 
+            var lerpValue = Time.time - startTime / time;
+            _targetLineRender.material.SetFloat("_LerpColour", lerpValue);
+            
             if (!IsInAlertRange())
             {
                 _targetRoutine = null;
@@ -257,6 +267,7 @@ public class EnemyArcher: EnemyBase
         if (target == null) return;
 
         transform.LookAt(target);
+        _ShootObj.transform.LookAt(target);
     }
     
     public void StartTargeting(float time)
@@ -270,6 +281,8 @@ public class EnemyArcher: EnemyBase
     {
         if (_timerRoutine != null || target == null) yield break;
         
+        _targetLineRender.material.SetFloat("_LerpColour", 0);
+        _targetLineRender.material.SetFloat("_Shooting", 1f);
         var playerController = target.GetComponent<TestPlayer>();
         
         yield return TimerRoutine(time);
@@ -277,12 +290,21 @@ public class EnemyArcher: EnemyBase
         if (__isPaused) yield return null;
         
         CheckLOS(maxLOSRadius, enemyData.attackRange);
+        _ShootObj.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+        yield return new WaitForSeconds(0.2f);
         animator.SetTrigger("Shoot");
+
+        yield return new WaitForSeconds(0.2f);
+        if (_inLos)
+        {
+            playerController.OnShot(playerController.Weaknesses[0], WeakTypes.PLAYER);
+            ShootHit(playerController);
+        }
+
         
-        if(_inLos) playerController.OnShot(playerController.Weaknesses[0], WeakTypes.PLAYER);
 
         _inLos = false;
-        
+        _targetLineRender.material.SetFloat("_Shooting", 0f);
         _shotRoutine = null;
     }
     
@@ -292,7 +314,13 @@ public class EnemyArcher: EnemyBase
         
         _shotRoutine = StartCoroutine(ShotRoutine(time));
     }
-    
+
+    private void ShootHit(TestPlayer playerController)
+    {
+        _ShootHit.transform.position = playerController.transform.position;
+        _ShootHit.GetComponentsInChildren<ParticleSystem>().ToList().ForEach(x => x.Play());
+    }
+
     private IEnumerator TimerRoutine(float time)
     {
         yield return new WaitForSeconds(time);
