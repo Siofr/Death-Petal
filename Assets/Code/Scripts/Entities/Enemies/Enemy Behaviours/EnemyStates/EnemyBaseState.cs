@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using State_Machine;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
-public class EnemyBaseState<T> : IState where T: EnemyBase
+public class EnemyBaseState<T> : IState where T : EnemyBase
 {
     protected readonly T enemyController;
 
-    protected bool __isPaused;
-    
-    protected EnemyBaseState() {  }
-    
-    protected EnemyBaseState(T enemyController) => this.enemyController = enemyController;
+    protected EnemyBaseState()
+    {
+    }
+
+    protected EnemyBaseState(T enemyController)
+    {
+        this.enemyController = enemyController;
+    }
     
     public virtual void OnEnter()
     {

@@ -29,25 +29,36 @@ public class ScoreManager : MonoBehaviour
 
     private EventBindings<ChangeScoreEvent> _changeScoreEventListener;
     private EventBindings<WipeComboEvent> _wipeComboEventListener;
-
+    private EventBindings<UpdateScoreEvent> _updateScoreEventListener;
+    
     private void Awake()
     {
         _changeScoreEventListener = new EventBindings<ChangeScoreEvent>(OnScoreChange);
         _wipeComboEventListener = new EventBindings<WipeComboEvent>(OnComboWipe);
+        _updateScoreEventListener = new EventBindings<UpdateScoreEvent>(UpdateScoreLoad);
+
     }
 
     private void OnEnable()
     {
         EventBus<ChangeScoreEvent>.Register(_changeScoreEventListener);
         EventBus<WipeComboEvent>.Register(_wipeComboEventListener);
+        EventBus<UpdateScoreEvent>.Register(_updateScoreEventListener);
     }
 
     private void OnDisable()
     {
         EventBus<ChangeScoreEvent>.Unregister(_changeScoreEventListener);
         EventBus<WipeComboEvent>.Register(_wipeComboEventListener);
+        EventBus<UpdateScoreEvent>.Unregister(_updateScoreEventListener);
     }
 
+    private void UpdateScoreLoad(UpdateScoreEvent ctx)
+    {
+        if (!ctx.isLoadingSave) return;
+        currentScore = ctx.score;
+    }
+    
     void OnScoreChange(ChangeScoreEvent ctx)
     {
         UpdateScore(ctx.score);

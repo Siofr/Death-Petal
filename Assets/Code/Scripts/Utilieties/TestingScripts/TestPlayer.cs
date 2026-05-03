@@ -165,9 +165,10 @@ public class TestPlayer : EntityBase, IEntity
 
     public override void HandleLoadData(ref LevelSaveData refData)
     {
-        var healthCount = Weaknesses.Count;
         base.HandleLoadData(ref refData);
-
+        
+        var healthCount = Weaknesses.Count;
+        
         if (healthCount < 2) EventBus<PlayerLowHealthEvent>.Raise(new PlayerLowHealthEvent());
         else EventBus<PlayerHealedEvent>.Raise(new PlayerHealedEvent());
     }

@@ -20,10 +20,10 @@ public class EnemyMotherVulnerableState: EnemyBaseState<EnemyMother>
         enemyController.sfxStateManager?.OnStateEnter("Vulnerable");
     }
 
-    // public override void Update()
-    // {
-    //     _mother.LookAtTarget();
-    // }
+    public override void Update()
+    {
+        //_mother.LookAtTarget();
+    }
 }
 
 public class EnemyMotherProtectedState: EnemyBaseState<EnemyMother>
@@ -48,6 +48,7 @@ public class EnemyMotherProtectedState: EnemyBaseState<EnemyMother>
     public override void Update()
     {
         //_mother.LookAtTarget();
+        _mother.ToggleAllWeaknesses(false);
         _mother.CheckSpawnedEnemies();
     }
 }
@@ -73,6 +74,7 @@ public class EnemyMotherFullState: EnemyBaseState<EnemyMother>
     public override void Update()
     {
         //_mother.LookAtTarget();
+        _mother.ToggleAllWeaknesses(false);
         _mother.CheckSpawnedEnemies();
     }
 }

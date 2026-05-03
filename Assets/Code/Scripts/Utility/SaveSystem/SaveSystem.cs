@@ -111,12 +111,15 @@ public struct LevelSaveData
     public List<EntitySaveData> entitySaveData;
     public List<PuzzleOutputSaveData> puzzleOutputSaveData;
     
+    public GradeSaveData gradeSaveData;
+    
     public LevelSaveData(string levelName)
     {
         this.levelName = levelName;
         saveableID = new List<int>();
         entitySaveData = new List<EntitySaveData>();
         puzzleOutputSaveData = new List<PuzzleOutputSaveData>();
+        gradeSaveData = new GradeSaveData();
     }
     
     public LevelSaveData(string levelName, LevelSaveData levelSaveData)
@@ -230,6 +233,66 @@ public struct PuzzleOutputSaveData
     public int GetID()
     {
         return id;
+    }
+}
+
+[Serializable]
+public struct GradeSaveData
+{
+    public int id;
+
+    public float timeElapsed;
+    public int score;
+    public int enemyCount;
+    
+    public string stage;
+
+    public GradeSaveData(int id, float timeElapsed, int score, int enemyCount, string stage)
+    {
+        this.id = id;
+        this.timeElapsed =  timeElapsed;
+        this.score = score;
+        this.enemyCount = enemyCount;
+        this.stage = stage;
+    }
+
+    public void Save(GradeManager gradeManager)
+    {
+        timeElapsed = gradeManager.currentTime;
+        score = (int)gradeManager.currentScore;
+        enemyCount = gradeManager.enemyCount;
+        
+        if (gradeManager.currentStage != null)
+        {
+            stage = gradeManager.currentStage.stageName;
+            return;
+        }
+
+        stage = "N/A";
+    }
+    
+    public void Load(GradeManager gradeManager)
+    {
+        gradeManager.currentTime = timeElapsed;
+        gradeManager.currentScore = score;
+        gradeManager.enemyCount = enemyCount;
+        
+        if(stage == "N/A") gradeManager.currentStage = null;
+        
+        var tempStages = GameObject.FindObjectsByType<Stage>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        if (tempStages.Length < 1) return;
+        
+        foreach (var tempStage in tempStages)
+        {
+            if (tempStage.stageName != stage) continue;
+            
+            gradeManager.currentStage = tempStage;
+        }
+        
+        if(gradeManager.currentStage != null)
+        
+        EventBus<OnLevelStartEvent>.Raise(new OnLevelStartEvent(gradeManager.currentStage, timeElapsed));
+        EventBus<UpdateScoreEvent>.Raise(new UpdateScoreEvent(score, true));
     }
 }
 

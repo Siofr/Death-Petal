@@ -20,10 +20,12 @@ struct UpdateComboMultEvent : IEvent
 struct UpdateScoreEvent : IEvent
 {
     public float score;
-
-    public UpdateScoreEvent(float score)
+    public bool isLoadingSave;
+    
+    public UpdateScoreEvent(float score,  bool isLoadingSave = false)
     {
         this.score = score;
+        this.isLoadingSave = isLoadingSave;
     }
 }
 
