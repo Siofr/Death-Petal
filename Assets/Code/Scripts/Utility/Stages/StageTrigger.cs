@@ -25,7 +25,7 @@ public class StageTrigger : MonoBehaviour
         switch (triggerType)
         {
             case TriggerType.STAGE_START:
-                EventBus<OnLevelStartEvent>.Raise(new OnLevelStartEvent(stage));
+                EventBus<OnLevelStartEvent>.Raise(new OnLevelStartEvent(stage, Time.time));
                 break;
 
             case TriggerType.STAGE_END:

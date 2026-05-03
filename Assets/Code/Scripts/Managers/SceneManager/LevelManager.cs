@@ -235,10 +235,11 @@ public class LevelManager : MonoBehaviour
         if (!isLoadingDefault)
         {
             LoadLevelData();
-            
             EntityHelper.UnlockAllInputs();
-
-            return;
+        }
+        else
+        {
+            StartCoroutine(PlayIntro());
         }
         
         // EventBus<SetTransitionEvent>.Raise( new SetTransitionEvent(false, true));

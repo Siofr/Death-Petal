@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Text;
+using System.Threading.Tasks;
+using UnityEditor;
 
 public struct OnLevelEndEvent : IEvent
 {
@@ -16,10 +18,12 @@ public struct OnLevelEndEvent : IEvent
 public struct OnLevelStartEvent : IEvent
 {
     public Stage stage;
+    public float time;
 
-    public OnLevelStartEvent(Stage stage)
+    public OnLevelStartEvent(Stage stage,  float time)
     {
         this.stage = stage;
+        this.time = time;
     }
 }
 
@@ -40,30 +44,48 @@ public struct DisplayEndUI : IEvent
     }
 }
 
-public class GradeManager : MonoBehaviour
+public class GradeManager : MonoBehaviour, ISaveable<GradeSaveData>
 {
     EventBindings<OnLevelEndEvent> _levelEndEventListener;
     EventBindings<OnLevelStartEvent> _levelStartEventListener;
     EventBindings<UpdateScoreEvent> _updateScoreEventListener;
     EventBindings<OnBossKilledEvent> _onBossKilledEventListener;
-
+    EventBindings<PauseEvent> _pauseEventListener;
+    
     public GradeSO[] gradeObjects;
-    private Stage currentStage;
+    public Stage currentStage;
 
     // Time Variables
-    private float currentTime;
-    private float finalTime;
-    private string timeGrade;
-    private string scoreGrade;
+    public float currentTime;
+    public float finalTime;
+    public string timeGrade;
+    public string scoreGrade;
 
     // Enemy Variables
-    private int enemyCount;
+    private int _startingEnemies;
+    public int enemyCount;
     private string enemyGrade;
 
     private List<string> grades = new List<string>();
     private string totalLetterGrade;
 
-    private float currentScore;
+    public float currentScore;
+    
+    // Pausing
+    private bool _isPaused;
+    
+    //Saving
+    public GradeSaveData _saveData;
+    public GradeSaveData SaveInfo => _saveData;
+
+    public SaveID_SO _saveSO;
+    
+    public SaveID_SO SaveSO => _saveSO;
+    
+    public int SaveID => _saveSO.saveID;
+
+    public string SaveableName => name;
+
 
     // Grade Numerical Value
     private Dictionary<string, int> gradeValue = new Dictionary<string, int>
@@ -92,6 +114,9 @@ public class GradeManager : MonoBehaviour
         _levelStartEventListener = new EventBindings<OnLevelStartEvent>(OnLevelStart);
         _updateScoreEventListener = new EventBindings<UpdateScoreEvent>(OnScoreUpdate);
         _onBossKilledEventListener = new EventBindings<OnBossKilledEvent>(OnBossKilled);
+        _pauseEventListener = new  EventBindings<PauseEvent>(OnPause);
+
+        _startingEnemies = FindObjectsByType<EnemyBase>(FindObjectsInactive.Exclude, FindObjectsSortMode.None).Length;
     }
 
     private void OnEnable()
@@ -100,6 +125,7 @@ public class GradeManager : MonoBehaviour
         EventBus<OnLevelStartEvent>.Register(_levelStartEventListener);
         EventBus<UpdateScoreEvent>.Register(_updateScoreEventListener);
         EventBus<OnBossKilledEvent>.Register(_onBossKilledEventListener);
+        EventBus<PauseEvent>.Register(_pauseEventListener);
     }
 
     private void OnDisable()
@@ -108,23 +134,108 @@ public class GradeManager : MonoBehaviour
         EventBus<OnLevelStartEvent>.Unregister(_levelStartEventListener);
         EventBus<UpdateScoreEvent>.Unregister(_updateScoreEventListener);
         EventBus<OnBossKilledEvent>.Unregister(_onBossKilledEventListener);
+        EventBus<PauseEvent>.Unregister(_pauseEventListener);
     }
 
     private void Update()
     {
+        if (_isPaused) return;
+        
         currentTime += Time.deltaTime;
     }
 
+    #region Saving
+
+    public async Task CreateSaveInstance(LevelSaveableData_SO levelSaveableData)
+    {
+        if (_saveSO == null)
+        {
+#if UNITY_EDITOR
+            _saveSO = ScriptableObject.CreateInstance<SaveID_SO>();
+
+            var levelPath = "Assets/LevelSaves/";
+            var fileName = name;
+            
+            if (ISaveableHelper.existingNames.ContainsKey(name))
+            {
+                fileName += ISaveableHelper.existingNames[name] + 1;
+
+                ISaveableHelper.existingNames[name]++;
+            }
+            else
+            {
+                ISaveableHelper.existingNames.Add(fileName, 0);
+            }
+            
+            AssetDatabase.CreateAsset(_saveSO, levelPath + fileName + "_ID.asset");
+            EditorUtility.SetDirty(_saveSO);
+#endif
+        }
+        
+        _saveSO.saveID = ISaveableHelper.GenerateISaveableID(levelSaveableData);
+
+        _saveData = new GradeSaveData(_saveSO.saveID, currentTime, (int)currentScore, enemyCount, "N/A");
+        
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(_saveSO);
+        EditorUtility.SetDirty(this);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+#endif
+    }
+
+    public async Task DeleteSaveInstance(LevelSaveableData_SO levelSaveableData)
+    {
+        _saveData = new GradeSaveData();
+
+        if (_saveSO != null && _saveSO.saveID > 0)
+        {
+            _saveData.id = _saveSO.saveID;
+        }
+    }
+
+    public void HandleLoadData(ref LevelSaveData refData)
+    {
+        if (!refData.saveableID.Contains(SaveID)) return;
+
+        _saveData = refData.gradeSaveData;
+
+        _saveData.Load(this);
+        
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+#endif
+    }
+
+    public void HandleSaveData(ref LevelSaveData refData)
+    {
+        if (!refData.saveableID.Contains(SaveID)) return;
+        
+        _saveData.Save(this);
+
+        refData.gradeSaveData = _saveData;
+        
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(this.gameObject);
+#endif
+    }
+
+    #endregion
+    
+    private void OnPause(PauseEvent ctx)
+    {
+        _isPaused = ctx.isPaused;
+    }
+    
     private void OnLevelStart(OnLevelStartEvent ctx)
     {
         // Reset Values for next stage
 
-        currentTime = 0;
+        currentTime = ctx.time;
         grades.Clear();
 
         currentStage = ctx.stage;
-
-        enemyCount = CheckStageBounds(LayerMask.GetMask("Enemy"));
     }
 
     private void OnLevelEnd(OnLevelEndEvent ctx)
@@ -207,7 +318,29 @@ public class GradeManager : MonoBehaviour
         Bounds bounds = currentStage.stageBoundary;
 
         Collider[] overlappingObjects = Physics.OverlapBox(bounds.center, bounds.size, currentStage.transform.rotation, objectLayer);
-        return overlappingObjects.Length;
+
+        var results = 0;
+
+        foreach (var overlappingObject in overlappingObjects)
+        {
+            var self = overlappingObject.TryGetComponent(out EnemyBase selfEnemy);
+            var parent =  overlappingObject.transform.parent.TryGetComponent(out EnemyBase parentEnemy);
+
+            if (self)
+            {
+                if (selfEnemy.gameObject.activeSelf || !selfEnemy.IsDead)
+                {
+                    results++;
+                    continue;
+                }
+            }
+
+            if (!parent) continue;
+
+            if (parentEnemy.gameObject.activeSelf) results++;
+        }
+        
+        return results;
     }
 
     private string GetGradeAverage(Dictionary<string, string> finalGrades)
