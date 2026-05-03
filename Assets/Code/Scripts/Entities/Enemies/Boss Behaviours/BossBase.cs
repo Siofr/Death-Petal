@@ -127,7 +127,7 @@ public class BossBase : EnemyBase
         
         foreach (GameObject eye in eyes)
         {
-            eye.GetComponent<Bishop_EyeLookAt>().lookAtTarget = playerTransform;
+            //eye.GetComponent<Bishop_EyeLookAt>().lookAtTarget = playerTransform;
         }
         
         Debug.Log("Is Entering");
