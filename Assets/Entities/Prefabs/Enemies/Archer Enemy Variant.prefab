@@ -39274,6 +39274,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4587541062937856011, guid: dbec22ccb534bb944b66923e04b97643, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4353556964216979823}
+    - targetCorrespondingSourceObject: {fileID: 1558258255239138291, guid: dbec22ccb534bb944b66923e04b97643, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7171555634994362308}
   m_SourcePrefab: {fileID: 100100000, guid: dbec22ccb534bb944b66923e04b97643, type: 3}
 --- !u!95 &537145672592978259 stripped
 Animator:
@@ -39290,6 +39293,40 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2228115285543031113, guid: dbec22ccb534bb944b66923e04b97643, type: 3}
   m_PrefabInstance: {fileID: 1006513968477784351}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1754100101515510508 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1558258255239138291, guid: dbec22ccb534bb944b66923e04b97643, type: 3}
+  m_PrefabInstance: {fileID: 1006513968477784351}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7171555634994362308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754100101515510508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42fbf57789ab40e4a99dbaf275c1ced5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXAnimationEvent
+  audioReferences:
+  - audioName: Alert
+    eventReference:
+      Guid:
+        Data1: 1620097214
+        Data2: 1338678890
+        Data3: -602123612
+        Data4: -430403598
+      Path: event:/Characters/Enemies/Archer/archerAlert
+  - audioName: Death
+    eventReference:
+      Guid:
+        Data1: 863533692
+        Data2: 1202971095
+        Data3: -1429826405
+        Data4: -705343790
+      Path: event:/Characters/Enemies/Archer/archerDeath
 --- !u!1 &3629306830426702100 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4587541062937856011, guid: dbec22ccb534bb944b66923e04b97643, type: 3}
@@ -39316,14 +39353,6 @@ MonoBehaviour:
         Data3: 1829604769
         Data4: 1188779390
       Path: event:/Characters/Enemies/Archer/archerIdle
-  - audioName: Alert
-    eventReference:
-      Guid:
-        Data1: 1620097214
-        Data2: 1338678890
-        Data3: -602123612
-        Data4: -430403598
-      Path: event:/Characters/Enemies/Archer/archerAlert
   - audioName: Windup
     eventReference:
       Guid:
@@ -39340,14 +39369,6 @@ MonoBehaviour:
         Data3: -1856509045
         Data4: -1893971100
       Path: event:/Characters/Enemies/Archer/archerRelease
-  - audioName: Death
-    eventReference:
-      Guid:
-        Data1: 863533692
-        Data2: 1202971095
-        Data3: -1429826405
-        Data4: -705343790
-      Path: event:/Characters/Enemies/Archer/archerDeath
 --- !u!4 &6389483979984050612 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6150750288168472747, guid: dbec22ccb534bb944b66923e04b97643, type: 3}

@@ -5052,6 +5052,7 @@ GameObject:
   - component: {fileID: 6794938781747717643}
   - component: {fileID: 7745911279073585054}
   - component: {fileID: 8604158970072716647}
+  - component: {fileID: 3922498189162700205}
   m_Layer: 0
   m_Name: MotherEnemy
   m_TagString: Untagged
@@ -5126,33 +5127,51 @@ MonoBehaviour:
   target: {fileID: 0}
   enemyScoreValue: 0
   petalDropChance: 0
-  onEnemyAttackEventPath:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  enemyPassiveIdle:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  exitIdleAlert:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  sfxStateManager: {fileID: 0}
+  _ignoreNavMesh: 0
   _spawnedEnemies: []
   _spawnPointRef: {fileID: 8555871078340034515}
   wingMaterial: {fileID: 2100000, guid: d93a2383172197b4d8152823a7c397fc, type: 2}
   _spawnType: 1
   maxSpawnCount: 3
   spawnTime: 10
+--- !u!114 &3922498189162700205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619952632507896543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289bb19b2d862914aab9bf19536c87a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerSFXState
+  audioReferences:
+  - audioName: Vulnerable
+    eventReference:
+      Guid:
+        Data1: 130825752
+        Data2: 1101904385
+        Data3: 1029574329
+        Data4: -1794100638
+      Path: event:/Characters/Enemies/Gargoyle/gargEnterVuln
+  - audioName: Invulnerable
+    eventReference:
+      Guid:
+        Data1: -602170272
+        Data2: 1207494475
+        Data3: 352768141
+        Data4: -678521937
+      Path: event:/Characters/Enemies/Gargoyle/gargEnemySpawn
+  - audioName: Death
+    eventReference:
+      Guid:
+        Data1: 911269677
+        Data2: 1293144348
+        Data3: -625001339
+        Data4: 2031782387
+      Path: event:/Characters/Enemies/Gargoyle/gargDeath
 --- !u!1 &1942715207298679292
 GameObject:
   m_ObjectHideFlags: 0
