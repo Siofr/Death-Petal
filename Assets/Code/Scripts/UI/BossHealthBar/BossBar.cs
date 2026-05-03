@@ -55,7 +55,7 @@ public class BossBar : MonoBehaviour
     private float GetRelativeHp()
     {
         float relativeHp = 0f;
-        relativeHp =  (GetCurrentHP() - 1.0f) / _innitMaxHP;
+        relativeHp =  GetCurrentHP() / _innitMaxHP;
         return relativeHp;
     }
 
@@ -65,7 +65,7 @@ public class BossBar : MonoBehaviour
     {
         //ctx.enemy = bossRef;
 
-        _relativeHP = GetRelativeHp();
+        _relativeHP = GetRelativeHp() - (1 / _innitMaxHP);
         _lerpHp = true;
         _lerpLaggedHp = true;
 
