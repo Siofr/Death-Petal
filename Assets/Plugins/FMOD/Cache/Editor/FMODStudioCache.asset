@@ -160,8 +160,8 @@ MonoBehaviour:
   - {fileID: 9175524144739703628}
   - {fileID: 1786155679060886108}
   - {fileID: -7800614332413112414}
-  MinDistance: 1
-  MaxDistance: 20
+  MinDistance: 7
+  MaxDistance: 50
   Length: 0
 --- !u!114 &-8439488213099299451
 MonoBehaviour:
@@ -271,7 +271,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 2000
 --- !u!114 &-7987231314673135245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,10 +419,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639133564486716243
+  lastModified: 639134453108751108
   FileSizes:
   - Name: Desktop
-    Value: 5832
+    Value: 5902
   Exists: 1
 --- !u!114 &-7169126679549350423
 MonoBehaviour:
@@ -555,7 +555,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 1420
 --- !u!114 &-6077111627813171293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,6 +691,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-5646635692807688197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Characters/Enemies/Bishop/bishopIntro
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Characters/Enemies/Bishop/bishopIntro
+  Guid:
+    Data1: 1970083477
+    Data2: 1088325058
+    Data3: 1964168857
+    Data4: -1503989767
+  Banks:
+  - {fileID: -207975926020211653}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-5130996653326174951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -713,33 +740,6 @@ MonoBehaviour:
   - {fileID: -207975926020211653}
   IsStream: 0
   Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &-5037428237018466709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Characters/Enemies/Archer/archerDamaged
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/Characters/Enemies/Archer/archerDamaged
-  Guid:
-    Data1: -977105578
-    Data2: 1205415420
-    Data3: -354818426
-    Data4: -177156054
-  Banks:
-  - {fileID: -207975926020211653}
-  IsStream: 0
-  Is3D: 1
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
@@ -1066,7 +1066,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 1500
 --- !u!114 &-3157121976840611533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1198,7 +1198,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 4500
 --- !u!114 &-2405683051118053574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1282,6 +1282,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 6500
+--- !u!114 &-2074824749289028015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Characters/Enemies/Gargoyle/gargEnterVuln
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Characters/Enemies/Gargoyle/gargEnterVuln
+  Guid:
+    Data1: 130825752
+    Data2: 1101904385
+    Data3: 1029574329
+    Data4: -1794100638
+  Banks:
+  - {fileID: -207975926020211653}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1050
 --- !u!114 &-2001404566768243940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1606,6 +1633,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-341138031285162520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Characters/Enemies/Gargoyle/gargDeath
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Characters/Enemies/Gargoyle/gargDeath
+  Guid:
+    Data1: 911269677
+    Data2: 1293144348
+    Data3: -625001339
+    Data4: 2031782387
+  Banks:
+  - {fileID: -207975926020211653}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2142
 --- !u!114 &-207975926020211653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1621,10 +1675,10 @@ MonoBehaviour:
   Path: Assets/Audio/FMODAssets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639133564486664171
+  lastModified: 639134453108705469
   FileSizes:
   - Name: Desktop
-    Value: 5805696
+    Value: 5936448
   Exists: 1
 --- !u!114 &-50027687769245882
 MonoBehaviour:
@@ -1696,7 +1750,6 @@ MonoBehaviour:
   - {fileID: 1706277018655536119}
   - {fileID: 8263788752755449382}
   - {fileID: -3738277161966539835}
-  - {fileID: -5037428237018466709}
   - {fileID: 226925113443759321}
   - {fileID: -6077111627813171293}
   - {fileID: 8400302767759772529}
@@ -1751,20 +1804,23 @@ MonoBehaviour:
   - {fileID: -1306495017560988729}
   - {fileID: -50027687769245882}
   - {fileID: 2098604448123029776}
-  - {fileID: 7774027306058290432}
   - {fileID: -8439488213099299451}
   - {fileID: -3871336531716652867}
   - {fileID: -4709707883576880682}
   - {fileID: 7156452680189950909}
   - {fileID: -3726423295143846426}
   - {fileID: -9024319493333344494}
+  - {fileID: -2074824749289028015}
+  - {fileID: -341138031285162520}
+  - {fileID: -5646635692807688197}
+  - {fileID: 4096486599808779601}
   EditorParameters: []
   MasterBanks:
   - {fileID: -207975926020211653}
   StringsBanks:
   - {fileID: -7454297375032179920}
   cacheVersion: 131849
-  cacheTime: 639133564486716243
+  cacheTime: 639134453108751108
   SerializableEventsDict:
   - key: event:/Characters/Enemies/Bishop/bishopLoop
     index: 0
@@ -2455,6 +2511,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 500
+--- !u!114 &4096486599808779601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Characters/Enemies/Gargoyle/gargVulnLoop
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Characters/Enemies/Gargoyle/gargVulnLoop
+  Guid:
+    Data1: -1183597348
+    Data2: 1303235029
+    Data3: -1178720841
+    Data4: 1071497409
+  Banks:
+  - {fileID: -207975926020211653}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &4325473142667030642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2827,33 +2910,6 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &7774027306058290432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Characters/Enemies/Gargoyle/gargEnterInvuln
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/Characters/Enemies/Gargoyle/gargEnterInvuln
-  Guid:
-    Data1: 1907335387
-    Data2: 1177634847
-    Data3: 265402276
-    Data4: -461332451
-  Banks:
-  - {fileID: -207975926020211653}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
 --- !u!114 &8038708433682738600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2988,7 +3044,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 1840
 --- !u!114 &8897270912667784019
 MonoBehaviour:
   m_ObjectHideFlags: 0
