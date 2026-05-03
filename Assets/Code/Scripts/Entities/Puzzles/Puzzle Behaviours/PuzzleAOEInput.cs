@@ -26,6 +26,17 @@ public class PuzzleAOEInput : PuzzleInputBase
         ToggleAllWeaknesses(false);
     }
 
+    protected override void OnCameraChange(CameraChangeEvent ctx)
+    {
+        if (PuzzleOutputs[0].IsSolved)
+        {
+            ToggleAllWeaknesses(false);
+            return;
+        }
+        
+        base.OnCameraChange(ctx);
+    }
+
     public void StartEffectTimer(float time)
     {
         StopAllCoroutines();
