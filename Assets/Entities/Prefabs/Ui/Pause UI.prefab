@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 1390468106152409335}
   - component: {fileID: 7248886921397309006}
   - component: {fileID: 6786063320045969721}
+  - component: {fileID: 2263805439513933588}
   m_Layer: 0
   m_Name: Pause UI
   m_TagString: Untagged
@@ -112,6 +113,21 @@ MonoBehaviour:
       Data3: -871967599
       Data4: -1195794376
     Path: event:/UI/Pause Menu/unpause
+--- !u!114 &2263805439513933588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870441938911779107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6911b6d2af831164fa873d731e5f5d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoCloseUi
+  popUpsToClose:
+  - {fileID: 2759300216123095324}
+  - {fileID: 3656639397632822621}
 --- !u!1 &2073198036412551269
 GameObject:
   m_ObjectHideFlags: 0
