@@ -19,6 +19,7 @@ public static class SaveSystem
         JsonUtility.ToJson(gameSaveData);
         File.WriteAllText(GetSaveDataPath(), JsonUtility.ToJson(gameSaveData, true));
         Debug.Log("Saved Game Data");
+        EventBus<LevelSaveCompleteEvent>.Raise( new LevelSaveCompleteEvent());
     }
 
     public static GameSaveData LoadGameData()
