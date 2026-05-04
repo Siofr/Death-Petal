@@ -18,6 +18,7 @@ namespace SFXUtil
         public static EventInstance  CreateEventInstance(EventReference eventPath, GameObject sourceObject)
         {
             EventInstance eventInstance = RuntimeManager.CreateInstance(eventPath);
+            RuntimeManager.AttachInstanceToGameObject(eventInstance, sourceObject);
             return eventInstance;
         }
     }
