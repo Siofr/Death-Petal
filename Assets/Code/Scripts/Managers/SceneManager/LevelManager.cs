@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public struct LevelSaveEvent : IEvent { }
+public struct LevelSaveCompleteEvent : IEvent { }
 
 public struct LevelLoadEvent : IEvent
 {

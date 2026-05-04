@@ -88,7 +88,7 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
                 spawnPoint.x,
                 -1f,
                 spawnPoint.y);
-            EventBus<SpawnEnemyEvent>.Raise(new SpawnEnemyEvent(transform.position + spawnPoint, typeof(EnemyBase), transform.parent, gameObject));
+            EventBus<SpawnEnemyEvent>.Raise(new SpawnEnemyEvent(transform.position + spawnPoint, typeof(EnemyLurker), transform.parent, gameObject));
         }
         yield return new WaitForSeconds(spawnBackup_attackLength);
         
