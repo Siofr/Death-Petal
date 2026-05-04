@@ -117,7 +117,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         print("Ended panning Camera");
     }
     
-    private void Start()
+    protected virtual void Start()
     {
         if (_isSolved)
         {
