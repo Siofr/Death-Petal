@@ -93,7 +93,10 @@ public class SFXManager : Singleton<SFXManager>
         _sfxSnapshotListener = new EventBindings<SFXSnapshot>(ChangeSnapshot);
         _pauseEventListener = new EventBindings<PauseEvent>(OnPauseEvent);
 
-        InitializeSnapshots();
+        foreach (EventInstance snapshot in snapshotInstances)
+        {
+            snapshot.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
     }
 
     public void OnEnable()
@@ -114,19 +117,18 @@ public class SFXManager : Singleton<SFXManager>
 
     public void InitializeSnapshots()
     {
-        foreach(EventInstance snapshot in snapshotInstances)
-        {
-            snapshot.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        }
+
     }
 
     public void ChangeSnapshot(SFXSnapshot ctx)
     {
+        Debug.Log("Pause Called if this is 2: " + ctx.snapshot);
         if (ctx.snapshot >= snapshotInstances.Count || ctx.snapshot < 0) return;
 
         if (ctx.activate && !IsPlaying(snapshotInstances[ctx.snapshot]))
         {
             snapshotInstances[ctx.snapshot].start();
+            snapshotInstances[ctx.snapshot].release();
         }
         else
         {
@@ -143,6 +145,7 @@ public class SFXManager : Singleton<SFXManager>
     {
         RuntimeManager.AttachInstanceToGameObject(ctx.eventInstance, ctx.sourceObject);
         ctx.eventInstance.start();
+        ctx.eventInstance.release();
     }
 
     public void StopSFX(SFXStopEvent ctx)
