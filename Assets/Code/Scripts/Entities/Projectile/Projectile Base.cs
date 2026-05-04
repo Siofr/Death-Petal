@@ -80,7 +80,7 @@ public class ProjectileBase : EnemyBase
 
     /*private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player")) Explode();
+        if(other.CompareTag("Ground")) Explode();
     }*/
 
     private void Explode()
@@ -164,6 +164,8 @@ public class ProjectileBase : EnemyBase
         
         target = null;
     }
+    
+    
     
     
 }
