@@ -166,8 +166,22 @@ public class TestPlayer : EntityBase, IEntity
     public override void HandleLoadData(ref LevelSaveData refData)
     {
         base.HandleLoadData(ref refData);
+
+        var diff = Weaknesses.Count - SaveInfo.health.Count;
+
+        if (diff > 0)
+        {
+            for (int i = Weaknesses.Count - 1; i > SaveInfo.health.Count - 1; i--)
+            {
+                var tempWeakness =  Weaknesses[i];
+                Weaknesses.Remove(tempWeakness);
+                Destroy(tempWeakness.transform.parent.gameObject);
+            }
+        }
         
         var healthCount = Weaknesses.Count;
+        
+        if(healthCount < 3) EventBus<PlayerDamagedEvent>.Raise(new PlayerDamagedEvent());
         
         if (healthCount < 2) EventBus<PlayerLowHealthEvent>.Raise(new PlayerLowHealthEvent());
         else EventBus<PlayerHealedEvent>.Raise(new PlayerHealedEvent());
