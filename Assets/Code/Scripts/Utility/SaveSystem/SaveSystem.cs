@@ -112,12 +112,14 @@ public struct GameSaveData
     {
         var result = new GameSaveData(true);
 
-        if (Directory.Exists(SaveSystem.GetSaveDataPath()))
+        if (Directory.Exists(SaveSystem.GetSaveDataPath())  || File.Exists(SaveSystem.GetSaveDataPath()))
         {
+            Debug.Log("Found Save Data File");
             result = SaveSystem.LoadGameData();
         }
         else
         {
+            Debug.Log("No Save Data File Found");
             File.WriteAllText(SaveSystem.GetSaveDataPath(), JsonUtility.ToJson(result, true));
         }
         

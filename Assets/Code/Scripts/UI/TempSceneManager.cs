@@ -51,14 +51,24 @@ public class TempSceneManager : MonoBehaviour
     
     public void loadDefaultScene(int sceneIndex)
     {
-        if(sceneIndex == 1) EventBus<LevelLoadEvent>.Raise(new LevelLoadEvent(true));
+        if (sceneIndex == 1)
+        {
+            EventBus<LevelLoadEvent>.Raise(new LevelLoadEvent(true));
+            LevelManager.isLoadingDefault = true;
+        }
         StartCoroutine(LoadSceneWithTransition(sceneIndex));
     }
 
     public void loadScene(int sceneIndex)
     {
-        if(sceneIndex == 1) EventBus<LevelLoadEvent>.Raise(new LevelLoadEvent(false));
-        EventBus<OnMenuLoaded>.Raise(new OnMenuLoaded());
+        if (sceneIndex == 1)
+        {
+            EventBus<LevelLoadEvent>.Raise(new LevelLoadEvent(false));
+            LevelManager.isLoadingDefault = false;
+        }
+        
+        if(sceneIndex == 0) EventBus<OnMenuLoaded>.Raise(new OnMenuLoaded());
+        
         StartCoroutine(LoadSceneWithTransition(sceneIndex));
     }
 
@@ -80,6 +90,8 @@ public class TempSceneManager : MonoBehaviour
 
     private void ResetSaveText()
     {
+        if (_saveText == null) return;
+            
         _saveText.color = Color.white;
         _saveText.text = "Save";
     }
