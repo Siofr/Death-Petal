@@ -16,6 +16,7 @@ public class PuzzleCameraFirstEncounter : PuzzleCameraCondition_SO
         {
             EnemyType.Lurker => typeof(EnemyLurker),
             EnemyType.Mother => typeof(EnemyMother),
+            EnemyType.Archer => typeof(EnemyArcher),
             _ => typeof(EnemyBase)
         };
 
