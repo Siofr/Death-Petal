@@ -9,7 +9,8 @@ public enum EnemyType
 {
     Hellspawn,
     Lurker,
-    Mother
+    Mother,
+    Archer
 }
 
 public class EnemyMother: EnemyBase
