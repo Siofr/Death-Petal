@@ -74,7 +74,7 @@ public class SFXManager : Singleton<SFXManager>
     private EventBindings<SFXStopEvent> _sfxStopEventListener;
     private EventBindings<SFXSnapshot> _sfxSnapshotListener;
     private EventBindings<PauseEvent> _pauseEventListener;
-    private EventBindings<LevelLoadedEvent> _levelLoadListener;
+    private EventBindings<LevelLoadEvent> _levelLoadListener;
 
     public List<EventReference> snapshotReferences = new List<EventReference>();
     private List<EventInstance> snapshotInstances = new List<EventInstance>();
@@ -93,6 +93,7 @@ public class SFXManager : Singleton<SFXManager>
 
         _sfxSnapshotListener = new EventBindings<SFXSnapshot>(ChangeSnapshot);
         _pauseEventListener = new EventBindings<PauseEvent>(OnPauseEvent);
+        _levelLoadListener = new EventBindings<LevelLoadEvent>(ReleaseSnapshots);
     }
 
     public void OnEnable()
@@ -101,7 +102,7 @@ public class SFXManager : Singleton<SFXManager>
         EventBus<SFXStopEvent>.Register(_sfxStopEventListener);
         EventBus<SFXSnapshot>.Register(_sfxSnapshotListener);
         EventBus<PauseEvent>.Register(_pauseEventListener);
-        EventBus<LevelLoadedEvent>.Register(_levelLoadListener);
+        EventBus<LevelLoadEvent>.Register(_levelLoadListener);
     }
 
     public void OnDisable()
@@ -110,10 +111,10 @@ public class SFXManager : Singleton<SFXManager>
         EventBus<SFXStopEvent>.Unregister(_sfxStopEventListener);
         EventBus<SFXSnapshot>.Unregister(_sfxSnapshotListener);
         EventBus<PauseEvent>.Unregister(_pauseEventListener);
-        EventBus<LevelLoadedEvent>.Unregister(_levelLoadListener);
+        EventBus<LevelLoadEvent>.Unregister(_levelLoadListener);
     }
 
-    public void ReleaseSnapshots()
+    public void ReleaseSnapshots(LevelLoadEvent ctx)
     {
         foreach (EventInstance snapshot in snapshotInstances)
         {
@@ -126,9 +127,9 @@ public class SFXManager : Singleton<SFXManager>
         Debug.Log("Pause Called if this is 2: " + ctx.snapshot);
         if (ctx.snapshot >= snapshotInstances.Count || ctx.snapshot < 0) return;
 
-        if (ctx.activate)
+        if (ctx.activate && !IsPlaying(snapshotInstances[ctx.snapshot]))
         {
-            RuntimeManager.CreateInstance(snapshotReferences[ctx.snapshot]);
+            snapshotInstances[ctx.snapshot].start();
         }
         else
         {
