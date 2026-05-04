@@ -10,6 +10,12 @@ public class ResolutionChange : MonoBehaviour
     public TMP_Dropdown resolutionDropdown;
     public Toggle fullscreenToggle;
 
+    void Awake()
+    {
+        SetResolution(PlayerPrefs.GetInt("ResolutionX", 1920),
+        PlayerPrefs.GetInt("ResolutionY", 1080));
+    }
+
     void OnEnable()
     {
         FixSettings();
@@ -18,6 +24,12 @@ public class ResolutionChange : MonoBehaviour
     public void SetResolution(int width, int height)
     {
         Screen.SetResolution(width, height, isFullScreen);
+    }
+
+    private void SaveResolution()
+    {
+        PlayerPrefs.SetInt("ResolutionX", resolution.x);
+        PlayerPrefs.SetInt("ResolutionY", resolution.y);
     }
 
     public void UpdateResolution()
@@ -51,6 +63,7 @@ public class ResolutionChange : MonoBehaviour
         }
         
         SetResolution(resolution.x, resolution.y);
+        SaveResolution();
     }
 
     private int GetResolutionIndex()
