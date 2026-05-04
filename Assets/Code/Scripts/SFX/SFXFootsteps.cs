@@ -57,6 +57,7 @@ public class SFXFootsteps : MonoBehaviour
 
     private void Update()
     {
+        if (!anim) anim = GetComponent<Animator>();
         var footstep = anim.GetFloat("Footstep");
         if (Mathf.Abs(footstep) < 0.0001f) footstep = 0f;
 
