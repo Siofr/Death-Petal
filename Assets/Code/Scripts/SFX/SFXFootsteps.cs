@@ -71,7 +71,6 @@ public class SFXFootsteps : MonoBehaviour
 
         eventInstance.setParameterByID(_terrainParam, GetFloorID());
 
-        RuntimeManager.AttachInstanceToGameObject(eventInstance, gameObject, false);
         EventBus<SFXEventTrigger>.Raise(new SFXEventTrigger(eventInstance, this.gameObject));
     }
 
