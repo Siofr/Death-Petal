@@ -23,6 +23,12 @@ public class TempSceneManager : MonoBehaviour
         EventBusUtils.ClearAllBuses();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    
+    public void loadDefaultScene(int sceneIndex)
+    {
+        LevelManager.isLoadingDefault = true;
+        StartCoroutine(LoadSceneWithTransition(sceneIndex));
+    }
 
     public void loadScene(int sceneIndex)
     {
