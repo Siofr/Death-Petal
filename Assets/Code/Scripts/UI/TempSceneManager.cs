@@ -23,6 +23,12 @@ public class TempSceneManager : MonoBehaviour
         EventBus<LevelSaveCompleteEvent>.Register(_saveCompleteListener);
     }
 
+    void OnDisable()
+    {
+        EventBus<LevelSaveCompleteEvent>.Unregister(_saveCompleteListener);
+        ResetSaveText();
+    }
+
     private void Start()
     {
         _switchButton = GetComponent<SwitchSelectedButton>();
@@ -50,15 +56,23 @@ public class TempSceneManager : MonoBehaviour
     private void SaveComplete()
     {
         _saveText.text = "Saved!";
-        if(_saveTextRoutine == null)
-            _saveTextRoutine = StartCoroutine(RevertSavedText());
+        _saveText.color = Color.black;
+        if(_saveTextRoutine != null)
+            StopCoroutine(_saveTextRoutine);
+        _saveTextRoutine = StartCoroutine(RevertSavedText());
     }
 
     private IEnumerator RevertSavedText()
     {
         yield return new WaitForSeconds(1.5f);
-        _saveText.text = "Save";
+        ResetSaveText();
         _saveTextRoutine = null;
+    }
+
+    private void ResetSaveText()
+    {
+        _saveText.color = Color.white;
+        _saveText.text = "Save";
     }
 
     public void save()
