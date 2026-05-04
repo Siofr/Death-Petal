@@ -316,7 +316,7 @@ public class EnemyBase : EntityBase, IEntity
         if (context.room.Bounds != _enemyAreaBounds) return;
         FreezeEnemy(false);
         
-        EventBus<PlayerTargetedEvent>.Raise(new PlayerTargetedEvent(enemyData.threatLevel));
+        if (!_isDead) EventBus<PlayerTargetedEvent>.Raise(new PlayerTargetedEvent(enemyData.threatLevel));
         Debug.Log("Is Entering");
         target = playerTransform;
     }

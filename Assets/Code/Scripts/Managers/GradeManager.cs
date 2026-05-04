@@ -328,7 +328,7 @@ public class GradeManager : MonoBehaviour, ISaveable<GradeSaveData>
 
             if (self)
             {
-                if (selfEnemy.gameObject.activeSelf || !selfEnemy.IsDead)
+                if (!selfEnemy.IsDead)
                 {
                     results++;
                     continue;
@@ -337,7 +337,7 @@ public class GradeManager : MonoBehaviour, ISaveable<GradeSaveData>
 
             if (!parent) continue;
 
-            if (parentEnemy.gameObject.activeSelf) results++;
+            if (!parentEnemy.IsDead) results++;
         }
         
         return results;
