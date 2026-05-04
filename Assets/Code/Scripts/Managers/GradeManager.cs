@@ -250,7 +250,7 @@ public class GradeManager : MonoBehaviour, ISaveable<GradeSaveData>
 
         for (int i = 0; i < gradeObjects.Length; i++)
         {
-            if (finalTime <= bestTime + gradeObjects[i].timeTaken * 60)
+            if (finalTime <= bestTime + gradeObjects[i].timeTaken)
             {
                 timeGrade = gradeObjects[i].letterGrade;
                 break;
@@ -277,14 +277,7 @@ public class GradeManager : MonoBehaviour, ISaveable<GradeSaveData>
         // Enemies Remaining Grade
         int enemiesRemaining = CheckStageBounds(LayerMask.GetMask("Enemy"));
 
-        if (enemyCount <= 0)
-        {
-            enemyGrade = "N/A";
-        }
-        else
-        {
-            enemyGrade = GetEnemyGrade(enemiesRemaining);
-        }
+        enemyGrade = GetEnemyGrade(enemiesRemaining);
 
         finalGrades.Add(enemiesRemaining.ToString(), enemyGrade);
         totalLetterGrade = GetGradeAverage(finalGrades);
