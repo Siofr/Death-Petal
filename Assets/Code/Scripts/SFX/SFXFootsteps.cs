@@ -50,7 +50,7 @@ public class SFXFootsteps : MonoBehaviour
         ground = LayerMask.GetMask("Ground");
     }
 
-    private void OnValidate()
+    private void Awake()
     {
         if (!anim) anim = GetComponent<Animator>();
     }
