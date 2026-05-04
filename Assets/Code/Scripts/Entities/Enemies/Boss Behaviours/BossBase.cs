@@ -23,7 +23,6 @@ public class BossBase : EnemyBase
     public Transform debugTarget;
     public bool isAttackReady = true;
     public Bishop_AttackPatternSpawner attackPatternSpawner;
-    [SerializeField] private GameObject[] eyes;
     [SerializeField] private ParticleSystem[] particles;
     [SerializeField] private ParticleSystem extraEyeParticle;
     public Bishop_Phase1Attacks activeAttack = Bishop_Phase1Attacks.None;
@@ -124,13 +123,6 @@ public class BossBase : EnemyBase
         var playerTransform =  context.playerTransform;
 
         if (context.room.Bounds != _enemyAreaBounds) return;
-        
-        foreach (GameObject eye in eyes)
-        {
-            //eye.GetComponent<Bishop_EyeLookAt>().lookAtTarget = playerTransform;
-        }
-        
-        Debug.Log("Is Entering");
         target = playerTransform;
     }
 
