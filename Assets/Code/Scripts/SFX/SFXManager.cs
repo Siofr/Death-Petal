@@ -75,6 +75,7 @@ public class SFXManager : Singleton<SFXManager>
     private EventBindings<SFXSnapshot> _sfxSnapshotListener;
     private EventBindings<PauseEvent> _pauseEventListener;
     private EventBindings<LevelLoadEvent> _levelLoadListener;
+    private EventBindings<OnMenuLoaded> _onMenuLoadedListener;
 
     public List<EventReference> snapshotReferences = new List<EventReference>();
     private List<EventInstance> snapshotInstances = new List<EventInstance>();
@@ -94,6 +95,7 @@ public class SFXManager : Singleton<SFXManager>
         _sfxSnapshotListener = new EventBindings<SFXSnapshot>(ChangeSnapshot);
         _pauseEventListener = new EventBindings<PauseEvent>(OnPauseEvent);
         _levelLoadListener = new EventBindings<LevelLoadEvent>(ReleaseSnapshots);
+        _onMenuLoadedListener = new EventBindings<OnMenuLoaded>(ReleaseSnapshots);
     }
 
     public void OnEnable()
@@ -103,6 +105,7 @@ public class SFXManager : Singleton<SFXManager>
         EventBus<SFXSnapshot>.Register(_sfxSnapshotListener);
         EventBus<PauseEvent>.Register(_pauseEventListener);
         EventBus<LevelLoadEvent>.Register(_levelLoadListener);
+        EventBus<OnMenuLoaded>.Register(_onMenuLoadedListener);
     }
 
     public void OnDisable()
@@ -112,9 +115,10 @@ public class SFXManager : Singleton<SFXManager>
         EventBus<SFXSnapshot>.Unregister(_sfxSnapshotListener);
         EventBus<PauseEvent>.Unregister(_pauseEventListener);
         EventBus<LevelLoadEvent>.Unregister(_levelLoadListener);
+        EventBus<OnMenuLoaded>.Unregister(_onMenuLoadedListener);
     }
 
-    public void ReleaseSnapshots(LevelLoadEvent ctx)
+    public void ReleaseSnapshots()
     {
         foreach (EventInstance snapshot in snapshotInstances)
         {

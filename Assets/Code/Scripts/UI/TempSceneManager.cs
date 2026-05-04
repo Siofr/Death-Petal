@@ -4,6 +4,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public struct OnMenuLoaded : IEvent
+{
+
+}
+
 public class TempSceneManager : MonoBehaviour
 {
     [SerializeField] private GameObject _credits;
@@ -53,6 +58,7 @@ public class TempSceneManager : MonoBehaviour
     public void loadScene(int sceneIndex)
     {
         if(sceneIndex == 1) EventBus<LevelLoadEvent>.Raise(new LevelLoadEvent(false));
+        EventBus<OnMenuLoaded>.Raise(new OnMenuLoaded());
         StartCoroutine(LoadSceneWithTransition(sceneIndex));
     }
 
