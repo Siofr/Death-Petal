@@ -28,7 +28,7 @@ public class SFXFootsteps : MonoBehaviour
 
     private LayerMask ground;
 
-    private Animator anim;
+    public Animator anim;
     private float _lastFootstep;
 
     private void Start()
@@ -52,7 +52,7 @@ public class SFXFootsteps : MonoBehaviour
 
     private void Awake()
     {
-        if (!anim) anim = GetComponent<Animator>();
+        // if (!anim) anim = GetComponent<Animator>();
     }
 
     private void Update()
