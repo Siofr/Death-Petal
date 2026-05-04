@@ -179,6 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TempSceneManager
   _credits: {fileID: 0}
   _creditsButton: {fileID: 0}
+  _saveText: {fileID: 0}
   isCreditsOpen: 0
 --- !u!1 &493113258323132928
 GameObject:
@@ -1358,6 +1359,7 @@ GameObject:
   - component: {fileID: 6590395529526478048}
   - component: {fileID: 7776164384714273377}
   - component: {fileID: 3188077738007743020}
+  - component: {fileID: 6625523248538275296}
   m_Layer: 5
   m_Name: Continue
   m_TagString: Untagged
@@ -1466,7 +1468,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1467520570944201657}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7319916567498675024}
+        m_TargetAssemblyTypeName: TempSceneManager, Assembly-CSharp
+        m_MethodName: loadScene
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7776164384714273377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1532,6 +1546,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f28a0b287fd9144b6c85ed7cdf186f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReplaceInactiveNav
+--- !u!114 &6625523248538275296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4943400714889907424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf0252f1f358cee4c9d587881b1adb37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ContinueButton
 --- !u!1 &5495929516744383307
 GameObject:
   m_ObjectHideFlags: 0

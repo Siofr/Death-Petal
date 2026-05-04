@@ -46,12 +46,13 @@ public class TempSceneManager : MonoBehaviour
     
     public void loadDefaultScene(int sceneIndex)
     {
-        LevelManager.isLoadingDefault = true;
+        if(sceneIndex == 1) EventBus<LevelLoadEvent>.Raise(new LevelLoadEvent(true));
         StartCoroutine(LoadSceneWithTransition(sceneIndex));
     }
 
     public void loadScene(int sceneIndex)
     {
+        if(sceneIndex == 1) EventBus<LevelLoadEvent>.Raise(new LevelLoadEvent(false));
         StartCoroutine(LoadSceneWithTransition(sceneIndex));
     }
 

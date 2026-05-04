@@ -24,7 +24,9 @@ public class PuzzleTriggerInput: PuzzleInputBase
     private void OnTriggerEnter(Collider other)
     {
         if (_isOneTimeUse && _isUsed) return;
-
+        
+        if(PuzzleOutputs[0].IsSolved) return;
+        
         if (other.CompareTag("Player")) _isUsed = true;
         
         foreach (IPuzzleOutput puzzleOutput in PuzzleOutputs)

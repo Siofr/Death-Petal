@@ -9,11 +9,17 @@ public class PuzzleCameraOutput : PuzzleOutputBase
     [Space]
     [Header("Animator Conditions")]
     [SerializeField] private Animator _animator;
-    
-    
+
+    protected override void Start()
+    {
+        _puzzleCameraCondition.Initialise();
+        if (IsSolved) return;
+    }
 
     public override void OnPuzzleSolved(PuzzleSolvedEvent context)
     {
+        if (IsSolved) return;
+        
         base.OnPuzzleSolved(context);
 
         if (context.puzzleOutput != this) return;

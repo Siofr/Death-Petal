@@ -10,6 +10,11 @@ public class PuzzleCameraFirstEncounter : PuzzleCameraCondition_SO
     
     private void OnEnable()
     {
+        Initialise();
+    }
+    
+    public override void Initialise()
+    {
         Debug.Log("hi :)");
         
         var type = _typeOfEnemy switch
