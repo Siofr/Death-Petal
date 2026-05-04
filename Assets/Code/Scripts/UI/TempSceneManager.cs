@@ -11,6 +11,7 @@ public class TempSceneManager : MonoBehaviour
     [SerializeField] private TMP_Text _saveText;
     private Coroutine _saveTextRoutine;
     public bool isCreditsOpen = false;
+    private float awakeTime;
 
     private SwitchSelectedButton _switchButton;
     
@@ -31,6 +32,7 @@ public class TempSceneManager : MonoBehaviour
 
     private void Start()
     {
+        awakeTime = Time.time;
         _switchButton = GetComponent<SwitchSelectedButton>();
     }
 
@@ -92,6 +94,21 @@ public class TempSceneManager : MonoBehaviour
         yield return SceneManager.LoadSceneAsync(sceneIndex);
         SceneManager.UnloadSceneAsync(activeScene);
         //EventBus<SetTransitionEvent>.Raise(new SetTransitionEvent(false, true));
+    }
+
+    public void LoadMainMenu()
+    {
+        if(Time.time - awakeTime < 3.6f) return;
+        StartCoroutine(ReturnToMainMenuWithTransition());
+    }
+    
+    private IEnumerator ReturnToMainMenuWithTransition()
+    {
+        EventBus<SetTransitionEvent>.Raise(new SetTransitionEvent(true, true));
+        yield return new WaitForSeconds(0.5f);
+        
+        // temporarily goes to gradXscene
+        yield return SceneManager.LoadSceneAsync(0);
     }
 
     public void LoadCredits()

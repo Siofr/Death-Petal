@@ -128,7 +128,9 @@ public class UIGradeDisplay : MonoBehaviour
     {
         EventBus<SetTransitionEvent>.Raise(new SetTransitionEvent(true, true));
         yield return new WaitForSeconds(0.5f);
-        yield return SceneManager.LoadSceneAsync(0);
+        
+        // temporarily goes to gradXscene
+        yield return SceneManager.LoadSceneAsync(4);
     }
 
     public void ResetUI()
