@@ -92,6 +92,8 @@ public class SFXManager : Singleton<SFXManager>
 
         _sfxSnapshotListener = new EventBindings<SFXSnapshot>(ChangeSnapshot);
         _pauseEventListener = new EventBindings<PauseEvent>(OnPauseEvent);
+
+        InitializeSnapshots();
     }
 
     public void OnEnable()
@@ -108,6 +110,14 @@ public class SFXManager : Singleton<SFXManager>
         EventBus<SFXStopEvent>.Unregister(_sfxStopEventListener);
         EventBus<SFXSnapshot>.Unregister(_sfxSnapshotListener);
         EventBus<PauseEvent>.Unregister(_pauseEventListener);
+    }
+
+    public void InitializeSnapshots()
+    {
+        foreach(EventInstance snapshot in snapshotInstances)
+        {
+            snapshot.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
     }
 
     public void ChangeSnapshot(SFXSnapshot ctx)
