@@ -50,6 +50,7 @@ public class TempSceneManager : MonoBehaviour
 
     public void loadScene(int sceneIndex)
     {
+        LevelManager.isLoadingDefault = false;
         StartCoroutine(LoadSceneWithTransition(sceneIndex));
     }
 

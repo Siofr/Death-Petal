@@ -16,7 +16,6 @@ public static class SaveSystem
 
     public static void SaveGameData()
     {
-        JsonUtility.ToJson(gameSaveData);
         File.WriteAllText(GetSaveDataPath(), JsonUtility.ToJson(gameSaveData, true));
         Debug.Log("Saved Game Data");
         EventBus<LevelSaveCompleteEvent>.Raise( new LevelSaveCompleteEvent());
@@ -26,6 +25,17 @@ public static class SaveSystem
     {
         Debug.Log("Read Game Save Data");
         return JsonUtility.FromJson<GameSaveData>(File.ReadAllText(GetSaveDataPath()));
+    }
+
+    public static void ClearData()
+    {
+        gameSaveData = GameSaveData.Initialise();
+        File.WriteAllText(GetSaveDataPath(), JsonUtility.ToJson(gameSaveData, true));
+    }
+
+    public static bool CheckData()
+    {
+        return gameSaveData.levelSaveData.Count > 0;
     }
     
     public static void SaveLevelData(LevelSaveData levelSaveData)
@@ -92,13 +102,26 @@ public static class SaveSystem
 public struct GameSaveData
 {
     public List<LevelSaveData> levelSaveData;
+
+    public GameSaveData(bool initialise)
+    {
+        levelSaveData = new List<LevelSaveData>();
+    }
     
     static public GameSaveData Initialise()
     {
-        var result = new GameSaveData();
-        
-        result = SaveSystem.LoadGameData();
+        var result = new GameSaveData(true);
 
+        if (Directory.Exists(SaveSystem.GetSaveDataPath()))
+        {
+            result = SaveSystem.LoadGameData();
+        }
+        else
+        {
+            File.WriteAllText(SaveSystem.GetSaveDataPath(), JsonUtility.ToJson(result, true));
+        }
+        
+        
         return result;
     }
 }
