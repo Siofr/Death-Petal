@@ -64,6 +64,17 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
         {
             enemy.OnShot(enemy.Weaknesses[0], enemy.Weaknesses[0].WeakType);
         }
+
+        for (int i = _spawnedEnemies.Count - 1; i >= 0; i--)
+        {
+            if (_spawnedEnemies[i].Weaknesses.Count < 1)
+            {
+                _spawnedEnemies.RemoveAt(i);
+                continue;
+            }
+            
+            _spawnedEnemies[i].OnShot(_spawnedEnemies[i].Weaknesses[0], _spawnedEnemies[i].Weaknesses[0].WeakType);
+        }
     }
     
     private void OnSpawnedEnemy(SpawnedEnemyEvent context)
