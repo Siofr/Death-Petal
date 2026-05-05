@@ -11,6 +11,8 @@ using FMODUnity;
 using Unity.Mathematics;
 using Random = UnityEngine.Random;
 
+public struct BossKilledEvent: IEvent { }
+
 public class BossBase : EnemyBase
 {
     [Header("Boss Settings")]
@@ -184,6 +186,7 @@ public class BossBase : EnemyBase
             animator.SetTrigger("Death");
             
             EventBus<TriggerDialogueEvent>.Raise(new TriggerDialogueEvent());
+            EventBus<BossKilledEvent>.Raise(new BossKilledEvent());
             //EventBus<EnemyDeathEvent>.Raise(new EnemyDeathEvent(this));
             _isDead = true;
 

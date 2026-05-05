@@ -34,6 +34,8 @@ public class ProjectileBase : EnemyBase
         IEntity playerEntity;
         
         target.TryGetComponent(out playerEntity);
+
+        if (playerEntity.Weaknesses.Count < 1) return;
         
         //print("Deal Damage");
         playerEntity.OnShot(playerEntity.Weaknesses[0], WeakTypes.PLAYER);

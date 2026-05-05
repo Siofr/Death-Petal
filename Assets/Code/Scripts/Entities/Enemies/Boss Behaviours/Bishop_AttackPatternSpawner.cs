@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -23,8 +24,26 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
     [SerializeField] private float spawnBackup_Radius;
     [SerializeField] private int spawnBackup_amount;
     [SerializeField] private float spawnBackup_attackLength;
-    
 
+    private EventBindings<SpawnedEnemyEvent> _onSpawnedEnemyListener;
+    private EventBindings<BossKilledEvent> _onBossKilledListener;
+    private List<EnemyBase> _spawnedEnemies = new List<EnemyBase>();
+    
+    private void OnEnable()
+    {
+        _onSpawnedEnemyListener = new EventBindings<SpawnedEnemyEvent>(OnSpawnedEnemy);
+        _onBossKilledListener = new EventBindings<BossKilledEvent>(OnBossKilled);
+        
+        EventBus<SpawnedEnemyEvent>.Register(_onSpawnedEnemyListener);
+        EventBus<BossKilledEvent>.Register(_onBossKilledListener);
+    }
+
+    private void OnDisable()
+    {
+        EventBus<SpawnedEnemyEvent>.Unregister(_onSpawnedEnemyListener);
+        EventBus<BossKilledEvent>.Unregister(_onBossKilledListener);
+    }
+    
     private void Start()
     {
         Initialise();
@@ -35,6 +54,24 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
         _bossController = GetComponent<BossBase>();
         if(_bossController.target)
             _playerPosition = _bossController.target.transform.position;
+    }
+
+    private void OnBossKilled()
+    {
+        foreach (var enemy in _spawnedEnemies)
+        {
+            enemy.OnShot(enemy.Weaknesses[0], enemy.Weaknesses[0].WeakType);
+        }
+    }
+    
+    private void OnSpawnedEnemy(SpawnedEnemyEvent context)
+    {
+        Debug.Log("Enemy Spawned");
+        Debug.Log($"Request: {context.requestObj.name}, Boss: {gameObject.name}");
+        
+        if (context.requestObj != gameObject) return;
+        
+        _spawnedEnemies.Add(context.enemy);
     }
 
     public void StartTargetSpit()

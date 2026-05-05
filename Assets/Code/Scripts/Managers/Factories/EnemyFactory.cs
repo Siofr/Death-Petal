@@ -78,10 +78,10 @@ public class EnemyFactory<T> : MonoBehaviour, IEnemyFactory<T> where T: EnemyBas
         
         enemyController.Initialise(config);
         
-        // if (requestObj != null)
-        // {
-        //     EventBus<SpawnedEnemyEvent>.Raise(new SpawnedEnemyEvent(enemyController, requestObj));
-        // }
+        if (requestObj != null)
+        {
+            EventBus<SpawnedEnemyEvent>.Raise(new SpawnedEnemyEvent(enemyController, requestObj));
+        }
     }
 
     private void OnSpawnEnemy(SpawnEnemyEvent context)

@@ -67,14 +67,17 @@ public class AOEBurn : AOEEffect
         {
             print("Check Targets");
             
-            if ((int)__aoeTargetType == -1 || __targets[i].Weaknesses[0].WeakType == __aoeTargetType)
+            if (__targets[i].Weaknesses.Count > 0)
             {
-                __targets[i].OnShot(__targets[i].Weaknesses[0], __targets[i].Weaknesses[0].WeakType);
-
-                if (__targets[i] == null || __targets[i].Weaknesses.Count < 1)
+                if ((int)__aoeTargetType == -1 || __targets[i].Weaknesses[0].WeakType == __aoeTargetType)
                 {
-                    __targets.RemoveAt(i);
+                    __targets[i].OnShot(__targets[i].Weaknesses[0], __targets[i].Weaknesses[0].WeakType);
                 }
+            }
+
+            if (__targets[i] == null || __targets[i].Weaknesses.Count < 1)
+            {
+                __targets.RemoveAt(i);
             }
         }
 
