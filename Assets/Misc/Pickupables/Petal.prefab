@@ -4960,6 +4960,7 @@ GameObject:
   - component: {fileID: 1079285446372504206}
   - component: {fileID: 4354626431224367860}
   - component: {fileID: 586769124261646354}
+  - component: {fileID: 431160291502313385}
   m_Layer: 12
   m_Name: Petal
   m_TagString: Petal
@@ -5043,6 +5044,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &431160291502313385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4566038899576105461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -903157637
+      Data2: 1264925354
+      Data3: -1930925904
+      Data4: -121028509
+    Path: event:/Interactables/Pickups/petalPickup
+  Event: 
+  EventPlayTrigger: 2
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &7831271205922178659
 GameObject:
   m_ObjectHideFlags: 0

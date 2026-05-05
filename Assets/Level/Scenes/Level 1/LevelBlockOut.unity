@@ -2386,6 +2386,42 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbaf08bc00647494ba1a69a3ffed2657, type: 3}
+--- !u!1 &915541628 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4922832577070057214, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+  m_PrefabInstance: {fileID: 127609053255897155}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &915541630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915541628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -2029140647
+      Data2: 1238556124
+      Data3: 315755158
+      Data4: -2050170451
+    Path: event:/Interactables/Environmental/rocksFalling
+  Event: 
+  EventPlayTrigger: 11
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 30
 --- !u!1 &926407307 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4915841194490648359, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
@@ -2993,7 +3029,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 50
+  field of view: 53.499466
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -3019,8 +3055,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215802007}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17552632, y: -0.7853891, z: 0.2578325, w: 0.5346746}
-  m_LocalPosition: {x: -66.40084, y: 1.9458256, z: -38.915752}
+  m_LocalRotation: {x: 0.007576478, y: 0.97994286, z: -0.037981108, w: 0.19547923}
+  m_LocalPosition: {x: -87.133446, y: -1.8708642, z: 23.901382}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11459,7 +11495,7 @@ PrefabInstance:
       objectReference: {fileID: 210902247}
     - target: {fileID: 2625238685536911245, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_VersionIndex
-      value: 4915
+      value: 4924
       objectReference: {fileID: 0}
     - target: {fileID: 2641898839700983307, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: _saveSO
@@ -11619,7 +11655,7 @@ PrefabInstance:
       objectReference: {fileID: 16164401}
     - target: {fileID: 3592037735945004054, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_VersionIndex
-      value: 4915
+      value: 4924
       objectReference: {fileID: 0}
     - target: {fileID: 3594014015640355583, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: _saveSO
@@ -13055,12 +13091,15 @@ PrefabInstance:
       objectReference: {fileID: 1277455590}
     - target: {fileID: 9105123153628395617, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
       propertyPath: m_VersionIndex
-      value: 5442
+      value: 5451
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4922832577070057214, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 915541630}
   m_SourcePrefab: {fileID: 100100000, guid: c9db49191c03d9a4d80c2599406ca9bf, type: 3}
 --- !u!1 &127609053255897156 stripped
 GameObject:
