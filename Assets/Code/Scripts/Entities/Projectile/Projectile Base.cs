@@ -16,7 +16,8 @@ public class ProjectileBase : EnemyBase
     [SerializeField] private List<ParticleSystem> _particleEmitters;
     private EnemyBase _callingEntity;
     [SerializeField] private GameObject explodeVFX;
-    
+
+    private EventBindings<BossKilledEvent> _onBossDeathEvent;
     
     protected override void Awake()
     {
@@ -28,7 +29,7 @@ public class ProjectileBase : EnemyBase
     {
         Initialise();
     }
-    
+
     private void DealDamage(EnemyBase callingEntity)
     {
         IEntity playerEntity;
@@ -131,7 +132,25 @@ public class ProjectileBase : EnemyBase
     {
         EventBus<RoomPlayerEnterEvent>.Unregister(__playerRoomEnterEventListener);
         EventBus<RoomPlayerExitEvent>.Unregister(__playerRoomExitEventListener);
+        
+        EventBus<BossKilledEvent>.Unregister(_onBossDeathEvent);
+        
+        StopAllCoroutines();
     }
+    
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+        _onBossDeathEvent = new EventBindings<BossKilledEvent>(OnBossDeath);
+        EventBus<BossKilledEvent>.Register(_onBossDeathEvent);
+    }
+
+    private void OnBossDeath()
+    {
+        Destroy(gameObject);
+    }
+    
     private void Update()
     {
         /*_enemyStateMachine.Update();*/
@@ -166,9 +185,5 @@ public class ProjectileBase : EnemyBase
         
         target = null;
     }
-    
-    
-    
-    
 }
 
