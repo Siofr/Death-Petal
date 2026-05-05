@@ -119,7 +119,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     
     protected virtual void Start()
     {
-        if (_isSolved)
+        if (_isSolved && LevelManager.isLoadingDefault)
         {
             EventBus<PuzzleSolvedEvent>.Raise(new PuzzleSolvedEvent(this));
         }
@@ -148,7 +148,7 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         IsSolved = true;
     }
 
-    private bool _alreadyLoaded;
+    protected bool _alreadyLoaded;
     
     private void OnLevelLoaded(LevelLoadedEvent levelLoadedEvent)
     {
