@@ -91,7 +91,12 @@ public class BossBase : EnemyBase
         __enemyStateMachine.SetState(idleState);
 
     }
-    
+
+    public void StopAllAttacks()
+    {
+        StopAllCoroutines();
+    }
+
     public bool InAttackRange()
     {
         if(target == null) return false;

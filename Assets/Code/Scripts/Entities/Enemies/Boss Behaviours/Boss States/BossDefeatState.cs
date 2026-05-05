@@ -6,6 +6,7 @@ public class BossDefeatState<T> : BossBaseState<T> where T : BossBase
 	
     public override void OnEnter()
     {
+        bossController.StopAllAttacks();
         bossController.sfxStateManager?.OnStateEnter("Death");
         bossController.StopAllCoroutines();
         bossController.animator.SetFloat(Animator.StringToHash("Blend"),0f);
