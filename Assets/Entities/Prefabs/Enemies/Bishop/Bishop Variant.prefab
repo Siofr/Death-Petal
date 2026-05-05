@@ -20822,6 +20822,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8287556641717610101, guid: c3f08d201b35f5a459a966864296f974, type: 3}
+      propertyPath: sfxStateManager
+      value: 
+      objectReference: {fileID: 8732063991770517235}
+    - target: {fileID: 8287556641717610101, guid: c3f08d201b35f5a459a966864296f974, type: 3}
       propertyPath: extraEyeParticle
       value: 
       objectReference: {fileID: 3488302120248538901}
@@ -20918,6 +20922,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 675939435818646562, guid: c3f08d201b35f5a459a966864296f974, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2935129164606642250}
+    - targetCorrespondingSourceObject: {fileID: 675939435818646562, guid: c3f08d201b35f5a459a966864296f974, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8732063991770517235}
+    - targetCorrespondingSourceObject: {fileID: 675939435818646562, guid: c3f08d201b35f5a459a966864296f974, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 981415405058140898}
   m_SourcePrefab: {fileID: 100100000, guid: c3f08d201b35f5a459a966864296f974, type: 3}
 --- !u!4 &1775589896115300841 stripped
 Transform:
@@ -21129,6 +21139,58 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8732063991770517235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5517205177673069592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289bb19b2d862914aab9bf19536c87a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TriggerSFXState
+  audioReferences:
+  - audioName: Death
+    eventReference:
+      Guid:
+        Data1: 130944228
+        Data2: 1147847170
+        Data3: 1940021890
+        Data4: 839127736
+      Path: event:/Characters/Enemies/Bishop/bishopDeath
+--- !u!114 &981415405058140898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5517205177673069592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioEventEmitter
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1894884098
+      Data2: 1256579236
+      Data3: 508845441
+      Data4: -2120736454
+    Path: event:/Characters/Enemies/Bishop/bishopLoop
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1001 &6139565100263037740
 PrefabInstance:
   m_ObjectHideFlags: 0
