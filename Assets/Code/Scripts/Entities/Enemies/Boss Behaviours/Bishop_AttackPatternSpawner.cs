@@ -58,6 +58,8 @@ public class Bishop_AttackPatternSpawner : MonoBehaviour
 
     private void OnBossKilled()
     {
+        StopAllCoroutines();
+        
         foreach (var enemy in _spawnedEnemies)
         {
             enemy.OnShot(enemy.Weaknesses[0], enemy.Weaknesses[0].WeakType);
