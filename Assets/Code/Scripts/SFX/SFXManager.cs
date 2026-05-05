@@ -128,7 +128,7 @@ public class SFXManager : Singleton<SFXManager>
 
     public void ChangeSnapshot(SFXSnapshot ctx)
     {
-        Debug.Log("Pause Called if this is 2: " + ctx.snapshot);
+        //Debug.Log("Pause Called if this is 2: " + ctx.snapshot);
         if (ctx.snapshot >= snapshotInstances.Count || ctx.snapshot < 0) return;
 
         if (ctx.activate && !IsPlaying(snapshotInstances[ctx.snapshot]))

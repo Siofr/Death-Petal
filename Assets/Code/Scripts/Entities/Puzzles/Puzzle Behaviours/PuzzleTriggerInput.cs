@@ -10,7 +10,7 @@ public class PuzzleTriggerInput: PuzzleInputBase
 
     private bool _isUsed;
     private BoxCollider _collider;
-
+    
     private void OnDrawGizmos()
     {
         if(_collider == null) _collider = GetComponent<BoxCollider>();

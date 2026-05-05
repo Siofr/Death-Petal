@@ -12,16 +12,24 @@ public class EnemyAttackState<T> : EnemyBaseState<T> where T : EnemyBase
         
         enemyController.target.TryGetComponent(out playerEntity);
         
-        while (playerEntity != null && playerEntity.Weaknesses.Count > 0)
+        // while (playerEntity != null && playerEntity.Weaknesses.Count > 0)
+        // {
+        //     yield return new WaitForSeconds(attackSpeed);
+        //     
+        //     if (!enemyController.InAttackRange()) break;
+        //     
+        //     playerEntity.OnShot(playerEntity.Weaknesses[0], WeakTypes.PLAYER);
+        //     Debug.Log("Damage Dealt to Player");
+        //     
+        //     yield return new WaitForSeconds(enemyController.enemyData.attackCooldown);
+        // }
+        
+        yield return new WaitForSeconds(attackSpeed);
+
+        if (enemyController.InAttackRange())
         {
-            yield return new WaitForSeconds(attackSpeed);
-            
-            if (!enemyController.InAttackRange()) break;
-            
             playerEntity.OnShot(playerEntity.Weaknesses[0], WeakTypes.PLAYER);
             Debug.Log("Damage Dealt to Player");
-            
-            yield return new WaitForSeconds(enemyController.enemyData.attackCooldown);
         }
         
         yield return new WaitForSeconds(enemyController.enemyData.attackCooldown);
