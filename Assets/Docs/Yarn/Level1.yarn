@@ -198,19 +198,27 @@ color: yellow
 ---
 <<start LineView>>
 <<actor ActorScreen 0 "happy">>
-<<actor ActorScreen 1 "happy" false>>
+<<actor ActorScreen 1 "forlorn" false>>
 Abbot: What how did you get here?
 Harmony: I love exploring, and it was really really badly hidden door...
+<<actor ActorScreen 0 "surprised">>
 Harmony: Are you smoking..?
+<<actor ActorScreen 1 "evil" false>>
 Abbot: What, even I need my vices. But my light blew out and I'm out of matches.
 <<item ActorScreen 1 true>>
+<<actor ActorScreen 0 "happy">>
 Harmony: Here have a lighter!
+<<actor ActorScreen 1 "surprised" false>>
 Abott: Oh thanks, wait... [imp]P-P-Petals[/]?
+<<actor ActorScreen 1 "evil" false>>
 Abott: I do not want any devil forsaken [imp] Petal Lighter[/].
+<<actor ActorScreen 0 "sad">>
 Harmony: Suit your self, I don't have one with a skeleton on it.
 Abott: Ah forget it.
 <<item ActorScreen 1 false>>
+<<actor ActorScreen 0 "happy">>
 Harmony: So, anyway. why do you follow me?
+<<actor ActorScreen 1 "happy" false>>
 Abbot: First of all, you are following [imp]me[/]. My intent was simply to add you to my records.
 Abbot: That weapon... it intrigued me.
 Abbot: I did not mean to concern myself with it. And yet, I have. 
@@ -287,7 +295,7 @@ position: -799,-285
 ---
 <<start LineView>>
 <<actor ActorScreen 0 "surprised">>
-<<actor ActorScreen 1 "surprised" false>>
+<<actor ActorScreen 1 "happy" false>>
 Harmony: Nice view huh.
 Abaddon: You could say that.
 <<event BalconyDialogue>>
