@@ -81,6 +81,11 @@ public class TempSceneManager : MonoBehaviour
         _saveTextRoutine = StartCoroutine(RevertSavedText());
     }
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
     private IEnumerator RevertSavedText()
     {
         yield return new WaitForSeconds(1.5f);
