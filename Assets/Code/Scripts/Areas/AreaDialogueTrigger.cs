@@ -39,5 +39,6 @@ public class AreaDialogueTrigger : MonoBehaviour
     public void Trigger(string node)
     {
         EventBus<TriggerDialogueEvent>.Raise(new TriggerDialogueEvent(NodeName));
+        EventBus<ToggleSavingEvent>.Raise(new ToggleSavingEvent(false));
     }
 }

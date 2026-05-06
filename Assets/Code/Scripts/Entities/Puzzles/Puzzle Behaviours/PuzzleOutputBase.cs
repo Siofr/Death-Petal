@@ -62,6 +62,8 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
     {
         if (_alreadyLoaded) yield break;
         
+        EventBus<LockInput>.Raise(new LockInput("Pause"));
+        
         print("Started panning Camera");
         
         EventBus<CameraActionEvent>.Raise(new CameraActionEvent(true));
@@ -72,12 +74,20 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         EventBus<LockInput>.Raise(new LockInput("Attack"));
         
         //if (InputHandler.Instance != null) InputHandler.Instance.enabled = false;
-        
-        if (_cameraPanRoutine != null || _camera == null) yield break;
+
+        if (_cameraPanRoutine != null || _camera == null)
+        {
+            EventBus<UnlockInput>.Raise(new UnlockInput("Pause"));
+            yield break;
+        }
 
         var brain = FindAnyObjectByType<CinemachineBrain>();
-        
-        if (brain == null) yield break;
+
+        if (brain == null)
+        {
+            EventBus<UnlockInput>.Raise(new UnlockInput("Pause"));
+            yield break;
+        }
 
         var currentCam = _camera.GetComponent<ICinemachineCamera>();
         var lastCam = brain.ActiveVirtualCamera;
@@ -115,6 +125,8 @@ public abstract class PuzzleOutputBase : MonoBehaviour, IPuzzleOutput, ISaveable
         
         EventBus<CameraActionEvent>.Raise(new CameraActionEvent(false));
         print("Ended panning Camera");
+        
+        EventBus<UnlockInput>.Raise(new UnlockInput("Pause"));
     }
     
     protected virtual void Start()

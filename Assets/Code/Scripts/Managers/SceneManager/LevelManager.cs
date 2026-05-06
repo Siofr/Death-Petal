@@ -253,6 +253,7 @@ public class LevelManager : MonoBehaviour
     {
         yield return new WaitForFixedUpdate();
         EventBus<TriggerDialogueEvent>.Raise(new TriggerDialogueEvent("L1Intro"));
+        EventBus<ToggleSavingEvent>.Raise(new ToggleSavingEvent(false));
     }
 
 

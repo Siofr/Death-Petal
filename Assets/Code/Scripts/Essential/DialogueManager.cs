@@ -48,11 +48,14 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         if (ctx.yarnNodeName == null) return;
 
+        EventBus<LockInput>.Raise(new LockInput("Pause"));
+        
         dialogueRunner.StartDialogue(ctx.yarnNodeName);
     }
 
     private void OnDialogueEnd()
     {
         EventBus<ExitDialogueEvent>.Raise(new ExitDialogueEvent());
+        EventBus<ToggleSavingEvent>.Raise(new ToggleSavingEvent(true));
     }
 }

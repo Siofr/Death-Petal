@@ -20,6 +20,7 @@ public class EntityTrigger : EntityBase, IEntity
         if (weakness.WeakType.HasFlag(damageType))
         {
             EventBus<TriggerDialogueEvent>.Raise(new TriggerDialogueEvent(yarnNode));
+            EventBus<ToggleSavingEvent>.Raise(new ToggleSavingEvent(false));
         }
 
         if (!isOneShot) return;

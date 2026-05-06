@@ -148,6 +148,7 @@ public class UIGradeDisplay : MonoBehaviour
         );
 
         EventBus<ExitDialogueEvent>.Raise(new ExitDialogueEvent());
+        EventBus<ToggleSavingEvent>.Raise(new ToggleSavingEvent(true));
         EventBus<ChangeCameraState>.Raise(new ChangeCameraState(false));
         background.gameObject.SetActive(false);
     }

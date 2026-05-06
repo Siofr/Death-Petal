@@ -333,6 +333,7 @@ namespace State_Machine
         private void OnDialogueExited()
         {
             _isDialogue = false;
+            EventBus<UnlockInput>.Raise(new UnlockInput("Pause"));
         }
 
         public void OnCameraAction(CameraActionEvent ctx)
