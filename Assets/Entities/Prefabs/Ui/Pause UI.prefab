@@ -520,6 +520,7 @@ GameObject:
   - component: {fileID: 9126903734445689339}
   - component: {fileID: 610874690368632849}
   - component: {fileID: 7991946476094044868}
+  - component: {fileID: 852220278831372961}
   m_Layer: 5
   m_Name: Load
   m_TagString: Untagged
@@ -748,6 +749,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ContinueButton
   isSaveButton: 0
   isPauseMenu: 1
+--- !u!114 &852220278831372961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2247670974630937228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f28a0b287fd9144b6c85ed7cdf186f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReplaceInactiveNav
 --- !u!1 &2256230927277794521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1786,6 +1799,7 @@ GameObject:
   - component: {fileID: 8539316794935184263}
   - component: {fileID: 7469982567017917300}
   - component: {fileID: 2876192930860789187}
+  - component: {fileID: 1626212083509104199}
   m_Layer: 5
   m_Name: Save
   m_TagString: Untagged
@@ -1919,6 +1933,42 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1626212083509104199}
+        m_TargetAssemblyTypeName: ReplaceInactiveNav, Assembly-CSharp
+        m_MethodName: UpdateButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6276334145982714264}
+        m_TargetAssemblyTypeName: ReplaceInactiveNav, Assembly-CSharp
+        m_MethodName: UpdateButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 852220278831372961}
+        m_TargetAssemblyTypeName: ReplaceInactiveNav, Assembly-CSharp
+        m_MethodName: UpdateButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!95 &5550989898146351143
 Animator:
   serializedVersion: 7
@@ -2026,6 +2076,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ContinueButton
   isSaveButton: 1
   isPauseMenu: 1
+--- !u!114 &1626212083509104199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4551326501217980835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f28a0b287fd9144b6c85ed7cdf186f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReplaceInactiveNav
 --- !u!1 &4794997838491885404
 GameObject:
   m_ObjectHideFlags: 0
@@ -3133,6 +3195,7 @@ GameObject:
   - component: {fileID: 5309111041363645697}
   - component: {fileID: 3975764796484058114}
   - component: {fileID: 7748100712411161476}
+  - component: {fileID: 6276334145982714264}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -3359,6 +3422,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &6276334145982714264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7307394376766698252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f28a0b287fd9144b6c85ed7cdf186f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReplaceInactiveNav
 --- !u!1 &7486643944879378062
 GameObject:
   m_ObjectHideFlags: 0

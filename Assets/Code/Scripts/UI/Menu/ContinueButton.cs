@@ -25,21 +25,20 @@ public class ContinueButton : MonoBehaviour
     {
         _button = GetComponent<Button>();
         _noSaveLoadEventListener = new EventBindings<ToggleSavingEvent>(OnToggleSaving);
+
+        if(!isSaveButton) _button.interactable = SaveSystem.CheckData();
     }
 
+    //DEPRECATED
     private void OnDestroy()
     {
         EventBus<ToggleSavingEvent>.Unregister(_noSaveLoadEventListener);
     }
     
+    //DEPRECATED
     private void OnToggleSaving(ToggleSavingEvent ctx)
     {
         Debug.Log("Entered Button?");
         _button.interactable = ctx.canSaveLoad;
-    }
-
-    private void Start()
-    {
-        if(!isSaveButton) _button.interactable = SaveSystem.CheckData();
     }
 }

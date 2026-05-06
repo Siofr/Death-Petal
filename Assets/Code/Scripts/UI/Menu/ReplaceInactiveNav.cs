@@ -11,7 +11,21 @@ public class ReplaceInactiveNav : MonoBehaviour
         eventSystem = EventSystem.current;
         selfSelectable = GetComponent<Selectable>();
         
+        SaveOriginal();
         CheckForInactiveButton();
+    }
+
+    public void UpdateButton()
+    {
+        CheckForInactiveButton();
+    }
+
+    Navigation oldNav;
+
+    private void SaveOriginal()
+    {
+        oldNav.selectOnDown = selfSelectable.navigation.selectOnDown;
+        oldNav.selectOnUp = selfSelectable.navigation.selectOnUp;
     }
 
     private void CheckForInactiveButton()
@@ -26,10 +40,12 @@ public class ReplaceInactiveNav : MonoBehaviour
         if (nav.selectOnUp.TryGetComponent(out Selectable up))
         {
             if (!up.interactable) nav.selectOnUp = up.navigation.selectOnUp;
+            else nav.selectOnUp = oldNav.selectOnUp;
         }
         if (nav.selectOnDown.TryGetComponent(out Selectable down))
         {
             if (!down.interactable) nav.selectOnDown = down.navigation.selectOnDown;
+            else nav.selectOnDown = oldNav.selectOnDown;
         }
         
         selfSelectable.navigation = nav;
