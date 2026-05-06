@@ -29,7 +29,7 @@ public static class SaveSystem
 
     public static void ClearData()
     {
-        gameSaveData = GameSaveData.Initialise();
+        gameSaveData = new GameSaveData(true);
         File.WriteAllText(GetSaveDataPath(), JsonUtility.ToJson(gameSaveData, true));
     }
 
