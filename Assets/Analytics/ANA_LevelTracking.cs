@@ -14,9 +14,13 @@ public class ANA_PlayerData
     public float time;
     [SerializeField]
     public Vector3 position;
+    [SerializeField]
+    public int playerHealth;
+    [SerializeField] 
+    public string input;
 }
 
-public class ANA_LevelTracking : MonoBehaviour
+public class ANA_LevelTracking : Singleton<ANA_LevelTracking>
 {
     //public string dataPath;
     public Key uploadKey = Key.H;
@@ -30,21 +34,36 @@ public class ANA_LevelTracking : MonoBehaviour
     public Coroutine activeRoutine;
     void Start()
     {
-        InvokeRepeating("LogPlayerData", logFrequency, logFrequency);
-
+        InvokeRepeating("LogPlayerTimeData", logFrequency, logFrequency);
     }
 
-    void LogPlayerData()
+    private void LogPlayerTimeData()
     {
+        LogPlayerData("No Action");
+    }
+    
+    static public void LogPlayerData(string foundInput)
+    {
+        int health = -1;
+
+        var playerEntity = Instance.playerTransform.GetComponentInChildren<TestPlayer>();
+
+        if (playerEntity != null)
+        {
+            health = playerEntity.Weaknesses.Count;
+        }
+        
         ANA_PlayerData newLog = new ANA_PlayerData
         {
             time = Time.time,
-            position = playerTransform.position
+            position = Instance.playerTransform.position,
+            playerHealth = health,
+            input = foundInput
         };
 
-        _playerDataOverTime.Add(newLog);
+        Instance._playerDataOverTime.Add(newLog);
     }
-
+    
     string PrebakeOutput()
     {
         string output = "";

@@ -187,6 +187,7 @@ public class InputHandler : Singleton<InputHandler>
     private void OnInteractPerformed(InputAction.CallbackContext ctx)
     {
         InteractEvent?.Invoke();
+        ANA_LevelTracking.LogPlayerData("Interact");
     }
 
     private void OnLookPerformed(InputAction.CallbackContext ctx)
@@ -197,11 +198,13 @@ public class InputHandler : Singleton<InputHandler>
     private void OnAttackPerformed(InputAction.CallbackContext ctx)
     {
         AttackEvent?.Invoke();
+        ANA_LevelTracking.LogPlayerData("Shoot");
     }
 
     private void OnSprint(InputAction.CallbackContext ctx)
     {
         SprintEvent?.Invoke();
+        ANA_LevelTracking.LogPlayerData($"Sprint");
     }
 
     //depricated
@@ -220,30 +223,36 @@ public class InputHandler : Singleton<InputHandler>
     private void OnBarrelLeft(InputAction.CallbackContext ctx)
     {
         RotateBarrelEvent.Invoke(-1);
+        ANA_LevelTracking.LogPlayerData("Rotate Left");
     }
     private void OnBarrelRight(InputAction.CallbackContext ctx)
     {
         RotateBarrelEvent.Invoke(1);
+        ANA_LevelTracking.LogPlayerData("Rotate Right");
     }
 
     private void OnNorthPerformed(InputAction.CallbackContext ctx)
     {
         HotkeyEvent.Invoke(2);
+        ANA_LevelTracking.LogPlayerData("Square/Green Bullet Loaded");
     }
 
     private void OnEastPerformed(InputAction.CallbackContext ctx)
     {
         HotkeyEvent.Invoke(1);
+        ANA_LevelTracking.LogPlayerData("Triangle/Red Bullet Loaded");
     }
 
     private void OnWestPerformed(InputAction.CallbackContext ctx)
     {
         HotkeyEvent.Invoke(0);
+        ANA_LevelTracking.LogPlayerData("Triangle/Blue Bullet Loaded");
     }
 
     private void OnSouthPerformed(InputAction.CallbackContext ctx)
     {
         RemoveBulletEvent?.Invoke();
+        ANA_LevelTracking.LogPlayerData("Remove Bullet");
     }
 
     private void OnRestartPerformed(InputAction.CallbackContext ctx)
