@@ -64,8 +64,9 @@ public class TempSceneManager : MonoBehaviour
     {
         if (sceneIndex == 1)
         {
-            EventBus<LevelLoadEvent>.Raise(new LevelLoadEvent(false));
             LevelManager.isLoadingDefault = false;
+            EventBus<LevelLoadEvent>.Raise(new LevelLoadEvent(false));
+            
         }
         
         if(sceneIndex == 0) EventBus<OnMenuLoaded>.Raise(new OnMenuLoaded());
