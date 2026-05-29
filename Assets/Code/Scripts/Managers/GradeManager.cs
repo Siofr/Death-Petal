@@ -141,7 +141,7 @@ public class GradeManager : MonoBehaviour, ISaveable<GradeSaveData>
     {
         if (_isPaused) return;
         
-        currentTime += Time.deltaTime;
+        currentTime += Time.unscaledDeltaTime * Time.timeScale;
     }
 
     #region Saving
