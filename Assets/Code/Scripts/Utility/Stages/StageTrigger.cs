@@ -22,10 +22,12 @@ public class StageTrigger : MonoBehaviour
     {
         if (collision.transform.tag != "Player") return;
 
+        var gradeManager = FindAnyObjectByType<GradeManager>();
+
         switch (triggerType)
         {
             case TriggerType.STAGE_START:
-                EventBus<OnLevelStartEvent>.Raise(new OnLevelStartEvent(stage, Time.time));
+                EventBus<OnLevelStartEvent>.Raise(new OnLevelStartEvent(stage, gradeManager.currentTime));
                 break;
 
             case TriggerType.STAGE_END:
