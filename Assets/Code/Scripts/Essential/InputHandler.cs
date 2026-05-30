@@ -166,7 +166,7 @@ public class InputHandler : Singleton<InputHandler>
         SOUTH.Disable();
 
         BARLEFT.Disable();
-        BARLEFT.Disable();
+        BARRIGHT.Disable();
         
         PAUSE.Disable();
 
