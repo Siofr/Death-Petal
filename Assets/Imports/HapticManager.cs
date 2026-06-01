@@ -18,13 +18,17 @@ public struct HapticFeedbackEvent : IEvent
 
 public class HapticManager : Singleton<HapticManager>
 {
+    private static bool isToggled;
     private Gamepad _gamepad;
     private EventBindings<HapticFeedbackEvent> _onHapticEventListener;
+
+    private EventBindings<ToggleHaptics> _onHapticsToggled;
 
     protected override void Awake()
     {
         base.Awake();
         _onHapticEventListener = new EventBindings<HapticFeedbackEvent>(OnHapticEvent);
+        _onHapticsToggled = new EventBindings<ToggleHaptics>(ToggleHaptics);
     }
 
     private void OnLevelWasLoaded()
@@ -41,16 +45,20 @@ public class HapticManager : Singleton<HapticManager>
     private void OnEnable()
     {
         EventBus<HapticFeedbackEvent>.Register(_onHapticEventListener);
+        EventBus<ToggleHaptics>.Register(_onHapticsToggled);
     }
 
     private void OnDisable()
     {
         EventBus<HapticFeedbackEvent>.Unregister(_onHapticEventListener);
+        EventBus<ToggleHaptics>.Unregister(_onHapticsToggled);
         InputSystem.ResetHaptics();
     }
 
     public void OnHapticEvent(HapticFeedbackEvent ctx)
     {
+        if (isToggled) return;
+
         _gamepad = Gamepad.current;
 
         if (_gamepad == null) return;
@@ -70,5 +78,10 @@ public class HapticManager : Singleton<HapticManager>
         }
 
         _gamepad.SetMotorSpeeds(0f, 0f);
+    }
+
+    public void ToggleHaptics()
+    {
+        isToggled = !isToggled;
     }
 }
