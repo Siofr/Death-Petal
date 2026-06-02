@@ -350,7 +350,7 @@ public class GradeManager : MonoBehaviour, ISaveable<GradeSaveData>
             }
         }
 
-        int finalGrade = Mathf.FloorToInt(gradeSum / gradeCount);
+        int finalGrade = Mathf.CeilToInt(gradeSum / gradeCount);
 
         return gradeReturn[finalGrade];
     }
